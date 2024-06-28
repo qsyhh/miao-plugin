@@ -1,0 +1,61 @@
+{{extend defaultLayout}}
+{{block 'css'}}
+<link rel="stylesheet" type="text/css" href="{{_res_path}}/admin/index.css"/>
+{{/block}}
+{{block 'main'}}
+
+<div class="info_box">
+  <div class="head-box type{{bgType}}">
+    <div class="label">喵喵管理面板</div>
+    <div class="title">#喵喵设置</div>
+  </div>
+</div>
+{{each schema cfgGroup}}
+<div class="cfg-box">
+  <div class="cfg-group">{{cfgGroup.title}}</div>
+  <ul class="cfg-ul">
+    {{each cfgGroup.cfg cfgItem cfgKey}}
+    <li class="cfg-li">
+      <div class="cfg-line">
+        {{cfgItem.title}}
+        {{if !(cfgItem.miao && isMiao) }}
+        <span class="cfg-hint"> #喵喵设置{{cfgItem.key}}
+          {{if cfgItem.type==='num'}} {{cfgItem.def}}{{else}} 开启/关闭{{/if}}
+        </span>
+        {{/if}}
+        {{if cfgItem.type === 'num' ||  cfgItem.type === 'str'}}
+        <div class="cfg-status">{{cfg[cfgKey]}}</div>
+        {{else}}
+        {{if cfg[cfgKey] || (cfgItem.miao && isMiao)}}
+        <div class="cfg-status">{{cfgItem.miao && isMiao ? '默认开启' : '已开启'}}</div>
+        {{else}}
+        <div class="cfg-status status-off">已关闭</div>
+        {{/if}}
+        {{/if}}
+      </div>
+      {{if cfgItem.desc && cfgItem.showDesc!== false}}
+      <div class="cfg-desc">{{cfgItem.desc}}</div>
+      {{/if}}
+    </li>
+    {{/each}}
+  </ul>
+</div>
+{{/each}}
+<div class="cfg-box">
+  <div class="cfg-group">其他设置</div>
+  <ul class="cfg-ul">
+    <li class="cfg-li">
+      <div class="cfg-line">
+        角色图片扩展包
+        <span class="cfg-hint"> #喵喵更新图像</span>
+        {{if imgPlus}}
+        <div class="cfg-status">已安装</div>
+        {{else}}
+        <div class="cfg-status status-off">未安装</div>
+        {{/if}}
+      </div>
+      <div class="cfg-desc">安装角色的扩展插图，图片较多可能需要一定时间，在返回提示前请勿重复执行</div>
+    </li>
+  </ul>
+</div>
+{{/block}}

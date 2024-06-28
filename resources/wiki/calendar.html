@@ -1,0 +1,137 @@
+{{extend elemLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" type="text/css" href="{{_res_path}}/wiki/calendar.css"/>
+{{/block}}
+
+{{block 'main'}}
+{{set weekName = '一二三四五六日'.split('')}}
+<div class="calendar">
+  <div class="cal-bg for-calendar-mode">
+    <table class="cont-table" border-collapse="collapse">
+      <tr class="tr thead">
+        {{each dateList d}}
+        <td colspan="{{d.date.length}}" class="td month">{{d.month}}月</td>
+        {{/each}}
+      </tr>
+      <tr class="tr thead">
+        {{each dateList d}}{{each d.date dn di}}
+        <td class="td date {{dn === nowDate ? 'current-date':''}}">
+          <span class="date-num">{{dn}}日</span>
+          <span class="date-week">周{{weekName[d.week[di]]}}</span>
+        </td>
+        {{/each}} {{/each}}
+      </tr>
+      <tr class="tr">
+        {{each dateList d}}{{each d.date dn}}
+        <td class="line {{dn === nowDate ? 'current-date':''}}">
+          {{if game === 'gs'}}
+            {{each charBirth[`${d.month}-${dn}`] char}}
+            <div class="card">
+              <div class="item-icon star{{char.star}}">
+                <div class="img" style="background-image:url('{{_res_path}}{{char.face}}')"></div>
+                <span class="char-name">{{char.name?.length>=4?char.name:`${char.name}生日`}}</span>
+              </div>
+            </div>
+            {{/each}}
+          {{/if}}
+        </td>
+        {{/each}} {{/each}}
+      </tr>
+    </table>
+  </div>
+  <div class="cal-bg for-list-mode">
+    <table class="cont-table" border-collapse="collapse">
+      <tr class="tr thead">
+        <td class="td month">活动列表</td>
+      </tr>
+      <tr class="tr">
+        <td class="line"></td>
+      </tr>
+    </table>
+  </div>
+  <div class="cal-list {{charMode}} char-num-{{charNum}}">
+    {{if game === 'gs'}}
+    <div class="cal-abyss-cont">
+      {{each abyss li}}
+        <div class="cal-item type-abyss" style="{{`left:${li.left}%;width:${li.width}%;`}}">
+          <div class="info">
+            <img src="{{_res_path}}/wiki/imgs/abyss-icon.png" class="cal-icon"/>
+            <strong>{{li.title}}</strong>
+            <span>{{li.label}}</span>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+    {{else}}
+      {{each abyss li}}
+      <div class="cal-abyss-cont">
+        <div class="cal-item type-{{li.type}}" style="{{`left:${li.left}%;width:${li.width}%;`}}">
+          <div class="info">
+            <img src="{{_res_path}}/wiki/imgs/{{li.type}}-icon.png" class="cal-icon" />
+            <strong>{{li.title}}</strong>
+            <span>{{li.label}}</span>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    {{/if}}
+    {{each list lis}}
+    {{each lis li idx}}
+    <div
+        class="cal-item type-{{li.type}} {{li.idx? `li-idx-${li.idx}`:``}} {{li.elem?'elem-'+li.elem:''}} {{li.width<20 ? 'small-mode':''}} li-col{{idx}}"
+        style="{{`margin-left:${li.left}%;width:${li.width}%`}}"
+        data-id="{{li.id}}"
+        data-type="{{li.type}}">
+      {{if li.banner2}}
+      <div class="banner" style="background-image:url('{{_res_path}}{{li.banner2}}')"></div>
+      {{else if li.banner}}
+      <div class="banner" style="background-image:url('{{li.banner}}')"></div>
+      {{/if}}
+      <div class="info">
+        {{if li.type === "character" && game === 'gs'}}
+        <img src="{{_res_path}}{{li.face}}" class="character-img"/>
+        {{else if li.icon}}
+        <img src="{{li.icon}}" class="cal-icon"/>
+        {{else}}
+        <img src="{{_res_path}}/wiki/imgs/calendar-icon.png" class="cal-icon" />
+        {{/if}}
+        <strong>{{li.title}}</strong>
+        <span>{{li.label}}</span>
+      </div>
+    </div>
+    {{/each}}
+    {{/each}}
+  </div>
+  <div class="now-line" style="left:{{nowLeft}}%"></div>
+  <div class="now-line line2" style="left:{{nowLeft}}%"></div>
+</div>
+<div class="now-time">
+  <span>当前时间：{{nowTime}}</span>
+</div>
+{{if game === 'gs'}}
+<div class="daily-talent">
+  {{each charTalent talent}}
+  {{each talent.chars char idx}}
+  <div class="card">
+    <div class="banner city-{{talent.cid}}">
+      {{if idx===0}}
+      <div class="title">
+        <div class="icon" style="background-image:url('{{_res_path}}{{talent.icon}}')"></div>
+        <span>{{talent.city}}·{{talent.abbr}}</span>
+      </div>
+      {{/if}}
+      <div class="line {{idx===0?'first':(idx===talent.chars.length-1?'last':'')}}"></div>
+    </div>
+    <div class="item-icon star{{char.star}}">
+      <div class="img" style="background-image:url('{{_res_path}}{{char.face}}')"></div>
+      <div class="weekly">
+        <div class="weekly-icon" style="background-image:url('{{_res_path}}{{char.weekly}}')"></div>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+  {{/each}}
+</div>
+{{/if}}
+{{/block}}

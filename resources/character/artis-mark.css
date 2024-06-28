@@ -1,0 +1,106 @@
+body,
+.container {
+  width: 660px;
+}
+.main-pic {
+  width: 1540px;
+  height: 550px;
+  margin-left: -599.5px;
+}
+.container > .cont {
+  margin-left: 15px;
+}
+.basic .detail .cont {
+  margin: 10px 0;
+}
+.basic:after {
+  display: none;
+}
+.arti-stat {
+  width: 100%;
+  margin-right: 0;
+}
+.mark-table {
+  text-align: center;
+  font-size: 14px;
+  line-height: 27px;
+}
+.mark-table .thead > div {
+  height: 35px;
+  line-height: 35px;
+  vertical-align: middle;
+}
+.mark-table .thead > div.th {
+  width: 20%;
+}
+.mark-table .thead > div .text {
+  line-height: 23px;
+  display: block;
+}
+.mark-table .thead > div .desc {
+  font-size: 12px;
+  display: block;
+  line-height: 18px;
+}
+.mark-table .th {
+  min-width: initial;
+  padding-right: 0;
+  text-align: center;
+}
+.mark-table .td {
+  font-weight: normal;
+}
+.cont-msg li {
+  font-size: 12px;
+}
+.arti-icon {
+  width: 30px;
+}
+.artis {
+  margin-top: -280px;
+  width: 650px;
+  position: relative;
+  z-index: 2;
+}
+.artis .no-bg {
+  opacity: 0;
+}
+.artis ul.detail.attr-detail {
+  border-radius: 0;
+}
+.artis ul.detail li span {
+  width: initial;
+}
+.artis ul.detail li span.val {
+  padding-right: 8px;
+}
+.artis ul.detail li span.mark {
+  text-align: right;
+  padding-left: 5px;
+  padding-right: 6px;
+  background: rgba(0, 0, 0, 0.4);
+}
+.artis ul.detail li span.mark:after {
+  content: "分";
+  font-size: 12px;
+  display: inline-block;
+  transform: scale(0.8);
+  margin-right: -1px;
+}
+.artis .mark-calc {
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 0 0 5px 5px;
+}
+.artis .mark-calc li.result {
+  background: rgba(0, 0, 0, 0.7);
+  height: 30px;
+  line-height: 30px;
+}
+.artis .mark-calc li.result .mark {
+  font-size: 18px;
+}
+.artis .item {
+  height: inherit;
+  width: 205px;
+}
+/*# sourceMappingURL=artis-mark.css.map */

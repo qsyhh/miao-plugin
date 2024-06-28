@@ -1,0 +1,112 @@
+<script src="../../../../../Yunzai-Botconfig/miao-diy/app/main.js"></script>{{extend defaultLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" type="text/css" href="{{_res_path}}/stat/common.css?v=1.0"/>
+<link rel="stylesheet" type="text/css" href="{{_res_path}}/common/tpl.css?v=1.0"/>
+<link rel="stylesheet" type="text/css" href="{{_res_path}}/stat/abyss-summary.css?v=1.0"/>
+{{/block}}
+
+{{block 'main'}}
+{{ set upDown = {up:'上半', down:'下半'} }}
+<div class="head-box type">
+  <div class="title">#上传深渊<span>{{abyss.schedule}} · {{abyss.total}}次战斗</span></div>
+  <div class="uid">UID:{{uid}}</div>
+</div>
+<div class="info_box">
+
+  <div class="abyss-stat-cont">
+
+    <div class="abyss-stat">
+      {{each stat ds}}
+      {{set avatar = avatars[ds.id]}}
+      <div class="cont">
+        {{if avatar}}
+        <div class="stat-title">
+          <span>{{ds.title}}</span>
+          <strong>{{ds.value}}</strong>
+        </div>
+        <div class="avatar-banner avatar-{{avatar.name}}"
+             style="background-image:url('{{_res_path}}{{avatar.gacha}}')"></div>
+
+        {{if ds.msg}}
+        <div class="stat-msg">
+          {{each ds.msg msg}}
+          {{if msg.txt}}
+          <div class="msg">{{msg.txt}}</div>
+          {{else}}
+          <div class="msg">{{msg.title}}<strong>{{msg.value}}%</strong>的{{msg.name}}</div>
+          {{/if}}
+          {{/each}}
+        </div>
+        {{/if}}
+        {{/if}}
+      </div>
+      {{/each}}
+    </div>
+
+  </div>
+  {{set cardTypes={1:['wide wide2'],2:['wide','wide'],3:['wide','mini','mini'],4:['mini','mini','mini','mini']} }}
+  {{each abyss?.floors floor}}
+  <div class="cont">
+
+    <div class="cont-body">
+      <div class="abyss-title">
+        <strong>第{{floor.index}}层</strong>
+        <span class="abyss-star">{{floor.star}}/9</span>
+      </div>
+      <div class="abyss-floor-team">
+        <div class="abyss-team">
+          {{set ds=floor?.display?.up?.avatars||[] }}
+          {{each ds id idx}}
+          <% include(_tpl_path+'/avatar-card.html', [avatars[id],{_res_path, cardType:cardTypes[ds.length][idx]}]) %>
+          {{/each}}
+        </div>
+        <div class="line"></div>
+        <div class="abyss-team">
+          {{set ds=floor?.display?.down?.avatars||[] }}
+          {{each ds id idx}}
+          <% include(_tpl_path+'/avatar-card.html', [avatars[id],{_res_path, cardType:cardTypes[ds.length][idx]}]) %>
+          {{/each}}
+        </div>
+      </div>
+      <div class="abyss-detail">
+        {{each floor.levels level idx}}
+        <div class="abyss-level">
+          <div class="info">
+            <div class="title">
+              第{{idx}}间
+            </div>
+            <span class="star star{{level.star}}"></span>
+            <div class="time">{{level?.up?.time}}</div>
+          </div>
+          <div class="avatars">
+            {{each upDown v k}}
+            <div class="avatar-list {{k}}">
+              {{each level[k]?.avatars||[] id}}
+              {{set avatar = avatars[id] || {} }}
+              <div class="avatar-icon item-icon star{{avatar.star==4?4:5}}">
+                <span class="img" style="background-image:url('{{_res_path}}{{avatar.face}}')"></span>
+              </div>
+              {{/each}}
+            </div>
+            {{/each}}
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+  {{/each}}
+
+  <div class="cont abyss-notice">
+    <div class="cont-body">
+      <ul class="cont-msg">
+        <li><strong>#上传深渊</strong>会上传你的角色列表及当期深渊挑战数据，<strong>不会上传其他信息</strong>，感谢支持，喵~</li>
+        <li>统计服务由DGP-Studio<strong>胡桃API</strong>提供，上传的数据将会用于排名以及<strong>#深渊使用率</strong><strong>#角色持有率</strong>等统计</li>
+        <li>深渊排行为本期深渊排行，{{if totalCount}}本期已提交用户数：<strong>{{totalCount}}</strong>，{{/if}}更新时间{{abyss.time}}。</li>
+        <li>角色装备与圣遗物为当前最新状态；排名会随时间而更新，数据排名仅供娱乐~</li>
+      </ul>
+    </div>
+  </div>
+</div>
+{{/block}}

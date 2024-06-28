@@ -1,0 +1,131 @@
+{{extend elemLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" type="text/css" href="{{_res_path}}/wiki/character-talent.css"/>
+{{/block}}
+
+{{block 'main'}}
+{{if game === 'gs'}}
+<div class="head-box" style="background-image:url('{{_res_path}}{{imgs.card}}')">
+{{else}}
+<div class="head-box" style="background-image:url('{{_res_path}}{{imgs.card}}');height:433px;">
+{{/if}}
+  <div class="head">
+    <img src="{{_res_path}}{{imgs.qFace||imgs.face}}"/>
+  </div>
+  <div class="head-detail">
+    <div class="name">
+      {{if game === 'gs'}}
+        {{title}}·{{name}}
+      {{else}}
+        {{name}}
+      {{/if}}
+    </div>
+    <div class="desc">
+      {{if game === 'gs'}}
+        {{@desc}}
+      {{else}}
+        {{detail.desc}}
+      {{/if}}
+    </div>
+  </div>
+  {{ if line[0]?.num !== 'NaN'}}
+  <div class="data-box">
+    {{if game === 'gs'}}
+    <div class="tab-label">90级基础数据</div>
+    <div class="data-line">
+      {{each line item}}
+      <div class="data_line_item">
+        <div class="num">{{item.num}}</div>
+        <div class="label">{{item.label}}</div>
+      </div>
+      {{/each}}
+      </div>
+      {{else}}
+      <div class="tab-label">80级满行迹基础数据</div>
+      <div class="data-line">
+        {{each line.ret item}}
+        <div class="data_line_item">
+          <div class="num">{{item.num}}</div>
+          <div class="label">{{item.label}}</div>
+        </div>
+        {{/each}}
+      </div>
+      <hr>
+      <div class="data-line">
+        <div class="data_line_item">
+          <div class="num">{{detail.sp}}</div>
+          <div class="label">能量上限</div>
+        </div>
+        {{each line.growret item}}
+        <div class="data_line_item">
+          <div class="num">{{item.num}}</div>
+          <div class="label">{{item.label}}</div>
+        </div>
+        {{/each}}
+      </div>
+    {{/if}}
+  </div>
+  {{else}}
+  <div class="data-box">
+    <div class="tab-label">90级基础数据</div>
+    <div class="data-line">
+      暂无详细数据
+    </div>
+  </div>
+  {{/if}}
+</div>
+
+
+{{if mode == "talent"}}
+{{set talentKey = game === 'gs' ? ['a','e','q']:['a','e','q','t'] }}
+{{each talentKey type}}
+{{if detail.talent[type]}}
+<div class="talent-box elem-bg">
+  <div class="talent-detail cont {{detail.talent[type+2]?'talent-merge':''}}">
+    {{set minLv = game === 'gs' ? 6 : (type==='a' || type ==='a2'? 1 : 6) }}
+    {{set maxLv = game === 'gs' ? 13 : (type==='a' || type ==='a2' ? 7 : 12 )}}
+    <% include(_tpl_path+'/talent-detail.html', [detail.talent[type], {_res_path,lvs,type,icon:imgs[type],minLv,maxLv,game}]) %>
+
+    {{if detail.talent[type+2]}}
+      {{set minLv = game === 'gs' ? 6 : (type==='a' || type ==='a2'? 1 : 6) }}
+      {{set maxLv = game === 'gs' ? 13 : (type==='a' || type ==='a2' ? 7 : 12 )}}
+      <% include(_tpl_path+'/talent-detail.html', [detail.talent[type+2], {_res_path,lvs,type,icon:imgs[type+2],minLv,maxLv,game}]) %>
+    {{/if}}
+  </div>
+
+
+
+
+</div>
+{{/if}}
+
+{{/each}}
+
+<div class="talent-box elem-bg">
+  <div class="talent-detail passive-talent">
+    {{if game === 'gs'}}
+      {{each detail.passive pass idx}}
+        <% include(_tpl_path+'/talent-detail.html', [pass, {_res_path,icon:imgs['passive'+idx],game}]) %>
+      {{/each}}
+    {{else}}
+      {{each detail.treeData treeData idx}}
+        {{if treeData.type === 'skill'}}
+          <% include(_tpl_path+'/talent-detail.html', [treeData, {_res_path,icon:imgs['tree'+treeData.idx],game}]) %>
+        {{/if}}
+      {{/each}}
+    {{/if}}
+  </div>
+</div>
+{{/if}}
+
+{{if mode == "cons"}}
+<div class="talent-box elem-bg">
+  <div class="talent-detail">
+    {{each detail.cons con idx}}
+    <% include(_tpl_path+'/talent-detail.html', [con, {_res_path,lvs,type,icon:imgs['cons'+idx],game}]) %>
+    {{/each}}
+  </div>
+</div>
+{{/if}}
+{{/block}}
