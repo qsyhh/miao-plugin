@@ -1,6 +1,6 @@
 # 说明
 
-此仓库为个人fork版本(我自己都不用)，建议使用原版[miao-plugin](https://gitee.com/yoimiya-kokomi/miao-plugin)
+此仓库为个人fork版本，建议使用原版[miao-plugin](https://gitee.com/yoimiya-kokomi/miao-plugin)
 
 此仓库安装命令
 
@@ -25,7 +25,7 @@ cd plugins/miao-plugin
 git remote add fork https://gitee.com/qsyhh/miao-plugin.git
 ```
 
-> 新增源无法使用指令直接更新此仓库，需前往插件目录执行`git pull fork`
+> 新增源无法使用指令直接更新此仓库，需前往插件目录执行`git pull fork master`
 
 </details>
 
