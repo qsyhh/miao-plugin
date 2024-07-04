@@ -6,6 +6,7 @@
 import { App } from "#miao"
 import { AbyssTeam } from "./stat/AbyssTeam.js"
 import { AbyssSummary } from "./stat/AbyssSummary.js"
+import { RoleCombatSummary } from "./stat/RoleCombatSummary.js"
 import { ConsStat, AbyssPct } from "./stat/AbyssStat.js"
 
 let app = App.init({
@@ -33,6 +34,11 @@ app.reg({
     rule: /^#*(喵喵|上传|本期)*(深渊|深境|深境螺旋)[ |0-9]*(数据)?$/,
     fn: AbyssSummary,
     desc: "上传深渊"
+  },
+  RoleCombatSummary: {
+    rule: /^#*(喵喵|上传|本期)*(幻想|剧诗|幻想真境剧诗)[ |0-9]*(数据)?$/,
+    fn: RoleCombatSummary,
+    desc: "上传幻想真境剧诗"
   }
 })
 

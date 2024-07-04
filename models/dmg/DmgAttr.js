@@ -130,6 +130,9 @@ let DmgAttr = {
     }
 
     lodash.forEach(buffs, (buff) => {
+      meta.mastery = meta.mastery || buff.mastery // 先反应
+    })
+    lodash.forEach(buffs, (buff) => {
       let ds = DmgAttr.getDs(attr, meta, params)
 
       ds.currentTalent = talent

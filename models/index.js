@@ -5,6 +5,7 @@ import Character from "./Character.js"
 import Artifact from "./Artifact.js"
 import ArtifactSet from "./ArtifactSet.js"
 import Abyss from "./Abyss.js"
+import Role from "./Role.js"
 import Player from "./Player.js"
 import Avatar from "./Avatar.js"
 import ProfileDmg from "./ProfileDmg.js"
@@ -31,6 +32,7 @@ for (let game of [ "gs", "sr" ]) {
 export {
   Base,
   Abyss,
+  Role,
   Button,
   Character,
   Artifact,
