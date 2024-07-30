@@ -42,7 +42,10 @@ export default function(staticIdx, keyIdx) {
           }
         }
       }
-
+    ],
+    "芳华待灼": [
+      staticIdx(1, "atkPct"),
+      keyIdx("有两名及以上我方角色拥有任意相同命途，暴击伤害提高[cdmg]%", "cdmg", 2)
     ]
   }
 }

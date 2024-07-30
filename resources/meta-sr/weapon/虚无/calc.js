@@ -88,6 +88,17 @@ export default function(staticIdx, keyIdx) {
     无边曼舞: [
       staticIdx(1, "cpct"),
       keyIdx("对处于防御降低或减速状态下的敌人暴击伤害提高[cdmg]%", "cdmg", 2)
+    ],
+    那无数个春天: [
+      staticIdx(1, "effPct"),
+      (tables) => {
+        return {
+          title: "【穷寇】状态下，敌方目标受到的伤害提高[enemydmg]%",
+          data: {
+            enemydmg: tables[2] + tables[3]
+          }
+        }
+      }
     ]
   }
 }
