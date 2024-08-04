@@ -62,7 +62,6 @@ const CharWiki = {
     if (mode === "wiki") {
       if (char.source === "amber") return await e.reply("暂不支持该角色图鉴展示")
 
-      if (char.isSr) return await e.reply("暂不支持星铁角色")
       return await CharWiki.render({ e, char })
     } else if (mode === "material") {
       return CharMaterial.render({ e, char })
@@ -72,20 +71,21 @@ const CharWiki = {
 
   async render({ e, char }) {
     let data = char.getData()
-    lodash.extend(data, char.getData("weaponTypeName,elemName"))
-    // 命座持有
-    let holding = await CharWikiData.getHolding(char.id)
-    let usage = await CharWikiData.getUsage(char.id)
-    return await Common.render("wiki/character-wiki", {
+    if (char.isGs) lodash.extend(data, char.getData("weaponTypeName,elemName"))
+
+    let datas = {
+      game: char.game,
       data,
       attr: char.getAttrList(),
       detail: char.getDetail(),
       imgs: char.getImgs(),
-      holding,
-      usage,
+      // 命座持有
+      holding: await CharWikiData.getHolding(char.id) || {},
+      usage: await CharWikiData.getUsage(char.id) || {},
       materials: char.getMaterials(),
       elem: char.elem
-    }, { e, scale: 1.4 })
+    }
+    return await Common.render("wiki/character-wiki", datas, { e, scale: 1.4 })
   }
 }
 

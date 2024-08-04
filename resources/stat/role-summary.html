@@ -23,9 +23,9 @@
           {{each role.stat.get_medal_round_list star}}
           <div class="stat-star-container">
             {{if star == 1}}
-            <div class="stat-star" style="background-image:url({{_res_path}}/stat/imgs/medal.png)"></div>
+            <div class="stat-star" style="background-image:url('{{_res_path}}/stat/imgs/medal.png')"></div>
             {{else}}
-            <div class="stat-star" style="background-image:url({{_res_path}}/stat/imgs/nomedal.png)"></div>
+            <div class="stat-star" style="background-image:url('{{_res_path}}/stat/imgs/nomedal.png')"></div>
             {{/if}}
           </div>
           {{/each}}
@@ -64,9 +64,9 @@
     <div class="cont-body">
       <div class="role-title">
         {{if round.is_get_medal}}
-        <div class="role-star" style="background-image:url({{_res_path}}/stat/imgs/medal.png)"></div>
+        <div class="role-star" style="background-image:url('{{_res_path}}/stat/imgs/medal.png')"></div>
         {{else}}
-        <div class="role-star" style="background-image:url({{_res_path}}/stat/imgs/nomedal.png)"></div>
+        <div class="role-star" style="background-image:url('{{_res_path}}/stat/imgs/nomedal.png')"></div>
         {{/if}}
         <strong>第 {{round_index}} 幕</strong>
         <span>{{round?.finish_time}}</span>
@@ -86,7 +86,7 @@
             <div class="role-choice-cards-content">
               {{each buffs buff}}
                 <div class="role-content-container">
-                  <div class="role-content-icon" style="background-image:url({{buff.icon}})"></div>
+                  <div class="role-content-icon" style="background-image:url('{{buff.icon}}')"></div>
                 </div>
               {{/each}}
             </div>
@@ -97,7 +97,7 @@
             <div class="role-choice-cards-content">
               {{each choice_cards choice_card}}
                 <div class="role-content-container">
-                  <div class="role-content-icon" style="background-image:url({{choice_card.icon}})"></div>
+                  <div class="role-content-icon" style="background-image:url('{{choice_card.icon}}')"></div>
                 </div>
               {{/each}}
             </div>

@@ -189,8 +189,7 @@ class Character extends Base {
 
   // 获取attr列表
   getAttrList() {
-    let { baseAttr, growAttr } = this
-    return CharMeta.getAttrList(baseAttr, growAttr, this.elemName)
+    return CharMeta.getAttrList(this)
   }
 
   // 获取素材

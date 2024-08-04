@@ -17,18 +17,26 @@ export const charPosIdx = {
 export const baseAttrName = {
   hp: "基础生命",
   atk: "基础攻击",
-  def: "基础防御"
+  def: "基础防御",
+  speed: "基础速度"
 }
 export const growAttrName = {
   atkPct: "大攻击",
+  atk: "大攻击",
   hpPct: "大生命",
+  hp: "大生命",
   defPct: "大防御",
+  def: "大防御",
+  speed: "速度",
   cpct: "暴击",
   cdmg: "爆伤",
   recharge: "充能",
   mastery: "精通",
   heal: "治疗",
-  phy: "物伤"
+  phy: "物伤",
+  stance: "击破特攻",
+  effPct: "效果命中",
+  effDef: "效果抵抗"
 }
 
 const mKeys = [
@@ -107,21 +115,42 @@ const lvKeys = [
 ]
 
 const CharMeta = {
-  getAttrList(base, grow, elem = "") {
-    let ret = []
-    lodash.forEach(base, (v, k) => {
-      ret.push({
-        title: baseAttrName[k],
-        value: Format.comma(v, 1)
+  getAttrList(data) {
+    let attr = []
+    let growret = []
+    lodash.forEach(data.baseAttr, (v, k) => {
+      if (baseAttrName[k]) {
+        attr.push({
+          title: baseAttrName[k],
+          value: Format.comma(v, 1)
+        })
+      }
+    })
+    if (data.isGs) {
+      attr.push({
+        title: "成长·" + (data.growAttr.key === "dmg" ? `${data.elemName}伤` : growAttrName[data.growAttr.key]),
+        value: data.growAttr.value.toString().length > 10 ? Format.comma(data.growAttr.value, 1) : data.growAttr.value
       })
-    })
-    ret.push({
-      title: "成长·" + (grow.key === "dmg" ? `${elem}伤` : growAttrName[grow.key]),
-      value: grow.value.toString().length > 10 ? Format.comma(grow.value, 1) : grow.value
-    })
-    return ret
+    } else {
+      let obj = {}
+      for (let key of Object.keys(data.meta?._detail?.tree)) {
+        let i = data.meta?._detail?.tree[key]
+        obj[i.key] = obj[i.key] ? obj[i.key] + i.value : i.value
+      }
+      for (let i in obj) {
+        growret.push({
+          title: growAttrName[i] || `${data.elemName}伤`,
+          value: Format.comma(obj[i], 1)
+        })
+      }
+    }
+    return {
+      attr,
+      growret
+    }
   },
   getMaterials(char, type = "all") {
+    if (char.game == "sr") return ""
     let ds = char.materials
     let ret = []
     lodash.forEach(mKeys, (cfg) => {
