@@ -19,7 +19,7 @@ lodash.forEach(data, (ds, key) => {
     ret[item.name] = tmp
   })
 })
-logger.info(ret)
+
 let meta = Meta.create("sr", "material")
 meta.addData(ret)
 meta.addAbbr(abbr2)
