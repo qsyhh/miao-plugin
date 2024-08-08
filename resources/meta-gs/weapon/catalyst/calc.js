@@ -170,43 +170,49 @@ export default function(step, staticStep) {
     金流监督: [
       staticStep("atkPct", 16), {
         title: "满层下，普通攻击造成的伤害提升[aDmg]%，重击造成的伤害提升[a2Dmg]%",
+        buffCount: 3,
         refine: {
-          aDmg: step(16 * 3),
-          a2Dmg: step(14 * 3)
+          aDmg: step(16),
+          a2Dmg: step(14)
         }
       }
     ],
-    遗祀玉珑: [
-      {
-        title: "处于队伍后台超过5秒后，生命值上限提升[hpPct]%，元素精通提升[mastery]点",
-        refine: {
-          hpPct: step(32),
-          mastery: step(40)
-        }
+    遗祀玉珑: {
+      title: "处于队伍后台超过5秒后，生命值上限提升[hpPct]%，元素精通提升[mastery]点",
+      refine: {
+        hpPct: step(32),
+        mastery: step(40)
       }
-    ],
+    },
     万世流涌大典: [
       staticStep("hpPct", 16), {
         title: "满层下，重击造成的伤害提升[a2Dmg]%",
+        buffCount: 3,
         refine: {
-          a2Dmg: [ 14 * 3, 18 * 3, 22 * 3, 26 * 3, 30 * 3 ]
+          a2Dmg: step(14, 4)
         }
       }
     ],
-    无垠蔚蓝之歌: [
-      {
-        title: "满层下，普通攻击造成的伤害提升[aDmg]%，重击造成的伤害提升[a2Dmg]%",
-        data: {
-          aDmg: step(8 * 3),
-          a2Dmg: step(6 * 3)
-        }
+    无垠蔚蓝之歌: {
+      title: "满层下，普通攻击造成的伤害提升[aDmg]%，重击造成的伤害提升[a2Dmg]%",
+      buffCount: 3,
+      refine: {
+        aDmg: step(8),
+        a2Dmg: step(6)
       }
-    ],
-    鹤鸣余音: [
-      {
-        title: "下落攻击命中敌人后，下落攻击造成的伤害提高[a3Dmg]%",
+    },
+    鹤鸣余音: {
+      title: "下落攻击命中敌人后，下落攻击造成的伤害提高[a3Dmg]%",
+      refine: {
+        a3Dmg: step(28, 13)
+      }
+    },
+    冲浪时光: [
+      staticStep("hpPct", 20), {
+        title: "满层时，普通攻击造成的伤害提升[aDmg]%",
+        buffCount: 4,
         refine: {
-          a3Dmg: step(28, 13)
+          aDmg: step(12)
         }
       }
     ]

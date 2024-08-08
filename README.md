@@ -1,6 +1,6 @@
 # 说明
 
-此仓库为个人fork版本，建议使用原版[miao-plugin](https://gitee.com/yoimiya-kokomi/miao-plugin)
+此仓库为个人fork版本 ~~建议使用原版[miao-plugin](https://gitee.com/yoimiya-kokomi/miao-plugin)~~
 
 此仓库安装命令
 
