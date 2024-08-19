@@ -1,9 +1,11 @@
 /* eslint-disable no-invalid-this */
 /* eslint-disable import/no-unresolved */
-import lodash, { stubFalse } from "lodash"
+import lodash from "lodash"
 import ProfileDetail from "./ProfileDetail.js"
 import { Data, Common, Format, Cfg } from "#miao"
 import { Button, Character, ProfileRank, ProfileDmg, Player } from "#miao.models"
+
+const { stubFalse } = lodash
 
 export async function groupRank(e) {
   const groupRank = Common.cfg("groupRank")
