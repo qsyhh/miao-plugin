@@ -9,7 +9,7 @@ import { miaoPath } from "#miao.path"
 * 获取面板查询的 目标uid
 * */
 const _getTargetUid = async function(e) {
-  let uidReg = /([1-9]|18)[0-9]{8}/
+  let uidReg = /(18|[1-9])[0-9]{8}/
 
   if (e.uid && uidReg.test(e.uid)) return e.uid
 
@@ -29,7 +29,7 @@ const _getTargetUid = async function(e) {
       return false
     }
   } catch (err) {
-    console.log(err)
+    logger.error(err)
   }
   return uid || false
 }
@@ -52,9 +52,7 @@ export async function getProfileRefresh(e, avatar) {
     profile = player.getProfile(char.id)
   }
   if (!profile || !profile.hasData) {
-    if (!e._isReplyed) {
-      e.reply([ `请确认${char.name}已展示在【游戏内】的角色展柜中，并打开了“显示角色详情”。然后请使用 #更新面板\n命令来获取${char.name}的面板详情`, new Button(e).profileList(player.uid), new Button(e).profile(char, player.uid) ])
-    }
+    if (!e._isReplyed) e.reply([ `请确认${char.name}已展示在【游戏内】的角色展柜中，并打开了“显示角色详情”。然后请使用 #更新面板\n命令来获取${char.name}的面板详情`, new Button(e).profileList(player.uid), new Button(e).profile(char, player.uid) ])
     return false
   }
   return profile

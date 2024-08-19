@@ -52,7 +52,7 @@ let Gacha = {
     if (!uid || !qq) return false
 
     let gacha = GachaData.analyse(qq, uid, type, game)
-    if (!gacha) return await e.reply([ `UID:${uid} 本地暂无抽卡信息，请通过【#抽卡帮助】获得绑定帮助...`, new Button(e).gacha() ])
+    if (!gacha) return e.reply([ `UID:${uid} 本地暂无抽卡信息，请通过【#抽卡帮助】获得绑定帮助...`, new Button(e).gacha() ])
 
     if (type === 302 || type === 12) type = "weapon"
     this.reply([
@@ -87,7 +87,7 @@ let Gacha = {
     let qq = e.user.qq
     if (!uid || !qq) return false
     let gacha = GachaData.stat(qq, uid, type, game)
-    if (!gacha) return await e.reply([ `UID:${uid} 本地暂无抽卡信息，请通过【#抽卡帮助】获得绑定帮助...`, new Button(e).gacha() ])
+    if (!gacha) return e.reply([ `UID:${uid} 本地暂无抽卡信息，请通过【#抽卡帮助】获得绑定帮助...`, new Button(e).gacha() ])
     e.reply([
       await Common.render("gacha/gacha-stat", {
         save_id: uid,

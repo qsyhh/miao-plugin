@@ -1,6 +1,6 @@
 /* eslint-disable no-invalid-this */
 /* eslint-disable import/no-unresolved */
-import lodash from "lodash"
+import lodash, { stubFalse } from "lodash"
 import ProfileDetail from "./ProfileDetail.js"
 import { Data, Common, Format, Cfg } from "#miao"
 import { Button, Character, ProfileRank, ProfileDmg, Player } from "#miao.models"
@@ -17,9 +17,8 @@ export async function groupRank(e) {
     type = "super"
   }
   let groupId = e.group_id
-  if (!type || (!groupId && type !== "super")) {
-    return false
-  }
+  if (!type || (!groupId && type !== "super")) return false
+
   let mode = /(分|圣遗物|遗器|评分|ACE)/.test(msg) ? "mark" : "dmg"
   mode = /(词条)/.test(msg) ? "valid" : mode
   mode = /(双爆|双暴)/.test(msg) ? "crit" : mode
@@ -28,9 +27,7 @@ export async function groupRank(e) {
   let char = Character.get(name, game)
   if (!char) {
     // 名字不存在或不为列表模式，则返回false
-    if (name || type !== "list") {
-      return false
-    }
+    if (name || type !== "list") return stubFalse
   } else {
     e.isSr = char.game === "sr"
   }
@@ -39,10 +36,7 @@ export async function groupRank(e) {
     let player = Player.create(100000000, game)
     if (player.getProfile(char.id)) {
       e.uid = 100000000
-      if (!char.isRelease && Cfg.get("notReleasedData") === false) {
-        e.reply("未实装角色面板已禁用...")
-        return true
-      }
+      if (!char.isRelease && Cfg.get("notReleasedData") === false) return e.reply("未实装角色面板已禁用...")
       return await ProfileDetail.render(e, char)
     } else {
       return true
@@ -50,14 +44,9 @@ export async function groupRank(e) {
   }
   // 正常群排名
   let groupCfg = await ProfileRank.getGroupCfg(groupId)
-  if (!groupRank) {
-    e.reply("群面板排名功能已禁用，Bot主人可通过【#喵喵设置】启用...")
-    return true
-  }
-  if (groupCfg.status === 1) {
-    e.reply("本群已关闭群排名，群管理员或Bot主人可通过【#启用排名】启用...")
-    return true
-  }
+  if (!groupRank) return e.reply("群面板排名功能已禁用，Bot主人可通过【#喵喵设置】启用...")
+  if (groupCfg.status === 1) return e.reply("本群已关闭群排名，群管理员或Bot主人可通过【#启用排名】启用...")
+
   if (type === "detail") {
     let uid = await ProfileRank.getGroupMaxUid(groupId, char.id, mode)
     if (uid) {
@@ -205,7 +194,7 @@ async function renderCharRankList({ e, uids, char, mode, groupId }) {
             }
           }
         } catch (e) {
-          // console.log(e)
+          // logger.error(e)
         }
       }
 

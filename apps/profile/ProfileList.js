@@ -12,7 +12,7 @@ const ProfileList = {
    */
   async refresh(e) {
     let uid = await getTargetUid(e)
-    if (!uid) return await e._replyNeedUid || await e.reply([ "请先发送【#绑定+你的UID】来绑定查询目标\n星铁请使用【#星铁绑定+UID】", new Button(e).bindUid() ])
+    if (!uid) return e._replyNeedUid || e.reply([ "请先发送【#绑定+你的UID】来绑定查询目标\n星铁请使用【#星铁绑定+UID】", new Button(e).bindUid() ])
 
     // 数据更新
     let player = Player.create(e)
@@ -46,7 +46,7 @@ const ProfileList = {
 
   async render(e) {
     let uid = await getTargetUid(e)
-    if (!uid) return await e._replyNeedUid || await e.reply([ "请先发送【#绑定+你的UID】来绑定查询目标\n星铁请使用【#星铁绑定+UID】", new Button(e).bindUid() ])
+    if (!uid) return e._replyNeedUid || e.reply([ "请先发送【#绑定+你的UID】来绑定查询目标\n星铁请使用【#星铁绑定+UID】", new Button(e).bindUid() ])
 
     let isSelfUid = false
     if (e.runtime && e.runtime?.user) {
@@ -76,7 +76,7 @@ const ProfileList = {
     let player = Player.create(e)
     let servName = Player.getProfileServName(uid, player.game)
     if (!player.hasProfile) await player.refresh({ profile: true })
-    if (!player.hasProfile) return await e.reply([ `本地暂无uid${uid}[${player.game}]的面板数据...`, new Button(e).profileList(uid) ])
+    if (!player.hasProfile) return e.reply([ `本地暂无uid${uid}[${player.game}]的面板数据...`, new Button(e).profileList(uid) ])
 
     let profiles = player.getProfiles()
 
@@ -142,17 +142,17 @@ const ProfileList = {
     let targetUid = ret[3]
 
     let user = e?.runtime?.user || {}
-    if (!user.hasCk && !e.isMaster) return await e.reply("为确保数据安全，目前仅允许绑定CK用户删除自己UID的面板数据，请联系Bot主人删除...")
+    if (!user.hasCk && !e.isMaster) return e.reply("为确保数据安全，目前仅允许绑定CK用户删除自己UID的面板数据，请联系Bot主人删除...")
 
-    if (!targetUid) return await e.reply([ `你确认要删除面板数据吗？ 请回复 #删除面板${uid} 以删除面板数据`, new Button(e).profileList(uid) ])
+    if (!targetUid) return e.reply([ `你确认要删除面板数据吗？ 请回复 #删除面板${uid} 以删除面板数据`, new Button(e).profileList(uid) ])
 
     const game = /星铁/.test(e.msg) ? "sr" : "gs"
     let uidList = user?.getCkUidList(game)
     let ckUids = (lodash.map(uidList, (ds) => ds.uid) || []).join(",").split(",")
-    if (!ckUids.includes(targetUid) && !e.isMaster) return await e.reply([ `仅允许删除自己的UID数据[${ckUids.join(",")}]`, new Button(e).profileList(uid) ])
+    if (!ckUids.includes(targetUid) && !e.isMaster) return e.reply([ `仅允许删除自己的UID数据[${ckUids.join(",")}]`, new Button(e).profileList(uid) ])
 
     Player.delByUid(targetUid, game)
-    return await e.reply([ `UID${targetUid}的本地数据已删除，排名数据已清除...`, new Button(e).profileList(uid) ])
+    return e.reply([ `UID${targetUid}的本地数据已删除，排名数据已清除...`, new Button(e).profileList(uid) ])
   },
 
   async reload(e) {

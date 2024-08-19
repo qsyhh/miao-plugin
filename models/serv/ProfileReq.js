@@ -93,7 +93,7 @@ export default class ProfileReq extends Base {
         data = JSON.parse(data)
       }
     } catch (e) {
-      console.log("面板请求错误", e)
+      logger.error("面板请求错误", e)
       self._isReq = false
       data = {}
     }

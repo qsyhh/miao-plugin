@@ -58,7 +58,7 @@ export async function uploadCharacterImg(e) {
           try {
             resid = val.data.match(/m_resid="(\d|\w|\/|\+)*"/)[0].replace(/m_resid=|"/g, "")
           } catch (err) {
-            console.log("Miao合并上传：转换id获取")
+            logger.mark("Miao合并上传：转换id获取")
             resid = val.id
           }
           if (!resid) break
@@ -74,7 +74,7 @@ export async function uploadCharacterImg(e) {
       }
     }
   }
-  if (imageMessages.length <= 0) return await e.reply("消息中未找到图片，请将要发送的图片与消息一同发送或引用要添加的图像..")
+  if (imageMessages.length <= 0) return e.reply("消息中未找到图片，请将要发送的图片与消息一同发送或引用要添加的图像..")
   return await saveImages(e, name, imageMessages)
 }
 
@@ -92,8 +92,8 @@ async function saveImages(e, name, imageMessages) {
     if (!val.url || urlMap[val.url]) continue
     urlMap[val.url] = true
     const response = await fetch(val.url)
-    if (!response.ok) return await e.reply("图片下载失败。")
-    if (response.headers.get("size") > 1024 * 1024 * imgMaxSize) return await e.reply([ segment.at(e.user_id, senderName), "添加失败：图片太大了。" ])
+    if (!response.ok) return e.reply("图片下载失败。")
+    if (response.headers.get("size") > 1024 * 1024 * imgMaxSize) return e.reply([ segment.at(e.user_id, senderName), "添加失败：图片太大了。" ])
     let fileName = ""
     let fileType = "png"
     if (val.file) {
@@ -123,15 +123,15 @@ async function saveImages(e, name, imageMessages) {
     let newImgPath = `${path}/${md5}.${fileType}`
     if (fs.existsSync(newImgPath)) {
       fs.unlink(newImgPath, (err) => {
-        console.log("unlink", err)
+        logger.error("unlink", err)
       })
     }
     fs.rename(imgPath, newImgPath, () => {
     })
     imgCount++
-    Bot.logger.mark(`添加成功: ${newImgPath}`)
+    logger.mark(`添加成功: ${newImgPath}`)
   }
-  return await e.reply([ segment.at(e.user_id, senderName), `\n成功添加${imgCount}张${name}${isProfile ? "面板图" : "图片"}。` ])
+  return e.reply([ segment.at(e.user_id, senderName), `\n成功添加${imgCount}张${name}${isProfile ? "面板图" : "图片"}。` ])
 }
 
 async function isAllowedToUploadCharacterImage(e) {
@@ -169,28 +169,27 @@ export async function delProfileImg(e) {
   let pathSuffix = `profile/normal-character/${name}`
   let path = resPath + pathSuffix
   let num = e.msg.match(/\d+/)
-  if (!num) return await e.reply(`删除哪张捏？请输入数字序列号,可输入【#${name}面板图列表】查看序列号`)
+  if (!num) return e.reply(`删除哪张捏？请输入数字序列号,可输入【#${name}面板图列表】查看序列号`)
   try {
     let imgs = fs.readdirSync(`${path}`).filter((file) => {
       return /\.(png|webp)$/.test(file)
     })
     fs.unlinkSync(`${path}/${imgs[num - 1]}`)
-    await e.reply("删除成功")
+    return e.reply("删除成功")
   } catch (err) {
-    await e.reply("删除失败，请检查序列号是否正确")
+    return e.reply("删除失败，请检查序列号是否正确")
   }
-  return true
 }
 
 export async function profileImgList(e) {
   let msglist = []
   let char = Character.get(e.msg.replace(/#|面板图列表/g, ""))
   if (!char || !char.name) return false
-  if ([ 1, 0 ].includes(Cfg.get("originalPic") * 1)) return await e.reply("已禁止获取面板图列表")
+  if ([ 1, 0 ].includes(Cfg.get("originalPic") * 1)) return e.reply("已禁止获取面板图列表")
   let name = char.name
   let pathSuffix = `profile/normal-character/${name}`
   let path = resPath + pathSuffix
-  if (!fs.existsSync(path)) return await e.reply(`暂无${char.name}的角色面板图`)
+  if (!fs.existsSync(path)) return e.reply(`暂无${char.name}的角色面板图`)
   try {
     let imgs = fs.readdirSync(`${path}`).filter((file) => {
       return /\.(png|webp)$/.test(file)
@@ -200,7 +199,7 @@ export async function profileImgList(e) {
     })
     for (let i = 0; i < imgs.length; i++) {
       // 合并转发最多99？ 但是我感觉不会有这么多先不做处理
-      console.log(`${path}${imgs[i]}`)
+      logger.mark(`${path}${imgs[i]}`)
       msglist.push({
         message: [
           `${i + 1}.`,
@@ -217,10 +216,10 @@ export async function profileImgList(e) {
       msg = await Bot.makeForwardMsg(msglist)
     }
     let msgRsg = await e.reply(msg)
-    if (!msgRsg) e.reply("风控了，可私聊查看", true)
+    if (!msgRsg) return e.reply("风控了，可私聊查看", true)
+    return true
   } catch (err) {
     logger.error(err)
-    await e.reply(`暂无${char.name}的角色面板图~`)
+    return e.reply(`暂无${char.name}的角色面板图~`)
   }
-  return true
 }

@@ -97,7 +97,7 @@ export default class MysApi {
         e._isReplyed = true
         return e._original_reply(msg)
       } else {
-        // console.log('请求错误')
+        // logger.error('请求错误')
       }
     }
     e._reqCount++

@@ -49,8 +49,8 @@ let Data = {
       try {
         return JSON.parse(fs.readFileSync(`${root}/${file}`, "utf8"))
       } catch (e) {
-        console.error(`JSON数据错误: ${root}/${file}`)
-        console.log(e)
+        logger.error(`JSON数据错误: ${root}/${file}`)
+        logger.error(e)
       }
     }
     return {}
@@ -95,7 +95,7 @@ let Data = {
       let txt = await redis.get(key)
       if (txt) return JSON.parse(txt)
     } catch (e) {
-      console.log(e)
+      logger.error(e)
     }
     return {}
   },
@@ -109,7 +109,7 @@ let Data = {
       let txt = await redis.get(key)
       if (txt) return JSON.parse(txt)
     } catch (e) {
-      console.log(e)
+      logger.error(e)
     }
     return def
   },
@@ -127,8 +127,8 @@ let Data = {
         let data = await import(`file://${root}/${file}?t=${new Date() * 1}`)
         return data || {}
       } catch (e) {
-        console.error(`import module错误: ${root}/${file}`)
-        console.log(e)
+        logger.error(`import module错误: ${root}/${file}`)
+        logger.error(e)
       }
     }
     return {}

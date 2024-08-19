@@ -36,10 +36,10 @@ export async function getOriginalPicture(e) {
         }
       } catch (e) {}
       if (!e.isMaster) {
-        if (imgPath.type === "character" && [ 2, 0 ].includes(originalPic)) return await e.reply("已禁止获取角色原图...")
-        if (imgPath.type === "profile" && [ 1, 0 ].includes(originalPic)) return await e.reply("已禁止获取面板原图...")
+        if (imgPath.type === "character" && [ 2, 0 ].includes(originalPic)) return e.reply("已禁止获取角色原图...")
+        if (imgPath.type === "profile" && [ 1, 0 ].includes(originalPic)) return e.reply("已禁止获取面板原图...")
       }
-      if (imgPath && imgPath.img) await e.reply(segment.image(`file://${miaoPath}/resources/${decodeURIComponent(imgPath.img)}`), false, { recallMsg: 30 })
+      if (imgPath && imgPath.img) e.reply(segment.image(`file://${miaoPath}/resources/${decodeURIComponent(imgPath.img)}`), false, { recallMsg: 30 })
       return true
     }
     // 对at错图像的增加嘲讽...

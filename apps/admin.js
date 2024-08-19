@@ -107,10 +107,10 @@ async function updateRes(e) {
     if (isForce) command = "git  checkout . && git  pull"
 
     exec(command, { cwd: `${resPath}/miao-res-plus/` }, async function(error, stdout, stderr) {
-      if (/(Already up[ -]to[ -]date|已经是最新的)/.test(stdout)) return await e.reply("目前所有图片都已经是最新了~")
+      if (/(Already up[ -]to[ -]date|已经是最新的)/.test(stdout)) return e.reply("目前所有图片都已经是最新了~")
 
       let numRet = /(\d*) files changed,/.exec(stdout)
-      if (numRet && numRet[1]) return await e.reply(`报告主人，更新成功，此次更新了${numRet[1]}个图片~`)
+      if (numRet && numRet[1]) return e.reply(`报告主人，更新成功，此次更新了${numRet[1]}个图片~`)
       if (error) {
         e.reply("更新失败！\nError code: " + error.code + "\n" + error.stack + "\n 请稍后重试。")
       } else {
@@ -172,11 +172,11 @@ async function miaoApiInfo(e) {
   }
   let { diyCfg } = await Data.importCfg("profile")
   let { qq, token } = (diyCfg?.miaoApi || {})
-  if (!qq || !token) return await e.reply("未正确填写miaoApi token，请检查miao-plugin/config/profile.js文件")
-  if (token.length !== 32) return await e.reply("miaoApi token格式错误")
+  if (!qq || !token) return e.reply("未正确填写miaoApi token，请检查miao-plugin/config/profile.js文件")
+  if (token.length !== 32) return e.reply("miaoApi token格式错误")
 
   let req = await fetch(`http://miao.games/api/info?qq=${qq}&token=${token}`)
   let data = await req.json()
-  if (data.status !== 0) return await e.reply("token检查错误，请求失败")
+  if (data.status !== 0) return e.reply("token检查错误，请求失败")
   e.reply(data.msg)
 }

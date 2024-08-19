@@ -99,7 +99,7 @@ let Avatar = {
     let msg = e.original_msg || e.msg
     if (!msg || !/^#/.exec(msg)) return false
     if (!Common.cfg("avatarCard")) return false
-    let uidRet = /[0-9]{9}/.exec(msg)
+    let uidRet = /(18|[1-9])[0-9]{8}/g.exec(msg)
     if (uidRet) {
       e.uid = uidRet[0]
       msg = msg.replace(uidRet[0], "")

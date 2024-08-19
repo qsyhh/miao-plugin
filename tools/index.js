@@ -39,7 +39,7 @@ const Index = {
         await relpyPrivate(msg.qq, msg)
         await redis.set("miao:runtime-warning", "true", { EX: 3600 * 24 })
       } else {
-        console.log(msg)
+        logger.error(msg)
       }
     }
   },

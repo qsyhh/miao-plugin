@@ -11,7 +11,7 @@ let Trans = {
     let success = 0
     let count = 0
     if (uids.length === 0) return
-    console.log("miao-plugin: 准备将面板数据迁移至data/PlayerData/gs...")
+    logger.mark("miao-plugin: 准备将面板数据迁移至data/PlayerData/gs...")
     lodash.forEach(uids, (uid) => {
       uid = uid.replace(".json", "")
       let ret = Trans.trans(uid)
@@ -19,7 +19,7 @@ let Trans = {
       if (ret) success++
 
       if (count % 100 === 0) {
-        console.log(`迁移成功: ${success}...`)
+        logger.mark(`迁移成功: ${success}...`)
       }
 
       try {
@@ -29,10 +29,10 @@ let Trans = {
         fs.copyFileSync(src, dst)
         fs.unlinkSync(src)
       } catch (err) {
-        console.log(err)
+        logger.error(err)
       }
     })
-    console.log("Trans UID", success)
+    // logger.mark("Trans UID", success)
   },
   trans(uid) {
     let data = Trans.getData(uid)

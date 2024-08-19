@@ -83,7 +83,7 @@ const Serv = {
       return player._update?.length || 0
     } catch (err) {
       if (!e._isReplyed) await e.reply(`UID:${uid}更新面板失败，更新服务：${serv.name}`)
-      console.log(err)
+      logger.error(err)
       return false
     }
   }

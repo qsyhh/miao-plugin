@@ -16,7 +16,7 @@ export async function profileArtis(e) {
   let { uid, avatar } = e
   let profile = e._profile || await getProfileRefresh(e, avatar)
   if (!profile) return true
-  if (!profile.hasArtis()) return await e.reply("未能获得圣遗物详情，请重新获取面板信息后查看")
+  if (!profile.hasArtis()) return e.reply("未能获得圣遗物详情，请重新获取面板信息后查看")
   let char = profile.char
   let { game } = char
   let charCfg = ArtisMarkCfg.getCfg(profile)

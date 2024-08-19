@@ -73,4 +73,4 @@ app.get("/:page", function(req, res) {
 })
 
 app.listen(8000)
-console.log("页面服务已启动，触发消息图片后访问 http://localhost:8000/ 调试页面")
+logger.info("页面服务已启动，触发消息图片后访问 http://localhost:8000/ 调试页面")

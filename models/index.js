@@ -24,11 +24,12 @@ for (let game of [ "gs", "sr" ]) {
       try {
         await import(`file://${file}`)
       } catch (e) {
-        console.log(e)
+        logger.error(e)
       }
     }
   }
 }
+
 export {
   Base,
   Abyss,

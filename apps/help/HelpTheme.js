@@ -17,12 +17,9 @@ let HelpTheme = {
     } else if (theme === "all") {
       ret = names
     }
-    if (exclude && lodash.isArray(exclude)) {
-      ret = lodash.difference(ret, exclude)
-    }
-    if (ret.length === 0) {
-      ret = [ "default" ]
-    }
+    if (exclude && lodash.isArray(exclude)) ret = lodash.difference(ret, exclude)
+    if (ret.length === 0) ret = [ "default" ]
+
     let name = lodash.sample(ret)
     let resPath = "{{_res_path}}/help/theme/"
     return {

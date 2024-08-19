@@ -120,7 +120,7 @@ const Wife = {
           avatar = lodash.sample(avatarList)
           return await Avatar.renderAvatar(e, avatar, renderType)
         }
-        return await e.reply("在当前米游社公开展示的角色中未能找到适合展示的角色..")
+        return e.reply("在当前米游社公开展示的角色中未能找到适合展示的角色..")
       case "设置":
       case "选择":
       case "挑选":
@@ -141,17 +141,17 @@ const Wife = {
           if (addRet.length === 0) return e.reply(`在可选的${targetCfg.keyword[0]}列表中未能找到 ${actionParam} ~`)
         }
         await selfUser.setCfg(`wife.${targetCfg.key}`, addRet)
-        return await e.reply(`${targetCfg.keyword[0]}已经设置：${addRet.join("，")}`)
+        return e.reply(`${targetCfg.keyword[0]}已经设置：${addRet.join("，")}`)
       case "列表":
       case "是":
       case "是谁":
         // 查看当前选择老婆
-        if (!isSelf) return await e.reply("只能查看自己的哦~")
+        if (!isSelf) return e.reply("只能查看自己的哦~")
         wifeList = await selfUser.getCfg(`wife.${targetCfg.key}`, [])
         if (wifeList && wifeList.length > 0) {
-          await e.reply(`你的${targetCfg.keyword[0]}是：${wifeList.join("，")}`)
+          e.reply(`你的${targetCfg.keyword[0]}是：${wifeList.join("，")}`)
         } else {
-          await e.reply(`尚未设置，回复#${targetCfg.keyword[0]}设置+角色名 来设置，如果设置多位请用逗号间隔`)
+          e.reply(`尚未设置，回复#${targetCfg.keyword[0]}设置+角色名 来设置，如果设置多位请用逗号间隔`)
         }
         break
     }

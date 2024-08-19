@@ -8,7 +8,7 @@ export async function ConsStat(e) {
   let consData = await HutaoApi.getCons()
   let overview = await HutaoApi.getOverview()
 
-  if (!consData) return await e.reply("角色持有数据获取失败，请稍后重试~")
+  if (!consData) return e.reply("角色持有数据获取失败，请稍后重试~")
 
   let msg = e.msg
 
@@ -94,7 +94,7 @@ export async function AbyssPct(e) {
   }
   let overview = await HutaoApi.getOverview()
 
-  if (!abyssData) return await e.reply(`深渊${modeName}数据获取失败，请稍后重试~`)
+  if (!abyssData) return e.reply(`深渊${modeName}数据获取失败，请稍后重试~`)
 
   let ret = []
   let chooseFloor = -1

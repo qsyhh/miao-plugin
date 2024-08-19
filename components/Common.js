@@ -17,7 +17,7 @@ const Common = {
     return new Promise((resolve) => setTimeout(resolve, ms))
   },
   async downFile() {
-    console.log("down file")
+    logger.mark("down file")
   }
 }
 

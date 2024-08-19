@@ -55,13 +55,12 @@ const CharWiki = {
     }
     if (char.isCustom) {
       if (mode === "wiki") return false
-      return await e.reply("暂不支持自定义角色")
+      return e.reply("暂不支持自定义角色")
     }
-    if (!char.isRelease && Cfg.get("notReleasedData") === false) return await e.reply("未实装角色资料已禁用...")
+    if (!char.isRelease && Cfg.get("notReleasedData") === false) return e.reply("未实装角色资料已禁用...")
 
     if (mode === "wiki") {
-      if (char.source === "amber") return await e.reply("暂不支持该角色图鉴展示")
-
+      if (char.source === "amber") return e.reply("暂不支持该角色图鉴展示")
       return await CharWiki.render({ e, char })
     } else if (mode === "material") {
       return CharMaterial.render({ e, char })

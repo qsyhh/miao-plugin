@@ -25,7 +25,7 @@ let ProfileDetail = {
     let pc = ProfileChange.matchMsg(msg)
 
     if (pc && pc.char && pc.change) {
-      if (!Cfg.get("profileChange")) return await e.reply("面板替换功能已禁用...")
+      if (!Cfg.get("profileChange")) return e.reply("面板替换功能已禁用...")
       e.game = pc.game
       e.isSr = e.game === "sr"
       e.uid = ""
@@ -38,7 +38,7 @@ let ProfileDetail = {
         e._profileMsg = changeMsg
       }
     }
-    let uidRet = /[0-9]{9}/.exec(msg)
+    let uidRet = /(18|[1-9])[0-9]{8}/g.exec(msg)
     if (uidRet) {
       e.uid = uidRet[0]
       msg = msg.replace(uidRet[0], "")
@@ -87,13 +87,13 @@ let ProfileDetail = {
     e.uid = uid
     e.avatar = char.id
 
-    if (char.isCustom) return await e.reply("自定义角色暂不支持此功能")
+    if (char.isCustom) return e.reply("自定义角色暂不支持此功能")
 
     if (!char.isRelease) {
       // 预设面板支持未实装角色
-      if (!profileChange && Number(e.uid) > 100000006) return await e.reply("角色尚未实装")
+      if (!profileChange && Number(e.uid) > 100000006) return e.reply("角色尚未实装")
       // 但仅在未实装开启时展示
-      if (Cfg.get("notReleasedData") === false) return await e.reply("未实装角色面板已禁用...")
+      if (Cfg.get("notReleasedData") === false) return e.reply("未实装角色面板已禁用...")
     }
 
     if (mode === "profile" || mode === "dmg" || mode === "weapon") {
@@ -110,11 +110,11 @@ let ProfileDetail = {
   async render(e, char, mode = "profile", params = {}) {
     let selfUser = await MysApi.initUser(e)
 
-    if (!selfUser) return await e.reply([ "尚未绑定UID", new Button(e).bindUid() ])
+    if (!selfUser) return e.reply([ "尚未绑定UID", new Button(e).bindUid() ])
 
     let { uid } = e
 
-    if (char.isCustom) return await e.reply(`暂不支持自定义角色${char.name}的面板信息查看`)
+    if (char.isCustom) return e.reply(`暂不支持自定义角色${char.name}的面板信息查看`)
 
     let profile = e._profile || await getProfileRefresh(e, char.id)
     if (!profile) return true

@@ -42,7 +42,7 @@ export default {
         if (ret) player._update.push(ds.avatarId)
       })
     } catch (e) {
-      console.log(e)
+      logger.error(e)
     }
   },
 

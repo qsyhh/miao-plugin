@@ -6,14 +6,14 @@ import { Character, MysApi, Player } from "#miao.models"
 
 export async function AbyssTeam(e) {
   let mys = await MysApi.init(e, "all")
-  if (!mys || !mys.uid) return await e.reply(`请绑定ck后再使用${e.original_msg || e.msg}`)
+  if (!mys || !mys.uid) return e.reply(`请绑定ck后再使用${e.original_msg || e.msg}`)
 
   let player = Player.create(e)
   await player.refreshMysDetail(2)
   await player.refreshTalent()
 
   let abyssData = await HutaoApi.getAbyssTeam()
-  if (!abyssData || !abyssData.data) return await e.reply("深渊组队数据获取失败，请稍后重试~")
+  if (!abyssData || !abyssData.data) return e.reply("深渊组队数据获取失败，请稍后重试~")
 
   abyssData = abyssData.data
   let avatarData = player.getAvatarData()

@@ -124,9 +124,9 @@ export default class Player extends Base {
       Data.delFile(this._file, "root")
       ProfileRank.delUidInfo(this.uid, this.game)
       this._delCache()
-      Bot.logger.mark(`【面板数据删除】${this.uid}本地文件数据已删除...`)
+      logger.mark(`【面板数据删除】${this.uid}本地文件数据已删除...`)
     } catch (e) {
-      console.log("del error", e)
+      logger.error("del error", e)
     }
     return true
   }
@@ -327,8 +327,8 @@ export default class Player extends Base {
       if (cfg.talent || cfg.talent === 0) await this.refreshTalent(cfg.ids || "", cfg.talent)
       if (cfg.profile || cfg.profile === 0) await this.refreshProfile(cfg.profile)
     } catch (e) {
-      Bot.logger.mark(`刷新uid${this.uid}数据遇到错误...`)
-      console.log(e)
+      logger.error(`刷新uid${this.uid}数据遇到错误...`)
+      logger.error(e)
     }
     this.save(true)
   }

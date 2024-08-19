@@ -273,7 +273,7 @@ class Character extends Base {
       this.meta = this.meta || {}
       this.meta._detail = Data.readJSON(`resources/meta-${this.game}/character/${name}/data.json`, "miao")
     } catch (e) {
-      console.log(e)
+      logger.error(e)
     }
     return this.meta._detail
   }

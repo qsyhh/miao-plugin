@@ -117,7 +117,7 @@ class Weapon extends Base {
     try {
       this._detail = Data.readJSON(`${path}/${this.type}/${this.name}/data.json`, "miao")
     } catch (e) {
-      console.log(e)
+      logger.error(e)
     }
     return this._detail
   }

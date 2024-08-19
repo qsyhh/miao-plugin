@@ -23,15 +23,15 @@ export async function AbyssSummary(e) {
     let lvs = Data.getVal(resAbyss, "floors.0.levels.0")
     // 检查是否查询到了深渊信息
     if (!lvs || !lvs.battles) {
-      return await e.reply("暂未获得本期深渊挑战数据...")
+      return e.reply("暂未获得本期深渊挑战数据...")
     } else if (lvs && lvs.battles && lvs.battles.length === 0) {
       if (!mys.isSelfCookie) {
-        if (isMatch) await e.reply(`请绑定ck后再使用${e.original_msg || e.msg}`)
+        if (isMatch) e.reply(`请绑定ck后再使用${e.original_msg || e.msg}`)
         return false
       }
     }
     resDetail = await mys.getCharacter()
-    if (!resDetail || !resAbyss || !resDetail.avatars || resDetail.avatars.length <= 3) return await e.reply("角色信息获取失败")
+    if (!resDetail || !resAbyss || !resDetail.avatars || resDetail.avatars.length <= 3) return e.reply("角色信息获取失败")
     delete resDetail._res
     delete resAbyss._res
     ret = await HutaoApi.uploadData({
@@ -40,7 +40,7 @@ export async function AbyssSummary(e) {
       resAbyss
     })
   } catch (err) {
-    // console.log(err);
+    // logger.error(err);
   }
   // 更新player信息
   player.setMysCharData(resDetail)
@@ -48,7 +48,7 @@ export async function AbyssSummary(e) {
   if (ret && ret.retcode === 0) {
     let stat = []
     if (ret.data) {
-      if (resAbyss.floors.length === 0) return await e.reply("暂未获得本期深渊挑战数据...")
+      if (resAbyss.floors.length === 0) return e.reply("暂未获得本期深渊挑战数据...")
 
       let abyss = new Abyss(resAbyss)
       let abyssData = abyss.getData()
@@ -115,7 +115,7 @@ export async function AbyssSummary(e) {
         uid
       }, { e, scale: 1.2 })
     } else {
-      return await e.reply("暂未获得本期深渊挑战数据...")
+      return e.reply("暂未获得本期深渊挑战数据...")
     }
   } else {
     e.reply(`${ret.message || "上传失败"}，请稍后重试...`)

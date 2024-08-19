@@ -18,7 +18,7 @@ const ProfileAvatar = {
     if (!AvatarUtil.needRefresh(player._profile, force, { 0: 24, 1: 2, 2: 0 })) return false
 
     let { uid, e } = player
-    if (uid.toString().length !== 9 || !e) return false
+    if (![ 9, 10 ].includes(uid.toString().length) || !e) return false
 
     let ret = await Serv.req(e, player)
     if (ret) {

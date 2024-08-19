@@ -19,7 +19,7 @@ export default {
   async response(data, req) {
     if (!data.playerInfo) {
       if (data.error) {
-        console.log(`Enka ReqErr: ${data.error}`)
+        logger.error(`Enka ReqErr: ${data.error}`)
       }
       return req.err("error", 60)
     }
