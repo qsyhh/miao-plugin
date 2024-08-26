@@ -263,6 +263,7 @@ let Cal = {
     let detail = timeMap[id] || {}
 
     if (ignoreIds.includes(id) || ignoreReg.test(title) || detail.display === false) return false
+
     if (/概率UP/.test(title)) {
       let reg = /(单手剑|双手剑|长柄武器|弓|法器)·/g
       if (reg.test(title)) {
@@ -283,8 +284,7 @@ let Cal = {
           extra.sort = 1
         }
       }
-    }
-    if (/纪行/.test(title)) {
+    } else if (/纪行/.test(title)) {
       type = "pass"
     }
 
