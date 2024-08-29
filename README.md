@@ -2,7 +2,17 @@
 
 此仓库为个人fork版本自用
 
-此仓库安装命令
+此仓库将在原仓库有更新时测试后推送同步，可能更新不及时...推荐使用原版 [miao-plugin](https://gitee.com/yoimiya-kokomi/miao-plugin)
+
+## 较原版的新增
+
+- [x] 支持星铁图鉴、星铁技能显示能量上限及削韧值
+
+- [x] 星铁面板增加q版头像(头像来源官方大月卡头像)
+
+- [ ] 星铁图鉴增加素材显示
+
+## 安装指令
 
 ```
 git clone --depth=1 https://gitee.com/qsyhh/miao-plugin.git ./plugins/miao-plugin/

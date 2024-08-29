@@ -106,7 +106,7 @@ const ProfileList = {
       chars.push(tmp)
     }
 
-    if (newCount > 0) hasNew = newCount <= 8
+    if (newCount > 0) hasNew = newCount <= 12
 
     chars = lodash.sortBy(chars, [ "isNew", "star", "level", "id" ])
     chars = chars.reverse()

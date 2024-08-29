@@ -32,7 +32,7 @@ const relationMap = {
 }
 
 const relation = lodash.flatMap(relationMap, (d) => d.keyword)
-const wifeReg = `^#?\\s*(${relation.join("|")})\\s*(设置|选择|指定|列表|查询|列表|是|是谁|照片|相片|图片|写真|图像)?\\s*([^\\d]*)\\s*(\\d*)$`
+const wifeReg = `^#?\\s*(${relation.join("|")})\\s*(设置|选择|指定|添加|列表|查询|列表|是|是谁|照片|相片|图片|写真|图像)?\\s*([^\\d]*)\\s*(\\d*)$`
 
 async function getAvatarList(player, type) {
   await player.refreshMysDetail()
@@ -72,7 +72,7 @@ const Wife = {
     let action = msgRet[2] || "卡片"
     let actionParam = msgRet[3] || ""
 
-    if (!"设置,选择,挑选,指定".split(",").includes(action) && actionParam) return false
+    if (!"设置,选择,挑选,指定,添加".split(",").includes(action) && actionParam) return false
 
     let targetCfg = lodash.find(relationMap, (cfg, key) => {
       cfg.key = key
@@ -91,6 +91,7 @@ const Wife = {
     let isSelf = true
     let renderType = (action === "卡片" ? "card" : "photo")
     let addRet = []
+    let existingWife = []
     switch (action) {
       case "照片":
       case "相片":
@@ -125,7 +126,11 @@ const Wife = {
       case "选择":
       case "挑选":
       case "指定":
-        if (!isSelf) return await e.reply("只能指定自己的哦~")
+      case "添加":
+        if (!isSelf) return e.reply("只能指定自己的哦~")
+        if (action === "添加") {
+          existingWife = await selfUser.getCfg(`wife.${targetCfg.key}`, [])
+        }
         // 选择老婆
         actionParam = actionParam.replace(/(，|、|;|；)/g, ",")
         wifeList = actionParam.split(",")
@@ -136,6 +141,7 @@ const Wife = {
             let char = Character.get(name)
             if (char && char.checkWifeType(targetCfg.type)) return char.name
           })
+          wifeList = wifeList.concat(existingWife)
           wifeList = lodash.filter(lodash.uniq(wifeList), (d) => !!d)
           addRet = wifeList
           if (addRet.length === 0) return e.reply(`在可选的${targetCfg.keyword[0]}列表中未能找到 ${actionParam} ~`)
