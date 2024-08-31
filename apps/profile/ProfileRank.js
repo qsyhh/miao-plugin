@@ -29,7 +29,7 @@ export async function groupRank(e) {
   let char = Character.get(name, game)
   if (!char) {
     // 名字不存在或不为列表模式，则返回false
-    if (name || type !== "list") return stubFalse
+    if (name || type !== "list") return false
   } else {
     e.isSr = char.game === "sr"
   }
