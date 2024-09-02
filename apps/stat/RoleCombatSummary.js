@@ -18,7 +18,7 @@ export async function RoleCombatSummary(e) {
     resRole = await mys.getRoleCombat(true)
     let lvs = Data.getVal(resRole, "data.0")
     // 检查是否查询到了幻想真境剧诗信息
-    if (!lvs || !lvs.has_data) return e.reply("暂未获得本期幻想真境剧诗挑战数据...")
+    if (!lvs || !lvs.has_detail_data) return e.reply("暂未获得本期幻想真境剧诗挑战数据...")
 
     resDetail = await mys.getCharacter()
     if (!resDetail || !resRole || !resDetail.avatars || resDetail.avatars.length <= 3) return e.reply("角色信息获取失败")
@@ -31,7 +31,7 @@ export async function RoleCombatSummary(e) {
   // 更新player信息
   player.setMysCharData(resDetail)
 
-  if (resRole.data.length === 0) return e.reply("暂未获得本期深渊挑战数据...")
+  if (resRole.data.length === 0) return e.reply("暂未获得本期幻想真境剧诗挑战数据...")
   let role = new RoleCombat(resRole.data[0])
   let roleData = role.getData()
   let ownAvatarIds = role.getOwnAvatars()
