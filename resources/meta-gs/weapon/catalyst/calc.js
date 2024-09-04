@@ -215,7 +215,7 @@ export default function(step, staticStep) {
     },
     冲浪时光: [
       staticStep("hpPct", 20), {
-        title: "满层时，普通攻击造成的伤害提升[aDmg]%",
+        title: "施放元素战技后，普通攻击造成的伤害提升[aDmg]%",
         buffCount: 4,
         refine: {
           aDmg: step(12)

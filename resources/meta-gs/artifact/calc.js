@@ -507,6 +507,32 @@ const buffs = {
         dmg: 10 * 5
       }
     }
+  },
+
+  烬城勇者绘卷: {
+    4: {
+      title: "触发元素反应后，元素伤害加成提升[dmg]%",
+      data: {
+        dmg: ({ params }) => params.Nightsoul === true ? 40 : 12
+      }
+    }
+  },
+
+  黑曜秘典: {
+    2: {
+      check: ({ params }) => params.Nightsoul === true,
+      title: "在场上处于夜魂加持状态时，造成的伤害提高[dmg]%",
+      data: {
+        dmg: 15
+      }
+    },
+    4: {
+      check: ({ params }) => params.Nightsoul === true,
+      title: "在场上消耗夜魂值后，暴击率提高[cpct]%",
+      data: {
+        cpct: 40
+      }
+    }
   }
 
 }
