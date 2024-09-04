@@ -286,6 +286,12 @@ export default function(step, staticStep) {
           dmg: step(16 * 3)
         }
       }
-    ]
+    ],
+    息燧之笛: {
+      title: "施放元素战技时，防御力提升[defPct]%",
+      refine: {
+        defPct: step(16)
+      }
+    }
   }
 }

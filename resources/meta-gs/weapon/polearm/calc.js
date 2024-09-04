@@ -173,6 +173,12 @@ export default function(step, staticStep) {
           dmg: ({ refine }) => step(18, 5)[refine] * 2
         }
       }
-    ]
+    ],
+    "虹的行迹": {
+      title: "施放元素战技时，防御力提升[defPct]%",
+      refine: {
+        defPct: step(16)
+      }
+    }
   }
 }

@@ -281,6 +281,13 @@ export default function(step, staticStep) {
         hpPct: step(40, 10),
         qCpct: step(28)
       }
+    },
+    碎链: {
+      title: "三名与装备者元素类型不同的角色，攻击力提升[atkPct]%，元素精通提升[mastery]点",
+      refine: {
+        atkPct: step(4.8, 1.2) * 3,
+        mastery: step(24)
+      }
     }
   }
 }
