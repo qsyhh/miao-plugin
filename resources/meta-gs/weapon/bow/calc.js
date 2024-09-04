@@ -232,7 +232,7 @@ export default function(step, staticStep) {
 
     鹮穿之喙: {
       title: "重击命中敌人2层提高元素精通[mastery]点",
-      data: {
+      refine: {
         mastery: step(80)
       }
     },
@@ -285,7 +285,7 @@ export default function(step, staticStep) {
     碎链: {
       title: "三名与装备者元素类型不同的角色，攻击力提升[atkPct]%，元素精通提升[mastery]点",
       refine: {
-        atkPct: step(4.8, 1.2) * 3,
+        atkPct: [ 4.8 * 3, 6 * 3, 7.2 * 3, 8.4 * 3, 9.6 * 3 ],
         mastery: step(24)
       }
     }

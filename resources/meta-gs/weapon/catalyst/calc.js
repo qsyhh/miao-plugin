@@ -209,8 +209,9 @@ export default function(step, staticStep) {
     },
     木棉之环: {
       title: "施放元素战技时，使普通攻击造成的伤害提升[aDmg]%",
+      sort: 9,
       data: {
-        aDmg: ({ attr, calc, refine }) => Math.min(Math.floor(calc(attr.atk) / 1000) * step(0.6, 0.1)[refine], step(16)[refine])
+        aDmg: ({ attr, calc, refine }) => Math.min(Math.floor(calc(attr.hp) / 1000) * step(0.6, 0.1)[refine], step(16)[refine])
       }
     },
     冲浪时光: [
