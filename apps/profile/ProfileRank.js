@@ -5,7 +5,7 @@ import ProfileDetail from "./ProfileDetail.js"
 import { Data, Common, Format, Cfg } from "#miao"
 import { Button, Character, ProfileRank, ProfileDmg, Player } from "#miao.models"
 
-const { stubFalse } = lodash
+// const { stubFalse } = lodash
 
 export async function groupRank(e) {
   const groupRank = Common.cfg("groupRank")
