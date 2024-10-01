@@ -120,21 +120,6 @@ export const cfgSchema = {
         def: 28,
         input: (n) => Math.min(100, Math.max(4, (n * 1 || 28))),
         desc: "可选值4~100，建议28，最终圣遗物数量取决于面板内圣遗物数量。设置高圣遗物数量会提高图片的长度，图片较大可能会影响渲染与发送速度"
-      },
-      background_list: {
-        title: "面板列表背景图",
-        key: "列表背景",
-        type: "str",
-        def: "def",
-        desc: "#面板背景图，可键入绝对路径、相对路径(插件目录相对路径：../../../../../plugins/miao-plugin/)、api图链"
-      },
-      filter_list: {
-        title: "面板背景图模糊度",
-        key: "面板模糊",
-        type: "num",
-        def: 1.2,
-        input: (n) => Math.min(10, Math.max(0, (n * 1 || 1.2))),
-        desc: "可选值0~10，#面板背景图模糊度"
       }
     }
   },

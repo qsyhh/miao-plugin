@@ -10,13 +10,15 @@ import fetch from "node-fetch"
 import { miaoPath } from "#miao.path"
 
 let keys = lodash.map(Cfg.getCfgSchemaMap(), (i) => i.key)
+let profil_keys = lodash.map(Cfg.getCfgSchemaMap(true), (i) => i.key)
 let app = App.init({
   id: "admin",
   name: "喵喵设置",
   desc: "喵喵设置"
 })
 
-let sysCfgReg = new RegExp(`^#喵喵设置\\s*(${keys.join("|")})?\\s*(.*)$`)
+let sysCfgReg = new RegExp(`^#喵喵(?:背景)?设置\\s*(${keys.join("|")})?\\s*(.*)$`)
+let profileCfgReg = new RegExp(`^#喵喵背景设置\\s*(${profil_keys.join("|")})?\\s*(.*)$`)
 
 app.reg({
   updateRes: {
@@ -61,10 +63,12 @@ const checkAuth = async function(e) {
 
 async function sysCfg(e) {
   if (!await checkAuth(e)) return true
+  let isBackground = false
+  if (/^#喵喵背景设置/.exec(e.msg)) isBackground = true
 
-  let cfgReg = sysCfgReg
+  let cfgReg = isBackground ? profileCfgReg : sysCfgReg
   let regRet = cfgReg.exec(e.msg)
-  let cfgSchemaMap = Cfg.getCfgSchemaMap()
+  let cfgSchemaMap = Cfg.getCfgSchemaMap(isBackground)
 
   if (!regRet) return true
 
@@ -80,11 +84,11 @@ async function sysCfg(e) {
     } else {
       val = cfgSchema.type === "num" ? (val * 1 || cfgSchema.def) : !/关闭/.test(val)
     }
-    Cfg.set(cfgSchema.cfgKey, val)
+    Cfg.set(cfgSchema.cfgKey, val, isBackground)
   }
 
-  let schema = Cfg.getCfgSchema()
-  let cfg = Cfg.getCfg()
+  let schema = Cfg.getCfgSchema(isBackground)
+  let cfg = Cfg.getCfg(isBackground)
   let imgPlus = fs.existsSync(plusPath)
 
   // 渲染图像
@@ -92,6 +96,7 @@ async function sysCfg(e) {
     schema,
     cfg,
     imgPlus,
+    isBackground,
     isMiao: Version.isMiao
   }, { e, scale: 1.4 })
 }

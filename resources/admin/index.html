@@ -7,7 +7,7 @@
 <div class="info_box">
   <div class="head-box type{{bgType}}">
     <div class="label">喵喵管理面板</div>
-    <div class="title">#喵喵设置</div>
+    <div class="title">#喵喵{{isBackground ? "背景" : ""}}设置</div>
   </div>
 </div>
 {{each schema cfgGroup}}
@@ -19,8 +19,8 @@
       <div class="cfg-line">
         {{cfgItem.title}}
         {{if !(cfgItem.miao && isMiao) }}
-        <span class="cfg-hint"> #喵喵设置{{cfgItem.key}}
-          {{if cfgItem.type==='num'}} {{cfgItem.def}}{{else}} 开启/关闭{{/if}}
+        <span class="cfg-hint"> #喵喵{{isBackground ? "背景" : ""}}设置{{cfgItem.key}}
+          {{if cfgItem.type==='num'}} {{cfgItem.def}}{{else if cfgItem.type==='str'}} {{else}} 开启/关闭{{/if}}
         </span>
         {{/if}}
         {{if cfgItem.type === 'num' ||  cfgItem.type === 'str'}}
@@ -41,6 +41,7 @@
   </ul>
 </div>
 {{/each}}
+{{if !isBackground}}
 <div class="cfg-box">
   <div class="cfg-group">其他设置</div>
   <ul class="cfg-ul">
@@ -58,4 +59,5 @@
     </li>
   </ul>
 </div>
+{{/if}}
 {{/block}}

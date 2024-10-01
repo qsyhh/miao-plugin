@@ -4,11 +4,12 @@ import lodash from "lodash"
 import { Data } from "../index.js"
 import { miaoPath } from "#miao.path"
 import { cfgSchema } from "../../config/system/cfg_system.js"
+import { cfgProfile } from "../../config/system/background_system.js"
 
 let cfgData = {
-  saveCfg(cfg) {
+  saveCfg(cfg, isBackground = false) {
     let ret = []
-    lodash.forEach(cfgSchema, (cfgGroup) => {
+    lodash.forEach(isBackground ? cfgProfile : cfgSchema, (cfgGroup) => {
       ret.push(`/** ************ 【${cfgGroup.title}】 ************* */`)
       lodash.forEach(cfgGroup.cfg, (cfgItem, cfgKey) => {
         ret.push(`// ${cfgItem.desc || cfgItem.title}`)
@@ -21,12 +22,12 @@ let cfgData = {
         }
       })
     })
-    fs.writeFileSync(`${miaoPath}/config/cfg.js`, ret.join("\n"), "utf8")
+    fs.writeFileSync(`${miaoPath}/config/${isBackground ? "background" : "cfg"}.js`, ret.join("\n"), "utf8")
   },
 
-  async getCfg() {
-    let ret = lodash.toPlainObject(await Data.importModule("/config/cfg.js", "miao"))
-    lodash.forEach(cfgSchema, (cfgGroup) => {
+  async getCfg(isBackground = false) {
+    let ret = lodash.toPlainObject(await Data.importModule(`/config/${isBackground ? "background" : "cfg"}.js`, "miao"))
+    lodash.forEach(isBackground ? cfgProfile : cfgSchema, (cfgGroup) => {
       lodash.forEach(cfgGroup.cfg, (cfgItem, cfgKey) => {
         ret[cfgKey] = Data.def(ret[cfgKey], cfgItem.def)
       })
@@ -34,9 +35,9 @@ let cfgData = {
     return ret
   },
 
-  getCfgSchemaMap() {
+  getCfgSchemaMap(isBackground = false) {
     let ret = {}
-    lodash.forEach(cfgSchema, (cfgGroup) => {
+    lodash.forEach(isBackground ? cfgProfile : cfgSchema, (cfgGroup) => {
       lodash.forEach(cfgGroup.cfg, (cfgItem, cfgKey) => {
         ret[cfgItem.key] = cfgItem
         cfgItem.cfgKey = cfgKey
@@ -44,8 +45,8 @@ let cfgData = {
     })
     return ret
   },
-  getCfgSchema() {
-    return cfgSchema
+  getCfgSchema(isBackground = false) {
+    return isBackground ? cfgProfile : cfgSchema
   }
 }
 

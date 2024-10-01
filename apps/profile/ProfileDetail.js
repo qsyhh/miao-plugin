@@ -215,6 +215,16 @@ let ProfileDetail = {
       data.treeData = treeData
     }
     data.weapon = profile.getWeaponDetail()
+    let background
+    if (Cfg.getProfile("background_profile") != "def") {
+      background = Cfg.getProfile("background_profile")
+      if (background?.startsWith("http")) {
+        const buffer = await fetch(background).then(res => res.arrayBuffer())
+        background = `data:image/jpeg;base64,${Buffer.from(buffer).toString("base64")}`
+      }
+      background = `<style>.background{position:absolute;background-image:url(${background});background-size:cover;width:100%;height:100%;filter:blur(${Cfg.getProfile("filter_profile")}px);}</style><div class="background"></div>`
+    }
+
     let renderData = {
       save_id: uid,
       uid,
@@ -225,6 +235,7 @@ let ProfileDetail = {
       dmgCalc,
       artisDetail,
       artisKeyTitle,
+      background,
       bodyClass: `char-${char.name}`,
       mode,
       wCfg,

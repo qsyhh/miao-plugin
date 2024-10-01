@@ -113,13 +113,13 @@ const ProfileList = {
     chars = chars.reverse()
 
     let background
-    if (Cfg.get("background_list") != "def") {
-      background = Cfg.get("background_list")
+    if (Cfg.getProfile("background_list") != "def") {
+      background = Cfg.getProfile("background_list")
       if (background?.startsWith("http")) {
         const buffer = await fetch(background).then(res => res.arrayBuffer())
         background = `data:image/jpeg;base64,${Buffer.from(buffer).toString("base64")}`
       }
-      background = `<style>.background{position:absolute;background-image:url(${background});background-size:cover;width:100%;height:100%;filter:blur(${Cfg.get("filter_list")}px);}</style><div class="background"></div>`
+      background = `<style>.background{position:absolute;background-image:url(${background});background-size:cover;width:100%;height:100%;filter:blur(${Cfg.getProfile("filter_list")}px);}</style><div class="background"></div>`
     }
 
     player.save()

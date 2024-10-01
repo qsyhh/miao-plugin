@@ -17,28 +17,41 @@ try {
   })
 } catch (e) {}
 
+let profile_cfg = {}
+
+try {
+  profile_cfg = await cfgData.getCfg(true)
+  cfgData.saveCfg(profile_cfg, true)
+} catch (e) {}
+
 let Cfg = {
   get(rote, def = "") {
     if (Version.isMiao && miaoCfg[rote]) return true
     let ret = lodash.get(cfg, rote)
     return lodash.isUndefined(cfg) ? def : ret
   },
-  set(rote, val) {
-    cfg[rote] = val
-    cfgData.saveCfg(cfg)
+  getProfile(rote, def = "") {
+    let ret = lodash.get(profile_cfg, rote)
+    return lodash.isUndefined(profile_cfg) ? def : ret
+  },
+  set(rote, val, isBackground = false) {
+    if (isBackground) {
+      profile_cfg[rote] = val
+    } else cfg[rote] = val
+    cfgData.saveCfg(isBackground ? profile_cfg : cfg, isBackground)
   },
   del(rote) {
     lodash.set(cfg, rote, undefined)
     fs.writeFileSync(_cfgPath + "cfg.json", JSON.stringify(cfg, null, "\t"))
   },
-  getCfg() {
-    return cfg
+  getCfg(isProfile = false) {
+    return isProfile ? profile_cfg : cfg
   },
-  getCfgSchema() {
-    return cfgData.getCfgSchema()
+  getCfgSchema(isBackground = false) {
+    return cfgData.getCfgSchema(isBackground)
   },
-  getCfgSchemaMap() {
-    return cfgData.getCfgSchemaMap()
+  getCfgSchemaMap(isBackground = false) {
+    return cfgData.getCfgSchemaMap(isBackground)
   },
   scale(pct = 1) {
     let scale = Cfg.get("renderScale", 100)
