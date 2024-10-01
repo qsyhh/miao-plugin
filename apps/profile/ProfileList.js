@@ -1,6 +1,7 @@
 /* eslint-disable import/no-unresolved */
 import lodash from "lodash"
-import { Common, Data } from "#miao"
+import fetch from "node-fetch"
+import { Common, Data, Cfg } from "#miao"
 import { getTargetUid } from "./ProfileCommon.js"
 import { Button, ProfileRank, Player, Character } from "#miao.models"
 
@@ -111,6 +112,16 @@ const ProfileList = {
     chars = lodash.sortBy(chars, [ "isNew", "star", "level", "id" ])
     chars = chars.reverse()
 
+    let background
+    if (Cfg.get("background_list") != "def") {
+      background = Cfg.get("background_list")
+      if (background?.startsWith("http")) {
+        const buffer = await fetch(background).then(res => res.arrayBuffer())
+        background = `data:image/jpeg;base64,${Buffer.from(buffer).toString("base64")}`
+      }
+      background = `<style>.background{position:absolute;background-image:url(${background});background-size:cover;width:100%;height:100%;filter:blur(${Cfg.get("filter_list")}px);}</style><div class="background"></div>`
+    }
+
     player.save()
     // 渲染图像
     return e.reply([
@@ -122,6 +133,7 @@ const ProfileList = {
         hasNew,
         msg,
         groupRank,
+        background,
         updateTime: player.getUpdateTime(),
         allowRank: rank && rank.allowRank,
         rankCfg,

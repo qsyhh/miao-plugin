@@ -3,8 +3,8 @@
 {{block 'css'}}
 <link rel="stylesheet" type="text/css" href="{{_res_path}}/character/profile-detail.css"/>
 <link rel="stylesheet" type="text/css" href="{{_res_path}}/character/profile-list.css"/>
+{{if background}}{{@background}}{{/if}}
 {{/block}}
-
 
 {{block 'main'}}
 {{set demo = chars[0]?.abbr || "雷神" }}

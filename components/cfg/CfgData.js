@@ -15,7 +15,7 @@ let cfgData = {
         let val = Data.def(cfg[cfgKey], cfgItem.def)
         if (cfgItem.input) val = cfgItem.input(val)
         if (cfgItem.type === "str") {
-          ret.push(`export const ${cfgKey} = '${val.toString()}'`, "")
+          ret.push(`export const ${cfgKey} = "${val.toString()}"`, "")
         } else {
           ret.push(`export const ${cfgKey} = ${val.toString()}`, "")
         }
