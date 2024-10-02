@@ -1,3 +1,4 @@
+/* eslint-disable no-empty-pattern */
 export const details = [
   {
     title: "普攻伤害",
@@ -19,7 +20,7 @@ export const details = [
     dmg: ({ talent }, dmg) => dmg(talent.t["全体伤害"], "t")
   }, {
     title: "天赋追击超击破",
-    dmg: ({ reaction }) => {
+    dmg: ({}, { reaction }) => {
       return {
         avg: reaction("superBreak").avg / 0.9
       }
@@ -28,7 +29,7 @@ export const details = [
     check: ({ cons }) => cons >= 2,
     title: "终结技后天赋追击超击破",
     params: { q: true },
-    dmg: ({ reaction }) => {
+    dmg: ({}, { reaction }) => {
       return {
         avg: reaction("superBreak").avg / 0.9
       }
