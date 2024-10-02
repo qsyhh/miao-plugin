@@ -44,6 +44,7 @@ export default function(staticIdx, keyIdx) {
         }
       }
     ],
+    "何物为真": [ staticIdx(1, "stance") ],
     "唯有香如故": [
       staticIdx(1, "stance"),
       (tables) => {
