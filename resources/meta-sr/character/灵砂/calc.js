@@ -49,17 +49,17 @@ export const defDmgIdx = 4
 
 export const buffs = [
   {
+    title: "行迹-朱燎：使自身攻击力/治疗量提高，[atkPct]%/[heal]%",
+    tree: 1,
+    data: {
+      atkPct: ({ attr }) => Math.min(Math.floor(attr.stance * 0.25, 50)),
+      heal: ({ attr }) => Math.min(Math.floor(attr.stance * 0.1, 20))
+    }
+  }, {
     title: "行迹-兰烟：施放普攻时额外恢复10点能量",
     tree: 2,
     data: {
       _energyevery: 10
-    }
-  }, {
-    title: "行迹-朱燎：使自身攻击力/治疗量提高，[atkPct]%/[heal]%",
-    cons: 3,
-    data: {
-      atkPct: ({ attr }) => Math.min(Math.floor(attr.stance * 0.25, 50)),
-      heal: ({ attr }) => Math.min(Math.floor(attr.stance * 0.1, 20))
     }
   }, {
     check: ({ params }) => params.q === true,
@@ -71,4 +71,4 @@ export const buffs = [
   }
 ]
 
-export const createdBy = "miao"
+export const createdBy = "喵喵"
