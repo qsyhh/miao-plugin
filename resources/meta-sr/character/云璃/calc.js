@@ -14,7 +14,7 @@ export const details = [
   }, {
     title: "终结技反击伤害(主目标)",
     params: { q: true, fj: true, cons2: true },
-    dmg: ({ talent }, dmg) => dmg(talent.q["反击·目标伤害"], "t")
+    dmg: ({ talent }, dmg) => dmg(talent.q["反击·目标伤害"], "q")
   }, {
     title: "终结技反击伤害(不含随机单体)",
     params: { q: true, fj: true, cons2: true },
@@ -77,3 +77,5 @@ export const buffs = [
     }
   }
 ]
+
+export const createdBy = "喵喵"

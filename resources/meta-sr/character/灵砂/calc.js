@@ -11,7 +11,7 @@ export const details = [
     dmg: ({ talent, calc, attr }, { heal }) => heal(calc(attr.atk) * talent.e["回复·百分比攻击"] + talent.e["回复·固定值"])
   }, {
     title: "终结技伤害",
-    dmg: ({ talent }, dmg) => dmg(talent.q["技能伤害"], "e")
+    dmg: ({ talent }, dmg) => dmg(talent.q["技能伤害"], "q")
   }, {
     title: "终结技生命回复",
     dmg: ({ talent, calc, attr }, { heal }) => heal(calc(attr.atk) * talent.q["回复·百分比攻击"] + talent.q["回复·固定值"])
