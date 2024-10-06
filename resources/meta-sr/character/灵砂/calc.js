@@ -62,6 +62,12 @@ export const buffs = [
       _energyevery: 10
     }
   }, {
+    title: "灵砂1命：敌方单位的弱点被击破其防御力降低[enemyDef]%",
+    cons: 1,
+    data: {
+      enemyDef: 20
+    }
+  }, {
     check: ({ params }) => params.q === true,
     title: "灵砂2命：施放终结技时，使我方全体击破特攻提高40",
     cons: 2,
