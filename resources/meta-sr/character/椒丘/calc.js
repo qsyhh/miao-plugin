@@ -21,7 +21,7 @@ export const details = [
   }
 ]
 
-export const mainAttr = "atk,heal,stance"
+export const mainAttr = "atk,cpct,cdmg,dmg,effPct"
 export const defDmgIdx = 4
 
 export const buffs = [
