@@ -277,7 +277,7 @@ let Cal = {
         let regRet = /·(.*)\(/.exec(title)
         if (regRet[1]) {
           let char = Character.get(regRet[1])
-          extra.banner2 = char.getImgs()?.card
+          extra.banner2 = char.getImgs?.()?.card
           extra.face = char.face
           extra.character = regRet[1]
           extra.elem = char.elem
