@@ -229,6 +229,21 @@ export default function(step, staticStep) {
       refine: {
         eDmg: step(16)
       }
-    }
+    },
+    "硕果钩": [
+      {
+        title: "下落攻击的暴击率提升[a3Cpct]%",
+        refine: {
+          a3Cpct: step(16)
+        }
+      }, {
+        title: "下落攻击命中敌人后，普通攻击、重击、下落攻击造成的伤害提升[a1Dmg]%",
+        refine: {
+          a1Dmg: step(16),
+          a2Dmg: step(16),
+          a3Dmg: step(16)
+        }
+      }
+    ]
   }
 }

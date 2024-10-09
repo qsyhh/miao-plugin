@@ -292,6 +292,22 @@ export default function(step, staticStep) {
       refine: {
         defPct: step(16)
       }
-    }
+    },
+    岩峰巡歌: [
+      {
+        title: "两层荣花之歌使防御力提高[defPct]%，并获得[dmg]%所有元素伤害加成",
+        buffCount: 2,
+        refine: {
+          defPct: step(8),
+          dmg: step(10)
+        }
+      }, {
+        title: "基于装备者的防御力，元素伤害加成提升[dmg]%",
+        sort: 9,
+        data: {
+          dmg: ({ attr, calc, refine }) => Math.min(Math.floor(calc(attr.def) / 1000) * step(8)[refine], step(25.6, 6.4)[refine])
+        }
+      }
+    ]
   }
 }
