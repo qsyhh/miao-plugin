@@ -293,6 +293,12 @@ export default function(step, staticStep) {
         defPct: step(16)
       }
     },
+    弥坚骨: {
+      title: "冲刺或替代冲刺的能力后，普通攻击造成的伤害提高[aPlus]%",
+      data: {
+        aPlus: ({ attr, calc, refine }) => calc(attr.atk) * step(16)[refine] / 100
+      }
+    },
     岩峰巡歌: [
       {
         title: "两层荣花之歌使防御力提高[defPct]%，并获得[dmg]%所有元素伤害加成",
