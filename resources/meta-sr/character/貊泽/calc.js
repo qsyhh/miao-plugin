@@ -13,16 +13,16 @@ export const details = [
     dmg: ({ talent }, dmg) => dmg(talent.t["附加伤害"], "t")
   }, {
     title: "天赋追击伤害",
-    params: { zj: true, cons6: true },
+    params: { zj: true },
     dmg: ({ talent, cons }, dmg) => {
-      let cost = cons == 6 ? 25 : 0
+      let cost = cons == 6 ? 0.25 : 0
       return dmg(talent.t["追加攻击伤害"] + cost, "t")
     }
   }, {
     title: "终结技后天赋追击伤害",
-    params: { zj: true, q: true, cons6: true },
+    params: { zj: true, q: true },
     dmg: ({ talent, cons }, dmg) => {
-      let cost = cons === 6 ? 25 : 0
+      let cost = cons === 6 ? 0.25 : 0
       return dmg(talent.t["追加攻击伤害"] + cost, "t")
     }
   }, {
@@ -38,7 +38,7 @@ export const mainAttr = "atk,cpct,cdmg"
 
 export const buffs = [
   {
-    title: "行迹-胁翼匿迹：貊泽在隐身状态下攻击敌人进入战斗时伤害提高[dmg]%",
+    title: "秘技-胁翼匿迹：貊泽在隐身状态下攻击敌人进入战斗时伤害提高[dmg]%",
     data: {
       dmg: 30
     }
@@ -62,7 +62,6 @@ export const buffs = [
       dmg: 30
     }
   }, {
-    check: ({ params }) => params.cons6 === true,
     title: "貊泽6命：天赋的追加攻击的伤害倍率提高[_tDmg]%",
     cons: 6,
     data: {
