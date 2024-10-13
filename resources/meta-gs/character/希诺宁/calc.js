@@ -27,27 +27,27 @@ export const mainAttr = "def,cpct,cdmg,heal"
 
 export const buffs = [
   {
-    title: "技能-音火锻淬: 采样器在激活时降低附近的敌人的对应元素抗性[kx]%",
+    title: "技能-音火锻淬：采样器在激活时降低附近的敌人的对应元素抗性[kx]%",
     data: {
       kx: ({ talent }) => talent.e["元素抗性降低"]
     }
   },
   {
-    title: "天赋-四境四象回声: 拥有少于两枚经过元素转化的「源音采样」，普通攻击与下落攻击造成的伤害提升[aDmg]%",
+    title: "天赋-四境四象回声：拥有少于两枚经过元素转化的「源音采样」，普通攻击与下落攻击造成的伤害提升[aDmg]%",
     data: {
       aDmg: 30,
       a3Dmg: 30
     }
   },
   {
-    title: "2命-献予灼原的五重奏: 根据「源音采样」的元素类型，使造成的伤害提升[dmg]%",
+    title: "希诺宁2命：根据「源音采样」的元素类型，使造成的伤害提升[dmg]%",
     cons: 2,
     data: {
       dmg: 50
     }
   },
   {
-    title: "4命-献予午后的花之梦: 施放音火锻淬后，普通攻击、重击与下落攻击造成的伤害值提升[aPlus]",
+    title: "希诺宁4命：施放音火锻淬后，普通攻击、重击与下落攻击造成的伤害值提升[aPlus]",
     cons: 4,
     data: {
       aPlus: ({ attr, calc }) => calc(attr.def) * 65 / 100,
@@ -56,7 +56,7 @@ export const buffs = [
     }
   },
   {
-    title: "6命-献予永夜的狂欢舞: 获得「永夜的祝福」后，普通攻击与下落攻击造成的伤害值提升[aPlus] ",
+    title: "希诺宁6命：获得「永夜的祝福」后，普通攻击与下落攻击造成的伤害值提升[aPlus] ",
     cons: 6,
     data: {
       aPlus: ({ attr, calc }) => calc(attr.def) * 300 / 100,
