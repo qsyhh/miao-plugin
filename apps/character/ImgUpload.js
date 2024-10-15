@@ -185,7 +185,7 @@ export async function profileImgList(e) {
   let msglist = []
   let char = Character.get(e.msg.replace(/#|面板图列表/g, ""))
   if (!char || !char.name) return false
-  if ([ 1, 0 ].includes(Cfg.get("originalPic") * 1)) return e.reply("已禁止获取面板图列表")
+  if ([ 1, 0, 4 ].includes(Cfg.get("originalPic") * 1)) return e.reply("已禁止获取面板图列表")
   let name = char.name
   let pathSuffix = `profile/normal-character/${name}`
   let path = resPath + pathSuffix
