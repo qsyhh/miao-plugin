@@ -26,18 +26,18 @@ export const mainAttr = "atk,cpct,cdmg"
 
 export const buffs = [
   {
-    title: "雷狩：发动天赋攻击时使自身造成的伤害提高[dmg]%",
+    title: "天赋-雷狩：发动天赋攻击时使自身造成的伤害提高[dmg]%",
     data: {
       dmg: ({ talent }) => talent.t["造成伤害提高"] * 100
     }
   }, {
-    title: "解形：追加攻击的暴击伤害提高[tCpct]%",
+    title: "行迹-解形：追加攻击的暴击伤害提高[tCpct]%",
     tree: 2,
     data: {
       tCpct: 36
     }
   }, {
-    title: "电举：施放战技时，攻击力提高[atkPct]%",
+    title: "行迹-电举：施放战技时，攻击力提高[atkPct]%",
     tree: 3,
     data: {
       atkPct: 48

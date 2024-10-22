@@ -124,7 +124,7 @@ export const buffs = [
       _cdmg: ({ talent }) => talent.e["暴击伤害提高"] * 100
     }
   }, {
-    title: "饮月6命：满Buff时使3级强普的虚数属性抗性穿透提高60%",
+    title: "饮月6魂：满Buff时使3级强普的虚数属性抗性穿透提高60%",
     cons: 6,
     check: ({ params }) => params.level3A === true,
     data: {

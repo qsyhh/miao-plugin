@@ -3,7 +3,10 @@ export const details = [
     title: "普攻伤害",
     dmg: ({ talent }, dmg) => dmg(talent.a["技能伤害"], "a")
   }, {
-    title: "战技伤害(扩散)",
+    title: "战技伤害(主目标)",
+    dmg: ({ talent }, dmg) => dmg(talent.e["目标伤害"], "e")
+  }, {
+    title: "战技伤害(完整)",
     dmg: ({ talent }, dmg) => dmg(talent.e["目标伤害"] + talent.e["相邻目标伤害"] * 2, "e")
   }, {
     title: "灼烧持续伤害",
@@ -28,7 +31,7 @@ export const details = [
   }
 ]
 
-export const defDmgIdx = 2
+export const defDmgIdx = 3
 export const mainAttr = "atk,cpct,cdmg"
 
 export const buffs = [
@@ -51,9 +54,9 @@ export const buffs = [
       dmg: 20
     }
   }, {
-    title: "桂乃芬2命：目标处于灼烧状态时，持续伤害倍率提升40%",
+    title: "桂乃芬2魂：目标处于灼烧状态时，持续伤害倍率提升40%",
     cons: 2
   }
 ]
 
-export const createdBy = "Aluxes"
+export const createdBy = "其实雨很好"

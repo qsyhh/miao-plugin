@@ -37,10 +37,9 @@ export const mainAttr = "atk,cpct,cdmg"
 
 export const buffs = [
   {
-    title: "行迹-军势：布洛妮娅在场时，我方全体造成的伤害提高10%",
-    tree: 3,
+    title: "秘技-在旗帜下：战斗开始时使我方全体攻击力提高[atkPct]%。",
     data: {
-      dmg: 10
+      atkPct: 15
     }
   }, {
     title: "行迹-号令：普攻的暴击率提高至[aCpct]%",
@@ -48,5 +47,13 @@ export const buffs = [
     data: {
       aCpct: 100
     }
+  }, {
+    title: "行迹-军势：布洛妮娅在场时，我方全体造成的伤害提高10%",
+    tree: 3,
+    data: {
+      dmg: 10
+    }
   }
 ]
+
+export const createdBy = "其实雨很好"

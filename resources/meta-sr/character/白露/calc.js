@@ -11,18 +11,23 @@ export const details = [
   }, {
     title: "天赋生息恢复",
     dmg: ({ calc, attr, talent }, { heal }) => heal(calc(attr.hp) * talent.t["生息·百分比生命"] + talent.t["生息·固定值"])
+  }, {
+    title: "天赋复活恢复",
+    dmg: ({ calc, attr, talent }, { heal }) => heal(calc(attr.hp) * talent.t["复活·百分比生命"] + talent.t["复活·固定值"])
   }
 ]
 
-export const mainAttr = "atk,cpct,cdmg,hp"
 export const defDmgIdx = 2
+export const mainAttr = "atk,cpct,cdmg,hp"
 
 export const buffs = [
   {
-    title: "白露2命：释放终结技后治疗提高15%",
+    title: "白露2魂：释放终结技后治疗提高15%",
     cons: 2,
     data: {
       heal: 15
     }
   }
 ]
+
+export const createdBy = "其实雨很好"

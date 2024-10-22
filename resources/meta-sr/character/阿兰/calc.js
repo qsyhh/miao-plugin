@@ -6,11 +6,14 @@ export const details = [
     title: "战技伤害",
     dmg: ({ talent }, dmg) => dmg(talent.e["技能伤害"], "e")
   }, {
-    title: "终结技伤害·主目标",
+    title: "终结技伤害(主目标)",
     dmg: ({ talent }, dmg) => dmg(talent.q["技能伤害"], "q")
   }, {
-    title: "终结技伤害·副目标",
-    dmg: ({ talent, cons }, dmg) => cons < 6 ? dmg(talent.q["相邻目标伤害"], "q") : dmg(talent.q["技能伤害"], "q")
+    title: "终结技伤害(完整)",
+    dmg: ({ talent, cons }, dmg) => {
+      let cost = cons < 6 ? talent.q["相邻目标伤害"] : talent.q["技能伤害"]
+      return dmg(talent.q["技能伤害"] + cost * 2, "q")
+    }
   }
 ]
 
@@ -24,13 +27,13 @@ export const buffs = [
       dmg: ({ talent }) => talent.t["伤害提高"] * 100
     }
   }, {
-    title: "阿兰1命：当前生命百分比小于等于50%时，战技造成的伤害提高[eDmg]%",
+    title: "阿兰1魂：当前生命百分比小于等于50%时，战技造成的伤害提高[eDmg]%",
     cons: 1,
     data: {
       eDmg: 10
     }
   }, {
-    title: "阿兰6命：当前生命百分比小于等于50%时，终结技造成的伤害提高[qDmg]%，且对相邻目标造成与主目标相同的伤害倍率",
+    title: "阿兰6魂：当前生命百分比小于等于50%时，终结技造成的伤害提高[qDmg]%，且对相邻目标造成与主目标相同的伤害倍率",
     cons: 6,
     data: {
       qDmg: 20
@@ -38,4 +41,4 @@ export const buffs = [
   }
 ]
 
-export const createdBy = "Aluxes"
+export const createdBy = "其实雨很好"

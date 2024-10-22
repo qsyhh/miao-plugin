@@ -61,27 +61,27 @@ export const buffs = [
       cdmg: ({ attr }) => Math.min(attr.stance * 0.5, 150)
     }
   }, {
-    title: "波提欧1命：造成伤害时无视地方目标[ignore]%的防御力",
+    title: "波提欧1魂：造成伤害时无视地方目标[ignore]%的防御力",
     cons: 1,
     data: {
       ignore: 16
     }
   }, {
-    title: "波提欧2命：处于【绝命对峙】并获得口袋时，击破特攻提高[stance]%",
+    title: "波提欧2魂：处于【绝命对峙】并获得口袋时，击破特攻提高[stance]%",
     check: ({ params }) => params.eBuff === true,
     cons: 2,
     data: {
       stance: 30
     }
   }, {
-    title: "波提欧4命：处于【绝命对峙】的目标受到的伤害额外提高[enemydmg]%",
+    title: "波提欧4魂：处于【绝命对峙】的目标受到的伤害额外提高[enemydmg]%",
     check: ({ params }) => params.eBuff === true,
     cons: 4,
     data: {
       enemydmg: 12
     }
   }, {
-    title: "波提欧6命：造成击破伤害时，对目标额外造成等同于原伤害倍率的40%的击破伤害",
+    title: "波提欧6魂：造成击破伤害时，对目标额外造成等同于原伤害倍率的40%的击破伤害",
     cons: 6
   }
 ]
