@@ -56,6 +56,7 @@ export default function(staticIdx, keyIdx) {
           }
         }
       }
-    ]
+    ],
+    "梦的蒙太奇": [ staticIdx(1, "speedPct") ]
   }
 }

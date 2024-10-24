@@ -100,6 +100,7 @@ export default function(staticIdx, keyIdx) {
           }
         }
       }
-    ]
+    ],
+    "忍法帖•缭乱破魔": [ staticIdx(1, "stance") ]
   }
 }

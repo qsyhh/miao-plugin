@@ -359,5 +359,25 @@ export default {
         }
       }
     ]
+  },
+  重循苦旅的司铎: {
+    2: attr("speedPct", 6)
+  },
+  识海迷坠的学者: {
+    2: attr("cpct", 8),
+    4: [
+      {
+        title: "战技和终结技造成的伤害提高[eDmg]%",
+        data: {
+          eDmg: 20,
+          qDmg: 20
+        }
+      }, {
+        title: "施放终结技后，下一次战技时造成的伤害额外提高[eDmg]%",
+        data: {
+          eDmg: 25
+        }
+      }
+    ]
   }
 }
