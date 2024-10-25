@@ -629,6 +629,10 @@
     "1317209": {
       "key": "speed",
       "value": 4
+    },
+    "1317210": {
+      "key": "atk",
+      "value": 8
     }
   },
   "treeData": {
