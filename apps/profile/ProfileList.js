@@ -124,7 +124,7 @@ const ProfileList = {
 
     player.save()
     // 渲染图像
-    return e.reply([
+    const msgRes = await e.reply([
       await Common.render("character/profile-list", {
         save_id: uid,
         uid,
@@ -140,6 +140,22 @@ const ProfileList = {
         elem: player.isGs ? "hydro" : "sr"
       }, { e, scale: 1.6, retType: "base64" }), new Button(e).profileList(uid, newChar)
     ])
+    if (msgRes) {
+      // 如果消息发送成功，就将message_id和图片路径存起来，3小时过期
+      const message_id = [ e.message_id ]
+      if (Array.isArray(msgRes.message_id)) {
+        message_id.push(...msgRes.message_id)
+      } else {
+        message_id.push(msgRes.message_id)
+      }
+      for (const i of message_id) {
+        await redis.set(`miao:original-picture:${i}`, JSON.stringify({
+          type: "background",
+          img: background
+        }), { EX: 3600 * 3 })
+      }
+    }
+    return true
   },
 
   /**

@@ -39,8 +39,10 @@ export async function getOriginalPicture(e) {
         if (imgPath.type === "character" && [ 2, 0 ].includes(originalPic)) return e.reply("已禁止获取角色原图...")
         if (imgPath.type === "profile" && [ 1, 0 ].includes(originalPic)) return e.reply("已禁止获取面板原图...")
       }
-      if (imgPath && imgPath.img) e.reply(segment.image(`file://${miaoPath}/resources/${decodeURIComponent(imgPath.img)}`), false, { recallMsg: 30 })
-      return true
+      if (imgPath && imgPath.img) {
+        if (/背景原图/.test(e.msg) && imgPath.type === "background") return e.reply(segment.image(imgPath?.img.replace("data:image/jpeg;base64,", "base64://")))
+        return e.reply(segment.image(`file://${miaoPath}/resources/${decodeURIComponent(imgPath.img)}`), false, { recallMsg: 30 })
+      }
     }
     // 对at错图像的增加嘲讽...
     e.reply(segment.image(`file://${miaoPath}/resources/common/face/what.jpg`))
