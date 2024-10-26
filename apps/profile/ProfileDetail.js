@@ -222,7 +222,7 @@ let ProfileDetail = {
         const buffer = await fetch(background.url).then(res => res.arrayBuffer())
         background.url = `data:image/jpeg;base64,${Buffer.from(buffer).toString("base64")}`
       }
-      background.text = `<style>.background{position:absolute;background-image:url(${background});background-size:cover;width:100%;height:100%;filter:blur(${Cfg.getProfile("filter_profile")}px);}</style><div class="background"></div>`
+      background.text = `<style>.background{position:absolute;background-image:url(${background.url});background-size:cover;width:100%;height:100%;filter:blur(${Cfg.getProfile("filter_profile")}px);}</style><div class="background"></div>`
     }
 
     let renderData = {
