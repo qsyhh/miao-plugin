@@ -1,7 +1,7 @@
 /* eslint-disable import/no-unresolved */
 import { Cfg } from "#miao"
 import { MysApi } from "#miao.models"
-import { miaoPath } from "#miao.path"
+import { miaoPath, rootPath } from "#miao.path"
 
 /**
  * 获取角色卡片的原图
@@ -40,7 +40,10 @@ export async function getOriginalPicture(e) {
         if (imgPath.type === "profile" && [ 1, 0 ].includes(originalPic)) return e.reply("已禁止获取面板原图...")
       }
       if (imgPath && imgPath.img) {
-        if (/背景原图/.test(e.msg) && imgPath.type === "background") return e.reply(segment.image(imgPath?.img.replace("data:image/jpeg;base64,", "base64://")))
+        if (/背景原图/.test(e.msg) && imgPath.type === "background") {
+          imgPath.img = imgPath?.img.replace("data:image/jpeg;base64,", "base64://").replace("../../../../..", `file://${rootPath}/`)
+          return e.reply(segment.image(imgPath?.img.replace("data:image/jpeg;base64,", "base64://")))
+        }
         return e.reply(segment.image(`file://${miaoPath}/resources/${decodeURIComponent(imgPath.img)}`), false, { recallMsg: 30 })
       }
     }

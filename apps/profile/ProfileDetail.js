@@ -215,14 +215,14 @@ let ProfileDetail = {
       data.treeData = treeData
     }
     data.weapon = profile.getWeaponDetail()
-    let background
+    let background = {}
     if (Cfg.getProfile("background_profile") != "def") {
-      background = Cfg.getProfile("background_profile")
-      if (background?.startsWith("http")) {
-        const buffer = await fetch(background).then(res => res.arrayBuffer())
-        background = `data:image/jpeg;base64,${Buffer.from(buffer).toString("base64")}`
+      background.url = Cfg.getProfile("background_profile")
+      if (background.url?.startsWith("http")) {
+        const buffer = await fetch(background.url).then(res => res.arrayBuffer())
+        background.url = `data:image/jpeg;base64,${Buffer.from(buffer).toString("base64")}`
       }
-      background = `<style>.background{position:absolute;background-image:url(${background});background-size:cover;width:100%;height:100%;filter:blur(${Cfg.getProfile("filter_profile")}px);}</style><div class="background"></div>`
+      background.text = `<style>.background{position:absolute;background-image:url(${background});background-size:cover;width:100%;height:100%;filter:blur(${Cfg.getProfile("filter_profile")}px);}</style><div class="background"></div>`
     }
 
     let renderData = {
@@ -235,7 +235,7 @@ let ProfileDetail = {
       dmgCalc,
       artisDetail,
       artisKeyTitle,
-      background,
+      background: background?.text,
       bodyClass: `char-${char.name}`,
       mode,
       wCfg,
@@ -258,7 +258,7 @@ let ProfileDetail = {
         }), { EX: 3600 * 3 })
         await redis.set(`miao:original-picture:${i}`, JSON.stringify({
           type: "background",
-          img: renderData?.background
+          img: background?.url || ""
         }), { EX: 3600 * 3 })
       }
     }
