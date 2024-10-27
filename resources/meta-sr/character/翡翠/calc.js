@@ -1,7 +1,10 @@
 export const details = [
   {
-    title: "普攻伤害",
+    title: "普攻伤害(主目标)",
     dmg: ({ talent }, dmg) => dmg(talent.a["目标伤害"], "a")
+  }, {
+    title: "普攻伤害(完整)",
+    dmg: ({ talent }, dmg) => dmg(talent.a["目标伤害"] + talent.a["相邻目标伤害"] * 2, "a")
   }, {
     title: "战技附加伤害",
     dmg: ({ talent }, dmg) => dmg(talent.e["附加伤害"], "e")
@@ -17,7 +20,7 @@ export const details = [
   }
 ]
 
-export const defDmgIdx = 4
+export const defDmgIdx = 5
 export const mainAttr = "atk,cpct,cdmg"
 
 export const buffs = [
@@ -59,4 +62,4 @@ export const buffs = [
   }
 ]
 
-export const createdBy = "Aluxes"
+export const createdBy = "其实雨很好"

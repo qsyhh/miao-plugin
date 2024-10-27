@@ -19,7 +19,12 @@ export const mainAttr = "atk,cpct,cdmg"
 
 export const buffs = [
   {
-    title: "秘技：攻击力提高[atkPct]%",
+    title: "战技-一锤子买卖：对生命值百分比大于等于50%的目标，战技造成的伤害提高20%",
+    data: {
+      eDmg: 20
+    }
+  }, {
+    title: "秘技-可以优化一下：攻击力提高[atkPct]%",
     data: {
       atkPct: 40
     }
@@ -36,24 +41,19 @@ export const buffs = [
       qDmg: 20
     }
   }, {
-    title: "战技：对生命值百分比大于等于50%的目标，战技造成的伤害提高20%",
-    data: {
-      eDmg: 20
-    }
-  }, {
-    title: "黑塔2命：叠满5层时，暴击率提高15%",
+    title: "黑塔2魂：叠满5层时，暴击率提高15%",
     cons: 2,
     data: {
       cpct: 15
     }
   }, {
-    title: "黑塔4命：天赋追加攻击造成的伤害提高10%",
+    title: "黑塔4魂：天赋追加攻击造成的伤害提高10%",
     cons: 4,
     data: {
       tDmg: 10
     }
   }, {
-    title: "黑塔6命：施放终结技后，攻击力提高25%",
+    title: "黑塔6魂：施放终结技后，攻击力提高25%",
     cons: 6,
     data: {
       atkPct: 25
@@ -61,4 +61,4 @@ export const buffs = [
   }
 ]
 
-export const createdBy = "Aluxes"
+export const createdBy = "其实雨很好"

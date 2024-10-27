@@ -19,33 +19,17 @@ export const details = [
     title: "天赋追击伤害",
     dmg: ({ talent }, dmg) => dmg(talent.t["全体伤害"], "t")
   }, {
-    title: "天赋追击超击破",
-    dmg: ({}, { reaction }) => {
-      return {
-        avg: reaction("superBreak").avg / 0.9
-      }
-    }
-  }, {
-    check: ({ cons }) => cons >= 2,
-    title: "终结技后天赋追击超击破",
-    params: { q: true },
-    dmg: ({}, { reaction }) => {
-      return {
-        avg: reaction("superBreak").avg / 0.9
-      }
-    }
-  }, {
     title: "天赋生命回复",
     dmg: ({ talent, calc, attr }, { heal }) => heal(calc(attr.atk) * talent.t["回复·百分比攻击"] + talent.t["回复·固定值"])
   }, {
     check: ({ cons }) => cons >= 4,
-    title: "4命生命回复",
+    title: "4魂生命回复",
     dmg: ({ calc, attr }, { heal }) => heal(calc(attr.atk) * 0.4)
   }
 ]
 
+export const defDmgIdx = 6
 export const mainAttr = "atk,heal,stance"
-export const defDmgIdx = 4
 
 export const buffs = [
   {
@@ -62,14 +46,14 @@ export const buffs = [
       _energyevery: 10
     }
   }, {
-    title: "灵砂1命：敌方单位的弱点被击破其防御力降低[enemyDef]%",
+    title: "灵砂1魂：敌方单位的弱点被击破其防御力降低[enemyDef]%",
     cons: 1,
     data: {
       enemyDef: 20
     }
   }, {
     check: ({ params }) => params.q === true,
-    title: "灵砂2命：施放终结技时，使我方全体击破特攻提高40",
+    title: "灵砂2魂：施放终结技时，使我方全体击破特攻提高[stance]%",
     cons: 2,
     data: {
       stance: 40

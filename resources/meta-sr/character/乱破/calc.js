@@ -1,5 +1,4 @@
 /* eslint-disable no-empty-pattern */
-// 强化战技 主目标3削韧，副目标1.5削韧
 
 export const details = [
   {
@@ -20,9 +19,11 @@ export const details = [
     title: "强普超击破伤害(前2段主目标)",
     check: ({ trees }) => trees["102"] === true,
     params: { q: true },
-    dmg: ({}, { reaction }) => {
+    dmg: ({ cons }, { reaction }) => {
+      // 2魂提升前两段主目标削韧值50%，故削韧1*(1+0.5)
+      let cost = cons > 1 ? 1.5 : 1
       return {
-        avg: reaction("superBreak").avg / 0.9 * 0.6 * 1
+        avg: reaction("superBreak").avg / 0.9 * 0.6 * 1.5 * cost
       }
     }
   }, {
@@ -30,17 +31,36 @@ export const details = [
     title: "强普超击破伤害(完整)",
     check: ({ trees }) => trees["102"] === true,
     params: { q: true },
-    dmg: ({}, { reaction }) => {
+    dmg: ({ cons }, { reaction }) => {
+      // 2魂提升前两段主目标削韧值50%，故共削韧 前两段主目标(1*(1+0.5)*2)+前两段相邻目标(0.5*4)+第三段削韧(0.5*3)
+      let cost = cons > 1 ? 6.5 : 5.5
       return {
-        avg: reaction("superBreak").avg / 0.9 * 0.6 * 5.5
+        avg: reaction("superBreak").avg / 0.9 * 0.6 * 1.5 * cost
       }
     }
   }, {
-    title: "强普第3段击破伤害(2韧性怪)",
+    title: "强普第3段击破伤害(10韧性怪1充能)",
     params: { q: true },
     dmg: ({ talent }, { reaction }) => {
       return {
-        avg: reaction("imaginaryBreak").avg / 0.9 * (2 + 2) / 4 * talent.t["击破倍率提高"] * 10
+        avg: reaction("imaginaryBreak").avg / 0.9 * (10 + 2) / 4 * (talent.t["击破伤害"] + talent.t["击破倍率提高"])
+      }
+    }
+  }, {
+    title: "强普第3段击破伤害(10韧性怪10充能)",
+    params: { q: true },
+    dmg: ({ talent }, { reaction }) => {
+      return {
+        avg: reaction("imaginaryBreak").avg / 0.9 * (10 + 2) / 4 * (talent.t["击破伤害"] + talent.t["击破倍率提高"] * 10)
+      }
+    }
+  }, {
+    check: ({ cons }) => cons === 6,
+    title: "强普第3段击破伤害(10韧性怪15充能)",
+    params: { q: true },
+    dmg: ({ talent }, { reaction }) => {
+      return {
+        avg: reaction("imaginaryBreak").avg / 0.9 * (10 + 2) / 4 * (talent.t["击破伤害"] + talent.t["击破倍率提高"] * 15)
       }
     }
   }

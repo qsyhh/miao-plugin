@@ -8,9 +8,9 @@ export const details = [
   }, {
     title: "战技提高暴击伤害",
     dmg: ({ talent, attr, cons }) => {
-      let extraCdmg = cons >= 6 ? 0.3 * attr.cdmg / 100 : 0
+      let extraCdmg = cons >= 6 ? 0.3 : 0
       return {
-        avg: Format.percent(talent.e["百分比爆伤"] * attr.cdmg / 100 + talent.e["额外爆伤"] + extraCdmg),
+        avg: Format.percent(attr.cdmg * (talent.e["百分比爆伤"] + talent.e["额外爆伤"] + extraCdmg) / 100),
         type: "text"
       }
     }
@@ -45,7 +45,7 @@ export const buffs = [
       atkPct: 20
     }
   }, {
-    title: "花火6命：战技的暴击伤害提高效果额外提高[_cdmg]%",
+    title: "花火6魂：战技的暴击伤害提高效果额外提高[_cdmg]%",
     sort: 9,
     cons: 6,
     data: {
@@ -54,4 +54,4 @@ export const buffs = [
   }
 ]
 
-export const createdBy = "Aluxes"
+export const createdBy = "其实雨很好"

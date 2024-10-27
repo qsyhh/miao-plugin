@@ -55,21 +55,21 @@ export const buffs = [
       atkPct: 30
     }
   }, {
-    title: "云璃1命：【勘破•斩】与【勘破•灭】造成的伤害提高[qDmg]%，【勘破•灭】的额外伤害段数增加3次。",
+    title: "云璃1魂：【勘破•斩】与【勘破•灭】造成的伤害提高[qDmg]%，【勘破•灭】的额外伤害段数增加3次。",
     cons: 1,
     data: {
       qDmg: 20
     }
   }, {
     check: ({ params }) => params.cons2 === true,
-    title: "云璃2命：发动反击造成伤害时无视敌方目标[ignore]%的防御力。",
+    title: "云璃2魂：发动反击造成伤害时无视敌方目标[ignore]%的防御力。",
     cons: 2,
     data: {
       ignore: 20
     }
   }, {
     check: ({ params }) => params.q === true,
-    title: "云璃6命：发动【勘破•斩】或【勘破•灭】造成伤害时暴击率提高[cpct]%，物理属性抗性穿透提高[kx]%",
+    title: "云璃6魂：发动【勘破•斩】或【勘破•灭】造成伤害时暴击率提高[cpct]%，物理属性抗性穿透提高[kx]%",
     cons: 6,
     data: {
       cpct: 15,
@@ -78,4 +78,4 @@ export const buffs = [
   }
 ]
 
-export const createdBy = "喵喵"
+export const createdBy = "其实雨很好"

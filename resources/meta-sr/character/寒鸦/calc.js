@@ -6,7 +6,12 @@ export const details = [
     title: "普攻伤害",
     dmg: ({ talent }, dmg) => dmg(talent.a["技能伤害"], "a")
   }, {
+    title: "战技标记后普攻伤害",
+    params: { e: true },
+    dmg: ({ talent }, dmg) => dmg(talent.a["技能伤害"], "a")
+  }, {
     title: "战技伤害",
+    params: { e: true },
     dmg: ({ talent }, dmg) => dmg(talent.e["技能伤害"], "e")
   }, {
     title: "终结技提高单体速度",
@@ -41,21 +46,26 @@ export const mainAttr = "atk,cpct,cdmg,dmg"
 
 export const buffs = [
   {
-    title: "天赋-罚恶：对战技标记的敌人造成的普攻、战技、终结技伤害提高[_dmg]%",
+    check: ({ params }) => params.q === true,
+    title: "终结技-十王敕令，遍土遵行：使我方角色速度提高[speedPlus]攻击力提高[atkPct]%",
     data: {
-      _dmg: ({ talent }) => talent.t["伤害提高"] * 100,
-      aDmg: ({ talent }) => talent.t["伤害提高"] * 100,
-      eDmg: ({ talent }) => talent.t["伤害提高"] * 100,
-      qDmg: ({ talent }) => talent.t["伤害提高"] * 100
+      speedPlus: ({ talent, attr }) => attr.speed * talent.q["速度提高"] * 100,
+      atkPct: ({ talent }) => talent.q["攻击力提高"] * 100
     }
   }, {
-    title: "寒鸦2命：释放战技后，速度提高[speedPct]%",
+    check: ({ params }) => params.e === true,
+    title: "天赋-罚恶：对战技标记的敌人造成的普攻、战技、终结技伤害提高[_dmg]%",
+    data: {
+      dmg: ({ talent }) => talent.t["伤害提高"] * 100
+    }
+  }, {
+    title: "寒鸦2魂：释放战技后，速度提高[speedPct]%",
     cons: 2,
     data: {
       speedPct: 20
     }
   }, {
-    title: "寒鸦6命：天赋的伤害提高效果额外提高[_dmg]%",
+    title: "寒鸦6魂：天赋的伤害提高效果额外提高[_dmg]%",
     cons: 6,
     data: {
       _dmg: 10,
@@ -66,4 +76,4 @@ export const buffs = [
   }
 ]
 
-export const createdBy = "Aluxes"
+export const createdBy = "其实雨很好"

@@ -1,27 +1,27 @@
 export const details = [
   {
-    title: "E伤害",
-    dmgKey: "e",
+    title: "普攻伤害",
+    dmg: ({ talent }, dmg) => dmg(talent.a["技能伤害"], "a")
+  }, {
+    title: "战技伤害",
     dmg: ({ talent }, dmg) => dmg(talent.e["技能伤害"], "e")
   }, {
-    title: "Q结束伤害",
-    params: { cons1: true },
-    dmgKey: "q",
-    dmg: ({ talent }, dmg) => dmg(talent.q["最后造成伤害"], "q")
-  }, {
-    title: "Q最多造成伤害",
+    title: "终结技最多造成伤害",
     dmg: ({ talent }, dmg) => dmg(talent.q["最多造成伤害"], "q")
+  }, {
+    title: "终结技结束伤害",
+    params: { cons1: true },
+    dmg: ({ talent }, dmg) => dmg(talent.q["最后造成伤害"], "q")
   }, {
     title: "天赋追加伤害",
     dmg: ({ talent, cons }, dmg) => {
-      let talentConfig = cons >= 6 ? "q,t" : "t"
-      let tdmg = dmg(talent.t["追加攻击伤害"], `${talentConfig}`)
-      return tdmg
+      let talentConfig = cons === 6 ? "q,t" : "t"
+      return dmg(talent.t["追加攻击伤害"], `${talentConfig}`)
     }
   }
 ]
 
-export const defDmgIdx = 1
+export const defDmgIdx = 2
 export const mainAttr = "atk,cpct,cdmg"
 
 export const buffs = [
@@ -65,4 +65,4 @@ export const buffs = [
   }
 ]
 
-export const createdBy = "liangshi"
+export const createdBy = "其实雨很好"

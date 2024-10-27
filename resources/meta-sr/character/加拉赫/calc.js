@@ -14,8 +14,8 @@ export const details = [
   }
 ]
 
-export const mainAttr = "atk,heal,stance"
 export const defDmgIdx = 3
+export const mainAttr = "atk,heal,stance"
 
 export const buffs = [
   {
@@ -31,13 +31,13 @@ export const buffs = [
       breakEnemydmg: ({ talent }) => talent.t["击破伤害提高"] * 100
     }
   }, {
-    title: "加拉赫1命：效果抵抗提高[effDef]%",
+    title: "加拉赫1魂：效果抵抗提高[effDef]%",
     cons: 1,
     data: {
       effDef: 50
     }
   }, {
-    title: "加拉赫6命：击破特攻提高[stance]%",
+    title: "加拉赫6魂：击破特攻提高[stance]%",
     cons: 6,
     data: {
       stance: 20

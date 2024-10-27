@@ -21,8 +21,8 @@ export const details = [
   }
 ]
 
-export const mainAttr = "atk,cpct,cdmg,dmg,effPct"
 export const defDmgIdx = 4
+export const mainAttr = "atk,cpct,cdmg,dmg,effPct"
 
 export const buffs = [
   {
@@ -42,13 +42,13 @@ export const buffs = [
       atkPct: ({ attr }) => attr.effPct > 80 ? Math.min(Math.floor((attr.effPct - 80) / 15) * 60, 240) : 0
     }
   }, {
-    title: "椒丘1命：对处于【烬煨】状态的敌方目标造成的伤害提高[dmg]%",
+    title: "椒丘1魂：对处于【烬煨】状态的敌方目标造成的伤害提高[dmg]%",
     cons: 1,
     data: {
       dmg: 40
     }
   }, {
-    title: "椒丘6命：9层【烬煨】会使目标的全属性抗性降低[kx]",
+    title: "椒丘6魂：9层【烬煨】会使目标的全属性抗性降低[kx]",
     cons: 6,
     data: {
       kx: 27
@@ -56,4 +56,4 @@ export const buffs = [
   }
 ]
 
-export const createdBy = "喵喵"
+export const createdBy = "其实雨很好"
