@@ -256,7 +256,7 @@ let ProfileDetail = {
           type: "profile",
           img: renderData?.data?.costumeSplash
         }), { EX: 3600 * 3 })
-        await redis.set(`miao:original-picture:${i}`, JSON.stringify({
+        await redis.set(`miao:original-background:${i}`, JSON.stringify({
           type: "background",
           img: background?.url || ""
         }), { EX: 3600 * 3 })

@@ -149,7 +149,7 @@ const ProfileList = {
         message_id.push(msgRes.message_id)
       }
       for (const i of message_id) {
-        await redis.set(`miao:original-picture:${i}`, JSON.stringify({
+        await redis.set(`miao:original-background:${i}`, JSON.stringify({
           type: "background",
           img: background?.url || ""
         }), { EX: 3600 * 3 })

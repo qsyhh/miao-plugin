@@ -27,6 +27,7 @@ export async function getOriginalPicture(e) {
   let originalPic = Cfg.get("originalPic") * 1
   if (source) {
     let imgPath = await redis.get(`miao:original-picture:${source.message_id}`)
+    if (/背景原图/.test(e.msg)) imgPath = await redis.get(`miao:original-background:${source.message_id}`)
     if (imgPath) {
       try {
         if (imgPath[0] === "{") {
@@ -40,11 +41,11 @@ export async function getOriginalPicture(e) {
         if (imgPath.type === "profile" && [ 1, 0 ].includes(originalPic)) return e.reply("已禁止获取面板原图...")
       }
       if (imgPath && imgPath.img) {
-        if (/背景原图/.test(e.msg) && imgPath.type === "background") {
+        if (/背景原图/.test(e.msg)) {
           imgPath.img = imgPath?.img.replace("data:image/jpeg;base64,", "base64://").replace("../../../../..", `file://${rootPath}/`)
-          return e.reply(segment.image(imgPath?.img.replace("data:image/jpeg;base64,", "base64://")))
+          return e.reply(segment.image(imgPath.img), false, { recallMsg: 60 })
         }
-        return e.reply(segment.image(`file://${miaoPath}/resources/${decodeURIComponent(imgPath.img)}`), false, { recallMsg: 30 })
+        return e.reply(segment.image(`file://${miaoPath}/resources/${decodeURIComponent(imgPath.img)}`), false, { recallMsg: 60 })
       }
     }
     // 对at错图像的增加嘲讽...
