@@ -40,6 +40,7 @@ export const details = [
     }
   }, {
     title: "强普第3段击破伤害(10韧性怪1充能)",
+    dmgKey: "a2_Break_1",
     params: { q: true },
     dmg: ({ talent }, { reaction }) => {
       return {
@@ -48,6 +49,7 @@ export const details = [
     }
   }, {
     title: "强普第3段击破伤害(10韧性怪10充能)",
+    dmgKey: "a2_Break_10",
     params: { q: true },
     dmg: ({ talent }, { reaction }) => {
       return {
@@ -57,6 +59,7 @@ export const details = [
   }, {
     check: ({ cons }) => cons === 6,
     title: "强普第3段击破伤害(10韧性怪15充能)",
+    dmgKey: "a2_Break_15",
     params: { q: true },
     dmg: ({ talent }, { reaction }) => {
       return {
@@ -66,7 +69,8 @@ export const details = [
   }
 ]
 
-export const defDmgIdx = 5
+export const defDmgKey = "a2_Break_10"
+// export const defDmgIdx = 2
 export const mainAttr = "atk,stance"
 
 export const buffs = [
