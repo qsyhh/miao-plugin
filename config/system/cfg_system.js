@@ -152,6 +152,13 @@ export const cfgSchema = {
         key: "图片",
         def: true
       },
+      withPic: {
+        title: "角色共用面板图",
+        key: "共用面板图",
+        def: true,
+        showDesc: true,
+        desc: "星铁同一角色不同命途是否共用同一个面板图文件夹，当前仅支持三月七及三月七·巡猎，默认开启"
+      },
       qFace: {
         title: "Q版角色头像",
         key: "卡通头像",

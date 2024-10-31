@@ -43,7 +43,7 @@ const ProfileAvatar = {
   },
 
   getCostumeSplash(profile, game = "gs") {
-    let { char, id, name } = profile
+    let { char, name } = profile
     if (!Cfg.get("costumeSplash", true)) return char.getImgs(profile._costume).splash
 
     let costume = profile._costume
@@ -75,19 +75,11 @@ const ProfileAvatar = {
     )) isSuper = true
     // 特殊处理开拓者的情况
     if (char.isTrailblazer) {
-      switch (id) {
-        case 8001:
-        case 8003:
-        case 8005:
-          name = "穹"
-          break
-        case 8002:
-        case 8004:
-        case 8006:
-          name = "星"
-          break
-      }
+      if (/^穹·/.test(name)) name = "穹"
+      if (/^星·/.test(name)) name = "星"
     }
+    // 特殊处理三月七的情况
+    if (/^三月七/.test(name) && Cfg.get("withPic")) name = "三月七"
     if (isSuper) {
       return CharImg.getRandomImg(
         [ `profile/super-character/${name}`, `profile/normal-character/${name}` ],
