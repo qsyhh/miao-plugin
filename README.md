@@ -1,8 +1,10 @@
 # 说明
 
-此仓库为个人fork版本自用，Q群：[517144547](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=2pln8DfZOIwge418mZ2lGK272ulJeABB&authKey=omB8vXIFk0NsTSkShPUrCuoXQsDwmH3DVx0CPakj%2FV4PjZD%2F3WCQrhM9PH08BGj1&noverify=0&group_code=517144547)
+此仓库为个人fork版本自用
 
 此仓库将在原仓库有更新时测试后推送同步，可能更新不及时...推荐使用原版 [miao-plugin](https://gitee.com/yoimiya-kokomi/miao-plugin)
+
+> 或搭配wiki([gitee](https://gitee.com/qsyhh/wiki)|[github](https://github.com/mhy-wiki/wiki))使用，项目Q群：[517144547](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=2pln8DfZOIwge418mZ2lGK272ulJeABB&authKey=omB8vXIFk0NsTSkShPUrCuoXQsDwmH3DVx0CPakj%2FV4PjZD%2F3WCQrhM9PH08BGj1&noverify=0&group_code=517144547)
 
 ## 较原版的新增
 
@@ -16,19 +18,22 @@
 
 ## 安装指令
 
+方式1: 首次/重新安装插件：
+
 ```
 git clone --depth=1 https://gitee.com/qsyhh/miao-plugin.git ./plugins/miao-plugin/
 pnpm install -P
 ```
 
-<details><summary>其他可能需要用的指令</summary>
-
-换源
+方式2: 🔐 换源
 
 ```
 cd plugins/miao-plugin
 git remote set-url origin https://gitee.com/qsyhh/miao-plugin.git
+git reset --hard HEAD
 ```
+
+注: 上述换源指令将会【强制覆盖】本地所有文件，否则无法使用指令更新插件，但面板图、配置文件等文件会保留。自修改过多请勿使用本插件，自修改报错一律不受理
 
 </details>
 
