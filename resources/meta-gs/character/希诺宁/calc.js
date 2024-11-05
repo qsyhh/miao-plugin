@@ -21,7 +21,7 @@ export const details = [
   }
 ]
 
-export const defDmgIdx = 4
+export const defDmgIdx = 3
 export const defParams = { Nightsoul: true }
 export const mainAttr = "def,cpct,cdmg,heal"
 
