@@ -21,23 +21,47 @@
 方式1: 首次/重新安装插件：
 
 ```
+// 使用gitee
 git clone --depth=1 https://gitee.com/qsyhh/miao-plugin.git ./plugins/miao-plugin/
+pnpm install -P
+
+// 使用github
+git clone --depth=1 https://github.com/qsyhh/miao-plugin.git ./plugins/miao-plugin/
 pnpm install -P
 ```
 
+>  [!NOTE]
+> 如果你的网络环境较差，无法连接到 Github，可以使用 [GitHub Proxy](https://mirror.ghproxy.com/) 提供的文件代理加速下载服务
+> ```
+> git clone --depth=1 https://mirror.ghproxy.com/https://github.com/qsyhh/miao-plugin.git ./plugins/miao-plugin/
+> pnpm install -P
+> ```
+
 方式2: 🔐 换源
 
+注: 该方式将会【强制覆盖】本地所有文件，否则无法使用指令更新插件，但面板图、配置文件等文件会保留。自修改过多请勿使用本fork版，自修改报错一律不受理
+
 ```
+// 使用gitee
 cd plugins/miao-plugin
 git remote set-url origin https://gitee.com/qsyhh/miao-plugin.git
 git reset --hard HEAD
+
+// 使用github
+cd plugins/miao-plugin
+git remote set-url origin https://github.com/qsyhh/miao-plugin.git
+git reset --hard HEAD
 ```
 
-注: 上述换源指令将会【强制覆盖】本地所有文件，否则无法使用指令更新插件，但面板图、配置文件等文件会保留。自修改过多请勿使用本插件，自修改报错一律不受理
+>  [!NOTE]
+> 如果你的网络环境较差，无法连接到 Github，可以使用 [GitHub Proxy](https://mirror.ghproxy.com/) 提供的文件代理加速下载服务
+> ```
+> cd plugins/miao-plugin
+> git remote set-url https://mirror.ghproxy.com/https://github.com/qsyhh/miao-plugin.git
+> git reset --hard HEAD
+> ```
 
-</details>
-
-以下为原版说明
+以下为原版仓库说明
 
 ---
 

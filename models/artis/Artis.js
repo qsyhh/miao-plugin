@@ -214,7 +214,7 @@ export default class Artis extends Base {
     Data.eachStr(pos.toString(), (p) => {
       let posAttr = mainAttr[p]
       if (!attrs.includes(posAttr)) {
-        if (Number(p) === dmgIdx && attrs.includes("dmg") && Format.isElem(posAttr)) return true
+        if (p == dmgIdx && attrs.includes("dmg") && Format.isElem(posAttr)) return true
         /* if (/Plus$/.test(posAttr) && attrs.includes(posAttr.replace('Pct', ''))) {
           return true
         } */
