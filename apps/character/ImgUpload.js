@@ -111,27 +111,24 @@ async function saveImages(e, name, imageMessages) {
       // 角色图像默认jpg
       fileType = "jpg"
     }
-
-    let imgPath = `${path}/${fileName}.${fileType}`
+    // 使用 Date.now() 作为文件名
+    let imgPath = `${path}/${Date.now()}.${fileType}`
     const streamPipeline = promisify(pipeline)
     await streamPipeline(response.body, fs.createWriteStream(imgPath))
 
-    // 使用md5作为文件名
-    let buffers = fs.readFileSync(imgPath)
-    let base64 = Buffer.from(buffers, "base64").toString()
-    let md5 = MD5(base64)
-    let newImgPath = `${path}/${md5}.${fileType}`
+    // 使用 Date.now() 重命名文件
+    let newImgPath = `${path}/${Date.now()}.${fileType}`
     if (fs.existsSync(newImgPath)) {
       fs.unlink(newImgPath, (err) => {
         logger.error("unlink", err)
       })
     }
-    fs.rename(imgPath, newImgPath, () => {
-    })
+    fs.rename(imgPath, newImgPath, () => {})
     imgCount++
     logger.mark(`添加成功: ${newImgPath}`)
   }
-  return e.reply([ segment.at(e.user_id, senderName), `\n成功添加${imgCount}张${name}${isProfile ? "面板图" : "图片"}。` ])
+  await e.reply(`\n成功添加${imgCount}张${name}${isProfile ? "面板图" : "图片"}。` ,true)
+  return false
 }
 
 async function isAllowedToUploadCharacterImage(e) {
