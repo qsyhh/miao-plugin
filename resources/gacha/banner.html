@@ -1,0 +1,47 @@
+{{extend defaultLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" type="text/css" href="{{_res_path}}/gacha/banner.css?v=1.0"/>
+{{/block}}
+
+{{block 'main'}}
+<div class="head-box">
+  <div class="title">#未复刻{{star}}星{{type}}</div>
+  <div class="pool-label">当前卡池: {{new_pool.data[0].version}} {{new_pool.name}}</div>
+</div>
+<div id="profile-stat">
+  <div class="cont">
+    <div class="cont-table">
+      <div class="avatar tr thead">
+        <div class="td-idx">#</div>
+        <div class="td-name">{{type}}</div>
+        <div class="td-total-up">UP次数</div>
+        <div class="td-lastpool">上次UP卡池</div>
+        <div class="td-poolcount">距今间隔</div>
+      </div>
+      {{each data item idx}}
+      <div class="avatar tr">
+        <div class="td td-idx  star{{star}}">{{idx+1}}</div>
+        <div class="td td-name  star{{star}}">
+          <div class="item-banner">
+            <div class="item-icon char-icon star{{star}}">
+              <span class="img" style="background-image:url('{{_res_path}}{{item.icon}}')"></span>
+            </div>
+
+            <span class="item-name">{{item.name}}</span>
+          </div>
+        </div>
+        <div class="td-total-up">{{item.count}}</div>
+        <div class="td-lastpool">{{item.version}}</div>
+        {{if item.daysDiff > 0 }}
+        <div class="td-poolcount">{{item.daysDiff}}天</div>
+        {{else}}
+        <div class="td-poolcount">当期UP</div>
+        {{/if}}
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</div>
+
+{{/block}}
