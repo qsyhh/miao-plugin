@@ -7,14 +7,12 @@ body {
   background-size: 100% auto;
 }
 .head-box {
-  margin-top: 45px;
-  margin-bottom: 45px;
+  margin: 20px 0px;
 }
-.head-box .pool-label {
-  font-size: 18px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  text-shadow: 0 0 1px #000, 1px 1px 3px rgba(0, 0, 0, 0.9);
+.item-icon {
+  width: 30px;
+  height: 30px;
+  display: inline-block;
 }
 #profile-stat {
   display: table;
@@ -57,9 +55,8 @@ body {
       .star(5, rgba(255, 228, 180, .5));
   */
 }
-.cont .lastpool,
-.cont .total-up,
-.cont .poolcount {
+.cont .cons,
+.cont .level {
   height: 22px;
   line-height: 22px;
   display: inline-block;
@@ -67,7 +64,7 @@ body {
   padding: 0;
   text-align: center;
   vertical-align: middle;
-  font-size: 15px;
+  font-size: 13px;
   position: relative;
 }
 .cont .cons {
@@ -79,7 +76,7 @@ body {
   height: 32px;
 }
 .cont .item-name {
-  padding-left: 10px;
+  padding-left: 5px;
   text-align: left;
   text-shadow: 0 0 1px rgba(255, 255, 255, 0.8);
 }
@@ -124,12 +121,14 @@ body {
 }
 .cont .tr .td.star4 .item-name {
   color: #720465;
+  overflow: hidden;
 }
 .cont .tr .td.star5 {
   background: rgba(255, 212, 132, 0.35);
 }
 .cont .tr .td.star5 .item-name {
   color: #6f4b00;
+  overflow: hidden;
 }
 .cont .tr.thead {
   background: rgba(0, 0, 0, 0.5) !important;
@@ -148,7 +147,7 @@ body {
   height: 36px;
   vertical-align: middle;
   line-height: 36px;
-  box-shadow: 0 0 1px 0 rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.5);
 }
 .cont .tr > div * {
   vertical-align: middle;
@@ -158,11 +157,11 @@ body {
 }
 .cont .tr .td-name {
   text-align: left;
-  width: 80px;
-  padding-left: 10px;
+  width: 100px;
+  padding-left: 3px;
 }
 .cont .tr .td-name .item-name {
-  width: 80px;
+  width: 112px;
 }
 .cont .tr .td-name .char-icon {
   width: 30px;
@@ -178,19 +177,10 @@ body {
   position: relative;
   top: 0;
   left: 0;
-  border-radius: 0 0 6px 12px;
+  border-radius: 0 0 6px 6px;
 }
-.cont .tr .td-total-up {
-  width: 40px;
-  text-align: center;
-}
-.cont .tr .td-lastpool {
-  width: 80px;
-  text-align: center;
-}
-.cont .tr .td-poolcount {
-  width: 140px;
-  text-align: center;
+.cont .tr .td-lv {
+  width: 35px;
 }
 .cont .tr .td-fetter {
   width: 40px;
@@ -278,16 +268,20 @@ body {
 .cont .tr .lv5.talent-plus {
   color: #b70000;
 }
+.cont .tr .lv5.crown-sr {
+  background: url("../common/item/crown-sr-o.png") center center no-repeat rgba(255, 36, 26, 0.55);
+  background-size: contain;
+}
 .cont .td-artis {
   width: 115px;
   text-align: left;
 }
 .cont .td-artis.class-ACE,
-.cont .td-artis.class-ACE² {
+.cont .td-artis.class-MAX {
   background: rgba(255, 228, 180, 0.5);
 }
 .cont .td-artis.class-ACE .artis-mark-class,
-.cont .td-artis.class-ACE² .artis-mark-class {
+.cont .td-artis.class-MAX .artis-mark-class {
   background: #ff5722;
 }
 .cont .td-artis.class-SSS,
@@ -374,15 +368,33 @@ body {
   font-size: 12px;
   margin-right: -60px;
 }
+.cont .td-material {
+  padding-left: 5px;
+  text-align: left !important;
+}
+.cont .td-weekly.today,
+.cont .td-material.today {
+  background: rgba(255, 212, 132, 0.35);
+  color: #6f4b00;
+}
+.cont .td-weekly.not-today,
+.cont .td-material.not-today {
+  opacity: 0.7;
+  background: rgba(50, 50, 50, 0.2);
+}
 .cont-notice {
-  color: #888;
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(0, 0, 0, 0.7);
   font-size: 13px;
   text-align: center;
-  padding: 8px;
+  padding: 10px;
+}
+.cont-notice strong {
+  color: #d3bc8e;
+  font-weight: normal;
+}
+.cont-notice div {
+  margin: 8px 0 0;
 }
 .cont-notice span {
-  padding: 0 3px;
-  color: #555;
+  margin-left: 5px;
 }
-/*# sourceMappingURL=profile-stat.css.map */

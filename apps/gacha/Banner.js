@@ -3,7 +3,7 @@ import lodash from "lodash"
 import { Common, Data } from "#miao"
 import { Character, Weapon } from "#miao.models"
 import { poolDetailSr } from "../../resources/meta-sr/info/index.js"
-import { poolDetail } from "../../resources/meta-gs/info/index.js"
+import { poolDetail, mixPoolDetail } from "../../resources/meta-gs/info/index.js"
 
 let dataList = {
   4: "四星",
@@ -16,6 +16,11 @@ let dataLists = {}
 lodash.forEach(dataList, (txt, key) => {
   Data.eachStr(txt, (t) => (dataLists[t] = key))
 })
+// 添加混池
+mixPoolDetail.forEach(k => {
+  k.half += "(混池)"
+  poolDetail.push(k)
+})
 
 let Banner = {
   async detail(e) {
@@ -23,9 +28,8 @@ let Banner = {
     let msg = e.original_msg || e.msg || ""
     if (!isMatch.test(msg)) return false
     let regRet = isMatch.exec(msg)
-    e.game = "gs"
-    if (e.isSr || /光锥/.test(msg)) e.game = "sr"
-    let data = Banner.calculateStats(regRet, e.game)
+    let game = /星铁|光锥/.test(e.msg) ? "sr" : "gs"
+    let data = Banner.calculateStats(regRet, game)
     // 渲染图像
     return e.reply([ await Common.render("gacha/banner", data, { e, scale: 1.4, retType: "base64" }) ])
   },
@@ -33,9 +37,10 @@ let Banner = {
     let mode = "char5"
     if (regRet[2] || regRet[3]) mode = `${regRet[3] ? dataLists[regRet[3]] : "char"}${regRet[2] ? dataLists[regRet[2]] : 5}`
     let type = /(char|weapon)(4|5)/.exec(mode)
-    let stats = { type: regRet[3] || "角色", star: regRet[2] || 5, data: {}, new_pool: { name: [], data: [] } }
+    let stats = { type: regRet[3] || "角色", star: type[2] || 5, data: {}, new_pool: { name: [], data: [] } }
     let data = game == "sr" ? poolDetailSr : poolDetail
     data.forEach(k => {
+      if (!k[mode]) return
       k[mode].forEach(i => {
         if (Blacklist.includes(i)) return
         if (!stats.data[i]) stats.data[i] = { name: i, count: 0, icon: "" }

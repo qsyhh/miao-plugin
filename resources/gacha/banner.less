@@ -1,15 +1,21 @@
 body {
-  background: url('./imgs/bg-01.jpg') left center;
+  background: url('../common/theme/bg-01.jpg') left center;
   background-size: 100% auto;
 }
 
 .container {
-  background: url('./imgs/main-01.png') center -25px no-repeat;
+  background: url('../common/theme/main-01.png') center -25px no-repeat;
   background-size: 100% auto;
 }
 
 .head-box {
-  margin-top: 0;
+  margin: 20px 0px;
+}
+
+.item-icon {
+  width: 30px;
+  height: 30px;
+  display: inline-block;
 }
 
 #profile-stat {
@@ -48,10 +54,11 @@ body {
 }
 
 .cont {
-  font-size: 14px;
+  font-size: 15px;
   background: none;
 
-  .cons, .level {
+  .cons,
+  .level {
     height: 22px;
     line-height: 22px;
     display: inline-block;
@@ -83,13 +90,12 @@ body {
     background: rgba(0, 0, 0, .4);
     font-weight: bold;
 
-    & > div {
+    &>div {
       box-shadow: 0 0 1px 0 rgba(255, 255, 255, .7);
       text-align: center;
     }
 
     .td-talent {
-
       color: #d3bc8e;
     }
   }
@@ -102,15 +108,17 @@ body {
       box-shadow: 0 0 1px 0 rgba(100, 100, 100, .3) inset;
     }
 
-    .star(@s, @color, @color2:#333) {
+    .star(@s, @color, @color2: #333) {
       .td.star@{s} {
         background: @color;
 
         .item-name {
           color: @color2;
+          overflow: hidden;
         }
       }
     }
+
     .star(1, rgba(200, 200, 200, 0.35));
     .star(2, rgba(168, 255, 133, 0.35));
     .star(3, rgba(137, 168, 255, 0.35));
@@ -120,7 +128,7 @@ body {
     &.thead {
       background: rgba(0, 0, 0, 0.5) !important;
 
-      & > div {
+      &>div {
         color: #d3bc8e !important;
       }
     }
@@ -133,12 +141,12 @@ body {
       background: rgba(240, 240, 240, 1);
     }
 
-    & > div {
+    &>div {
       text-align: center;
       height: 36px;
       vertical-align: middle;
       line-height: 36px;
-      box-shadow: 0 0 1px 0 rgba(255, 255, 255, .7);
+      box-shadow: 0 0 1px 0 rgba(0, 0, 0, .5);
 
       * {
         vertical-align: middle;
@@ -146,7 +154,7 @@ body {
     }
 
     .td-idx {
-      width: 30px;
+      width: 40px;
     }
 
     .td-name {
@@ -155,7 +163,7 @@ body {
       padding-left: 3px;
 
       .item-name {
-        width: 50px;
+        width: 112px;
       }
 
       .char-icon {
@@ -243,9 +251,7 @@ body {
       }
     }
 
-    .td-talent {
-
-    }
+    .td-talent {}
 
     .talent-plus {
       font-weight: bold;
@@ -254,7 +260,7 @@ body {
       text-shadow: 0px 0px 1px #fff;
     }
 
-    .lv(@lv, @c1, @c2:#333) {
+    .lv(@lv, @c1, @c2: #333) {
       .lv@{lv} {
         background: @c1;
 
@@ -263,6 +269,7 @@ body {
         }
       }
     }
+
     .lv(1, rgba(60, 63, 65, .3));
     .lv(2, rgba(23, 184, 58, .5), #005800);
     .lv(3, rgba(27, 128, 212, .5));
@@ -274,6 +281,11 @@ body {
 
       &.talent-plus {
         color: #b70000;
+      }
+
+      &.crown-sr {
+        background: url("../common/item/crown-sr-o.png") center center no-repeat rgba(255, 36, 26, .55);
+        background-size: contain;
       }
     }
 
@@ -293,7 +305,9 @@ body {
     text-align: left;
 
     &.class- {
-      &ACE, &ACE² {
+
+      &ACE,
+      &MAX {
         background: rgba(255, 228, 180, .5);
 
         .artis-mark-class {
@@ -301,7 +315,8 @@ body {
         }
       }
 
-      &SSS, &SS {
+      &SSS,
+      &SS {
         background: rgba(223, 190, 255, .5);
 
         .artis-mark-class {
@@ -309,7 +324,8 @@ body {
         }
       }
 
-      &S, &A {
+      &S,
+      &A {
         background: rgba(190, 208, 255, .5);
 
         .artis-mark-class {
@@ -317,7 +333,9 @@ body {
         }
       }
 
-      &B, &C, &D {
+      &B,
+      &C,
+      &D {
         background: rgba(171, 171, 171, .5);
 
         .artis-mark-class {
@@ -399,17 +417,43 @@ body {
     font-size: 12px;
     margin-right: -60px;
   }
+
+  .td-material {
+    padding-left: 5px;
+    text-align: left !important;
+  }
+
+  .td-weekly,
+  .td-material {
+
+    &.today {
+      background: rgba(255, 212, 132, 0.35);
+      color: #6f4b00;
+    }
+
+    &.not-today {
+      opacity: .7;
+      background: rgba(50, 50, 50, .2);
+    }
+  }
 }
 
 .cont-notice {
-  color: #888;
-  background: rgba(255, 255, 255, .4);
+  background: rgba(0, 0, 0, .7);
   font-size: 13px;
   text-align: center;
-  padding: 8px;
+  padding: 10px;
+
+  strong {
+    color: #d3bc8e;
+    font-weight: normal;
+  }
+
+  div {
+    margin: 8px 0 0;
+  }
 
   span {
-    padding: 0 3px;
-    color: #555;
+    margin-left: 5px;
   }
 }
