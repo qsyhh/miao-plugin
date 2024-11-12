@@ -9,6 +9,9 @@ body {
 .head-box {
   margin: 20px 0px;
 }
+.head-box .pool-label {
+  text-shadow: 0 0 1px #000, 1px 1px 3px rgba(0, 0, 0, 0.9);
+}
 .item-icon {
   width: 30px;
   height: 30px;
@@ -161,7 +164,7 @@ body {
   padding-left: 3px;
 }
 .cont .tr .td-name .item-name {
-  width: 112px;
+  width: 140px;
 }
 .cont .tr .td-name .char-icon {
   width: 30px;

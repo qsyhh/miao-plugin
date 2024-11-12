@@ -7,7 +7,7 @@
 {{block 'main'}}
 <div class="head-box">
   <div class="title">#{{star}}星{{type}}复刻统计</div>
-  <div class="pool-label">当前卡池: {{new_pool.data[0].version}} {{new_pool.name}}</div>
+  <div class="pool-label">当前卡池: {{new_pool.data[0].version}} {{new_pool.name.join(", ")}}</div>
 </div>
 <div id="profile-stat">
   <div class="cont">
@@ -36,7 +36,7 @@
         {{if item.daysDiff > 0 }}
         <div class="td-poolcount">{{item.daysDiff}}天</div>
         {{else}}
-        <div class="td-poolcount">当期UP</div>
+        <div class="td-poolcount">{{item.daysStar ? `下期up(${item.daysStar*-1}天后开启)` : `当期UP(${item.daysDiff*-1}天后关闭)`}}</div>
         {{/if}}
       </div>
       {{/each}}

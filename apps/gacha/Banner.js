@@ -47,20 +47,21 @@ let Banner = {
         stats.data[i].count++
         stats.data[i].version = k.version + k.half
         stats.data[i].daysDiff = Banner.daysSince(k.to)
+        if (stats.data[i].daysDiff < 0 && Banner.daysSince(k.from) < 0) stats.data[i].daysStar = Banner.daysSince(k.from)
       })
     })
     let dataMap = []
     Object.keys(stats.data).forEach(i => {
       stats.data[i].icon = type[1] == "char" ? Character.get(i, game).getImgs?.()?.face : Weapon.get(i, game)?.img
       if (stats.data[i].daysDiff < 0) {
-        stats.new_pool.name += ` ${i}`
-        stats.new_pool.data.push(stats.data[i])
+        if (!stats.data[i].daysStar) {
+          stats.new_pool.name.push(i)
+          stats.new_pool.data.push(stats.data[i])
+        }
       }
       dataMap.push(stats.data[i])
     })
-    stats.data = dataMap.sort((a, b) => {
-      return b.daysDiff - a.daysDiff
-    })
+    stats.data = dataMap.sort((a, b) => b.daysDiff - a.daysDiff)
 
     return stats
   },
