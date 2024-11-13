@@ -37,7 +37,7 @@ let Banner = {
     let mode = "char5"
     if (regRet[2] || regRet[3]) mode = `${regRet[3] ? dataLists[regRet[3]] : "char"}${regRet[2] ? dataLists[regRet[2]] : 5}`
     let type = /(char|weapon)(4|5)/.exec(mode)
-    let stats = { type: regRet[3] || "角色", star: type[2] || 5, data: {}, new_pool: { name: [], data: [] } }
+    let stats = { game, type: regRet[3] || "角色", star: type[2] || 5, data: {}, new_pool: { name: [], data: [] } }
     let data = game == "sr" ? poolDetailSr : poolDetail
     data.forEach(k => {
       if (!k[mode]) return
@@ -47,7 +47,7 @@ let Banner = {
         stats.data[i].count++
         stats.data[i].version = k.version + k.half
         stats.data[i].daysDiff = Banner.daysSince(k.to)
-        if (stats.data[i].daysDiff < 0 && Banner.daysSince(k.from) < 0) stats.data[i].daysStar = Banner.daysSince(k.from)
+        if (stats.data[i].daysDiff < 0 && Banner.daysSince(k.from) <= 0) stats.data[i].daysStar = Banner.daysSince(k.from)
       })
     })
     let dataMap = []

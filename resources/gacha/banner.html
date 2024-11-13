@@ -5,15 +5,17 @@
 {{/block}}
 
 {{block 'main'}}
+{{ set gameMap = { gs: "#", sr: "*" } }}
+
 <div class="head-box">
-  <div class="title">#{{star}}星{{type}}复刻统计</div>
+  <div class="title">{{gameMap[game]}}{{star}}星{{type}}复刻统计</div>
   <div class="pool-label">当前卡池: {{new_pool.data[0].version}} {{new_pool.name.join(", ")}}</div>
 </div>
 <div id="profile-stat">
   <div class="cont">
     <div class="cont-table">
       <div class="avatar tr thead">
-        <div class="td-idx">#</div>
+        <div class="td-idx">{{gameMap[game]}}</div>
         <div class="td-name">{{type}}</div>
         <div class="td-total-up">UP次数</div>
         <div class="td-lastpool">上次UP卡池</div>
@@ -36,7 +38,7 @@
         {{if item.daysDiff > 0 }}
         <div class="td-poolcount">{{item.daysDiff}}天</div>
         {{else}}
-        <div class="td-poolcount">{{item.daysStar ? `下期up(${item.daysStar*-1}天后开启)` : `当期UP(${item.daysDiff*-1}天后关闭)`}}</div>
+        <div class="td-poolcount">{{item?.daysStar < 0 ? `下期up(${item.daysStar*-1}天后开启)` : item.daysStar == 0 ? "当期UP(今天开启)" : item.daysDiff == 0 ? "上期UP(今天关闭)": `当期UP(${item.daysDiff*-1}天后关闭)`}}</div>
         {{/if}}
       </div>
       {{/each}}

@@ -6,7 +6,7 @@ import poke from "./poke.js"
 import help from "./help.js"
 import admin from "./admin.js"
 import gacha from "./gacha.js"
-import banner from "./bannner.js"
+import banner from "./banner.js"
 
 let apps = { character, poke, profile, stat, wiki, gacha, banner, admin, help }
 let rules = {} // v3
