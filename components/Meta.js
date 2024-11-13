@@ -141,7 +141,13 @@ const Meta = {
   // 在各个游戏内匹配，以传入的game优先
   matchGame(game = "gs", type, txt) {
     txt = lodash.trim(txt + "").toLowerCase()
-    let games = (!game || game === "gs") ? [ "gs", "sr" ] : [ "sr", "gs" ]
+    let games = [ "sr", "gs" ]
+    if (!game || game === "gs") {
+      games.reverse()
+    } else {
+      games.unshift(game)
+      games = [ ...new Set(games) ]
+    }
     for (let currGame of games) {
       let id = Meta.getId(currGame, type, txt)
       if (id) {

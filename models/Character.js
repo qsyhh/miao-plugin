@@ -25,7 +25,7 @@ class Character extends Base {
   constructor({ id, name = "", elem = "", game = "gs" }) {
     super()
     // 检查缓存
-    let cacheObj = this._getCache(CharId.isTraveler(id) ? `character:${id}:${elem || "anemo"}` : `character:${id}`)
+    let cacheObj = this._getCache(CharId.isTraveler(id) ? `character:${game}:${id}:${elem || "anemo"}` : `character:${game}:${id}`)
     if (cacheObj) return cacheObj
     // 设置数据
     this._id = id

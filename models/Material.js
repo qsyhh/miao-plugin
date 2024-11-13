@@ -32,7 +32,7 @@ lodash.forEach(data, (ds) => {
 class Material extends Base {
   constructor(data, game) {
     super()
-    let cache = this._getCache(`material:${data.name}`)
+    let cache = this._getCache(`material:${game}:${data.name}`)
     if (cache) return cache
 
     this.game = game
