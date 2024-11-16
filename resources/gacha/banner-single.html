@@ -1,0 +1,54 @@
+{{extend defaultLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" type="text/css" href="{{_res_path}}/gacha/banner-single.css?v=1.0"/>
+{{/block}}
+
+{{block 'main'}}
+{{ set gameMap = { gs: "#", sr: "*" } }}
+<div class="head-box">
+  <div class="title">{{gameMap[game]}}{{name}}复刻统计</div>
+  <div class="pool-label">共记复刻{{count}}次，已{{daysDiff}}天未复刻</div>
+</div>
+<div class="act-list">
+  {{each version_list data}}
+  <div class="detail">
+    <div class="pool pool-{{data.version}}">
+      <div class="type">
+        <span>{{data.version}} {{data.half}}</span>{{if data.diffDay}}距上次复刻{{data.diffDay}}天{{else}}首次UP{{/if}}
+        <p>{{data.from}} ~ {{data.to}}</p>
+      </div>
+      <hr />
+      <div class="char-pool">
+        角色活动{{game == gs ? "祈愿" : "跃迁"}}：「{{data.title.join("」,「")}}」
+        <div class="pool-item">
+          {{each data.char char}}
+          <div class="item">
+            <div class="item-icon star star{{char.star}}">
+              <img class="icon" src="{{_res_path}}{{char.icon}}">
+            </div>
+            <div class="name">{{char.name}}</div>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+      <img class="line" src="{{_res_path}}gacha/imgs/line.png" />
+      <div class="weapon-pool">
+        <!-- 不知道如何判断星铁的卡池类型(「流光定影」「溯回忆象」「真意之汇」)，先固定「流光定影」「溯回忆象」 -->
+        {{game == "gs" ? "武器活动祈愿:「神铸赋形」" : data.weapon5.length == 2 ? "光锥活动跃迁：「流光定影」「溯回忆象」": "光锥活动跃迁：「流光定影」"}}
+        <div class="pool-item">
+        {{each data.weapon weapon}}
+        <div class="item">
+          <div class="item-icon star star{{weapon.star}}">
+            <img class="icon" src="{{_res_path}}{{weapon.icon}}">
+          </div>
+          <div class="name">{{weapon.name}}</div>
+        </div>
+        {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
+{{/block}}
