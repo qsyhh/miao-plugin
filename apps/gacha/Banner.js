@@ -65,7 +65,7 @@ let Banner = {
         })
         pool_detail.char = Banner._sort(pool_detail.char, "star")
         pool_detail.weapon = Banner._sort(pool_detail.weapon, "star")
-        if (index + 1 != pool_list.length) pool_detail.diffDay = Banner.daysSince(pool_list[index + 1].from, pool_detail.from)
+        if (index + 1 != pool_list.length) pool_detail.diffDay = Banner.daysSince(pool_list[index + 1].to, pool_detail.from)
       })
       result.version_list.push(pool_detail)
     })
@@ -77,8 +77,8 @@ let Banner = {
     let mode = "char5"
     if (regRet[3] || regRet[4]) mode = `${regRet[4] ? dataLists[regRet[4]] : "char"}${regRet[3] ? dataLists[regRet[3]] : 5}`
     let type = /(char|weapon)(4|5)/.exec(mode)
-    let stats = { game, type: regRet[4] || "角色", star: type[3] || 5, data: {}, new_pool: { name: [], data: [] } }
-    let data = game == "sr" ? poolDetailSr : poolDetail
+    let stats = { game, type: regRet[4] || "角色", star: type[2] || 5, data: {}, new_pool: { name: [], data: [] } }
+    let data = Banner._sort(game == "sr" ? poolDetailSr : poolDetail, "version", true)
     data.forEach(k => {
       if (!k[mode]) return
       k[mode].forEach(i => {
