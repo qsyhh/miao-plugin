@@ -127,8 +127,8 @@ async function saveImages(e, name, imageMessages) {
     imgCount++
     logger.mark(`添加成功: ${newImgPath}`)
   }
-  await e.reply(`\n成功添加${imgCount}张${name}${isProfile ? "面板图" : "图片"}。` ,true)
-  return false
+
+  return e.reply(`\n成功添加${imgCount}张${name}${isProfile ? "面板图" : "图片"}。` ,true)
 }
 
 async function isAllowedToUploadCharacterImage(e) {
