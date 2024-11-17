@@ -8,7 +8,7 @@
 {{ set gameMap = { gs: "#", sr: "*" } }}
 <div class="head-box">
   <div class="title">{{gameMap[game]}}{{name}}复刻统计</div>
-  <div class="pool-label">共记复刻{{count}}次，已{{daysDiff}}天未复刻</div>
+  <div class="pool-label">共记复刻{{count}}次，{{if daysDiff >0}}已{{daysDiff}}天未复刻{{else}}当前UP{{/if}}</div>
 </div>
 <div class="act-list">
   {{each version_list data}}
