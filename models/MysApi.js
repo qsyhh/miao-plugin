@@ -68,10 +68,11 @@ export default class MysApi {
         uid = mys.uid || uid
       }
     }
+    if (/星铁/.test(e.msg)) e.isSr = true
     if (uid) {
       return new User({ id: e.user_id, uid })
     } else {
-      e.reply([ "请先发送【#绑定+你的UID】来绑定查询目标\n星铁请使用【#星铁绑定+UID】", new Button(e).bindUid() ])
+      e.reply([ `请先发送【${e.isSr ? "*" : "#"}绑定+你的UID】来绑定查询目标\n示例：${e.isSr ? "*" : "#"}绑定100000000`, new Button(e).bindUid() ])
       e._replyNeedUid = true
       return false
     }
@@ -132,7 +133,7 @@ export default class MysApi {
 
   // 获取幻想真境剧诗信息
   async getRoleCombat(need_detail = false) {
-    return await this.getData("role_combat", { need_detail: need_detail })
+    return await this.getData("role_combat", { need_detail })
   }
 
   async getDetail(id) {

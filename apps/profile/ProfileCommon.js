@@ -24,7 +24,7 @@ const _getTargetUid = async function(e) {
 
     uid = user.uid
     if ((!uid || !uidReg.test(uid)) && !e._replyNeedUid) {
-      e.reply([ `请先发送【${e.isSr ? "*" : "#"}绑定+你的UID】来绑定查询目标`, new Button(e).bindUid() ])
+      e.reply([ `请先发送【${e.isSr ? "*" : "#"}绑定+你的UID】来绑定查询目标\n示例：${e.isSr ? "*" : "#"}绑定100000000`, new Button(e).bindUid() ])
       e._replyNeedUid = true
       return false
     }
