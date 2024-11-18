@@ -13,14 +13,14 @@ const ProfileList = {
    */
   async refresh(e) {
     let uid = await getTargetUid(e)
-    if (!uid) return e._replyNeedUid || e.reply([ "请先发送【#绑定+你的UID】来绑定查询目标\n星铁请使用【#星铁绑定+UID】", new Button(e).bindUid() ])
+    if (!uid) return e._replyNeedUid || e.reply([ `请先发送【${e.isSr ? "*" : "#"}绑定+你的UID】来绑定查询目标\n示例：${e.isSr ? "*" : "#"}绑定100000000`, new Button(e).bindUid() ])
 
     // 数据更新
     let player = Player.create(e)
     await player.refreshProfile(2)
 
     if (!player?._update?.length) {
-      e._isReplyed || e.reply([ "获取角色面板数据失败，请确认角色已在游戏内橱窗展示，并开放了查看详情。设置完毕后请5分钟后再进行请求~", new Button(e).profileList(uid) ])
+      e._isReplyed || e.reply([ `获取${e.isSr ? "星铁" : "原神"}UID：${uid} 角色面板数据失败，请确认角色已在游戏内橱窗展示，并开放了查看详情。设置完毕后请5分钟后再进行请求~`, new Button(e).profileList(uid) ])
       e._isReplyed = true
     } else {
       let ret = {}
@@ -29,7 +29,7 @@ const ProfileList = {
         if (char) ret[char.name] = true
       })
       if (lodash.isEmpty(ret)) {
-        e._isReplyed || e.reply([ "获取角色面板数据失败，未能请求到角色数据。请确认角色已在游戏内橱窗展示，并开放了查看详情。设置完毕后请5分钟后再进行请求~", new Button(e).profileList(uid) ])
+        e._isReplyed || e.reply([ `获取${e.isSr ? "星铁" : "原神"}UID：${uid} 角色面板数据失败，未能请求到角色数据。请确认角色已在游戏内橱窗展示，并开放了查看详情。设置完毕后请5分钟后再进行请求~`, new Button(e).profileList(uid) ])
         e._isReplyed = true
       } else {
         e.newChar = ret
@@ -47,7 +47,7 @@ const ProfileList = {
 
   async render(e) {
     let uid = await getTargetUid(e)
-    if (!uid) return e._replyNeedUid || e.reply([ "请先发送【#绑定+你的UID】来绑定查询目标\n星铁请使用【#星铁绑定+UID】", new Button(e).bindUid() ])
+    if (!uid) return e._replyNeedUid || e.reply([ `请先发送【${e.isSr ? "*" : "#"}绑定+你的UID】来绑定查询目标\n示例：${e.isSr ? "*" : "#"}绑定100000000`, new Button(e).bindUid() ])
 
     let isSelfUid = false
     if (e.runtime && e.runtime?.user) {
@@ -172,15 +172,15 @@ const ProfileList = {
     let user = e?.runtime?.user || {}
     if (!user.hasCk && !e.isMaster) return e.reply("为确保数据安全，目前仅允许绑定CK用户删除自己UID的面板数据，请联系Bot主人删除...")
 
-    if (!targetUid) return e.reply([ `你确认要删除面板数据吗？ 请回复 #删除面板${uid} 以删除面板数据`, new Button(e).profileList(uid) ])
+    if (!targetUid) return e.reply([ `你确认要删除面板数据吗？ 请回复 ${e.isSr ? "*" : "#"}删除面板${uid} 以删除面板数据`, new Button(e).profileList(uid) ])
 
-    const game = /星铁/.test(e.msg) ? "sr" : "gs"
+    const game = e.isSr ? "sr" : "gs"
     let uidList = user?.getCkUidList(game)
     let ckUids = (lodash.map(uidList, (ds) => ds.uid) || []).join(",").split(",")
     if (!ckUids.includes(targetUid) && !e.isMaster) return e.reply([ `仅允许删除自己的UID数据[${ckUids.join(",")}]`, new Button(e).profileList(uid) ])
 
     Player.delByUid(targetUid, game)
-    return e.reply([ `UID${targetUid}的本地数据已删除，排名数据已清除...`, new Button(e).profileList(uid) ])
+    return e.reply([ `${e.isSr ? "星铁" : "原神"}UID${targetUid}的本地数据已删除，排名数据已清除...`, new Button(e).profileList(uid) ])
   },
 
   async reload(e) {

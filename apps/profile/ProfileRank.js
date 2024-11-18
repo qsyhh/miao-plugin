@@ -74,11 +74,7 @@ export async function groupRank(e) {
       if (uids.length > 0) {
         return renderCharRankList({ e, uids, char, mode, groupId })
       } else {
-        if (e.isSr) {
-          e.reply([ "暂无排名：请通过【*面板】查看角色面板以更新排名信息...", new Button(e).profile(char) ])
-        } else {
-          e.reply([ "暂无排名：请通过【#面板】查看角色面板以更新排名信息...", new Button(e).profile(char) ])
-        }
+        e.reply([ `暂无排名：请通过【${e.isSr ? "*" : "#"}面板】查看角色面板以更新排名信息...`, new Button(e).profile(char) ])
       }
     }
     return true

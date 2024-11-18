@@ -40,7 +40,8 @@ export const poolName = {
   艾梅莉埃: "凝露轻芳",
   玛拉妮: "鲨鲨逐浪游",
   基尼奇: "巡火猎秘",
-  希诺宁: "煅火的祝赐"
+  希诺宁: "煅火的祝赐",
+  恰斯卡: "饮羽散红"
 }
 
 export const poolDetail = [

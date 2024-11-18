@@ -24,7 +24,7 @@ const _getTargetUid = async function(e) {
 
     uid = user.uid
     if ((!uid || !uidReg.test(uid)) && !e._replyNeedUid) {
-      e.reply([ "请先发送【#绑定+你的UID】来绑定查询目标\n星铁请使用【#星铁绑定+UID】", new Button(e).bindUid() ])
+      e.reply([ `请先发送【${e.isSr ? "*" : "#"}绑定+你的UID】来绑定查询目标`, new Button(e).bindUid() ])
       e._replyNeedUid = true
       return false
     }
@@ -35,6 +35,7 @@ const _getTargetUid = async function(e) {
 }
 
 export async function getTargetUid(e) {
+  if (/星铁/.test(e.msg)) e.isSr = true
   let uid = await _getTargetUid(e)
   if (uid) e.uid = uid
   return uid
@@ -47,12 +48,12 @@ export async function getProfileRefresh(e, avatar) {
   let player = Player.create(e)
   let profile = player.getProfile(char.id)
   if (!profile || !profile.hasData) {
-    logger.mark(`本地无UID:${player.uid}的${char.name}面板数据，尝试自动请求...`)
+    logger.mark(`本地无${char.isSr ? "星铁" : "原神"}UID:${player.uid}的${char.name}面板数据，尝试自动请求...`)
     await player.refresh({ profile: true })
     profile = player.getProfile(char.id)
   }
   if (!profile || !profile.hasData) {
-    if (!e._isReplyed) e.reply([ `请确认${char.name}已展示在【游戏内】的角色展柜中，并打开了“显示角色详情”。然后请使用 #更新面板\n命令来获取${char.name}的面板详情`, new Button(e).profileList(player.uid), new Button(e).profile(char, player.uid) ])
+    if (!e._isReplyed) e.reply([ `请确认${char.name}已展示在【游戏内】的角色展柜中，并打开了“显示角色详情”。然后请使用 ${char.isSr ? "*" : "#"}更新面板\n命令来获取${char.name}的面板详情`, new Button(e).profileList(player.uid), new Button(e).profile(char, player.uid) ])
     return false
   }
   return profile

@@ -29,9 +29,7 @@ const ProfileStat = {
     let player = Player.create(e, game)
     let refreshCount = await player.refreshTalent("", 2)
     if (refreshCount && !e.isSr) {
-      e.reply(`角色天赋更新成功，共${refreshCount}个角色\n你现在可以通过【#练度统计】【#天赋统计】来查看角色信息了...`)
-    } else if (e.isSr) {
-      e.reply(`角色行迹更新成功，共${refreshCount}个角色\n你现在可以通过【*练度统计】来查看角色信息了...`)
+      e.reply(`角色${e.isSr ? "行迹" : "天赋"}更新成功，共${refreshCount}个角色\n你现在可以通过${e.isSr ? "【*练度统计】" : "【#练度统计】【#天赋统计】"}来查看角色信息了...`)
     } else {
       e.reply("角色天赋未能更新...")
     }
@@ -361,7 +359,7 @@ const ProfileStat = {
       sort: true
     })
 
-    if (avatarRet.length === 0) return await e._isReplyed || await e.reply(`查询失败，暂未获得#${uid}角色数据，请绑定CK或 #更新面板`)
+    if (avatarRet.length === 0) return await e._isReplyed || await e.reply(`查询失败，暂未获得${e.isSr ? "星铁" : "原神"}UID：${uid}角色数据，请绑定CK或 ${e.isSr ? "*" : "#"}更新面板`)
 
     let filterFunc = (x) => true
     if (isRole) {

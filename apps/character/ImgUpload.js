@@ -1,5 +1,4 @@
 /* eslint-disable import/no-unresolved */
-import MD5 from "md5"
 import fs from "node:fs"
 import lodash from "lodash"
 import fetch from "node-fetch"
@@ -94,10 +93,8 @@ async function saveImages(e, name, imageMessages) {
     const response = await fetch(val.url)
     if (!response.ok) return e.reply("图片下载失败。")
     if (response.headers.get("size") > 1024 * 1024 * imgMaxSize) return e.reply([ segment.at(e.user_id, senderName), "添加失败：图片太大了。" ])
-    let fileName = ""
     let fileType = "png"
     if (val.file) {
-      fileName = val.file.substring(0, val.file.lastIndexOf("."))
       fileType = val.file.substring(val.file.lastIndexOf(".") + 1)
     }
     if (response.headers.get("content-type") === "image/gif") {
@@ -128,7 +125,7 @@ async function saveImages(e, name, imageMessages) {
     logger.mark(`添加成功: ${newImgPath}`)
   }
 
-  return e.reply(`\n成功添加${imgCount}张${name}${isProfile ? "面板图" : "图片"}。` ,true)
+  return e.reply(`\n成功添加${imgCount}张${name}${isProfile ? "面板图" : "图片"}。`, true)
 }
 
 async function isAllowedToUploadCharacterImage(e) {

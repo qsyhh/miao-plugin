@@ -74,7 +74,7 @@ export async function profileArtisList(e) {
 
   if (artis.length === 0) {
     let artisName = game === "gs" ? "圣遗物" : "遗器"
-    await e.reply(`请先获取角色面板数据后再查看${artisName}列表...`)
+    await e.reply(`请先通过【${e.isSr ? "*" : "#"}更新面板】获取角色面板数据后再查看${artisName}列表...`)
     await profileHelp(e)
     return true
   }
