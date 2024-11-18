@@ -2944,13 +2944,13 @@
         "type": "monster",
         "star": 4
       }
-    },
-    "万相石": {
-      "id": "n101224",
-      "name": "万相石",
-      "type": "specialty",
-      "star": 1
     }
+  },
+  "万相石": {
+    "id": 101224,
+    "name": "万相石",
+    "type": "specialty",
+    "star": 1
   },
   "秘刻金纹的源核": {
     "id": "n113066",
@@ -2963,5 +2963,23 @@
     "name": "灼灼彩菊",
     "type": "specialty",
     "star": 1
+  },
+  "微光角菌": {
+    "id": 101252,
+    "name": "微光角菌",
+    "type": "specialty",
+    "star": 1
+  },
+  "枯叶紫英": {
+    "id": 101253,
+    "name": "枯叶紫英",
+    "type": "specialty",
+    "star": 1
+  },
+  "深邃纠缠的凝视": {
+    "id": 113067,
+    "name": "深邃纠缠的凝视",
+    "type": "boss",
+    "star": 4
   }
 }

@@ -288,6 +288,15 @@ export default function(step, staticStep) {
         atkPct: [ 4.8 * 3, 6 * 3, 7.2 * 3, 8.4 * 3, 9.6 * 3 ],
         mastery: step(24)
       }
-    }
+    },
+    星鹫赤羽: [
+      staticStep("atkPct", 24), {
+        title: "2名与装备者元素类型不同的角色，重击伤害提高[a2Dmg]%，元素爆发伤害提高[qDmg]%",
+        refine: {
+          a2Dmg: step(48),
+          qDmg: step(24)
+        }
+      }
+    ]
   }
 }
