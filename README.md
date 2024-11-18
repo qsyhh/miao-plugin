@@ -49,12 +49,14 @@ pnpm install -P
 // 使用gitee
 cd plugins/miao-plugin
 git remote set-url origin https://gitee.com/qsyhh/miao-plugin.git
-git reset --hard HEAD
+git fetch origin master
+git reset --hard origin/master
 
 // 使用github
 cd plugins/miao-plugin
 git remote set-url origin https://github.com/qsyhh/miao-plugin.git
-git reset --hard HEAD
+git fetch origin master
+git reset --hard origin/master
 ```
 
 >  [!NOTE]
@@ -62,7 +64,8 @@ git reset --hard HEAD
 > ```
 > cd plugins/miao-plugin
 > git remote set-url https://mirror.ghproxy.com/https://github.com/qsyhh/miao-plugin.git
-> git reset --hard HEAD
+> git fetch origin master
+> git reset --hard origin/master
 > ```
 
 以下为原版仓库说明
