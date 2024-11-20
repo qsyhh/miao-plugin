@@ -222,6 +222,12 @@ export default function(step, staticStep) {
           aDmg: step(12)
         }
       }
-    ]
+    ],
+    乘浪的回旋: {
+      title: "施放元素战技后，生命值上限提升[hpPct]%",
+      refine: {
+        hpPct: step(44)
+      }
+    }
   }
 }

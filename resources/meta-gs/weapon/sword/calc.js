@@ -15,6 +15,7 @@ export default function(step, staticStep) {
       }
     },
     降临之剑: {
+      check: ({ charId }) => [ 10000005, 10000007 ].includes(charId * 1),
       title: "旅行者攻击力提高[atkPlus]",
       data: {
         atkPlus: 66
@@ -314,6 +315,15 @@ export default function(step, staticStep) {
           dmg: ({ attr, calc, refine }) => Math.min(Math.floor(calc(attr.def) / 1000) * step(8)[refine], step(25.6, 6.4)[refine])
         }
       }
-    ]
+    ],
+    厄水之祸: {
+      title: "角色处于护盾庇护下时,普攻和重击造成伤害提升[aDmg]%，暴击率提升[aCpct]%",
+      refine: {
+        aDmg: step(20),
+        a2Dmg: step(20),
+        aCpct: step(8),
+        a2Cpct: step(8)
+      }
+    }
   }
 }
