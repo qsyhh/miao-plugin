@@ -45,6 +45,10 @@ let DmgCalc = {
 
     if (ele === "phy") dmgNum = (1 + phy.base / 100 + phy.plus / 100 + dynamicPhy / 100)
 
+    if (/^scene,.*/.test(ele) || /.*,scene$/.test(ele) || ele === "scene") {
+      dmgNum = 1
+      if (ele !== "scene") ele = ele.replace(/(,)?scene(,)?/g, "")
+    }
     // 易伤区
     let enemydmgNum = 1
     if (game === "sr") enemydmgNum = 1 + enemydmg.base / 100 + enemydmg.plus / 100 + dynamicEnemydmg / 100
@@ -113,7 +117,7 @@ let DmgCalc = {
     cpctNum = Math.max(0, Math.min(1, cpctNum))
     if (cpctNum === 0) cdmgNum = 0
 
-    const isEle = ele !== false && ele !== "phy"
+    const isEle = ele !== false && ele !== "phy" && ele !== "scene"
     // 反应区
     let eleNum = 1
     let eleBase = 1
