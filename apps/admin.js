@@ -88,6 +88,7 @@ async function sysCfg(e) {
     let type = "str"
     if (/^全部模糊/.exec(regRet[2])) type = "num"
     lodash.forEach(Object.keys(cfgSchemaMap), (cm) => {
+      if (/^def/.test(cfgSchemaMap[cm].cfgKey)) return
       let val = regRet[2].replace(/^全部(模糊)?/, "") || ""
       if (cfgSchemaMap[cm].type == type) {
         val = valDeal(val, cfgSchemaMap[cm])
@@ -155,6 +156,8 @@ async function updateMiaoPlugin(e) {
 async function bgHelp(e) {
   return e.reply(
     "【#喵喵背景设置帮助】\n" +
+    "#喵喵背景设置默认[0-2] --- 设置本地默认背景模式\n" +
+    "#喵喵背景设置默认图[123.png] --- 设置本地默认背景图\n" +
     "#喵喵背景设置列表xxx --- 设置面板列表背景图\n" +
     "#喵喵背景设置面板xxx --- 设置xx面板背景图\n" +
     "#喵喵背景设置列表模糊[0-50] --- 设置面板列表背景图模糊度\n" +
@@ -163,7 +166,8 @@ async function bgHelp(e) {
     "#喵喵背景设置全部xxx --- 一键设置面板、面板列表背景图\n" +
     "#喵喵背景设置全部模糊[0-50] --- 一键设置面板、面板列表模糊度\n" +
     "-------------------\n" +
-    "上述xxx替换为绝对路径/相对路径/图链，为def时为关闭自定义背景图\n" +
+    "上述xxx替换为【绝对路径/相对路径/图链】，为def时为关闭自定义背景图\n" +
+    "#喵喵背景设置默认为1时需在插件目录/resources/profile/background下放入背景图，并使用#喵喵背景设置默认图+文件全名\n" +
     `插件绝对路径：${e.isMaster && e.isPrivate ? miaoPath : e.isMaster ? "请私聊查看" : "null"}\n` +
     "插件相对路径：../../../../../plugins/miao-plugin/", true
   )

@@ -1,7 +1,9 @@
 import Cfg from "./Cfg.js"
 import Render from "./common/Render.js"
+import Background from "./common/Background.js"
 
 const Common = {
+  ...Background,
   render: async function(arg1, arg2, arg3, arg4) {
     if (arguments.length === 4 && typeof (arguments[1]) === "string") {
       return Render.render(arg2, arg3, {
