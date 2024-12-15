@@ -10,7 +10,7 @@ export const details = [
     dmg: ({ talent }, dmg) => dmg(talent.a2["技能伤害"], "a")
   }, {
     title: "强化普攻伤害(完整)",
-    dmg: ({ talent }, dmg) => dmg(talent.a2["单体伤害"] + talent.a2["相邻目标伤害"] * 2, "a")
+    dmg: ({ talent }, dmg) => dmg(talent.a2["技能伤害"] + talent.a2["相邻目标伤害"] * 2, "a")
   }, {
     title: "战技击破特攻提高",
     dmg: ({ talent }) => {
