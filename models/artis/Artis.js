@@ -75,7 +75,7 @@ export default class Artis extends Base {
 
         let tmp = {
           ...artis?.getData("img,name,set"),
-          level: ds?.level == 0 ? 0 : ds.level || 1
+          level: ds.level || 0
         }
         if (ds.main && ds.attrs) {
           tmp.main = ds.main || null
@@ -110,12 +110,12 @@ export default class Artis extends Base {
       arti.id = artiObj.id || ds.id || arti.id || ""
       arti.name = artiObj.name || arti.name || ""
       arti.set = artiObj.setName || arti.set || ""
-      arti.level = arti?.level || ds?.level == 0 ? 0 : ds.level || arti.level || 1
+      arti.level = ds.level || arti.level || 0
       arti.star = artiObj.getStarById(ds.id) || arti.star || 5
     } else {
       arti.name = ds.name || arti.name || ""
       arti.set = ds.set || Artifact.getSetNameByArti(arti.name) || ""
-      arti.level = ds?.level == 0 ? 0 : ds.level || 1
+      arti.level = ds.level || 0
       arti.star = ds.star || 5
     }
   }
@@ -148,7 +148,7 @@ export default class Artis extends Base {
     this.eachIdx((ds, idx) => {
       let key = this.isGs ? "name" : "id"
       let tmp = {
-        level: ds?.level == 0 ? 0 : ds.level || 1
+        level: ds.level || 0
       }
       if (!ds[key]) return true
 
