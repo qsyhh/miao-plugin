@@ -231,7 +231,7 @@ let CalZzz = {
 
     let label = ""
     if (eDate - sDate > 365 * 24 * 3600 * 1000) {
-      label = sDate.format("MM-DD HH:mm") + sDate < now ? " 后永久有效" : " (" + moment.duration(sDate - now).humanize() + "后开始)"
+      label = sDate.format("MM-DD HH:mm") + (sDate < now ? " 后永久有效" : " (" + moment.duration(sDate - now).humanize() + "后开始)")
     } else if (now > sDate && eDate > now) {
       label = eDate.format("MM-DD HH:mm") + " (" + moment.duration(eDate - now).humanize() + "后结束)"
       if (width > 38) label = sDate.format("MM-DD HH:mm") + " ~ " + label
