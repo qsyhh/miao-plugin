@@ -4,6 +4,7 @@ import Calendar from "./wiki/Calendar.js"
 import TodayMaterial from "./wiki/TodayMaterial.js"
 import CharWiki from "./wiki/CharWiki.js"
 import CalendarSr from "./wiki/CalendarSr.js"
+import CalendarZzz from "./wiki/CalendarZzz.js"
 
 let app = App.init({
   id: "wiki",
@@ -28,6 +29,12 @@ app.reg({
   calendarSr: {
     rule: /^#(星铁)+(日历|日历列表)$/,
     fn: CalendarSr.render
+  },
+
+  // %日历
+  calendarZzz: {
+    rule: /^#(绝区零)+(日历|日历列表)$/,
+    fn: CalendarZzz.render
   },
 
   // #今日素材
