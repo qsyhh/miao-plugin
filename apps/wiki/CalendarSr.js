@@ -105,7 +105,7 @@ let CalSr = {
   getAbyssCal(s1, e1, versionStartTime) {
     let check = []
     let f = "YYYY-MM-DD HH:mm:ss"
-    let newAbyssStart = moment("2023-12-25 04:00:00")
+    let newAbyssStart = moment("2024-06-24 04:00:00")
 
     let abyss1Start = moment(versionStartTime, "YYYY-MM-DD HH:mm:ss").day(1).hours(4).format(f)
 
@@ -129,17 +129,18 @@ let CalSr = {
 
     let title1 = "「混沌回忆」"
     let title2 = "「虚构叙事」"
+    let title3 = "「末日幻影」"
     let exchange = false
     let diff = newAbyssStart.diff(abyss0Start, "days")
     if (diff % 28 === 0) exchange = true
-    if (exchange) [ title1, title2 ] = [ title2, title1 ]
+    if (exchange) [ title1, title3 ] = [ title3, title1 ]
 
     check.push([ moment(abyssB1Start), moment(abyssB1End), title1 ])
     check.push([ moment(abyss0Start), moment(abyss0End), title2 ])
-    check.push([ moment(abyss1Start), moment(abyss1End), title1 ])
-    check.push([ moment(abyss2Start), moment(abyss2End), title2 ])
-    check.push([ moment(abyss3Start), moment(abyss3End), title1 ])
-    check.push([ moment(abyss4Start), moment(abyss4End), title2 ])
+    check.push([ moment(abyss1Start), moment(abyss1End), title3 ])
+    check.push([ moment(abyss2Start), moment(abyss2End), title1 ])
+    check.push([ moment(abyss3Start), moment(abyss3End), title2 ])
+    check.push([ moment(abyss4Start), moment(abyss4End), title3 ])
     check.push([ moment(abyss5Start), moment(abyss5End), title1 ])
 
     let ret = []
@@ -244,7 +245,7 @@ let CalSr = {
         title: t[2],
         start_time: t[0].format("YYYY-MM-DD HH:mm"),
         end_time: t[1].format("YYYY-MM-DD HH:mm"),
-        abyssType: t[2] === "「混沌回忆」" ? "abyss-1" : "abyss-2"
+        abyssType: t[2] === "「混沌回忆」" ? "abyss-1" : t[2] === "「虚构叙事」" ? "abyss-2" : "abyss-3"
       }, abyss, { ...dateList, now })
     })
 

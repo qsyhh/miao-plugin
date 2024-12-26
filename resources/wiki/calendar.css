@@ -291,15 +291,23 @@ body {
   position: relative;
 }
 .cal-abyss-cont .type-abyss {
-  background: url("imgs/abyss.jpg") #333465 top right no-repeat;
+  background: url("./imgs/abyss.jpg") #333465 top right no-repeat;
 }
 .cal-abyss-cont .type-abyss .info {
   background: none;
   color: #d3bc8d;
   background-image: linear-gradient(to right, #333465, #333465 80%, rgba(51, 52, 101, 0) 100%);
 }
+.cal-abyss-cont .type-newAbyss {
+  background: url("./imgs/newAbyss.jpg") #1a3061 top right no-repeat;
+}
+.cal-abyss-cont .type-newAbyss .info {
+  background: none;
+  color: #d3bc8d;
+  background-image: linear-gradient(to right, #1a3061, #1a3061 80%, rgba(26, 48, 97, 0) 100%);
+}
 .cal-abyss-cont .type-abyss-1 {
-  background: url("imgs/abyss-1.jpg") #0f0829 top right no-repeat;
+  background: url("./imgs/abyss-1.jpg") #0f0829 top right no-repeat;
 }
 .cal-abyss-cont .type-abyss-1 .info {
   background: none;
@@ -307,12 +315,20 @@ body {
   background-image: linear-gradient(to right, #0f0829, #0f0829 80%, rgba(15, 8, 41, 0) 100%);
 }
 .cal-abyss-cont .type-abyss-2 {
-  background: url("imgs/abyss-2.jpg") #16202a top right no-repeat;
+  background: url("./imgs/abyss-2.jpg") #16202a top right no-repeat;
 }
 .cal-abyss-cont .type-abyss-2 .info {
   background: none;
   color: #d3bc8d;
   background-image: linear-gradient(to right, #16202a, #16202a 80%, rgba(22, 32, 42, 0) 100%);
+}
+.cal-abyss-cont .type-abyss-3 {
+  background: url("imgs/abyss-3.jpg") #2b2a37 top right no-repeat;
+}
+.cal-abyss-cont .type-abyss-3 .info {
+  background: none;
+  color: #d3bc8d;
+  background-image: linear-gradient(to right, #2b2a37, #2b2a37 80%, rgba(43, 42, 55, 0) 100%);
 }
 .cal-abyss-cont .cal-item {
   border-radius: 0;
