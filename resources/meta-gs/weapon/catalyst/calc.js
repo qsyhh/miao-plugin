@@ -228,6 +228,14 @@ export default function(step, staticStep) {
       refine: {
         hpPct: step(44)
       }
-    }
+    },
+    祭星者之望: [
+      staticStep("mastery", 100), {
+        title: "队伍中自己的当前场上角色对附近的敌人造成的伤害提升[dmg]%",
+        refine: {
+          dmg: step(28)
+        }
+      }
+    ]
   }
 }
