@@ -10,6 +10,8 @@ import hutaoApi from "./api/HutaoApi.js"
 import homoApi from "./api/HomoApi.js"
 import avocadoApi from "./api/AvocadoApi.js"
 import enkaHSRApi from "./api/EnkaHSRApi.js"
+import mysPanelApi from "./api/MysPanelApi.js"
+import mysPanelHSRApi from "./api/MysPanelHSRApi.js"
 
 let { diyCfg } = await Data.importCfg("profile")
 
@@ -19,19 +21,25 @@ const apis = {
   enka: enkaApi,
   hutao: hutaoApi,
   homo: homoApi,
+  mysPanel: mysPanelApi,
   avocado: avocadoApi,
-  enkaHSR: enkaHSRApi
+  enkaHSR: enkaHSRApi,
+  mysPanelHSR: mysPanelHSRApi
 }
 
 const servs = {}
 
 const Serv = {
   // 根据UID获取 ProfileServ
-  getServ(uid, game = "gs") {
+  getServ(uid, game = "gs", fromMys = false) {
     let token = diyCfg?.miaoApi?.token
     let qq = diyCfg?.miaoApi?.qq
     let hasToken = !!(qq && token && token.length === 32 && !/^test/.test(token))
     let isGs = game === "gs"
+
+    // 特判：从米游社更新
+    // 回避基础数据源 mys，命名为 mysPanel
+    if (fromMys) return Serv.serv(isGs ? "mysPanel" : "mysPanelHSR")
 
     // 根据uid判断当前服务器类型。官服0 B服1 国际2
     let servType = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 1, 6: 2, 7: 2, 8: 2, 18: 2, 9: 2 }[String(uid).slice(0, -8)]
@@ -44,8 +52,8 @@ const Serv = {
     if ((servIdx === "0" || servIdx === "1") && hasToken) return Serv.serv("miao")
 
     // 如果指定了序号，则返回对应服务。0和1已前置判断
-    // 原神：0自动，1喵，2Enka，3Mgg, 4:Hutao
-    // 星铁：0自动，1喵，2Mihomo，3Avocado, 4EnkaHSR
+    // 原神：0自动，1喵，2Enka，3Mgg，4:Hutao，5:米游社
+    // 星铁：0自动，1喵，2Mihomo，3Avocado，4EnkaHSR，5:米游社
     let servKey = isGs
       ? {
           2: "enka",
@@ -71,15 +79,15 @@ const Serv = {
   },
 
   // 发起请求
-  async req(e, player) {
+  async req(e, player, fromMys = false) {
     let req = ProfileReq.create(e, player.game)
     if (!req) return false
 
-    let serv = Serv.getServ(e.uid || player.uid, player.game)
+    let serv = Serv.getServ(e.uid || player.uid, player.game, fromMys)
     let { uid } = player
     try {
       player._update = []
-      await req.requestProfile(player, serv, player.game)
+      await req.requestProfile(player, serv)
       return player._update?.length || 0
     } catch (err) {
       if (!e._isReplyed) await e.reply(`UID:${uid}更新面板失败，更新服务：${serv.name}`)

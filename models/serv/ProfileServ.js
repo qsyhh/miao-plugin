@@ -1,7 +1,7 @@
 /* eslint-disable import/no-unresolved */
 import lodash from "lodash"
-import Base from "../Base.js"
 import { Data } from "#miao"
+import Base from "../Base.js"
 
 let { sysCfg, diyCfg } = await Data.importCfg("profile")
 
