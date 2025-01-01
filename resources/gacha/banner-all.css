@@ -7,10 +7,15 @@ body {
   background-size: 100% auto;
 }
 .head-box {
-  margin: 20px 0px;
+  margin: 0px 0px;
 }
 .head-box .pool-label {
   text-shadow: 0 0 1px #000, 1px 1px 3px rgba(0, 0, 0, 0.9);
+  margin: 4px 0px;
+}
+.head-box .head-box .pool-time {
+  text-shadow: 0 0 1px #000, 1px 1px 3px rgba(0, 0, 0, 0.9);
+  font-size: 14px;
 }
 .item-icon {
   width: 30px;
@@ -106,18 +111,21 @@ body {
 }
 .cont .tr .td.star1 .item-name {
   color: #333;
+  overflow: hidden;
 }
 .cont .tr .td.star2 {
   background: rgba(168, 255, 133, 0.35);
 }
 .cont .tr .td.star2 .item-name {
   color: #333;
+  overflow: hidden;
 }
 .cont .tr .td.star3 {
   background: rgba(137, 168, 255, 0.35);
 }
 .cont .tr .td.star3 .item-name {
   color: #333;
+  overflow: hidden;
 }
 .cont .tr .td.star4 {
   background: rgba(195, 134, 255, 0.35);

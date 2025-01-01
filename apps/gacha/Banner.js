@@ -87,7 +87,8 @@ let Banner = {
         stats.data[i].count++
         stats.data[i].version = k.version + k.half
         stats.data[i].daysDiff = Banner.daysSince(k.to)
-        if (stats.data[i].daysDiff < 0 && Banner.daysSince(k.from) <= 0) stats.data[i].daysStar = Banner.daysSince(k.from)
+        stats.data[i] = { ...stats.data[i], ...k }
+        if (stats.data[i].daysDiff < 0 && Banner.daysSince(k.from) < -1) stats.data[i].daysStar = Banner.daysSince(k.from)
       })
     })
     let dataMap = []

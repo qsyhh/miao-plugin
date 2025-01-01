@@ -9,7 +9,10 @@
 
 <div class="head-box">
   <div class="title">{{gameMap[game]}}{{star}}星{{type}}复刻统计</div>
-  <div class="pool-label">当前卡池: {{new_pool.data[0].version}} {{new_pool.name.join(", ")}}</div>
+  {{if new_pool.data.length!=0}}
+    <div class="pool-label">当前卡池: {{new_pool.data[0].version}} {{new_pool.name.join(", ")}}</div>
+    <div class="pool-time">{{new_pool.data[0].from}} ~ {{new_pool.data[0].to}}</div>
+  {{/if}}
 </div>
 <div id="profile-stat">
   <div class="cont">
