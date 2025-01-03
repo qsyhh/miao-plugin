@@ -82,7 +82,7 @@ export default class ProfileDmg extends Base {
 
   async getCalcRule() {
     let ruleName = this.char?.name
-    if ([ 10000005, 10000007 ].includes(this.char.id * 1)) ruleName = `旅行者/${this.profile.elem}`
+    if ([ 10000005, 10000007, 20000000 ].includes(this.char.id * 1)) ruleName = `旅行者/${this.profile.elem}`
     const cfgPath = ProfileDmg.dmgRulePath(ruleName, this.char?.game)
     let cfg = {}
     if (cfgPath) {

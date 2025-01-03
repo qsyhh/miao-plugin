@@ -177,11 +177,10 @@ const ProfileChange = {
         let chars = Character.get(txt, game)
         if (chars) {
           char.char = chars.id
+          char.elem = chars.elem
         }
       }
-      if (!lodash.isEmpty(char)) {
-        change.char = char
-      }
+      if (!lodash.isEmpty(char)) change.char = char
     })
     ret.change = lodash.isEmpty(change) ? false : change
     return ret
@@ -206,7 +205,7 @@ const ProfileChange = {
     let dc = ds.char || {}
     if (!source || !source.hasData) source = {}
 
-    let char = Character.get(dc?.char || source.id || charid)
+    let char = Character.get({ id: dc?.char || source.id || charid, elem: dc?.elem })
     if (!char) return false
 
     let level = dc.level || source.level || 90
@@ -233,7 +232,7 @@ const ProfileChange = {
       level,
       cons: Data.def(dc.cons, source.cons, 0),
       fetter: source.fetter || 10,
-      elem: source.char?.elem || char.elem,
+      elem: char.elem || source.char?.elem,
       dataSource: "change",
       _source: "change",
       promote,

@@ -161,6 +161,13 @@ class Character extends Base {
 
   // 基于角色名获取Character
   static get(val, game = "gs") {
+    if (lodash.isString(val)) {
+      let travelerName = /旅行者|主角?|空|荧/g
+      if (travelerName.test(val) && game === "gs") {
+        let elem = Format.elem(val.replace(travelerName, ""), "")
+        if (elem) val = { id: 20000000, elem }
+      }
+    }
     let id = CharId.getId(val, game)
     if (!id) return false
     return new Character(id)
