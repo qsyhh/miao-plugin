@@ -1,9 +1,9 @@
 /* eslint-disable import/no-unresolved */
 import lodash from "lodash"
-import { Cfg, Common } from "#miao"
 import { miaoPath } from "#miao.path"
 import { Character } from "#miao.models"
 import CharTalent from "./CharTalent.js"
+import { Cfg, Common, Format } from "#miao"
 import CharWikiData from "./CharWikiData.js"
 import CharMaterial from "./CharMaterial.js"
 
@@ -13,6 +13,7 @@ const CharWiki = {
   check(e) {
     let msg = e.original_msg || e.msg
     if (!e.msg) return false
+    e.game = /星铁|开拓者/.test(e.msg) ? "sr" : e.game ?? "gs"
 
     let ret = wikiReg.exec(msg)
     if (!ret || !ret[1] || !ret[2]) return false
@@ -31,6 +32,11 @@ const CharWiki = {
     }
     if ([ "cons", "talent" ].includes(mode) && !Common.cfg("charWikiTalent")) return false
 
+    let travelerName = /旅行者|主角?|空|荧/g
+    if (travelerName.test(ret[1]) && e.game === "gs") {
+      let elem = Format.elem(ret[1].replace(travelerName, ""), "")
+      if (elem) ret[1] = { id: 20000000, elem }
+    }
     let char = Character.get(ret[1], e.game)
     if (!char || (char.isCustom && mode !== "pic")) return false
 

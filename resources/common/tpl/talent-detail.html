@@ -6,7 +6,11 @@
     <img src="{{_res_path}}{{icon}}"/>
   </div>
   <div class="talent-info">
-    <div class="talent-name">{{ds.name}}<span> —— {{ds.type}} {{if ds.tag}}| {{ds.tag}}{{/if}}</span></div>
+    {{if type && game==='sr'}}
+      <div class="talent-name">{{ds.name}}<span> —— {{ds.type}} {{if ds.tag}}| {{ds.tag}}{{/if}}</span></div>
+    {{else}}
+      <div class="talent-name">{{ds.name}}</div>
+    {{/if}}
     <div class="talent-desc">
       {{each ds.desc d}}
       {{ if d[0] === "<" || game==='sr' }}

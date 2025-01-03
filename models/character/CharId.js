@@ -47,7 +47,7 @@ const CharId = {
 
     let match = Meta.matchGame(game, "char", ds)
     if (match) return ret(match.data, match.game, elem)
-    if (game !== 'sr') {
+    if (game !== "sr") {
       // 尝试使用元素起始匹配
       let em = Format.matchElem(ds, "", true)
       if (em) {
