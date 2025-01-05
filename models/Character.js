@@ -32,7 +32,7 @@ class Character extends Base {
     this.name = name
     this.game = game
     if (!this.isCustom) {
-      let meta = Meta.getData(game, "char", CharId.isTraveler(id) ? `旅行者/${elem}` : name)
+      let meta = Meta.getData(game, "char", name)
       this.meta = meta || {}
       if (this.isGs) this.elem = Format.elem(elem || meta.elem, "anemo")
     } else {
