@@ -33,16 +33,16 @@ let MysPanelData = {
     }
   },
 
-  getTalent(char, ds = {}) {
-    // 照抄 EnkaData 实现
-    let idx = 0
+  getTalent(char, ds = []) {
+    let { talentId = {} } = char.meta
     let ret = {}
     lodash.forEach(ds, (talent_data) => {
-      const lv = talent_data.level
-      let key
-      if (talent_data.skill_type == 1) { // 1 主动技能；2 被动技能
-        key = [ "a", "e", "q" ][idx++]
-        ret[key] = ret[key] || lv
+      if (talent_data.skill_type === 1) {
+        let key
+        if (talentId[talent_data.skill_id]) {
+          key = talentId[talent_data.skill_id]
+          ret[key] = talent_data.level
+        }
       }
     })
     return ret

@@ -28,7 +28,7 @@ const ProfileStat = {
 
     let player = Player.create(e, game)
     let refreshCount = await player.refreshTalent("", 2)
-    if (refreshCount && !e.isSr) {
+    if (refreshCount) {
       e.reply(`角色${e.isSr ? "行迹" : "天赋"}更新成功，共${refreshCount}个角色\n你现在可以通过${e.isSr ? "【*练度统计】" : "【#练度统计】【#天赋统计】"}来查看角色信息了...`)
     } else {
       e.reply("角色天赋未能更新...")
