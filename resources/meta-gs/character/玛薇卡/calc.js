@@ -7,10 +7,6 @@ export const details = [
     params: { fy: true },
     dmg: ({ talent }, dmg) => dmg(talent.e["焚曜之环伤害"], "e,nightsoul")
   }, {
-    title: "0战意E后驰轮车普攻一段伤害",
-    params: { cl: true },
-    dmg: ({ talent }, dmg) => dmg(talent.e["驰轮车普通攻击一段伤害"], "a,nightsoul")
-  }, {
     title: "满战意E后驰轮车普攻一段伤害",
     params: { zy: 200, cl: true },
     dmg: ({ talent, calc, attr, cons }, dmg) => {
@@ -37,14 +33,40 @@ export const details = [
       }
     }
   }, {
-    title: "0战意E后驰轮车重击终结伤害",
+    title: "满战意E后驰轮车普攻一轮蒸发",
     params: { zy: 200, cl: true },
+    dmg: ({ talent, calc, attr, cons }, dmg) => {
+      let aDmg1 = dmg(talent.e["驰轮车普通攻击一段伤害"], "a,nightsoul", "vaporize")
+      let aDmg2 = dmg(talent.e["驰轮车普通攻击二段伤害"], "a,nightsoul", "vaporize")
+      let aDmg3 = dmg(talent.e["驰轮车普通攻击三段伤害"], "a,nightsoul", "vaporize")
+      let aDmg4 = dmg(talent.e["驰轮车普通攻击四段伤害"], "a,nightsoul", "vaporize")
+      let aDmg5 = dmg(talent.e["驰轮车普通攻击五段伤害"], "a,nightsoul", "vaporize")
+      let aPlus = talent.q["驰轮车普通攻击伤害提升"] * calc(attr.atk) * 2 + (cons > 1 ? calc(attr.atk) * 0.6 : 0)
+      return {
+        dmg: aDmg1.dmg + aDmg2.dmg + aDmg3.dmg + aDmg4.dmg + aDmg5.dmg + aPlus * 5,
+        avg: aDmg1.avg + aDmg2.avg + aDmg3.avg + aDmg4.avg + aDmg5.avg + aPlus * 5
+      }
+    }
+  }, {
+    title: "0战意E后驰轮车重击终结伤害",
+    params: { zy: 0, cl: true },
     dmg: ({ talent }, dmg) => dmg(talent.e["驰轮车重击终结伤害"], "a2,nightsoul")
   }, {
     title: "满战意E后驰轮车重击终结伤害",
     params: { cl: true },
     dmg: ({ talent, calc, attr, cons }, dmg) => {
       let a2Dmg = dmg(talent.e["驰轮车重击终结伤害"], "a2,nightsoul")
+      let a2Plus = talent.q["驰轮车重击伤害提升"] * calc(attr.atk) * 2 + (cons > 1 ? calc(attr.atk) * 0.9 : 0)
+      return {
+        dmg: a2Dmg.dmg + a2Plus,
+        avg: a2Dmg.avg + a2Plus
+      }
+    }
+  }, {
+    title: "满战意E后驰轮车重击终结蒸发",
+    params: { cl: true },
+    dmg: ({ talent, calc, attr, cons }, dmg) => {
+      let a2Dmg = dmg(talent.e["驰轮车重击终结伤害"], "a2,nightsoul", "vaporize")
       let a2Plus = talent.q["驰轮车重击伤害提升"] * calc(attr.atk) * 2 + (cons > 1 ? calc(attr.atk) * 0.9 : 0)
       return {
         dmg: a2Dmg.dmg + a2Plus,
