@@ -8,7 +8,6 @@ let MysPanelData = {
   setAvatar(player, ds) {
     let { id, element, level, fetter, actived_constellation_num } = ds.base
     let elem = Format.elem(element)
-    logger.info({ id, elem })
     let char = Character.get({ id, elem })
     let avatar = player.getAvatar(id, true)
     if (!char) return false
@@ -50,9 +49,11 @@ let MysPanelData = {
         ret[key] = ret[key] || talent_data.level
       }
     })
-    lodash.forEach(talentCons, (lv, key) => {
-      if (ret[key] && cons >= lv) ret[key] = Math.max(1, ret[key] - 3)
-    })
+    if (cons >= 3) {
+      lodash.forEach(talentCons, (lv, key) => {
+        if (lv != 0 && ret[key] && cons >= lv) ret[key] = Math.max(1, ret[key] - 3)
+      })
+    }
     return ret
   },
 
