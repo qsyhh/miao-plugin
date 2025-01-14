@@ -247,9 +247,9 @@ export default function(step, staticStep) {
     ],
     "焚曜千阳": {
       title: "施放元素战技或元素爆发时，暴击伤害提高[cdmg]%，攻击力提升[atkPct]%",
-      refine: {
-        cdmg: step(20),
-        atkPct: step(28)
+      data: {
+        cdmg: ({ params, refine }) => params.Nightsoul === true ? (step(20)[refine] * 1.75) : step(20)[refine],
+        atkPct: ({ params, refine }) => params.Nightsoul === true ? (step(28)[refine] * 1.75) : step(28)[refine]
       }
     }
   }

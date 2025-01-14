@@ -98,8 +98,7 @@ export default function(step, staticStep) {
         title: "护盾+满层情况下攻击力提高[atkPct]%",
         buffCount: 10,
         refine: {
-          atkPct: step(4),
-          shield: step(20)
+          atkPct: step(4)
         }
       }
     ],
@@ -236,6 +235,14 @@ export default function(step, staticStep) {
           dmg: step(28)
         }
       }
-    ]
+    ],
+    寝正月初晴: {
+      title: "触发[_buff]种方式，元素精通提升[mastery]",
+      // 扩散作为无序元素反应，冰雷火水后手也可触发扩散反应
+      data: {
+        _buff: ({ element }) => ![ "草", "岩" ].includes(element) ? 3 : 2,
+        mastery: ({ element, refine }) => ![ "草", "岩" ].includes(element) ? step(120 + 96 + 32)[refine] : step(96 + 32)[refine]
+      }
+    }
   }
 }
