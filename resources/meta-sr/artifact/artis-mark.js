@@ -3,6 +3,7 @@
  * 如character/${name}/artis.js下有角色自定义规则优先使用自定义
  */
 export const usefulAttr = {
+  "大黑塔": { hp: 0, atk: 75, def: 0, speed: 100, cpct: 100, cdmg: 100, stance: 0, heal: 0, recharge: 50, effPct: 0, effDef: 0, dmg: 100 },
   "忘归人": { hp: 50, atk: 0, def: 50, speed: 100, cpct: 0, cdmg: 0, stance: 100, heal: 0, recharge: 50, effPct: 75, effDef: 0, dmg: 0 },
   "星期日": { hp: 50, atk: 0, def: 50, speed: 100, cpct: 0, cdmg: 100, stance: 0, heal: 0, recharge: 100, effPct: 0, effDef: 75, dmg: 0 },
   "乱破": { hp: 0, atk: 100, def: 0, speed: 100, cpct: 0, cdmg: 0, stance: 100, heal: 0, recharge: 50, effPct: 0, effDef: 30, dmg: 0 },

@@ -102,6 +102,27 @@
 
 {{/each}}
 
+{{if game === 'sr'}}
+{{set mtalentKey = ['m','mt'] }}
+{{each mtalentKey type}}
+{{if detail.talent[type]}}
+{{set minLv = 4 }}
+{{set maxLv = 10}}
+<div class="talent-box elem-bg">
+  <div class="talent-detail cont {{detail.talent[type+2]?'talent-merge':''}}">
+    <% include(_tpl_path+'/talent-detail.html', [detail.talent[type], {_miao_path,lvs,type,icon:imgs[type],minLv,maxLv,game}]) %>
+    {{if detail.talent[type+1]}}
+      <% include(_tpl_path+'/talent-detail.html', [detail.talent[type+1], {_miao_path,lvs,type,icon:imgs[type+1],minLv,maxLv,game}]) %>
+    {{/if}}
+    {{if detail.talent[type+2]}}
+      <% include(_tpl_path+'/talent-detail.html', [detail.talent[type+2], {_miao_path,lvs,type,icon:imgs[type+2],minLv,maxLv,game}]) %>
+    {{/if}}
+  </div>
+</div>
+{{/if}}
+{{/each}}
+{{/if}}
+
 <div class="talent-box elem-bg">
   <div class="talent-detail passive-talent">
     {{if game === 'gs'}}

@@ -22,7 +22,7 @@
     </div>
   </div>
 
-  {{if ds.tables && ds.tables.length > 0}}
+  {{if ds.tables && ds.tables.length > 0 && !ds.tables[0].isSame}}
   <div class="talent-common-info">
     {{each ds.tables tr}}
     {{if tr.isSame}}
