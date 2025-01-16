@@ -203,6 +203,8 @@ export default class Player extends Base {
           case 8005:
             id = avatars["8005"] ? 8005 : 8006
             break
+          case 8007:
+            id = avatars["8007"] ? 8007 : 8008
         }
       }
     }

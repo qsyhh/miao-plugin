@@ -282,7 +282,8 @@ export default class ProfileRank {
     let profileIdMap = {
       8002: 8001,
       8004: 8003,
-      8006: 8005
+      8006: 8005,
+      8008: 8007
     }
     if (profileIdMap[profile.id]) { return `miao:rank:${this.groupId}:${type}:${profileIdMap[profile.id]}` }
     return `miao:rank:${this.groupId}:${type}:${profile.id}`
