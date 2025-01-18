@@ -153,10 +153,10 @@ export const buffs = [
     }
   }, {
     check: ({ params }) => params.fy,
-    title: "玛薇卡2命：焚曜之环状态下，附近的敌人的防御力降低[eEnemyDef]%",
+    title: "玛薇卡2命：焚曜之环状态下，附近的敌人的防御力降低[enemyDef]%",
     cons: 2,
     data: {
-      eEnemyDef: 20
+      enemyDef: 20
     }
   }, {
     title: "玛薇卡2命：驰轮车状态下，玛薇卡的普通攻击、重击、元素爆发燔天之时中的坠日斩造成的伤害提升，提升值相当于玛薇卡攻击力的60%/90%/120%。",
