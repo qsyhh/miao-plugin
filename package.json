@@ -1,8 +1,10 @@
 {
   "name": "miao-plugin",
-  "version": "2.3.3",
+  "version": "2.5.15",
   "author": "Yoimiya-Kokomi",
   "description": "miao-plugin",
+  "isFork": true,
+  "forkAuthor": "qsyhh",
   "type": "module",
   "scripts": {},
   "dependencies": {
