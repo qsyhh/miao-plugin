@@ -134,7 +134,7 @@ async function updateRes(e) {
       }
     })
   } else {
-    command = `git clone https://gitee.com/yoimiya-kokomi/miao-res-plus.git "${resPath}/miao-res-plus/" --depth=1`
+    command = `git clone https://gitee.com/qsyhh/miao-res-plus.git "${resPath}/miao-res-plus/" --depth=1`
     e.reply("开始尝试安装图片加量包，可能会需要一段时间，请耐心等待~")
     exec(command, function(error, stdout, stderr) {
       if (error) {

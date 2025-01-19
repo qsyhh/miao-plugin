@@ -4,13 +4,13 @@
 
 此仓库将在原仓库有更新时测试后推送同步，可能更新不及时...推荐使用原版 [miao-plugin](https://gitee.com/yoimiya-kokomi/miao-plugin)
 
-> 或搭配wiki([gitee](https://gitee.com/qsyhh/wiki)|[github](https://github.com/mhy-wiki/wiki))使用，项目Q群：[517144547](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=2pln8DfZOIwge418mZ2lGK272ulJeABB&authKey=omB8vXIFk0NsTSkShPUrCuoXQsDwmH3DVx0CPakj%2FV4PjZD%2F3WCQrhM9PH08BGj1&noverify=0&group_code=517144547)
+> 项目Q群：[517144547](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=2pln8DfZOIwge418mZ2lGK272ulJeABB&authKey=omB8vXIFk0NsTSkShPUrCuoXQsDwmH3DVx0CPakj%2FV4PjZD%2F3WCQrhM9PH08BGj1&noverify=0&group_code=517144547)
 
-## 较原版的新增
+## 较原版的新增/修改
 
 - [x] 支持星铁图鉴、星铁技能显示能量上限及削韧值
 
-- [x] 星铁面板增加q版头像(头像来源官方大月卡头像)
+- [x] 星铁面板增加q版头像(头像来源官方大月卡头像) [@YuapXc](https://gitee.com/YuapXc)
 
 - [x] 新增`#喵喵背景设置`、`#喵喵背景帮助`命令，支持自定义面板、面板列表背景图
 
@@ -19,6 +19,8 @@
 - [x] 新增`#复刻统计`、`#四星复刻统计`、`*四星光锥复刻统计`命令，用于查看角色/武器多久未复刻，UI源码来源[windoge-plugin](https://gitee.com/windoge/windoge-plugin)
 
 - [x] 新增`#绫华复刻统计`、`#雾切复刻统计`、`*于夜声中复刻统计`命令，用于查看角色历史复刻卡池，支持使用别名查询
+
+- [x] 更换`#更新图像`源为[miao-res-plus](https://gitee.com/qsyhh/miao-res-plus) [@DenFengLai](https://gitee.com/DenFengLai)
 
 ## 安装指令
 
@@ -35,9 +37,9 @@ pnpm install -P
 ```
 
 >  [!NOTE]
-> 如果你的网络环境较差，无法连接到 Github，可以使用 [GitHub Proxy](https://mirror.ghproxy.com/) 提供的文件代理加速下载服务
+> 如果你的网络环境较差，无法连接到 Github，可以使用 [GitHub Proxy](https://ghproxy.link/) 提供的文件代理加速下载服务
 > ```
-> git clone --depth=1 https://mirror.ghproxy.com/https://github.com/qsyhh/miao-plugin.git ./plugins/miao-plugin/
+> git clone --depth=1 https://ghfast.top/https://github.com/qsyhh/miao-plugin.git ./plugins/miao-plugin/
 > pnpm install -P
 > ```
 
@@ -60,10 +62,10 @@ git reset --hard origin/master
 ```
 
 >  [!NOTE]
-> 如果你的网络环境较差，无法连接到 Github，可以使用 [GitHub Proxy](https://mirror.ghproxy.com/) 提供的文件代理加速下载服务
+> 如果你的网络环境较差，无法连接到 Github，可以使用 [GitHub Proxy](https://ghproxy.link/) 提供的文件代理加速下载服务
 > ```
 > cd plugins/miao-plugin
-> git remote set-url https://mirror.ghproxy.com/https://github.com/qsyhh/miao-plugin.git
+> git remote set-url https://ghfast.top/https://github.com/qsyhh/miao-plugin.git
 > git fetch origin master
 > git reset --hard origin/master
 > ```
