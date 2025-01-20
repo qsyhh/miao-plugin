@@ -54,7 +54,7 @@ export default class ProfileRank {
         if (uid) {
           ret.push({
             uid,
-            charId
+            charId: charId.replace(/_.*/g, "")
           })
         }
       }

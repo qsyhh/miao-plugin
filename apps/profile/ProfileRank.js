@@ -49,20 +49,22 @@ export async function groupRank(e) {
   if (!groupRank) return e.reply("群面板排名功能已禁用，Bot主人可通过【#喵喵设置】启用...")
   if (groupCfg.status === 1) return e.reply("本群已关闭群排名，群管理员或Bot主人可通过【#启用排名】启用...")
 
+  let charName = ""
+  if (char.isTraveler) charName = `旅行者/${char.elem}`
   if (type === "detail") {
     let uid = await ProfileRank.getGroupMaxUid(groupId, char.id, mode)
     if (uid) {
       e.uid = uid
       return await ProfileDetail.render(e, char)
     } else {
-      if (mode === "dmg" && !ProfileDmg.dmgRulePath(char.name, char.game)) {
+      if (mode === "dmg" && !ProfileDmg.dmgRulePath(charName || char.name, char.game)) {
         e.reply([ `暂无排名：${char.name}暂不支持伤害计算，无法进行排名..`, new Button(e).profile(char) ])
       } else {
         e.reply("暂无排名：请通过【#面板】查看角色面板以更新排名信息...")
       }
     }
   } else if (type === "list") {
-    if (mode === "dmg" && char && !ProfileDmg.dmgRulePath(char.name, char.game)) {
+    if (mode === "dmg" && char && !ProfileDmg.dmgRulePath(charName || char.name, char.game)) {
       e.reply([ `暂无排名：${char.name}暂不支持伤害计算，无法进行排名..`, new Button(e).profile(char) ])
     } else {
       let uids = []
@@ -153,7 +155,8 @@ async function renderCharRankList({ e, uids, char, mode, groupId }) {
   for (let ds of uids) {
     let uid = ds.uid || ds.value
     let player = Player.create(uid, e.isSr ? "sr" : "gs")
-    let avatar = player.getAvatar(ds.charId || char.id)
+    let charId = char.isTraveler ? char.id : (ds.charId || char.id)
+    let avatar = player.getAvatar(charId)
     if (!avatar) continue
 
     let profile = avatar.getProfile()
