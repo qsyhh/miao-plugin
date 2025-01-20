@@ -81,8 +81,7 @@ export const buffs = [
       mastery: 125,
       kx: 20
     }
-  },
-  {
+  }, {
     title: "茜特菈莉6命：施放元素战技时提供[dmg]%元素伤害加成",
     cons: 6,
     data: {
