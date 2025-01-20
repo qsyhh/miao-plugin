@@ -24,7 +24,7 @@ export default class ProfileRank {
   static async getCharacterFromKey(key, game = "gs") {
     if (game === "gs") {
       // 原神的角色id都是8位
-      return /^miao:rank:\d+:(?:mark|dmg|crit|valid):(\d{8}(?:_.*)?)$/.exec(key)
+      return /^miao:rank:\d+:(?:mark|dmg|crit|valid):(\d{8})$/.exec(key)
     } else {
       // 星铁的角色id都是4位
       return /^miao:rank:\d+:(?:mark|dmg|crit|valid):(\d{4})$/.exec(key)
@@ -54,7 +54,7 @@ export default class ProfileRank {
         if (uid) {
           ret.push({
             uid,
-            charId: charId.replace(/_.*/g, "")
+            charId
           })
         }
       }
@@ -75,8 +75,7 @@ export default class ProfileRank {
     let charIdMap = {
       8002: 8001,
       8004: 8003,
-      8006: 8005,
-      8008: 8007
+      8006: 8005
     }
     let uids = charIdMap[charId] ? await redis.zRangeWithScores(`miao:rank:${groupId}:${type}:${charIdMap[charId]}`, -`${number}`, -1) : await redis.zRangeWithScores(`miao:rank:${groupId}:${type}:${charId}`, -`${number}`, -1)
     return uids ? uids.reverse() : false
@@ -94,7 +93,7 @@ export default class ProfileRank {
     for (let key of keys) {
       let charRet = await ProfileRank.getCharacterFromKey(key, game)
       if (charRet) {
-        if (charId === "" || /^20000000_/.test(charId) || charId * 1 === charRet[1] * 1) await redis.del(key)
+        if (charId === "" || charId * 1 === charRet[1] * 1) await redis.del(key)
       }
     }
     if (charId === "") await redis.del(`miao:rank:${groupId}:cfg`)
@@ -204,8 +203,6 @@ export default class ProfileRank {
     let uidMap = {}
     let qqMap = {}
     let add = (qq, uid, type) => {
-      // 预设面板不参与排名
-      if (uid * 1 < 100000006) return false
       uidMap[uid] = { uid, qq, type: type === "ck" ? "ck" : "bind" }
       qqMap[qq] = true
     }
@@ -262,6 +259,8 @@ export default class ProfileRank {
    */
   static async checkRankLimit(uid) {
     if (!uid) return false
+    // 预设面板不参与排名
+    if (uid * 1 < 100000006) return false
 
     try {
       let rankLimit = Common.cfg("groupRankLimit") * 1 || 1
@@ -286,8 +285,7 @@ export default class ProfileRank {
       8006: 8005,
       8008: 8007
     }
-    if ([ 10000005, 10000007, 20000000 ].includes(profile.id * 1)) profile.id = `20000000_${profile.elem}`
-    if (profileIdMap[profile.id]) return `miao:rank:${this.groupId}:${type}:${profileIdMap[profile.id]}`
+    if (profileIdMap[profile.id]) { return `miao:rank:${this.groupId}:${type}:${profileIdMap[profile.id]}` }
     return `miao:rank:${this.groupId}:${type}:${profile.id}`
   }
 
