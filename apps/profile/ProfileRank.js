@@ -67,7 +67,7 @@ export async function groupRank(e) {
     } else {
       let uids = []
       if (char) {
-        uids = await ProfileRank.getGroupUidList(groupId, char ? char.id : "", mode)
+        uids = await ProfileRank.getGroupUidList(groupId, char ? char.isTraveler ? `20000000_${char.elem}` : char.id : "", mode)
       } else {
         uids = await ProfileRank.getGroupMaxUidList(groupId, mode, game)
       }
