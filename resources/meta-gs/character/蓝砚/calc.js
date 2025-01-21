@@ -13,7 +13,7 @@ export const details = [
     dmg: ({ talent, calc, attr }, { shield }) => shield(talent.e["护盾吸收量2"][0] * calc(attr.atk) / 100 + talent.e["护盾吸收量2"][1])
   }, {
     title: "Q单次伤害",
-    dmg: ({ talent }, dmg) => dmg(talent.q["技能伤害"][0], "q")
+    dmg: ({ talent }, dmg) => dmg(talent.q["技能伤害2"][0], "q")
   }
 ]
 
