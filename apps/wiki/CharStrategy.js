@@ -21,7 +21,7 @@ const CharStrategy = {
     if (!ret || !ret[1]) return false
 
     // let mode = "strategy"
-    if (!Cfg.get("roleCharInfoSource")) return false
+    if (!Cfg.get("charStrategyt")) return false
 
     let char = Character.get(ret[1], e.game)
     if (!char) return false
@@ -39,6 +39,7 @@ const CharStrategy = {
       return false
     }
     let { name, elemName } = char.getData("name,elemName")
+    if (char.isTraveler) name = "旅行者"
     if (char.isTrailblazer) name = "开拓者"
     let data = Data.readJSON(`resources/meta-${char.game}/info/json/${elemName}/${name}.json`, "miao")
     if (data.strategy && data.strategy.length != 0) {
@@ -47,8 +48,8 @@ const CharStrategy = {
       msglist.push({
         message: [ `${name}攻略，共${list.length}张` ]
       })
-      lodash.forEach(list, (ds) => {
-        let img = CharStrategy.downImgs(name, ds, elemName)
+      lodash.forEach(list, async(ds) => {
+        let img = await CharStrategy.downImgs(name, ds, elemName)
         if (!img) return false
         msglist.push({
           message: [
