@@ -30,9 +30,15 @@ export async function uploadCharacterImg(e) {
   // 通过解析正则获取消息中的角色名
   if (!regRet || !regRet[1]) return false
 
-  let char = Character.get(regRet[1])
-  if (!char || !char.name) return false
-  let name = char.name
+  let name
+  if (regRet[1] != "星" && regRet[1] != "穹") {
+    let char = Character.get(regRet[1])
+    if (!char || !char.name) return false
+    name = char.name
+    if (/^穹·/.test(name)) return e.reply(`请使用【#上传星${isProfile ? "面板图" : "图片"}】或【#上传穹${isProfile ? "面板图" : "图片"}】添加星铁主角图片`)
+  } else {
+    name = regRet[1]
+  }
   for (let val of e.message) {
     if (val.type === "image") imageMessages.push(val)
   }
@@ -177,13 +183,18 @@ export async function delProfileImg(e) {
 
 export async function profileImgList(e) {
   let msglist = []
-  let char = Character.get(e.msg.replace(/#|面板图列表/g, ""))
-  if (!char || !char.name) return false
+  let name = e.msg.replace(/#|面板图列表/g, "")
   if ([ 1, 0, 4 ].includes(Cfg.get("originalPic") * 1)) return e.reply("已禁止获取面板图列表")
-  let name = char.name
+  if (name != "星" && name != "穹") {
+    let char = Character.get(name)
+    if (!char || !char.name) return false
+    name = char.name
+    if (/^穹·/.test(name)) return e.reply("请使用【#星面板图列表】或【#穹面板图列表】查看星铁主角面板图列表")
+  }
+
   let pathSuffix = `profile/normal-character/${name}`
   let path = resPath + pathSuffix
-  if (!fs.existsSync(path)) return e.reply(`暂无${char.name}的角色面板图`)
+  if (!fs.existsSync(path)) return e.reply(`暂无${name}的角色面板图`)
   try {
     let imgs = fs.readdirSync(`${path}`).filter((file) => {
       return /\.(png|webp)$/.test(file)
@@ -214,6 +225,6 @@ export async function profileImgList(e) {
     return true
   } catch (err) {
     logger.error(err)
-    return e.reply(`暂无${char.name}的角色面板图~`)
+    return e.reply(`暂无${name}的角色面板图~`)
   }
 }
