@@ -75,7 +75,8 @@ export default class ProfileRank {
     let charIdMap = {
       8002: 8001,
       8004: 8003,
-      8006: 8005
+      8006: 8005,
+      8008: 8007
     }
     let uids = charIdMap[charId] ? await redis.zRangeWithScores(`miao:rank:${groupId}:${type}:${charIdMap[charId]}`, -`${number}`, -1) : await redis.zRangeWithScores(`miao:rank:${groupId}:${type}:${charId}`, -`${number}`, -1)
     return uids ? uids.reverse() : false
@@ -203,6 +204,8 @@ export default class ProfileRank {
     let uidMap = {}
     let qqMap = {}
     let add = (qq, uid, type) => {
+      // 预设面板不参与排名
+      if (uid * 1 < 100000006) return false
       uidMap[uid] = { uid, qq, type: type === "ck" ? "ck" : "bind" }
       qqMap[qq] = true
     }
@@ -259,8 +262,6 @@ export default class ProfileRank {
    */
   static async checkRankLimit(uid) {
     if (!uid) return false
-    // 预设面板不参与排名
-    if (uid * 1 < 100000006) return false
 
     try {
       let rankLimit = Common.cfg("groupRankLimit") * 1 || 1
