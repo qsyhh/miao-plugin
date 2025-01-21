@@ -140,6 +140,14 @@ export const cfgSchema = {
         showDesc: false,
         desc: "#刻晴天赋/#刻晴命座 的天赋信息"
       },
+      charStrategyt: {
+        title: "角色图鉴-攻略",
+        key: "攻略",
+        type: "num",
+        def: false,
+        showDesc: false,
+        desc: "#绫华攻略 的攻略信息"
+      },
       roleCharInfoSource: {
         title: "角色图鉴-幻想真境剧诗角色数据库",
         key: "幻想数据库",

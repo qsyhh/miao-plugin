@@ -26,6 +26,11 @@ app.reg({
     fn: updateRes,
     desc: "【#管理】更新素材"
   },
+  updateStrategy: {
+    rule: /^#(星铁)?喵喵(强制)?(更新攻略资源|攻略资源更新)$/,
+    fn: updateStrategy,
+    desc: "【#管理】更新攻略资源"
+  },
   update: {
     rule: /^#喵喵(强制)?更新$/,
     fn: updateMiaoPlugin,
@@ -141,6 +146,45 @@ async function updateRes(e) {
         e.reply("角色图片加量包安装失败！\nError code: " + error.code + "\n" + error.stack + "\n 请稍后重试。")
       } else {
         e.reply("角色图片加量包安装成功！您后续也可以通过 #喵喵更新图像 命令来更新图像")
+      }
+    })
+  }
+  return true
+}
+
+async function updateStrategy(e) {
+  if (!await checkAuth(e)) return true
+  let game = "gs"
+  if (/星铁/.test(e.msg)) game = "sr"
+
+  if (game == "sr") return e.reply("敬请期待")
+  let isForce = e.msg.includes("强制")
+  let command = ""
+  let path = `${resPath}/meta-${game}/info/json/`
+  if (fs.existsSync(path)) {
+    e.reply("开始尝试攻略资源包，请稍后~")
+    command = "git pull"
+    if (isForce) command = "git  checkout . && git  pull"
+
+    exec(command, { cwd: path }, async function(error, stdout, stderr) {
+      if (/(Already up[ -]to[ -]date|已经是最新的)/.test(stdout)) return e.reply("已经是最新了~")
+
+      let numRet = /(\d*) files changed,/.exec(stdout)
+      if (numRet && numRet[1]) return e.reply(`报告主人，更新成功，此次改动了${numRet[1]}个文件~`)
+      if (error) {
+        e.reply("更新失败！\nError code: " + error.code + "\n" + error.stack + "\n 请稍后重试。")
+      } else {
+        e.reply("攻略资源更新成功~")
+      }
+    })
+  } else {
+    command = `git clone -b ${game} https://gitee.com/qsyhh/resources.git "${path}" --depth=1`
+    e.reply("开始尝试安装攻略资源包，请稍后~")
+    exec(command, function(error, stdout, stderr) {
+      if (error) {
+        e.reply("攻略资源包安装失败！\nError code: " + error.code + "\n" + error.stack + "\n 请稍后重试。")
+      } else {
+        e.reply(`攻略资源包安装成功！您后续也可以通过 ${game == "gs" ? "#" : "*"}喵喵更新攻略资源 命令来更新攻略`)
       }
     })
   }
