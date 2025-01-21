@@ -48,16 +48,17 @@ const CharStrategy = {
       msglist.push({
         message: [ `${name}攻略，共${list.length}张` ]
       })
-      lodash.forEach(list, async(ds) => {
+      for (let ds of list) {
         let img = await CharStrategy.downImgs(name, ds, elemName)
         if (!img) return false
         msglist.push({
           message: [
-            `帖子：https://www.miyoushe.com/ys/article/${ds.article}`,
+            `版主：${ds.author}`,
+            // `帖子：https://www.miyoushe.com/ys/article/${ds.article}`,
             segment.image(`file://${img}`)
           ]
         })
-      })
+      }
       let msg
       if (e.group?.makeForwardMsg) {
         msg = await e.group.makeForwardMsg(msglist)
