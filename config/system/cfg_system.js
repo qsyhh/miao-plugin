@@ -143,7 +143,6 @@ export const cfgSchema = {
       charStrategyt: {
         title: "角色图鉴-攻略",
         key: "攻略",
-        type: "num",
         def: false,
         showDesc: false,
         desc: "#绫华攻略 的攻略信息"
