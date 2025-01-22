@@ -1,6 +1,5 @@
 /* eslint-disable import/no-unresolved */
 import fs from "node:fs"
-import lodash from "lodash"
 import fetch from "node-fetch"
 import { promisify } from "util"
 import { pipeline } from "stream"
@@ -34,7 +33,7 @@ const CharStrategy = {
   async strategy(e) {
     let char = e.char
     if (!fs.existsSync(`${miaoPath}/resources/meta-${char.game}/info/json`)) {
-      logger.error(`暂未下载攻略资源包，请发送【${char.isGs ? "#" : "*"}更新攻略资源】更新资源`)
+      logger.error(`暂未下载攻略资源包，请发送【${char.isGs ? "#" : "*"}喵喵更新攻略资源】更新资源`)
       e.msg = e.original_msg
       return false
     }
