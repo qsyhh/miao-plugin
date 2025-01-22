@@ -39,7 +39,8 @@ const CharStrategy = {
     }
     let { game, name, elemName, weapon } = char.getData("game,name,elemName,weapon")
     name = char.isTraveler ? "旅行者" : char.isTrailblazer ? "开拓者" : name
-    let data = Data.readJSON(`resources/meta-${game}/info/json/${game == "gs" ? elemName : weapon}/${name}.json`, "miao")
+    let type = game == "gs" ? elemName : weapon
+    let data = Data.readJSON(`resources/meta-${game}/info/json/${type}/${name}.json`, "miao")
     if (data.strategy && data.strategy.length != 0) {
       let msglist = []
       let list = data.strategy
@@ -48,7 +49,7 @@ const CharStrategy = {
       })
       for (let ds of list) {
         if (!ds.author) continue
-        let img = await CharStrategy.downImgs(name, ds, elemName)
+        let img = await CharStrategy.downImgs(name, ds, type)
         if (!img) return false
         msglist.push({
           message: [
@@ -70,8 +71,8 @@ const CharStrategy = {
     }
     return true
   },
-  async downImgs(name, ds = {}, elemName) {
-    if (/旅行者|开拓者/.test(name)) name = `${name}_${elemName}`
+  async downImgs(name, ds = {}, type) {
+    if (/旅行者|开拓者/.test(name)) name = `${name}_${type}`
     if (!fs.existsSync(_path + name)) Data.createDir(`temp/miao/strategy/${name}`, "root")
     let imgPath = `${_path}${name}/${ds.author}_${ds.article}.png`
     if (!fs.existsSync(imgPath)) {
