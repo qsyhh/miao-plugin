@@ -49,7 +49,7 @@ const CharStrategy = {
       })
       for (let ds of list) {
         if (!ds.author) continue
-        let img = await CharStrategy.downImgs(name, ds, type)
+        let img = await CharStrategy.downImgs(ds, { name, game, type })
         if (!img) return false
         msglist.push({
           message: [
@@ -71,10 +71,11 @@ const CharStrategy = {
     }
     return true
   },
-  async downImgs(name, ds = {}, type) {
-    if (/旅行者|开拓者/.test(name)) name = `${name}_${type}`
-    if (!fs.existsSync(_path + name)) Data.createDir(`temp/miao/strategy/${name}`, "root")
-    let imgPath = `${_path}${name}/${ds.author}_${ds.article}.png`
+  async downImgs(ds = {}, char = {}) {
+    let name = char.name
+    if (/旅行者|开拓者/.test(name)) name = `${name}_${char.type}`
+    if (!fs.existsSync(_path + `${char.game}/${name}`)) Data.createDir(`temp/miao/strategy/${char.game}/${name}`, "root")
+    let imgPath = `${_path}${char.game}/${name}/${ds.author}_${ds.article}.png`
     if (!fs.existsSync(imgPath)) {
       logger.mark(`[喵喵:角色攻略] 下载${ds.author}-${name}攻略图`)
       try {
