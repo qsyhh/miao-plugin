@@ -157,7 +157,6 @@ async function updateStrategy(e) {
   let game = "gs"
   if (/星铁/.test(e.msg)) game = "sr"
 
-  if (game == "sr") return e.reply("敬请期待")
   let isForce = e.msg.includes("强制")
   let command = ""
   let path = `${resPath}/meta-${game}/info/json/`

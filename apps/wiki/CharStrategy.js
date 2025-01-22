@@ -37,10 +37,9 @@ const CharStrategy = {
       e.msg = e.original_msg
       return false
     }
-    let { name, elemName } = char.getData("name,elemName")
-    if (char.isTraveler) name = "旅行者"
-    if (char.isTrailblazer) name = "开拓者"
-    let data = Data.readJSON(`resources/meta-${char.game}/info/json/${elemName}/${name}.json`, "miao")
+    let { game, name, elemName, weapon } = char.getData("game,name,elemName,weapon")
+    name = char.isTraveler ? "旅行者" : char.isTrailblazer ? "开拓者" : name
+    let data = Data.readJSON(`resources/meta-${game}/info/json/${game == "gs" ? elemName : weapon}/${name}.json`, "miao")
     if (data.strategy && data.strategy.length != 0) {
       let msglist = []
       let list = data.strategy
@@ -48,13 +47,14 @@ const CharStrategy = {
         message: [ `${name}攻略，共${list.length}张` ]
       })
       for (let ds of list) {
+        if (!ds.author) continue
         let img = await CharStrategy.downImgs(name, ds, elemName)
         if (!img) return false
         msglist.push({
           message: [
             `版主：${ds.author}`,
-            // `帖子：https://www.miyoushe.com/ys/article/${ds.article}`,
-            segment.image(`file://${img}`)
+            segment.image(`file://${img}`),
+            `https://www.miyoushe.com/ys/article/${ds.article}`
           ]
         })
       }
