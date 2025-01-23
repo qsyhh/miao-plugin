@@ -24,7 +24,7 @@ mixPoolDetail.forEach(k => {
 
 let Banner = {
   async detail(e) {
-    let isMatch = /^#(原神|星铁)?((四星|五星)?(角色|武器|光锥|up)?|.*)(复刻)?(统计|卡池|祈愿)$/
+    let isMatch = /^#(原神|星铁)?((四星|五星)?(角色|武器|光锥|up)?|.*?)(复刻)?(统计|卡池|祈愿)$/
     let msg = e.original_msg || e.msg || ""
     if (!isMatch.test(msg)) return false
     let regRet = isMatch.exec(msg)
