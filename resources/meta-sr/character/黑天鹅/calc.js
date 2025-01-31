@@ -50,10 +50,10 @@ export const buffs = [
       enemyDef: ({ talent }) => talent.e["防御力降低"] * 100
     }
   }, {
-    check: ({ params }) => params.q === true,
-    title: "终结技-沉醉于彼界的臂湾：【揭露】状态下，目标受到的伤害提高[enemydmg]%",
+    title: "终结技-沉醉于彼界的臂湾：【揭露】状态下，目标受到的伤害提高[_enemydmg]%",
     data: {
-      enemydmg: ({ talent }) => talent.q["伤害提高"] * 100
+      _enemydmg: ({ talent }) => talent.q["伤害提高"] * 100,
+      enemydmg: ({ talent, params }) => params.q ? talent.q["伤害提高"] * 100 : 0
     }
   }, {
     title: "行迹-烛影朕兆：基于效果命中，提高造成的伤害[dmg]%",
@@ -62,10 +62,9 @@ export const buffs = [
       dmg: ({ attr }) => Math.min(attr.effPct * 0.6, 72)
     }
   }, {
-    check: ({ params }) => params.t === true,
-    title: "天赋-无端命运的机杼：层数大于等于7层时，造成的持续伤害无视目标防御力[dotIgnore]%",
+    title: "天赋-无端命运的机杼：层数大于等于7层时，造成的持续伤害无视目标防御力20%",
     data: {
-      dotIgnore: 20
+      dotIgnore: ({ params }) => params.t ? 20 : 0
     }
   }, {
     title: "黑天鹅1魂：敌方抗性降低[kx]%",

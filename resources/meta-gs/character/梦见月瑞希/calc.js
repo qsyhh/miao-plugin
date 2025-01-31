@@ -56,12 +56,12 @@ export const buffs = [
       mastery: 100
     }
   }, {
-    check: ({ params }) => params.cons1,
-    title: "梦见月瑞希1命：处于二十三夜待状态下的敌人受到风元素伤害而触发扩散反应时，使此次扩散反应对该敌人造成的伤害提升[fyplus]",
+    title: "梦见月瑞希1命：处于二十三夜待状态下的敌人受到风元素伤害而触发扩散反应时，使此次扩散反应对该敌人造成的伤害提升[_fyplus]",
     cons: 1,
     sort: 9,
     data: {
-      fyplus: ({ attr, calc }) => calc(attr.mastery) * 11
+      _fyplus: ({ attr, calc }) => calc(attr.mastery) * 11,
+      fyplus: ({ attr, calc, params }) => params.cons1 ? calc(attr.mastery) * 11 : 0
     }
   }, {
     title: "梦见月瑞希2命：进入梦浮状态时，为附近的队伍中所有其他角色提供[_dmg]%火、水、冰与雷元素伤害加成",

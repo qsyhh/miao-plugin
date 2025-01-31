@@ -75,10 +75,10 @@ export const mainAttr = "atk,stance"
 
 export const buffs = [
   {
-    title: "终结技-忍道•极•爱死天流：进入【结印】状态，击破特攻提高[stance]%",
-    check: ({ params }) => params.q === true,
+    title: "终结技-忍道•极•爱死天流：进入【结印】状态，击破特攻提高[_stance]%",
     data: {
-      stance: ({ talent }) => talent.q["击破特攻提高"] * 100
+      _stance: ({ talent }) => talent.q["击破特攻提高"] * 100,
+      stance: ({ talent, params }) => params.q ? talent.q["击破特攻提高"] * 100 : 0
     }
   }, {
     title: "天赋-忍•科学•堪忍袋：10点充能使本次击破伤害倍率提高[_stancePct]%",
@@ -92,18 +92,16 @@ export const buffs = [
       breakEnemydmg: ({ attr }) => 2 + (attr.ark > 2400 ? Math.min(Math.floor(attr.atk - 2400) / 100, 8) : 0)
     }
   }, {
-    title: "乱破1魂：【结印】状态期间，乱破造成的伤害无视目标[ignore]%的防御",
-    check: ({ params }) => params.q === true,
+    title: "乱破1魂：【结印】状态期间，乱破造成的伤害无视目标15%的防御",
     cons: 1,
     data: {
-      ignore: 15
+      ignore: ({ params }) => params.q ? 15 : 0
     }
   }, {
-    title: "乱破4魂：【结印】状态期间，我方全体速度提高[speedPct]%",
-    check: ({ params }) => params.q === true,
+    title: "乱破4魂：【结印】状态期间，我方全体速度提高50%",
     cons: 4,
     data: {
-      speedPct: 50
+      speedPct: ({ params }) => params.q ? 50 : 0
     }
   }
 ]

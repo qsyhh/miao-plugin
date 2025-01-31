@@ -42,17 +42,16 @@ export const mainAttr = "atk,cpct,cdmg"
 
 export const buffs = [
   {
-    check: ({ params }) => params.q === true,
-    title: "终结技-剑为地纪，刃惊天宗：下一次反击造成的暴击伤害提高[cdmg]%",
+    title: "终结技-剑为地纪，刃惊天宗：下一次反击造成的暴击伤害提高[_cdmg]%",
     data: {
-      cdmg: ({ talent }) => talent.q["暴击伤害提高"] * 100
+      _cdmg: ({ talent }) => talent.q["暴击伤害提高"] * 100,
+      cdmg: ({ talent, params }) => params.q ? talent.q["暴击伤害提高"] * 100 : 0
     }
   }, {
-    check: ({ params }) => params.fj === true,
-    title: "行迹-真刚：施放反击时，云璃的攻击力提高[atkPct]%",
+    title: "行迹-真刚：施放反击时，云璃的攻击力提高30%",
     tree: 3,
     data: {
-      atkPct: 30
+      atkPct: ({ params }) => params.fj ? 30 : 0
     }
   }, {
     title: "云璃1魂：【勘破•斩】与【勘破•灭】造成的伤害提高[qDmg]%，【勘破•灭】的额外伤害段数增加3次。",
@@ -61,19 +60,17 @@ export const buffs = [
       qDmg: 20
     }
   }, {
-    check: ({ params }) => params.cons2 === true,
-    title: "云璃2魂：发动反击造成伤害时无视敌方目标[ignore]%的防御力。",
+    title: "云璃2魂：发动反击造成伤害时无视敌方目标20%的防御力。",
     cons: 2,
     data: {
-      ignore: 20
+      ignore: ({ params }) => params.cons2 ? 20 : 0
     }
   }, {
-    check: ({ params }) => params.q === true,
-    title: "云璃6魂：发动【勘破•斩】或【勘破•灭】造成伤害时暴击率提高[cpct]%，物理属性抗性穿透提高[kx]%",
+    title: "云璃6魂：发动【勘破•斩】或【勘破•灭】造成伤害时暴击率提高15%，物理属性抗性穿透提高20%",
     cons: 6,
     data: {
-      cpct: 15,
-      kx: 20
+      cpct: ({ params }) => params.q ? 15 : 0,
+      kx: ({ params }) => params.q ? 20 : 0
     }
   }
 ]

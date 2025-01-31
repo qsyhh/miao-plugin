@@ -28,10 +28,10 @@ export const mainAttr = "atk,cpct,cdmg"
 
 export const buffs = [
   {
-    check: ({ params }) => params.a2 === true,
-    title: "天赋-师父，我悟了！：【师父】施放攻击或终结技后，造成的伤害提高[aDmg]%",
+    title: "天赋-师父，我悟了！：【师父】施放攻击或终结技后，造成的伤害提高[_aDmg]%",
     data: {
-      aDmg: ({ talent }) => talent.t["伤害提高"] * 100
+      _aDmg: ({ talent }) => talent.t["伤害提高"] * 100,
+      aDmg: ({ talent, params }) => params.a2 ? talent.t["伤害提高"] * 100 : 0
     }
   }, {
     title: "三月七1魂：场上存在【师父】时，三月七速度提高[speedPct]%",
@@ -40,11 +40,10 @@ export const buffs = [
       speedPct: 10
     }
   }, {
-    check: ({ params }) => params.a2 === true,
-    title: "三月七6魂：施放终结技后，下一次强化普攻造成的暴击伤害提高[aCdmg]%",
+    title: "三月七6魂：施放终结技后，下一次强化普攻造成的暴击伤害提高50%",
     cons: 6,
     data: {
-      aCdmg: 50
+      aCdmg: ({ params }) => params.a2 ? 50 : 0
     }
   }
 ]

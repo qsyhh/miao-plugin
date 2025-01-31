@@ -16,10 +16,7 @@ export const details = [
   }, {
     title: "E后焕光追影弹(单枚)",
     params: { cons6: true },
-    dmg: ({ talent, cons }, dmg) => {
-      let cost = cons > 1 ? 1.35 : 1.15
-      return dmg(talent.e["焕光追影弹伤害"] * cost, "a2,nightsoul")
-    }
+    dmg: ({ talent, cons }, dmg) => dmg(talent.e["焕光追影弹伤害"] * (cons > 1 ? 1.35 : 1.15), "a2,nightsoul")
   }, {
     title: "Q裂风索魂弹伤害",
     dmg: ({ talent }, dmg) => dmg(talent.q["裂风索魂弹伤害"], "q,nightsoul")
@@ -46,17 +43,14 @@ export const buffs = [
     data: {
       _a2Dmg: 15
     }
-  },
-  {
+  }, {
     title: "恰斯卡2命：恰斯卡登场时，获得一层固有天赋「子弹的戏法」的「焕影之灵」。",
     cons: 2
-  },
-  {
-    check: ({ params }) => params.cons6 === true,
-    title: "恰斯卡6命：「命袭」状态下，恰斯卡施放元素战技的多重瞄准会立即完成蓄力，并且本次多重瞄准中的追影弹和焕光追影弹的暴击伤害提升[a2Cdmg]。",
+  }, {
+    title: "恰斯卡6命：「命袭」状态下，恰斯卡施放元素战技的多重瞄准会立即完成蓄力，并且本次多重瞄准中的追影弹和焕光追影弹的暴击伤害提升120%。",
     cons: 6,
     data: {
-      a2Cdmg: 120
+      a2Cdmg: ({ params }) => params.cons6 ? 120 : 0
     }
   }
 ]

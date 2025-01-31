@@ -14,10 +14,7 @@ export const details = [
     dmg: ({ talent }, dmg) => dmg(talent.q["技能伤害"], "q")
   }, {
     title: "天赋持续伤害",
-    dmg: ({ talent, cons }, dmg) => {
-      let cost = cons > 1 ? 3 : 0
-      return dmg(talent.t["持续伤害"] + cost, "dot", "skillDot")
-    }
+    dmg: ({ talent, cons }, dmg) => dmg(talent.t["持续伤害"] + cons > 1 ? 3 : 0, "dot", "skillDot")
   }
 ]
 

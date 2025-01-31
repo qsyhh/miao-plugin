@@ -14,17 +14,11 @@ export const details = [
   }, {
     title: "天赋追击伤害",
     params: { zj: true },
-    dmg: ({ talent, cons }, dmg) => {
-      let cost = cons == 6 ? 0.25 : 0
-      return dmg(talent.t["追加攻击伤害"] + cost, "t")
-    }
+    dmg: ({ talent, cons }, dmg) => dmg(talent.t["追加攻击伤害"] + (cons === 6 ? 0.25 : 0), "t")
   }, {
     title: "终结技后天赋追击伤害",
     params: { zj: true, q: true },
-    dmg: ({ talent, cons }, dmg) => {
-      let cost = cons === 6 ? 0.25 : 0
-      return dmg(talent.t["追加攻击伤害"] + cost, "t")
-    }
+    dmg: ({ talent, cons }, dmg) => dmg(talent.t["追加攻击伤害"] + (cons === 6 ? 0.25 : 0), "t")
   }, {
     check: ({ cons }) => cons > 1,
     title: "二命追击伤害",
@@ -43,10 +37,9 @@ export const buffs = [
       dmg: 30
     }
   }, {
-    check: ({ params }) => params.zj === true,
-    title: "行迹-不折镆干：【猎物】受到的追加攻击伤害提高[tDmg]%",
+    title: "行迹-不折镆干：【猎物】受到的追加攻击伤害提高25%",
     data: {
-      tDmg: 25
+      tDmg: ({ params }) => params.zj ? 25 : 0
     }
   }, {
     title: "貊泽2魂：我方全体目标对成为【猎物】的敌方目标造成伤害时，暴击伤害提高[speedPct]%",
@@ -55,11 +48,10 @@ export const buffs = [
       cdmg: 40
     }
   }, {
-    check: ({ params }) => params.q === true,
-    title: "貊泽4魂：施放终结技时，貊泽造成的伤害提高[dmg]%",
+    title: "貊泽4魂：施放终结技时，貊泽造成的伤害提高30%",
     cons: 4,
     data: {
-      dmg: 30
+      dmg: ({ params }) => params.q ? 30 : 0
     }
   }, {
     title: "貊泽6魂：天赋的追加攻击的伤害倍率提高[_tDmg]%",

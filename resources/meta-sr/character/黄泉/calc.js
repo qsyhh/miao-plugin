@@ -19,10 +19,7 @@ export const details = [
   }, {
     title: "终结技伤害·对单",
     params: { q: true },
-    dmg: ({ talent, trees }, dmg) => {
-      let extraTd = trees["103"] ? 1.5 : 0
-      return dmg(talent.q["单体伤害"] + extraTd, "q")
-    }
+    dmg: ({ talent, trees }, dmg) => dmg(talent.q["单体伤害"] + trees["103"] ? 1.5 : 0, "q")
   }, {
     title: "终结技伤害·对无花目标",
     params: { q: true },
@@ -35,10 +32,10 @@ export const mainAttr = "atk,cpct,cdmg,dmg"
 
 export const buffs = [
   {
-    check: ({ params }) => params.q === true,
-    title: "天赋-红叶时雨，万倾一空：终结技期间使敌方全属性抗性降低[kx]%",
+    title: "天赋-红叶时雨，万倾一空：终结技期间使敌方全属性抗性降低[_kx]%",
     data: {
-      kx: ({ talent }) => talent.t["全属性抗性降低"] * 100
+      _kx: ({ talent }) => talent.t["全属性抗性降低"] * 100,
+      kx: ({ talent, params }) => params.q ? talent.t["全属性抗性降低"] * 100 : 0
     }
   }, {
     title: "行迹-奈落：黄泉普攻、战技、终结技造成的伤害为原伤害的160%",

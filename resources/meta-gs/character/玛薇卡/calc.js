@@ -152,11 +152,10 @@ export const buffs = [
       atkPct: 40
     }
   }, {
-    check: ({ params }) => params.fy,
-    title: "玛薇卡2命：焚曜之环状态下，附近的敌人的防御力降低[enemyDef]%",
+    title: "玛薇卡2命：焚曜之环状态下，附近的敌人的防御力降低20%",
     cons: 2,
     data: {
-      enemyDef: 20
+      enemyDef: ({ params }) => params.fy ? 20 : 0
     }
   }, {
     title: "玛薇卡2命：驰轮车状态下，玛薇卡的普通攻击、重击、元素爆发燔天之时中的坠日斩造成的伤害提升，提升值相当于玛薇卡攻击力的60%/90%/120%。",
@@ -168,11 +167,10 @@ export const buffs = [
       dmg: 10
     }
   }, {
-    check: ({ params }) => params.cl,
-    title: "玛薇卡6命：驾驶驰轮车时使附近的敌人的防御力降低[enemyDef]%",
+    title: "玛薇卡6命：驾驶驰轮车时使附近的敌人的防御力降低20%",
     cons: 6,
     data: {
-      enemyDef: 20
+      enemyDef: ({ params }) => params.cl ? 20 : 0
     }
   }
 ]

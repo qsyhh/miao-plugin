@@ -43,11 +43,11 @@ export const buffs = [
       atkPct: 48
     }
   }, {
-    check: ({ params }) => params.cons1 === true,
-    title: "飞霄1魂：5层buff，使终结技伤害额外提高[qPlus]",
+    title: "飞霄1魂：5层buff，使终结技伤害额外提高[_qPlus]",
     cons: 1,
     data: {
-      qPlus: ({ talent, attr, calc }) => calc(attr.atk) * talent.q["最后造成伤害"] * 10 / 100 * 5
+      _qPlus: ({ talent, attr, calc }) => calc(attr.atk) * talent.q["最后造成伤害"] * 10 / 100 * 5,
+      qPlus: ({ talent, attr, calc, params }) => params.cons1 ? calc(attr.atk) * talent.q["最后造成伤害"] * 10 / 100 * 5 : 0
     }
   }, {
     title: "飞霄4魂：发动天赋的追加攻击时速度提高[speedPct]%",

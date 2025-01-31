@@ -36,24 +36,15 @@ export const details = [
     }
   }, {
     title: "终结技伤害(单目标)",
-    dmg: ({ talent, cons }, dmg) => {
-      let cost = cons === 6 ? 1.4 : 0
-      return dmg(talent.q["技能伤害"] + cost, "q")
-    }
+    dmg: ({ talent, cons }, dmg) => dmg(talent.q["技能伤害"] + (cons === 6 ? 1.4 : 0), "q")
   }, {
     check: ({ trees }) => trees["103"],
     title: "终结技伤害(单目标 26层谜底)",
-    dmg: ({ talent, cons }, dmg) => {
-      let cost = cons === 6 ? 1.4 : 0
-      return dmg(talent.q["技能伤害"] + 0.26 + cost, "q")
-    }
+    dmg: ({ talent, cons }, dmg) => dmg(talent.q["技能伤害"] + 0.26 + (cons === 6 ? 1.4 : 0), "q")
   }, {
     check: ({ trees }) => trees["103"],
     title: "终结技伤害(单目标 99层谜底)",
-    dmg: ({ talent, cons }, dmg) => {
-      let cost = cons === 6 ? 1.4 : 0
-      return dmg(talent.q["技能伤害"] + 0.99 + cost, "q")
-    }
+    dmg: ({ talent, cons }, dmg) => dmg(talent.q["技能伤害"] + 0.99 + (cons === 6 ? 1.4 : 0), "q")
   }
 ]
 
@@ -62,10 +53,10 @@ export const mainAttr = "atk,cpct,cdmg"
 
 export const buffs = [
   {
-    check: ({ params }) => params.q,
-    title: "终结技-早说了是魔法吧：终结技施放时，使攻击力提高[atkPct]%",
+    title: "终结技-早说了是魔法吧：终结技施放时，使攻击力提高[_atkPct]%",
     data: {
-      atkPct: ({ talent }) => talent.q["攻击力提高"] * 100
+      _atkPct: ({ talent }) => talent.q["攻击力提高"] * 100,
+      atkPct: ({ talent, params }) => params.q ? talent.q["攻击力提高"] * 100 : 0
     }
   }, {
     title: "天赋-拿来吧你：敌方目标进入战斗时，大黑塔对其施加1层【解读】。每个波次开始时，对一个随机敌方目标施加25层【解读】"
@@ -81,11 +72,10 @@ export const buffs = [
       atkPct: 60
     }
   }, {
-    check: ({ params }) => params.tArtisBuffCount === 42,
-    title: "行迹-冷漠的诚实：若主目标的解读层数达到42，使大黑塔造成的伤害提高[dmg]%",
+    title: "行迹-冷漠的诚实：若主目标的解读层数达到42，使大黑塔造成的伤害提高50%",
     tree: 1,
     data: {
-      dmg: 50
+      dmg: ({ params }) => params.tArtisBuffCount === 42 ? 50 : 0
     }
   }, {
     title: "行迹-视界外来信：队伍中的智识命途角色大于等于2名，使我方全体暴击伤害提高[cdmg]%",

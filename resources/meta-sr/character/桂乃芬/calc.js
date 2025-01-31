@@ -36,16 +36,10 @@ export const mainAttr = "atk,cpct,cdmg"
 
 export const buffs = [
   {
-    title: "天赋-古来君子养艺人：3层【吞火】状态下目标受到的伤害提高[enemydmg]%",
-    check: ({ cons }) => cons < 6,
+    title: "天赋-古来君子养艺人：[_buffCount]层【吞火】状态下目标受到的伤害提高[enemydmg]%",
     data: {
-      enemydmg: ({ talent }) => talent.t["伤害提高"] * 100 * 3
-    }
-  }, {
-    title: "天赋-古来君子养艺人：4层【吞火】状态下目标受到的伤害提高[enemydmg]%",
-    cons: 6,
-    data: {
-      enemydmg: ({ talent }) => talent.t["伤害提高"] * 100 * 4
+      _buffCount: ({ cons }) => cons < 6 ? 3 : 4,
+      enemydmg: ({ talent, cons }) => talent.t["伤害提高"] * 100 * (cons < 6 ? 3 : 4)
     }
   }, {
     title: "行迹-逾锋：对陷入灼烧状态的敌方目标造成的伤害提高[dmg]%",

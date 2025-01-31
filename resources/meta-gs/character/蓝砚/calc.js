@@ -4,10 +4,7 @@ export const details = [
     dmg: ({ talent }, dmg) => dmg(talent.e["翦月环伤害"], "e")
   }, {
     title: "E翦月环染色伤害",
-    dmg: ({ talent, cons }, dmg) => {
-      let cost = cons > 0 ? 2 : 1
-      return dmg(talent.e["翦月环伤害"] * 1.5 * cost, "e")
-    }
+    dmg: ({ talent, cons }, dmg) => dmg(talent.e["翦月环伤害"] * 1.5 * (cons > 0 ? 2 : 1), "e")
   }, {
     title: "E护盾吸收量",
     dmg: ({ talent, calc, attr }, { shield }) => shield(talent.e["护盾吸收量2"][0] * calc(attr.atk) / 100 + talent.e["护盾吸收量2"][1])

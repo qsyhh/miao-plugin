@@ -46,17 +46,18 @@ export const mainAttr = "atk,cpct,cdmg,dmg"
 
 export const buffs = [
   {
-    check: ({ params }) => params.q === true,
-    title: "终结技-十王敕令，遍土遵行：使我方角色速度提高[speedPlus]攻击力提高[atkPct]%",
+    title: "终结技-十王敕令，遍土遵行：使我方角色速度提高[_speedPlus]攻击力提高[_atkPct]%",
     data: {
-      speedPlus: ({ talent, attr }) => attr.speed * talent.q["速度提高"] * 100,
-      atkPct: ({ talent }) => talent.q["攻击力提高"] * 100
+      _speedPlus: ({ talent, attr }) => attr.speed * talent.q["速度提高"] * 100,
+      _atkPct: ({ talent }) => talent.q["攻击力提高"] * 100,
+      speedPlus: ({ talent, attr, params }) => params.q ? attr.speed * talent.q["速度提高"] * 100 : 0,
+      atkPct: ({ talent, params }) => params.q ? talent.q["攻击力提高"] * 100 : 0
     }
   }, {
-    check: ({ params }) => params.e === true,
     title: "天赋-罚恶：对战技标记的敌人造成的普攻、战技、终结技伤害提高[_dmg]%",
     data: {
-      dmg: ({ talent }) => talent.t["伤害提高"] * 100
+      _dmg: ({ talent }) => talent.t["伤害提高"] * 100,
+      dmg: ({ talent, params }) => params.e ? talent.t["伤害提高"] * 100 : 0
     }
   }, {
     title: "寒鸦2魂：释放战技后，速度提高[speedPct]%",
@@ -65,13 +66,10 @@ export const buffs = [
       speedPct: 20
     }
   }, {
-    title: "寒鸦6魂：天赋的伤害提高效果额外提高[_dmg]%",
+    title: "寒鸦6魂：天赋的伤害提高效果额外提高10%",
     cons: 6,
     data: {
-      _dmg: 10,
-      aDmg: 10,
-      eDmg: 10,
-      qDmg: 10
+      dmg: ({ params }) => params.e ? 10 : 0
     }
   }
 ]
