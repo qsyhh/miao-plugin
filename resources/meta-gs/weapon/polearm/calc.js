@@ -138,12 +138,24 @@ export default function(step, staticStep) {
         atkPlus: ({ attr, calc, refine }) => step(52 + 28 * 3)[refine] * calc(attr.mastery) / 100
       }
     },
-    "赤月之形": {
-      title: "生命之契大于等于生命上限30%，造成的伤害提升[dmg]%",
-      refine: {
-        dmg: step(36, 12)
+    "赤月之形": [
+      {
+        check: ({ params }) => params.BondOfLife,
+        title: "重击命中敌人时，赋予生命值上限25%的生命之契",
+        data: {
+          _addBondOfLife: ({ params }) => {
+            params.BondOfLife = Math.min(params.BondOfLife + 25, 200)
+            return true
+          }
+        }
+      }, {
+        check: ({ params }) => params.BondOfLife >= 30,
+        title: "生命之契大于等于生命上限30%，造成的伤害提升[dmg]%",
+        refine: {
+          dmg: step(36, 12)
+        }
       }
-    },
+    ],
     "风信之锋": {
       title: "触发元素反应提升攻击力[atkPct]%, 精通[mastery]",
       refine: {

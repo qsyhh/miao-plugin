@@ -72,6 +72,8 @@ export const buffs = [
       cpct: 10,
       cdmg: 70
     }
+  }, {
+    title: "tip：伤害类型中生命之契默认不显示武器加成，但最终计算会计算武器加成"
   }
 ]
 

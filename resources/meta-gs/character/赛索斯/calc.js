@@ -1,32 +1,32 @@
 export const details = [
   {
-    title: "贯影箭伤害",
-    dmg: ({ talent, attr }, { basic }) => basic(talent.a["贯影箭伤害2"][0] * attr.atk / 100 + talent.a["贯影箭伤害2"][1] * attr.mastery / 100, "a2")
+    title: "重击贯影箭伤害",
+    dmg: ({ talent, attr, calc }, { basic }) => basic(talent.a["贯影箭伤害2"][0] * calc(attr.atk) / 100 + talent.a["贯影箭伤害2"][1] * calc(attr.mastery) / 100, "a2")
   }, {
-    title: "贯影箭激化",
-    dmg: ({ talent, attr }, { basic }) => basic(talent.a["贯影箭伤害2"][0] * attr.atk / 100 + talent.a["贯影箭伤害2"][1] * attr.mastery / 100, "a2", "aggravate")
+    title: "重击贯影箭激化",
+    dmg: ({ talent, attr, calc }, { basic }) => basic(talent.a["贯影箭伤害2"][0] * calc(attr.atk) / 100 + talent.a["贯影箭伤害2"][1] * calc(attr.mastery) / 100, "a2", "超激化")
   }, {
-    title: "E伤害",
+    title: "E技能伤害",
     dmg: ({ talent }, dmg) => dmg(talent.e["技能伤害"], "e")
   }, {
-    title: "E激化伤害",
-    dmg: ({ talent }, dmg) => dmg(talent.e["技能伤害"], "e", "aggravate")
+    title: "E技能激化",
+    dmg: ({ talent }, dmg) => dmg(talent.e["技能伤害"], "e", "超激化")
   }, {
-    title: "Q后普攻一段",
+    title: "Q后普攻一段伤害",
     params: { q: true },
     dmg: ({ talent }, dmg) => dmg(talent.a["一段伤害"], "a2")
   }, {
     title: "Q后普攻一段激化",
     params: { q: true },
-    dmg: ({ talent }, dmg) => dmg(talent.a["一段伤害"], "a2", "aggravate")
+    dmg: ({ talent }, dmg) => dmg(talent.a["一段伤害"], "a2", "超激化")
   }, {
-    title: "Q后普攻三段",
+    title: "Q后普攻三段伤害",
     params: { q: true },
     dmg: ({ talent }, dmg) => dmg(talent.a["三段伤害"], "a2")
   }, {
     title: "Q后普攻三段激化",
     params: { q: true },
-    dmg: ({ talent }, dmg) => dmg(talent.a["三段伤害"], "a2", "aggravate")
+    dmg: ({ talent }, dmg) => dmg(talent.a["三段伤害"], "a2", "超激化")
   }
 ]
 
@@ -35,26 +35,25 @@ export const mainAttr = "atk,cpct,cdmg,mastery"
 
 export const buffs = [
   {
-    check: ({ params }) => params.q === true,
-    title: "赛索斯技能：暝弦矢造成的伤害提升[a2Plus]",
+    title: "元素爆发-秘仪·瞑光贯影：暝弦矢(Q后普攻)造成的伤害提升[_a2Plus]",
     data: {
-      a2Plus: ({ talent, attr }) => attr.mastery / 100 * talent.q["瞑弦矢伤害提升"]
+      _a2Plus: ({ talent, attr, calc }) => calc(attr.mastery) / 100 * talent.q["瞑弦矢伤害提升"],
+      a2Plus: ({ params, talent, attr, calc }) => params.q ? calc(attr.mastery) / 100 * talent.q["瞑弦矢伤害提升"] : 0
     }
   }, {
-    check: ({ params }) => params.q !== true,
-    title: "赛索斯天赋：贯影箭造成的伤害值提升[a2Plus]",
+    title: "天赋-砂王的赐礼：贯影箭造成的伤害值提升[_a2Plus]",
     data: {
-      a2Plus: ({ attr, calc }) => calc(attr.mastery) * 600 / 100
+      _a2Plus: ({ attr, calc }) => calc(attr.mastery) * 600 / 100,
+      a2Plus: ({ params, attr, calc }) => params.q ? 0 : calc(attr.mastery) * 600 / 100
     }
   }, {
-    check: ({ params }) => params.q !== true,
-    title: "赛索斯1命：贯影箭的暴击率提升[a2Cpct]%",
+    title: "赛索斯1命：贯影箭的暴击率提升15%",
     cons: 1,
     data: {
-      a2Cpct: 15
+      a2Cpct: ({ params }) => params.q ? 0 : 15
     }
   }, {
-    title: "赛索斯2命：释放EQ获得[dmg]%雷伤加成",
+    title: "赛索斯2命：释放元素战技与元素爆发，雷伤加成提升[dmg]%",
     cons: 2,
     data: {
       dmg: 15 * 2
@@ -65,7 +64,7 @@ export const buffs = [
     data: {
       mastery: 80
     }
-  }, "aggravate"
+  }
 ]
 
-export const createdBy = "liangshi"
+export const createdBy = "其实雨很好"

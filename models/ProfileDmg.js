@@ -165,6 +165,9 @@ export default class ProfileDmg extends Base {
         detail = detail({ ...ds, attr, profile })
       }
       let params = lodash.merge({}, defParams, lodash.isFunction(detail?.params) ? detail?.params(meta) : detail?.params || {})
+      // 生命之契不能超过200
+      if (params.BondOfLife) params.BondOfLife = Math.min(params.BondOfLife, 200)
+
       let { attr, msg } = DmgAttr.calcAttr({ originalAttr, buffs, artis, meta, params, talent: detail.talent || "", game })
       if (detail.isStatic) return
 

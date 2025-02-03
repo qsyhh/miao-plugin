@@ -154,15 +154,26 @@ export default function(step, staticStep) {
     },
     纯水流华: [
       {
-        title: "生命之契提升[dmg]%全部元素伤害加成",
-        sort: 9,
-        data: {
-          dmg: ({ attr, calc, refine }) => Math.min(Math.floor(calc(attr.hp) / 1000) * 2 * step(0.24)[refine], step(12)[refine])
-        }
-      }, {
         title: "释放元素战技全部元素伤害加成提升[dmg]%",
         refine: {
           dmg: step(8)
+        }
+      }, {
+        check: ({ params }) => params.BondOfLife,
+        title: "施放元素战技时，赋予生命值上限24%的生命之契",
+        data: {
+          _addBondOfLife: ({ params }) => {
+            params.BondOfLife = Math.min(params.BondOfLife + 24, 200)
+            return true
+          }
+        }
+      }, {
+        check: ({ params }) => params.BondOfLife,
+        title: "[_BondOfLife]%生命之契提升[dmg]%全部元素伤害加成",
+        sort: 9,
+        data: {
+          _BondOfLife: ({ params }) => params.BondOfLife,
+          dmg: ({ attr, calc, refine, params }) => Math.min(Math.floor(calc(attr.hp) * params.BondOfLife / 1000) * step(2)[refine], step(12)[refine])
         }
       }
     ],

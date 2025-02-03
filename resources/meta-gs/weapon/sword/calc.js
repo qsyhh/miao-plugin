@@ -227,16 +227,32 @@ export default function(step, staticStep) {
         rechargePlus: [ 16, 20, 24, 28, 32 ]
       }
     },
-    海渊终曲: {
-      title: "释放元素战技攻击力提升[atkPct]%，生命之契提升[atkPlus]点攻击力",
-      sort: 9,
-      data: {
-        atkPlus: ({ attr, calc, refine }) => Math.min(Math.floor(calc(attr.hp) * 0.25 * step(0.24)[refine] / 10, step(150)))
-      },
-      refine: {
-        atkPct: step(12)
+    海渊终曲: [
+      {
+        title: "释放元素战技攻击力提升[atkPct]%",
+        refine: {
+          atkPct: step(12)
+        }
+      }, {
+        check: ({ params }) => params.BondOfLife,
+        title: "施放元素战技时，赋予生命值上限25%的生命之契",
+        data: {
+          _addBondOfLife: ({ params }) => {
+            params.BondOfLife = Math.min(params.BondOfLife + 25, 200)
+            return true
+          }
+        }
+      }, {
+        // 生命之契清除时才生效🤔，暂时先算进去吧
+        check: ({ params }) => params.BondOfLife,
+        title: "[_BondOfLife]%生命之契清除时，提升[atkPlus]点攻击力",
+        sort: 9,
+        data: {
+          _BondOfLife: ({ params }) => params.BondOfLife,
+          atkPlus: ({ attr, calc, params, refine }) => Math.min(calc(attr.hp) * params.BondOfLife * step(2.4)[refine], step(150))
+        }
       }
-    },
+    ],
     船坞长剑: {
       title: "满层提高[mastery]点元素精通",
       refine: {
