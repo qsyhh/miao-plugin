@@ -1,40 +1,46 @@
 export const details = [
   {
-    title: "E后普攻一段",
+    title: "E后普攻一段伤害",
     dmg: ({ talent }, dmg) => dmg(talent.a["一段伤害"], "a")
   }, {
-    title: "E突刺伤害",
-    dmg: ({ talent, attr }, { basic }) => basic(talent.e["上挑攻击伤害2"][0] * attr.atk / 100 + talent.e["上挑攻击伤害2"][1] * attr.def / 100, "e")
+    title: "E后重击伤害",
+    dmg: ({ talent }, dmg) => dmg(talent.a["重击伤害"], "a2")
   }, {
-    title: "E人偶伤害",
-    dmg: ({ talent, attr }, { basic }) => basic(talent.e["袖伤害2"][0] * attr.atk / 100 + talent.e["袖伤害2"][1] * attr.def / 100, "e")
+    title: "E后下落攻击伤害",
+    dmg: ({ talent }, dmg) => dmg(talent.a["低空/高空坠地冲击伤害2"][0], "a3")
   }, {
-    title: "2命人偶切斩伤害",
-    check: ({ cons }) => cons >= 2,
-    dmg: ({ talent, attr }, { basic }) => basic((talent.e["袖伤害2"][0] * attr.atk / 100 + talent.e["袖伤害2"][1] * attr.def / 100) * 1.7, "e")
+    title: "E上挑攻击伤害",
+    dmg: ({ talent, attr, calc }, { basic }) => basic((calc(attr.atk) * talent.e["上挑攻击伤害2"][0] + calc(attr.def) * talent.e["上挑攻击伤害2"][1]) / 100, "e")
   }, {
-    title: "Q伤害",
-    dmg: ({ talent, attr }, { basic }) => basic(talent.q["技能伤害2"][0] * attr.atk / 100 + talent.q["技能伤害2"][1] * attr.def / 100, "q")
+    title: "E袖切斩伤害",
+    dmg: ({ talent, attr, calc }, { basic }) => basic((calc(attr.atk) * talent.e["袖伤害2"][0] + calc(attr.def) * talent.e["袖伤害2"][1]) / 100, "e")
+  }, {
+    title: "Q技能伤害",
+    dmg: ({ talent, attr, calc }, { basic }) => basic((calc(attr.atk) * talent.q["技能伤害2"][0] + calc(attr.def) * talent.q["技能伤害2"][1]) / 100, "q")
+  }, {
+    check: ({ cons }) => cons > 1,
+    title: "2命绢切斩伤害",
+    dmg: ({ talent, attr, calc }, { basic }) => basic(((calc(attr.atk) * talent.e["袖伤害2"][0] + calc(attr.def) * talent.e["袖伤害2"][1]) / 100) * 1.7, "e")
   }
 ]
 
-export const defDmgIdx = 2
+export const defDmgIdx = 5
 export const mainAttr = "atk,def,cpct,cdmg,dmg"
 
 export const buffs = [
   {
-    title: "千织天赋：队伍中角色创造岩造物时，获得[dmg]%岩伤加成",
+    title: "天赋-锦上添花：队伍中附近的角色创造岩元素创造物时，获得[_dmg]%岩伤加成(单人不触发)",
     data: {
-      dmg: 20
+      _dmg: 20
     }
   }, {
     title: "千织6命：普攻造成的伤害提升[aPlus]",
     sort: 9,
     cons: 6,
     data: {
-      aPlus: ({ attr }) => attr.def * 235 / 100
+      aPlus: ({ attr, calc }) => calc(attr.def) * 235 / 100
     }
   }
 ]
 
-export const createdBy = "liangshi"
+export const createdBy = "其实雨很好"

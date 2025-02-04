@@ -283,7 +283,7 @@ export default function(step, staticStep) {
       }
     },
     白雨心弦: {
-      title: "满层下，生命值上限提升[hpPct]%元素爆发的暴击率提[qCpct]%",
+      title: "3层疗护，使生命值上限提升[hpPct]%，元素爆发的暴击率提升[qCpct]%",
       refine: {
         hpPct: step(40, 10),
         qCpct: step(28)
