@@ -37,12 +37,13 @@ export const details = [
     }
   }, {
     title: "长按E三级激愈水球治疗",
-    dmg: ({ talent, attr, calc }, { heal }) => {
+    params: { BondOfLife: 20 },
+    dmg: ({ talent, attr, calc, params }, { heal }) => {
       // 三级提升治疗量5%*2
       let cost = 1 + 0.1
       // 拾取2枚源水之滴，获得20%生命之契
       // 天赋-细致入微的诊疗
-      cost += Math.min(Math.floor((calc(attr.hp) * 20 / 100) / 1000) * 0.03, 0.3)
+      cost += Math.min(Math.floor((calc(attr.hp) * params.BondOfLife / 100) / 1000) * 0.03, 0.3)
       return heal((calc(attr.hp) * talent.e["激愈水球治疗量2"][0] / 100 + talent.e["激愈水球治疗量2"][1]) * cost)
     }
   }, {
