@@ -19,3 +19,7 @@
 /resources/profile/super-character/*
 /resources/profile/normal-character/*
 /node_modules/
+/resources/profile/background/*
+!/resources/profile/background/default
+/resources/meta-gs/info/json/
+/resources/meta-sr/info/json/

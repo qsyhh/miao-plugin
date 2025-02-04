@@ -33,7 +33,7 @@ const CharStrategy = {
   async strategy(e) {
     let char = e.char
     if (!fs.existsSync(`${miaoPath}/resources/meta-${char.game}/info/json`)) {
-      logger.error(`暂未下载攻略资源包，请发送【${char.isGs ? "#" : "*"}喵喵更新攻略资源】更新资源`)
+      logger.error(`[喵喵角色攻略-${char.game}] 尚未安装${char.isGs ? "原神" : "星铁"}攻略资源包，发送 ${char.isGs ? "#" : "*"}喵喵安装攻略资源 以安装`)
       e.msg = e.original_msg
       return false
     }
@@ -44,7 +44,9 @@ const CharStrategy = {
     if (data.strategy && data.strategy.length != 0) {
       let msglist = []
       let list = data.strategy
+      let nickname = "QQ用户"
       msglist.push({
+        nickname,
         message: [ `${name}攻略，共${list.length}张` ]
       })
       for (let ds of list) {
@@ -52,6 +54,7 @@ const CharStrategy = {
         let img = await CharStrategy.downImgs(ds, { name, game, type })
         if (!img) return false
         msglist.push({
+          nickname,
           message: [
             `版主：${ds.author}`,
             segment.image(`file://${img}`),
