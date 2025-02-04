@@ -161,29 +161,29 @@ async function updateStrategy(e) {
     let command = ""
     let path = `${resPath}/meta-${game}/info/json/`
     if (fs.existsSync(path)) {
-      e.reply(`[喵喵角色攻略-${game}] ${/安装/.test(e.msg) ? "攻略资源已安装，" : ""}开始尝试更新攻略资源包，请稍后~`)
+      await e.reply(`[喵喵角色攻略-${game}] ${/安装/.test(e.msg) ? "攻略资源已安装，" : ""}开始尝试更新攻略资源包，请稍后~`)
       command = "git pull"
       if (e.msg.includes("强制")) command = "git  checkout . && git  pull"
 
       exec(command, { cwd: path }, async function(error, stdout, stderr) {
-        if (/(Already up[ -]to[ -]date|已经是最新的)/.test(stdout)) return e.reply(`[喵喵角色攻略-${game}] 已经是最新了~`)
+        if (/(Already up[ -]to[ -]date|已经是最新的)/.test(stdout)) return await e.reply(`[喵喵角色攻略-${game}] 已经是最新了~`)
 
         let numRet = /(\d*) files changed,/.exec(stdout)
-        if (numRet && numRet[1]) return e.reply(`[喵喵角色攻略-${game}] 报告主人，更新成功，此次改动了${numRet[1]}个文件~`)
+        if (numRet && numRet[1]) return await e.reply(`[喵喵角色攻略-${game}] 报告主人，更新成功，此次改动了${numRet[1]}个文件~`)
         if (error) {
-          e.reply(`[喵喵角色攻略-${game}] 更新失败！\nError code: " + error.code + "\n" + error.stack + "\n 请稍后重试。`)
+          await e.reply(`[喵喵角色攻略-${game}] 更新失败！\nError code: " + error.code + "\n" + error.stack + "\n 请稍后重试。`)
         } else {
-          e.reply(`[喵喵角色攻略-${game}] 攻略资源更新成功~`)
+          await e.reply(`[喵喵角色攻略-${game}] 攻略资源更新成功~`)
         }
       })
     } else if (/安装/.test(e.msg)) {
       command = `git clone -b ${game} https://gitee.com/qsyhh/resources.git "${path}" --depth=1`
-      e.reply(`[喵喵角色攻略-${game}] 开始尝试安装攻略资源包，请稍后~`)
-      exec(command, function(error, stdout, stderr) {
+      await e.reply(`[喵喵角色攻略-${game}] 开始尝试安装攻略资源包，请稍后~`)
+      exec(command, async function(error, stdout, stderr) {
         if (error) {
-          e.reply(`[喵喵角色攻略-${game}] 攻略资源包安装失败！\nError code: " + error.code + "\n" + error.stack + "\n 请稍后重试。`)
+          await e.reply(`[喵喵角色攻略-${game}] 攻略资源包安装失败！\nError code: " + error.code + "\n" + error.stack + "\n 请稍后重试。`)
         } else {
-          e.reply(`[喵喵角色攻略-${game}] 攻略资源包安装成功！您后续也可以通过 #喵喵更新攻略资源 命令来更新全部攻略`)
+          await e.reply(`[喵喵角色攻略-${game}] 攻略资源包安装成功！您后续也可以通过 #喵喵更新攻略资源 命令来更新全部攻略`)
         }
       })
     } else {
