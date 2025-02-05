@@ -1,12 +1,37 @@
 export default function(staticIdx, keyIdx) {
   return {
+    "溯忆": (tables) => {
+      return {
+        check: ({ params }) => params.Memosprite,
+        title: "忆灵在场时，4层【缅怀】使造成的伤害提高[dmg]%",
+        data: {
+          dmg: tables[1] * 4
+        }
+      }
+    },
     "将光阴织成黄金": [
       staticIdx(1, "speedPct"),
-      keyIdx("3层【织锦】使暴击伤害提高[cdmg]%，使造成的普攻伤害提高[aDmg]%", { cdmg: 2, aDmg: 2 })
+      (tables) => {
+        return {
+          title: "6层【织锦】使装备者和装备者的忆灵暴击伤害提高[cdmg]%，使造成的普攻伤害提高[aDmg]%",
+          data: {
+            cdmg: tables[2] * 6,
+            aDmg: tables[3] * 6
+          }
+        }
+      }
     ],
     "胜利只在朝夕间": [
       staticIdx(1, "cdmg"),
-      keyIdx("装备者的忆灵对我方目标施放技能时，使我方全体目标造成的伤害提高[dmg]%", "dmg", 2)
+      (tables) => {
+        return {
+          check: ({ params }) => params.Memosprite,
+          title: "装备者的忆灵对我方目标施放技能时，使我方全体目标造成的伤害提高[dmg]%",
+          data: {
+            dmg: tables[2]
+          }
+        }
+      }
     ],
     "天才们的问候": [
       staticIdx(1, "atkPct"),
@@ -14,7 +39,15 @@ export default function(staticIdx, keyIdx) {
     ],
     "多流汗，少流泪": [
       staticIdx(1, "cpct"),
-      keyIdx("装备者的忆灵在场上时，装备者与忆灵造成的伤害提高[dmg]%", "dmg", 2)
+      (tables) => {
+        return {
+          check: ({ params }) => params.Memosprite,
+          title: "装备者的忆灵在场上时，装备者与忆灵造成的伤害提高[dmg]%",
+          data: {
+            dmg: tables[2]
+          }
+        }
+      }
     ],
     "记忆永不落幕": [
       staticIdx(1, "speedPct"),
