@@ -23,7 +23,7 @@ export const details = [
   }, {
     title: "Q治疗量(145%生命之契)",
     params: { BondOfLife: 145 },
-    dmg: ({ attr, calc, params }, { heal }) => heal(150 / 100 * (params.BondOfLife + calc(attr.atk)))
+    dmg: ({ attr, calc, params }, { heal }) => heal(150 / 100 * (calc(attr.hp) * params.BondOfLife + calc(attr.atk)))
   }, {
     check: ({ cons }) => cons > 1,
     title: "2命厄月血火伤害",
