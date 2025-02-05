@@ -12,27 +12,33 @@ export const details = [
     title: "强化战技伤害(首段 主目标 26层解读)",
     /**
      * q[终结技]：释放终结技后获得【灵感】，战技强化
-     * tArtisBuffCount[解读层数]：天赋buff进入战斗初始给1层，每波次随机施加25层
+     * tArtisBuffCount[解读层数]：天赋buff进入战斗初始给1层，每波次随机施加25层，1命额外计算50%
      */
     params: { q: true, tArtisBuffCount: 26 },
-    dmg: ({ talent, params }, dmg) => dmg(calcTalent(talent.e2["技能伤害"], talent.t["主目标每层倍率"], params.tArtisBuffCount), "e")
+    dmg: ({ talent, cons, params }, dmg) => calcTalent({ cons, params, dmg }, talent.e2["技能伤害"], talent.t["主目标每层倍率"])
   }, {
     title: "强化战技伤害(尾段 主目标 26层解读)",
     params: { q: true, tArtisBuffCount: 26 },
-    dmg: ({ talent, params }, dmg) => dmg(calcTalent(talent.e2["所有目标伤害"], talent.t["主目标每层倍率"], params.tArtisBuffCount), "e")
+    dmg: ({ talent, cons, params }, dmg) => calcTalent({ cons, params, dmg }, talent.e2["所有目标伤害"], talent.t["主目标每层倍率"])
   }, {
     title: "强化战技伤害(完整 3目标 26层解读)",
     params: { q: true, tArtisBuffCount: 26 },
-    dmg: ({ talent, params }, dmg) => {
-      let { e2Dmg1, e2Dmg2, e2Dmg3, e2Dmg4 } = calcTalent(talent.e2, talent.t, params.tArtisBuffCount, true)
-      return dmg(e2Dmg1 + e2Dmg2 + e2Dmg3 + e2Dmg4, "e")
+    dmg: ({ talent, cons, params }, dmg) => {
+      let { e2Dmg1, e2Dmg2, e2Dmg3, e2Dmg4 } = calcTalent({ cons, params, dmg }, talent.e2, talent.t, true)
+      return {
+        dmg: e2Dmg1.dmg * 2 + e2Dmg2.dmg * 4 + e2Dmg3.dmg + e2Dmg4.dmg * 2,
+        avg: e2Dmg1.avg * 2 + e2Dmg2.avg * 4 + e2Dmg3.avg + e2Dmg4.avg * 2
+      }
     }
   }, {
     title: "强化战技伤害(完整 3目标 满层解读)",
     params: { q: true, tArtisBuffCount: 42 },
-    dmg: ({ talent, params }, dmg) => {
-      let { e2Dmg1, e2Dmg2, e2Dmg3, e2Dmg4 } = calcTalent(talent.e2, talent.t, params.tArtisBuffCount, true)
-      return dmg(e2Dmg1 + e2Dmg2 + e2Dmg3 + e2Dmg4, "e")
+    dmg: ({ talent, cons, params }, dmg) => {
+      let { e2Dmg1, e2Dmg2, e2Dmg3, e2Dmg4 } = calcTalent({ cons, params, dmg }, talent.e2, talent.t, true)
+      return {
+        dmg: e2Dmg1.dmg * 2 + e2Dmg2.dmg * 4 + e2Dmg3.dmg + e2Dmg4.dmg * 2,
+        avg: e2Dmg1.avg * 2 + e2Dmg2.avg * 4 + e2Dmg3.avg + e2Dmg4.avg * 2
+      }
     }
   }, {
     title: "终结技伤害(单目标)",
@@ -87,6 +93,9 @@ export const buffs = [
     title: "行迹-饥饿的地景：施放终结技时，每持有1层【谜底】，使本次终结技的伤害倍率提高1%",
     tree: 3
   }, {
+    title: "大黑塔1魂：强化战技计算【解读】层数时，额外计算层数最高的1个目标当前【解读】层数的50.0%",
+    cons: 1
+  }, {
     title: "大黑塔4魂：队伍中的智识命途角色的速度提高[speedPct]%",
     cons: 4,
     data: {
@@ -102,9 +111,9 @@ export const buffs = [
 ]
 
 /**
+ * @param ds - 数据集
  * @param talentE2 - 强普数据数组
  * @param talentT - 天赋数据数组
- * @param tArtisBuffCount - 解读层数
  * @param all {true|false} - 是否传出所有
  * @returns {number|object}
  * - e2Dmg1 前两段主目标
@@ -112,13 +121,15 @@ export const buffs = [
  * - e2Dmg3 尾段主目标
  * - e2Dmg4 尾段相邻目标
  */
-function calcTalent(talentE2, talentT, tArtisBuffCount, all = false) {
-  if (!all) return talentE2 + talentT * tArtisBuffCount * 2
+function calcTalent(ds, talentE2, talentT, all = false) {
+  let tArtisBuffCount = ds.params.tArtisBuffCount
+  if (ds.cons > 0) tArtisBuffCount += tArtisBuffCount / 2
+  if (!all) return ds.dmg(talentE2 + talentT * tArtisBuffCount * 2, "e")
   return {
-    e2Dmg1: (talentE2["技能伤害"] + talentT["主目标每层倍率"] * tArtisBuffCount * 2) * 2,
-    e2Dmg2: (talentE2["技能伤害"] + talentT["相邻目标每层倍率"] * tArtisBuffCount * 2) * 4,
-    e2Dmg3: (talentE2["所有目标伤害"] + talentT["主目标每层倍率"] * tArtisBuffCount * 2),
-    e2Dmg4: (talentE2["所有目标伤害"] + talentT["相邻目标每层倍率"] * tArtisBuffCount * 2) * 2
+    e2Dmg1: ds.dmg(talentE2["技能伤害"] + talentT["主目标每层倍率"] * tArtisBuffCount * 2, "e"),
+    e2Dmg2: ds.dmg(talentE2["技能伤害"] + talentT["相邻目标每层倍率"] * tArtisBuffCount * 2, "e"),
+    e2Dmg3: ds.dmg(talentE2["所有目标伤害"] + talentT["主目标每层倍率"] * tArtisBuffCount * 2, "e"),
+    e2Dmg4: ds.dmg(talentE2["所有目标伤害"] + talentT["相邻目标每层倍率"] * tArtisBuffCount * 2, "e")
   }
 }
 
