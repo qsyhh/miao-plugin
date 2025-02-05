@@ -16,7 +16,8 @@ export default function(staticIdx, keyIdx) {
           title: "6层【织锦】使装备者和装备者的忆灵暴击伤害提高[cdmg]%，使造成的普攻伤害提高[aDmg]%",
           data: {
             cdmg: tables[2] * 6,
-            aDmg: tables[3] * 6
+            aDmg: tables[3] * 6,
+            meDmg: tables[3] * 6
           }
         }
       }
@@ -35,7 +36,7 @@ export default function(staticIdx, keyIdx) {
     ],
     "天才们的问候": [
       staticIdx(1, "atkPct"),
-      keyIdx("装备者施放终结技后，使装备者与忆灵造成的普攻伤害额外提高[aDmg]%", "aDmg", 2)
+      keyIdx("装备者施放终结技后，使装备者与忆灵造成的普攻伤害额外提高[aDmg]%", { aDmg: 2, meDmg: 2 })
     ],
     "多流汗，少流泪": [
       staticIdx(1, "cpct"),

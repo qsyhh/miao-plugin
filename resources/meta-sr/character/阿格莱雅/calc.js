@@ -67,7 +67,7 @@ export const buffs = [
     tree: 1,
     data: {
       _hpBase: ({ talent, attr, calc }) => calc(attr.hp) * talent.t["生命·百分比"] / 100 + talent.t["生命·固定值"],
-      _speedBase: ({ attr, calc }) => calc(attr) * 35 / 100
+      _speedBase: ({ attr, calc }) => calc(attr.speed) * 35 / 100
     }
   },
   {
@@ -79,7 +79,7 @@ export const buffs = [
         return speed * 720 / 100 + mSpeed * 360 / 100
       },
       atkPlus: ({ talent, cons, attr, calc, params }) => {
-        if (params.q) return 0
+        if (!params.q) return 0
         let { speed, mSpeed } = calcSpeed({ talent, cons, attr, calc })
         return speed * 720 / 100 + mSpeed * 360 / 100
       }
@@ -122,7 +122,7 @@ export const buffs = [
         return speed > 320 ? 60 : speed > 240 ? 30 : speed > 160 ? 10 : 0
       },
       aDmg: ({ talent, cons, attr, calc, params }) => {
-        if (params.q) return 0
+        if (!params.q) return 0
         let { speed } = calcSpeed({ talent, cons, attr, calc })
         return speed > 320 ? 60 : speed > 240 ? 30 : speed > 160 ? 10 : 0
       },
@@ -131,7 +131,7 @@ export const buffs = [
         return mSpeed > 320 ? 60 : mSpeed > 240 ? 30 : mSpeed > 160 ? 10 : 0
       },
       meDmg: ({ talent, cons, attr, calc, params }) => {
-        if (params.q) return 0
+        if (!params.q) return 0
         let { mSpeed } = calcSpeed({ talent, cons, attr, calc })
         return mSpeed > 320 ? 60 : mSpeed > 240 ? 30 : mSpeed > 160 ? 10 : 0
       }
