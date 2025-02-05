@@ -21,9 +21,9 @@ export const details = [
     title: "Q技能蒸发",
     dmg: ({ talent }, dmg) => dmg(talent.q["技能伤害"], "q", "蒸发")
   }, {
-    title: "Q治疗量(145%生命之契)",
+    title: "Q消契后治疗量(145%生命之契)",
     params: { BondOfLife: 145 },
-    dmg: ({ attr, calc, params }, { heal }) => heal(150 / 100 * (calc(attr.hp) * params.BondOfLife / 100 + calc(attr.atk)))
+    dmg: ({ attr, calc, params }, { heal }) => heal(50 / 100 * (calc(attr.hp) * params.BondOfLife / 100 + 3 * calc(attr.atk)))
   }, {
     check: ({ cons }) => cons > 1,
     title: "2命厄月血火伤害",
