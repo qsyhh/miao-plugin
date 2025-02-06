@@ -12,18 +12,20 @@ export const details = [
     dmg: ({ talent, calc, attr }, { basic }) => basic(calc(attr.hp) * talent.e["鲨鲨撕咬基础伤害"] / 100, "a,nightsoul")
   }, {
     title: "E后巨浪鲨鲨撕咬伤害",
-    params: { buffCount: 3 },
-    dmg: ({ talent, calc, attr, cons }, { basic }) => basic(calc(attr.hp) * (talent.e["鲨鲨撕咬基础伤害"] + (cons > 0 ? 66 : 0)) / 100, "a,nightsoul")
+    params: { buffCount: 3, cons1: true },
+    dmg: ({ talent, calc, attr }, { basic }) => basic(calc(attr.hp) * talent.e["鲨鲨撕咬基础伤害"] / 100, "a,nightsoul")
   }, {
     title: "E后巨浪鲨鲨撕咬蒸发",
-    params: { buffCount: 3 },
-    dmg: ({ talent, calc, attr, cons }, { basic }) => basic(calc(attr.hp) * (talent.e["鲨鲨撕咬基础伤害"] + (cons > 0 ? 66 : 0)) / 100, "a,nightsoul", "vaporize")
+    params: { buffCount: 3, cons1: true },
+    dmg: ({ talent, calc, attr }, { basic }) => basic(calc(attr.hp) * talent.e["鲨鲨撕咬基础伤害"] / 100, "a,nightsoul", "蒸发")
   }, {
     title: "Q爆瀑飞弹伤害",
-    dmg: ({ talent, calc, attr, cons }, { basic }) => basic(calc(attr.hp) * (talent.q["技能伤害"] / 100 + (cons > 0 ? 66 : 0)), "q,nightsoul")
+    params: { cons1: true },
+    dmg: ({ talent, calc, attr }, { basic }) => basic(calc(attr.hp) * talent.q["技能伤害"] / 100, "q,nightsoul")
   }, {
     title: "Q爆瀑飞弹蒸发",
-    dmg: ({ talent, calc, attr, cons }, { basic }) => basic(calc(attr.hp) * (talent.q["技能伤害"] / 100 + (cons > 0 ? 66 : 0)), "q,nightsoul", "vaporize")
+    params: { cons1: true },
+    dmg: ({ talent, calc, attr }, { basic }) => basic(calc(attr.hp) * talent.q["技能伤害"] / 100, "q,nightsoul", "蒸发")
   }
 ]
 
@@ -51,7 +53,9 @@ export const buffs = [
     cons: 1,
     sort: 9,
     data: {
-      _aPlus: ({ calc, attr }) => calc(attr.hp) * 66 / 100
+      _aPlus: ({ calc, attr }) => calc(attr.hp) * 66 / 100,
+      aPlus: ({ calc, attr, params }) => params.cons1 ? calc(attr.hp) * 66 / 100 : 0,
+      qPlus: ({ calc, attr, params }) => params.cons1 ? calc(attr.hp) * 66 / 100 : 0
     }
   }, {
     title: "玛拉妮4命：爆瀑飞弹造成的伤害提升[qDmg]%",
