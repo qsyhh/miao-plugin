@@ -9,9 +9,9 @@ export const details = [
   }, {
     title: "满战意E后驰轮车普攻一段伤害",
     params: { zy: 200, cl: true },
-    dmg: ({ talent, calc, attr, cons }, dmg) => {
+    dmg: ({ talent, calc, attr }, dmg) => {
       let aDmg = dmg(talent.e["驰轮车普通攻击一段伤害"], "a,nightsoul")
-      let aPlus = talent.q["驰轮车普通攻击伤害提升"] * calc(attr.atk) * 2 + (cons > 1 ? calc(attr.atk) * 0.6 : 0)
+      let aPlus = talent.q["驰轮车普通攻击伤害提升"] * calc(attr.atk) * 2
       return {
         dmg: aDmg.dmg + aPlus,
         avg: aDmg.avg + aPlus
@@ -20,13 +20,13 @@ export const details = [
   }, {
     title: "满战意E后驰轮车普攻一轮伤害",
     params: { zy: 200, cl: true },
-    dmg: ({ talent, calc, attr, cons }, dmg) => {
+    dmg: ({ talent, calc, attr }, dmg) => {
       let aDmg1 = dmg(talent.e["驰轮车普通攻击一段伤害"], "a,nightsoul")
       let aDmg2 = dmg(talent.e["驰轮车普通攻击二段伤害"], "a,nightsoul")
       let aDmg3 = dmg(talent.e["驰轮车普通攻击三段伤害"], "a,nightsoul")
       let aDmg4 = dmg(talent.e["驰轮车普通攻击四段伤害"], "a,nightsoul")
       let aDmg5 = dmg(talent.e["驰轮车普通攻击五段伤害"], "a,nightsoul")
-      let aPlus = talent.q["驰轮车普通攻击伤害提升"] * calc(attr.atk) * 2 + (cons > 1 ? calc(attr.atk) * 0.6 : 0)
+      let aPlus = talent.q["驰轮车普通攻击伤害提升"] * calc(attr.atk) * 2
       return {
         dmg: aDmg1.dmg + aDmg2.dmg + aDmg3.dmg + aDmg4.dmg + aDmg5.dmg + aPlus * 5,
         avg: aDmg1.avg + aDmg2.avg + aDmg3.avg + aDmg4.avg + aDmg5.avg + aPlus * 5
@@ -35,13 +35,13 @@ export const details = [
   }, {
     title: "满战意E后驰轮车普攻一轮蒸发",
     params: { zy: 200, cl: true },
-    dmg: ({ talent, calc, attr, cons }, dmg) => {
+    dmg: ({ talent, calc, attr }, dmg) => {
       let aDmg1 = dmg(talent.e["驰轮车普通攻击一段伤害"], "a,nightsoul", "vaporize")
       let aDmg2 = dmg(talent.e["驰轮车普通攻击二段伤害"], "a,nightsoul", "vaporize")
       let aDmg3 = dmg(talent.e["驰轮车普通攻击三段伤害"], "a,nightsoul", "vaporize")
       let aDmg4 = dmg(talent.e["驰轮车普通攻击四段伤害"], "a,nightsoul", "vaporize")
       let aDmg5 = dmg(talent.e["驰轮车普通攻击五段伤害"], "a,nightsoul", "vaporize")
-      let aPlus = talent.q["驰轮车普通攻击伤害提升"] * calc(attr.atk) * 2 + (cons > 1 ? calc(attr.atk) * 0.6 : 0)
+      let aPlus = talent.q["驰轮车普通攻击伤害提升"] * calc(attr.atk) * 2
       return {
         dmg: aDmg1.dmg + aDmg2.dmg + aDmg3.dmg + aDmg4.dmg + aDmg5.dmg + aPlus * 5,
         avg: aDmg1.avg + aDmg2.avg + aDmg3.avg + aDmg4.avg + aDmg5.avg + aPlus * 5
@@ -54,9 +54,9 @@ export const details = [
   }, {
     title: "满战意E后驰轮车重击终结伤害",
     params: { cl: true },
-    dmg: ({ talent, calc, attr, cons }, dmg) => {
+    dmg: ({ talent, calc, attr }, dmg) => {
       let a2Dmg = dmg(talent.e["驰轮车重击终结伤害"], "a2,nightsoul")
-      let a2Plus = talent.q["驰轮车重击伤害提升"] * calc(attr.atk) * 2 + (cons > 1 ? calc(attr.atk) * 0.9 : 0)
+      let a2Plus = talent.q["驰轮车重击伤害提升"] * calc(attr.atk) * 2
       return {
         dmg: a2Dmg.dmg + a2Plus,
         avg: a2Dmg.avg + a2Plus
@@ -65,9 +65,9 @@ export const details = [
   }, {
     title: "满战意E后驰轮车重击终结蒸发",
     params: { cl: true },
-    dmg: ({ talent, calc, attr, cons }, dmg) => {
+    dmg: ({ talent, calc, attr }, dmg) => {
       let a2Dmg = dmg(talent.e["驰轮车重击终结伤害"], "a2,nightsoul", "vaporize")
-      let a2Plus = talent.q["驰轮车重击伤害提升"] * calc(attr.atk) * 2 + (cons > 1 ? calc(attr.atk) * 0.9 : 0)
+      let a2Plus = talent.q["驰轮车重击伤害提升"] * calc(attr.atk) * 2
       return {
         dmg: a2Dmg.dmg + a2Plus,
         avg: a2Dmg.avg + a2Plus
@@ -80,9 +80,9 @@ export const details = [
   }, {
     title: "100战意Q技能伤害",
     params: { zy: 100 },
-    dmg: ({ talent, calc, attr, cons }, dmg) => {
+    dmg: ({ talent, calc, attr }, dmg) => {
       let qDmg = dmg(talent.q["技能伤害"], "q,nightsoul")
-      let qPlus = talent.q["坠日斩伤害提升"] * calc(attr.atk) * 1 + (cons > 1 ? calc(attr.atk) * 1.2 : 0)
+      let qPlus = talent.q["坠日斩伤害提升"] * calc(attr.atk)
       return {
         dmg: qDmg.dmg + qPlus,
         avg: qDmg.avg + qPlus
@@ -91,9 +91,9 @@ export const details = [
   }, {
     title: "满战意Q技能伤害",
     params: { zy: 200 },
-    dmg: ({ talent, calc, attr, cons }, dmg) => {
+    dmg: ({ talent, calc, attr }, dmg) => {
       let qDmg = dmg(talent.q["技能伤害"], "q,nightsoul")
-      let qPlus = talent.q["坠日斩伤害提升"] * calc(attr.atk) * 2 + (cons > 1 ? calc(attr.atk) * 1.2 : 0)
+      let qPlus = talent.q["坠日斩伤害提升"] * calc(attr.atk) * 2
       return {
         dmg: qDmg.dmg + qPlus,
         avg: qDmg.avg + qPlus
@@ -152,14 +152,17 @@ export const buffs = [
       atkPct: 40
     }
   }, {
-    title: "玛薇卡2命：焚曜之环状态下，附近的敌人的防御力降低20%",
+    title: "玛薇卡2命：夜魂加持状态下时，基础攻击力提升200点。焚曜之环状态下，附近的敌人的防御力降低20%。驰轮车状态下，玛薇卡的普通攻击、重击、元素爆发燔天之时中的坠日斩造成的伤害提升[aPlus]/[a2Plus]/[qPlus]",
     cons: 2,
     data: {
-      enemyDef: ({ params }) => params.fy ? 20 : 0
+      atkBase: 200,
+      enemyDef: ({ params }) => params.fy ? 20 : 0,
+      aPlus: ({ calc, attr }) => calc(attr.atk) * 60 / 100,
+      a2Plus: ({ calc, attr }) => calc(attr.atk) * 90 / 100,
+      // aPlus: ({ calc, attr, params }) => params.cl ? calc(attr.atk) * 60 / 100 : 0,
+      // a2Plus: ({ calc, attr, params }) => params.cl ? calc(attr.atk) * 90 / 100 : 0,
+      qPlus: ({ calc, attr }) => calc(attr.atk) * 120 / 100
     }
-  }, {
-    title: "玛薇卡2命：驰轮车状态下，玛薇卡的普通攻击、重击、元素爆发燔天之时中的坠日斩造成的伤害提升，提升值相当于玛薇卡攻击力的60%/90%/120%。",
-    cons: 2
   }, {
     title: "玛薇卡4命：额外获得[dmg]%伤害加成",
     cons: 4,

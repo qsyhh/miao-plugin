@@ -384,11 +384,13 @@ export default {
     2: attr("atkPct", 12),
     4: [
       {
+        check: ({ params }) => params.Memosprite,
         title: "装备者的忆灵在场时，装备者的速度提高[speedPct]%",
         data: {
           speedPct: 6
         }
       }, {
+        check: ({ params }) => params.Memosprite,
         title: "装备者的忆灵攻击时，装备者和忆灵的暴击伤害提高[cdmg]%",
         data: {
           cdmg: 30
