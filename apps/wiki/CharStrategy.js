@@ -43,22 +43,20 @@ const CharStrategy = {
     let data = Data.readJSON(`resources/meta-${game}/info/json/${type}/${name}.json`, "miao")
     if (data.strategy && data.strategy.length != 0) {
       let msglist = []
-      let list = data.strategy
-      let nickname = "QQ用户"
       msglist.push({
-        nickname,
-        message: [ `${name}攻略，共${list.length}张` ]
+        nickname: "QQ用户",
+        message: [ `${name}攻略，共${data.strategy.length}张` ]
       })
-      for (let ds of list) {
+      for (let ds of data.strategy) {
         if (!ds.author) continue
         let img = await CharStrategy.downImgs(ds, { name, game, type })
-        if (!img) return false
+        if (!img) continue
         msglist.push({
-          nickname,
+          nickname: "QQ用户",
           message: [
             `版主：${ds.author}`,
             segment.image(`file://${img}`),
-            `https://www.miyoushe.com/ys/article/${ds.article}`
+            ds.isOther ? ds.articleUrl : `https://www.miyoushe.com/ys/article/${ds.article}`
           ]
         })
       }
@@ -70,9 +68,10 @@ const CharStrategy = {
       } else {
         msg = await Bot.makeForwardMsg(msglist)
       }
-      e.reply(msg)
+      return e.reply(msg)
     }
-    return true
+    e.msg = e.original_msg
+    return false
   },
   async downImgs(ds = {}, char = {}) {
     let name = char.name
