@@ -133,7 +133,7 @@ class AttrData extends Base {
     ret._calc = true
 
     /**
-     * 提取并赋值角色静态的攻击、防御、生命的百分比加成总数值
+     * 提取并赋值角色静态的攻击、防御、生命、伤害加成的百分比加成总数值
      * 包括但不限于圣遗物主副词条之和
      * 圣遗物常驻加成，如追忆2、角斗士2等
      * 武器副词条
@@ -142,13 +142,15 @@ class AttrData extends Base {
     let staticAttrPct = {
       atkPct: 0,
       defPct: 0,
-      hpPct: 0
+      hpPct: 0,
+      dmgPct: 0
     }
     let _attr = this._attr
     if (_attr) {
       lodash.forEach([ "atk", "def", "hp" ], (key) => {
         staticAttrPct[key + "Pct"] += _attr[key].pct
       })
+      staticAttrPct.dmgPct += _attr.dmg.plus
     }
     ret.staticAttrPct = staticAttrPct
 
