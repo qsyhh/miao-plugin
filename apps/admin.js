@@ -4,7 +4,6 @@ import lodash from "lodash"
 import { exec, execSync } from "child_process"
 import makemsg from "../../../lib/common/common.js"
 import { Cfg, Common, Data, Version, App } from "#miao"
-import { update as Update } from "../../other/update.js"
 
 import fetch from "node-fetch"
 import { miaoPath } from "#miao.path"
@@ -193,11 +192,56 @@ async function updateStrategy(e) {
   return true
 }
 
+let timer
+
 async function updateMiaoPlugin(e) {
-  e.msg = `#${e.msg.includes("强制") ? "强制" : ""}更新miao-plugin`
-  const up = new Update(e)
-  up.e = e
-  return up.update()
+  if (!await checkAuth(e)) return true
+  let isForce = e.msg.includes("强制")
+  let command = "git  pull"
+  if (isForce) {
+    command = "git  checkout . && git  pull"
+    e.reply("正在执行强制更新操作，请稍等")
+  } else {
+    e.reply("正在执行更新操作，请稍等")
+  }
+  e.oldCommitId = await getcommitId()
+  exec(command, { cwd: miaoPath }, async function(error, stdout, stderr) {
+    if (/(Already up[ -]to[ -]date|已经是最新的)/.test(stdout)) return e.reply("目前已经是最新版喵喵了~")
+    if (error) return e.reply("喵喵更新失败！\nError code: " + error.code + "\n" + error.stack + "\n 请稍后重试。")
+
+    e.reply("喵喵更新成功，正在尝试重新启动Yunzai以应用更新...")
+    e.reply(await Miaoupdatelog(e, "miao-plugin"))
+    timer && clearTimeout(timer)
+    Data.setCacheJSON("miao:restart-msg", {
+      msg: "重启成功，新版喵喵已经生效",
+      qq: e.user_id
+    }, 30)
+    let npm = checkPnpm()
+    timer = setTimeout(function() {
+      let command = `${npm} start`
+      if (process.argv[1].includes("pm2")) {
+        command = `${npm} run restart`
+      }
+      exec(command, { windowsHide: true }, function(error, stdout, stderr) {
+        if (error) {
+          logger.error(`重启失败\n${error.stack}`)
+          return e.reply("自动重启失败，请手动重启以应用新版喵喵。\nError code: " + error.code + "\n" + error.stack + "\n")
+        } else if (stdout) {
+          logger.mark(`重启成功，运行已转为后台，查看日志请用命令：${npm} run log`)
+          logger.mark(`停止后台运行命令：${npm} stop`)
+          process.exit()
+        }
+      })
+    }, 1000)
+  })
+  return true
+}
+
+function checkPnpm() {
+  let npm = "npm"
+  let ret = execSync("pnpm -v")
+  if (ret.stdout) npm = "pnpm"
+  return npm
 }
 
 async function bgHelp(e) {
@@ -225,7 +269,7 @@ async function Miaoupdatelog(e, plugin = "miao-plugin") {
 
   let logAll
   try {
-    logAll = await execSync(cm, { encoding: "utf-8", windowsHide: true })
+    logAll = execSync(cm, { encoding: "utf-8", windowsHide: true })
   } catch (error) {
     logger.error(error.toString())
     this.reply(error.toString())
@@ -235,16 +279,21 @@ async function Miaoupdatelog(e, plugin = "miao-plugin") {
   let log = []
   for (let str of logAll) {
     str = str.split("||")
-    if (str[0] == this.oldCommitId) break
+    if (str[0] == e.oldCommitId) break
     if (str[1].includes("Merge branch")) continue
     log.push(str[1])
   }
   let line = log.length
   log = log.join("\n\n")
   if (log.length <= 0) return ""
-  let end = "更多详细信息，请前往gitee查看\nhttps://gitee.com/qsyhh/miao-plugin"
-  log = await makemsg.makeForwardMsg(this.e, [ log, end ], `${plugin}更新日志，共${line}条`)
+  let end = "更多详细信息，请前往gitee查看\nhttps://gitee.com/yoimiya-kokomi/miao-plugin"
+  log = await makemsg.makeForwardMsg(e, [ log, end ], `${plugin}更新日志，共${line}条`)
   e.reply(log)
+}
+
+async function getcommitId() {
+  const commitId = execSync("cd plugins/miao-plugin && git rev-parse --short HEAD", { encoding: "utf-8" })
+  return lodash.trim(commitId)
 }
 
 async function miaoApiInfo(e) {
