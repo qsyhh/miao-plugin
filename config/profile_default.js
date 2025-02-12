@@ -23,6 +23,11 @@ export const enkaApi = {
   proxyAgent: "" // 请求的proxy配置，如无需proxy则留空
 }
 
+export const enkaHSRApi = {
+  url: "https://enka.network/", // 请求API地址，可从上方提供的API地址中进行选择
+  proxyAgent: "" // 请求的proxy配置，如无需proxy则留空
+}
+
 /**
  * 喵喵Api 私有的面板更新服务
  * 供Yunzai开发者及有投喂的老板们小范围使用
