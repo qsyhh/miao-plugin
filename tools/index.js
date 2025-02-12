@@ -1,7 +1,7 @@
 /* eslint-disable import/no-unresolved */
 import { Data, Version } from "#miao"
 import fs from "node:fs"
-import Trans from "./trans.js"
+// import Trans from "./trans.js"
 import { rootPath } from "#miao.path"
 
 let relpyPrivate = async function() {
@@ -13,18 +13,24 @@ const Index = {
   async init() {
     await Index.checkVersion()
     await Index.startMsg()
-    Index.transUserData()
+    // Index.transUserData()
   },
 
   // 发启动消息
   async startMsg() {
     let msgStr = await redis.get("miao:restart-msg")
     if (msgStr) {
-      let msg = JSON.parse(msgStr)
-      await relpyPrivate(msg.qq, msg.msg)
+      let { uin, qq, isGroup, id, time } = JSON.parse(msgStr)
+      uin = uin || Bot.uin
+      time = (new Date().getTime() - time) / 1000
+      let msg = `重启成功，新版喵喵已经生效：耗时${time.toFixed(2)}秒`
+      if (isGroup) {
+        Bot[uin].pickGroup(id).sendMsg(msg)
+      } else {
+        let msgs = [ msg, `当前喵喵版本: ${Version.version}`, "您可使用 #喵喵版本 命令查看更新信息" ]
+        await relpyPrivate(qq, msgs.join("\n"))
+      }
       await redis.del("miao:restart-msg")
-      let msgs = [ `当前喵喵版本: ${Version.version}`, "您可使用 #喵喵版本 命令查看更新信息" ]
-      await relpyPrivate(msg.qq, msgs.join("\n"))
     }
   },
 
@@ -42,12 +48,12 @@ const Index = {
         logger.error(msg)
       }
     }
-  },
+  }
 
   // 迁移面板数据
-  transUserData() {
-    Trans.init()
-  }
+  // transUserData() {
+  //   Trans.init()
+  // }
 }
 
 export default Index

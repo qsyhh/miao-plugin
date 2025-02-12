@@ -160,29 +160,29 @@ async function updateStrategy(e) {
     let command = ""
     let path = `${resPath}/meta-${game}/info/json/`
     if (fs.existsSync(path)) {
-      await e.reply(`[喵喵角色攻略-${game}] ${/安装/.test(e.msg) ? "攻略资源已安装，" : ""}开始尝试更新攻略资源包，请稍后~`)
+      e.reply(`[喵喵角色攻略-${game}] ${/安装/.test(e.msg) ? "攻略资源已安装，" : ""}开始尝试更新攻略资源包，请稍后~`)
       command = "git pull"
       if (e.msg.includes("强制")) command = "git  checkout . && git  pull"
 
-      exec(command, { cwd: path }, async function(error, stdout, stderr) {
-        if (/(Already up[ -]to[ -]date|已经是最新的)/.test(stdout)) return await e.reply(`[喵喵角色攻略-${game}] 已经是最新了~`)
+      exec(command, { cwd: path }, function(error, stdout, stderr) {
+        if (/(Already up[ -]to[ -]date|已经是最新的)/.test(stdout)) return e.reply(`[喵喵角色攻略-${game}] 已经是最新了~`)
 
         let numRet = /(\d*) files changed,/.exec(stdout)
-        if (numRet && numRet[1]) return await e.reply(`[喵喵角色攻略-${game}] 报告主人，更新成功，此次改动了${numRet[1]}个文件~`)
+        if (numRet && numRet[1]) return e.reply(`[喵喵角色攻略-${game}] 报告主人，更新成功，此次改动了${numRet[1]}个文件~`)
         if (error) {
-          await e.reply(`[喵喵角色攻略-${game}] 更新失败！\nError code: " + error.code + "\n" + error.stack + "\n 请稍后重试。`)
+          e.reply(`[喵喵角色攻略-${game}] 更新失败！\nError code: " + error.code + "\n" + error.stack + "\n 请稍后重试。`)
         } else {
-          await e.reply(`[喵喵角色攻略-${game}] 攻略资源更新成功~`)
+          e.reply(`[喵喵角色攻略-${game}] 攻略资源更新成功~`)
         }
       })
     } else if (/安装/.test(e.msg)) {
       command = `git clone -b ${game} https://gitee.com/qsyhh/resources.git "${path}" --depth=1`
-      await e.reply(`[喵喵角色攻略-${game}] 开始尝试安装攻略资源包，请稍后~`)
-      exec(command, async function(error, stdout, stderr) {
+      e.reply(`[喵喵角色攻略-${game}] 开始尝试安装攻略资源包，请稍后~`)
+      exec(command, function(error, stdout, stderr) {
         if (error) {
-          await e.reply(`[喵喵角色攻略-${game}] 攻略资源包安装失败！\nError code: " + error.code + "\n" + error.stack + "\n 请稍后重试。`)
+          e.reply(`[喵喵角色攻略-${game}] 攻略资源包安装失败！\nError code: " + error.code + "\n" + error.stack + "\n 请稍后重试。`)
         } else {
-          await e.reply(`[喵喵角色攻略-${game}] 攻略资源包安装成功！您后续也可以通过 #喵喵更新攻略资源 命令来更新全部攻略`)
+          e.reply(`[喵喵角色攻略-${game}] 攻略资源包安装成功！您后续也可以通过 #喵喵更新攻略资源 命令来更新全部攻略`)
         }
       })
     } else {
@@ -209,13 +209,16 @@ async function updateMiaoPlugin(e) {
     if (/(Already up[ -]to[ -]date|已经是最新的)/.test(stdout)) return e.reply("目前已经是最新版喵喵了~")
     if (error) return e.reply("喵喵更新失败！\nError code: " + error.code + "\n" + error.stack + "\n 请稍后重试。")
 
+    await Miaoupdatelog(e)
     e.reply("喵喵更新成功，正在尝试重新启动Yunzai以应用更新...")
-    e.reply(await Miaoupdatelog(e, "miao-plugin"))
     timer && clearTimeout(timer)
     Data.setCacheJSON("miao:restart-msg", {
-      msg: "重启成功，新版喵喵已经生效",
-      qq: e.user_id
-    }, 30)
+      uin: e?.self_id || e.bot.uin,
+      qq: e.user_id,
+      isGroup: !!e.isGroup,
+      id: e.group_id || e.user_id,
+      time: new Date().getTime()
+    }, 90)
     let npm = checkPnpm()
     timer = setTimeout(function() {
       let command = `${npm} start`
@@ -263,16 +266,15 @@ async function bgHelp(e) {
   )
 }
 
-async function Miaoupdatelog(e, plugin = "miao-plugin") {
-  let cm = "git log  -20 --oneline --pretty=format:\"%h||[%cd]  %s\" --date=format:\"%F %T\""
-  if (plugin) cm = `cd ./plugins/${plugin}/ && ${cm}`
+async function Miaoupdatelog(e) {
+  let cm = "cd ./plugins/miao-plugin/ && git log  -20 --oneline --pretty=format:\"%h||[%cd]  %s\" --date=format:\"%F %T\""
 
   let logAll
   try {
     logAll = execSync(cm, { encoding: "utf-8", windowsHide: true })
   } catch (error) {
     logger.error(error.toString())
-    this.reply(error.toString())
+    e.reply(error.toString())
   }
   if (!logAll) return false
   logAll = logAll.split("\n")
@@ -287,8 +289,8 @@ async function Miaoupdatelog(e, plugin = "miao-plugin") {
   log = log.join("\n\n")
   if (log.length <= 0) return ""
   let end = "更多详细信息，请前往gitee查看\nhttps://gitee.com/yoimiya-kokomi/miao-plugin"
-  log = await makemsg.makeForwardMsg(e, [ log, end ], `${plugin}更新日志，共${line}条`)
-  e.reply(log)
+  log = await makemsg.makeForwardMsg(e, [ log, end ], `miao-plugin更新日志，共${line}条`)
+  return await e.reply(log)
 }
 
 async function getcommitId() {
