@@ -262,6 +262,8 @@ export default class ProfileRank {
    */
   static async checkRankLimit(uid) {
     if (!uid) return false
+    // 预设面板不参与排名
+    if (uid * 1 < 100000006) return false
 
     try {
       let rankLimit = Common.cfg("groupRankLimit") * 1 || 1
