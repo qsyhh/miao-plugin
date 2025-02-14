@@ -3019,5 +3019,29 @@
     "name": "蚀灭的阳焰",
     "type": "weekly",
     "star": 5
+  },
+  "云岩裂叶": {
+    "id": "n101254",
+    "name": "云岩裂叶",
+    "type": "specialty",
+    "star": 1
+  },
+  "琉鳞石": {
+    "id": "n101255",
+    "name": "琉鳞石",
+    "type": "specialty",
+    "star": 1
+  },
+  "蚀灭的鳞羽": {
+    "id": "n113070",
+    "name": "蚀灭的鳞羽",
+    "type": "weekly",
+    "star": 5
+  },
+  "龙像的无智核": {
+    "id": "n113072",
+    "name": "龙像的无智核",
+    "type": "boss",
+    "star": 4
   }
 }
