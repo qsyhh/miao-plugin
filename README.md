@@ -26,7 +26,7 @@
 
 ## 安装指令
 
-首先注册[gitcode](https://gitcode.com)并前往[token-classic](https://gitcode.com/setting/token-classic)获取个人令牌
+首先前往[token-classic](https://gitcode.com/setting/token-classic)获取个人令牌
 
 方式1: 首次/重新安装插件：
 

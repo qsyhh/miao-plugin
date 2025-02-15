@@ -23,10 +23,11 @@ const Index = {
       let { uin, qq, isGroup, id, time } = JSON.parse(msgStr)
       uin = uin || Bot.uin
       time = (new Date().getTime() - time) / 1000
-      let msg = `重启成功，新版喵喵已经生效：耗时${time.toFixed(2)}秒`
+      let msg = `重启成功，耗时${time.toFixed(2)}秒`
       if (isGroup) {
         Bot[uin].pickGroup(id).sendMsg(msg)
       } else {
+        if (msgStr.isMiao) msg += "\n新版喵喵已经生效："
         let msgs = [ msg, `当前喵喵版本: ${Version.version}`, "您可使用 #喵喵版本 命令查看更新信息" ]
         await relpyPrivate(qq, msgs.join("\n"))
       }

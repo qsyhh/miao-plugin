@@ -65,16 +65,11 @@ export default function(step, staticStep) {
       refine: { qDmg: step(40) }
     },
     "贯虹之槊": [
-      {
+      staticStep("shield", 20), {
         title: "护盾满层状态提高攻击力[atkPct]%",
         buffCount: 10,
         refine: {
           atkPct: step(4)
-        }
-      }, {
-        title: "护盾强效提高[shield]%",
-        refine: {
-          shield: step(20)
         }
       }
     ],
@@ -116,13 +111,14 @@ export default function(step, staticStep) {
         }
       }
     ],
-    "息灾": {
-      title: "获得[dmg]%元素伤害加成，满Buff提供[atkPct]%攻击力加成",
-      data: {
-        dmg: ({ refine }) => step(12)[refine],
-        atkPct: ({ refine, params }) => step(3.2 * 6)[refine] * (params.off_field === true ? 2 : 1)
+    "息灾": [
+      staticStep("dmg", 12), {
+        title: "满Buff提供[atkPct]%攻击力加成",
+        data: {
+          atkPct: ({ refine, params }) => step(3.2 * 6)[refine] * (params.off_field === true ? 2 : 1)
+        }
       }
-    },
+    ],
     "贯月矢": {
       title: "拾取苏生之叶的角色攻击力提升[atkPct]%",
       refine: {
@@ -176,16 +172,15 @@ export default function(step, staticStep) {
         dmg: [ 7 * 3, 8.5 * 3, 10 * 3, 11.5 * 3, 13 * 3 ]
       }
     },
-    "公义的酬报": false,
     "柔灯挽歌": [
       staticStep("atkPct", 15), {
         title: "对处于燃烧状态的敌人造成伤害提升[dmg]%",
-        sort: 9,
         data: {
           dmg: ({ refine }) => step(18, 5)[refine] * 2
         }
       }
     ],
+    "公义的酬报": false,
     "虹的行迹": {
       title: "施放元素战技时，防御力提升[defPct]%",
       refine: {
@@ -193,10 +188,9 @@ export default function(step, staticStep) {
       }
     },
     "镇山之钉": {
-      title: "队伍中附近的其他角色施放元素战技后，元素战技造成的伤害提升[eDmg]%",
-      buffCount: 2,
+      title: "元素战技造成的伤害提升[eDmg]%",
       refine: {
-        eDmg: step(16)
+        eDmg: step(12 * 2)
       }
     },
     "且住亭御咄": {

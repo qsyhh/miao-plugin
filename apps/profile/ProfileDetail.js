@@ -119,6 +119,7 @@ let ProfileDetail = {
     let profile = e._profile || await getProfileRefresh(e, char.id)
     if (!profile) return true
 
+    profile.uid = e.uid
     char = profile.char || char
     let a = profile.attr
     let base = profile.base

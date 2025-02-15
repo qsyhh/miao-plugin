@@ -220,6 +220,7 @@ async function updateMiaoPlugin(e) {
       uin: e?.self_id || e.bot.uin,
       qq: e.user_id,
       isGroup: !!e.isGroup,
+      isMiao: true,
       id: e.group_id || e.user_id,
       time: new Date().getTime()
     }, 90)

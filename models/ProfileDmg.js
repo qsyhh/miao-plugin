@@ -119,6 +119,7 @@ export default class ProfileDmg extends Base {
 
     let meta = {
       charId: this.char?.id,
+      uid: profile.uid,
       level: profile.level,
       cons: profile.cons * 1,
       talent,
