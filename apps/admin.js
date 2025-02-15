@@ -164,27 +164,25 @@ async function updateStrategy(e) {
       command = "git pull"
       if (e.msg.includes("强制")) command = "git  checkout . && git  pull"
 
-      exec(command, { cwd: path }, function(error, stdout, stderr) {
-        if (/(Already up[ -]to[ -]date|已经是最新的)/.test(stdout)) return e.reply(`[喵喵角色攻略-${game}] 已经是最新了~`)
+      let ret = await execPro(command, { cwd: path })
+      if (/(Already up[ -]to[ -]date|已经是最新的)/.test(ret.stdout)) return e.reply(`[喵喵角色攻略-${game}] 已经是最新了~`)
 
-        let numRet = /(\d*) files changed,/.exec(stdout)
-        if (numRet && numRet[1]) return e.reply(`[喵喵角色攻略-${game}] 报告主人，更新成功，此次改动了${numRet[1]}个文件~`)
-        if (error) {
-          e.reply(`[喵喵角色攻略-${game}] 更新失败！\nError code: " + error.code + "\n" + error.stack + "\n 请稍后重试。`)
-        } else {
-          e.reply(`[喵喵角色攻略-${game}] 攻略资源更新成功~`)
-        }
-      })
+      let numRet = /(\d*) files changed,/.exec(ret.stdout)
+      if (numRet && numRet[1]) return e.reply(`[喵喵角色攻略-${game}] 报告主人，更新成功，此次改动了${numRet[1]}个文件~`)
+      if (ret.error) {
+        e.reply(`[喵喵角色攻略-${game}] 更新失败！\nError code: ` + ret.error.code + "\n" + ret.error.stack + "\n 请稍后重试。")
+      } else {
+        e.reply(`[喵喵角色攻略-${game}] 攻略资源更新成功~`)
+      }
     } else if (/安装/.test(e.msg)) {
       command = `git clone -b ${game} https://gitee.com/qsyhh/resources.git "${path}" --depth=1`
       e.reply(`[喵喵角色攻略-${game}] 开始尝试安装攻略资源包，请稍后~`)
-      exec(command, function(error, stdout, stderr) {
-        if (error) {
-          e.reply(`[喵喵角色攻略-${game}] 攻略资源包安装失败！\nError code: " + error.code + "\n" + error.stack + "\n 请稍后重试。`)
-        } else {
-          e.reply(`[喵喵角色攻略-${game}] 攻略资源包安装成功！您后续也可以通过 #喵喵更新攻略资源 命令来更新全部攻略`)
-        }
-      })
+      let ret = await execPro(command)
+      if (ret.error) {
+        e.reply(`[喵喵角色攻略-${game}] 攻略资源包安装失败！\nError code:  ` + ret.error.code + "\n" + ret.error.stack + "\n 请稍后重试。")
+      } else {
+        e.reply(`[喵喵角色攻略-${game}] 攻略资源包安装成功！您后续也可以通过 #喵喵更新攻略资源 命令来更新全部攻略`)
+      }
     } else {
       logger.error(`[喵喵角色攻略-${game}] 尚未安装${game == "gs" ? "原神" : "星铁"}攻略资源包，发送 ${game == "gs" ? "#" : "*"}喵喵安装攻略资源 以安装`)
     }
@@ -322,4 +320,11 @@ function valDeal(val, cfgSchema) {
     val = cfgSchema.type === "num" ? (val * 1 || cfgSchema.def) : !/关闭/.test(val)
   }
   return val
+}
+async function execPro(cmd, ds = {}) {
+  return new Promise((resolve, reject) => {
+    exec(cmd, ds, (error, stdout, stderr) => {
+      resolve({ error, stdout, stderr })
+    })
+  })
 }
