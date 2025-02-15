@@ -4,16 +4,7 @@
 <link rel="stylesheet" type="text/css" href="{{_res_path}}/common/tpl.css"/>
 <link rel="stylesheet" type="text/css" href="{{_res_path}}/character/profile-detail.css"/>
 <link rel="stylesheet" type="text/css" href="{{_res_path}}/wiki/character-wiki.css"/>
-{{if game == "sr"}}
-<style>
-.basic {
-  height: 580px;
-}
-.main-pic {
-  height: 580px;
-}
-</style>
-{{/if}}
+{{if game == "sr"}}<style>.basic {height: 580px}.main-pic {width: 111%;height: 580px;margin-left: -153px}</style>{{/if}}
 {{/block}}
 {{set weapon = data.weapon}}
 {{set dataSource = data.dataSource}}

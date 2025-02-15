@@ -39,27 +39,55 @@ export const growAttrName = {
   effDef: "效果抵抗"
 }
 
-const mKeys = [
-  {
-    key: "gem",
-    num: "1/9/9/6"
-  }, {
-    key: "boss",
-    num: "46",
-    check: (char) => !char.isTraveler
-  }, {
-    key: "normal",
-    num: "18/30/36"
-  }, {
-    key: "specialty",
-    num: "168"
-  }, {
-    key: "talent"
-  }, {
-    key: "weekly",
-    star: 5
-  }
-]
+const mKeys = {
+  "gs": [
+    {
+      key: "gem",
+      num: "1/9/9/6"
+    }, {
+      key: "boss",
+      num: "46",
+      check: (char) => !char.isTraveler
+    }, {
+      key: "normal",
+      num: "18/30/36"
+    }, {
+      key: "specialty",
+      num: "168"
+    }, {
+      key: "talent"
+    }, {
+      key: "weekly",
+      star: 5
+    }
+  ],
+  "sr": [
+    {
+      key: "101",
+      num: "388.8w",
+      check: () => "322.64w"
+    }, {
+      key: "201",
+      num: "65",
+      check: () => "28"
+    }, {
+      key: "701",
+      num: "56/71/73",
+      check: (char) => char.weaponType == "记忆" ? "40/52/55" : "40/55/54"
+    }, {
+      key: "501",
+      num: "8",
+      check: () => "5"
+    }, {
+      key: "401",
+      num: "12"
+    }, {
+      key: "301",
+      num: "18/69/139",
+      check: (char) => char.weaponType == "记忆" ? "9/53/105" : "12/54/105"
+    }
+  ]
+}
 
 let item = (type, lv, num) => {
   return { type, lv, num }
@@ -150,18 +178,37 @@ const CharMeta = {
     }
   },
   getMaterials(char, type = "all") {
-    if (char.game == "sr") return ""
-    let ds = char.materials
+    let ds = char.materials || {}
     let ret = []
-    lodash.forEach(mKeys, (cfg) => {
+    if (char.isSr) {
+      let detail = char.detail
+      let list = {}
+      lodash.forEach({ ...detail.treeData, ...detail.attr }, (cfg) => {
+        lodash.forEach(cfg.cost, (cost, idx) => {
+          list[idx] += cost[idx]
+        })
+      })
+      let datas = {}
+      lodash.forEach(list, (idx, key) => {
+        let mat = Material.get(key, "sr")
+        if (!mat) return true
+        datas[mat.name] = mat.star
+        if (ds[mat.poseType] && datas[ds[mat.poseType]] > mat.star) return true
+        ds[mat.poseType] = mat.name
+      })
+    }
+    lodash.forEach(mKeys[char.game], (cfg) => {
       let title = ds[cfg.key]
-      let mat = Material.get(title)
+      let mat = Material.get(title, char.game)
       if (!mat) return true
-      if (cfg.check && !cfg.check(char)) return true
+      if (cfg.check) {
+        if (char.isGs && !cfg.check(char)) return true
+        if (char.isTrailblazer && cfg.check(char)) cfg.num = cfg.check(char)
+      }
       if (type !== "all" && mat.type !== type) return true
 
       ret.push({
-        ...mat.getData("label,star,icon,type"),
+        ...mat.getData("label,star,icon,poseType"),
         num: cfg.num || mat.source || ""
       })
     })

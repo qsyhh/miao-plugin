@@ -13,6 +13,11 @@ body {
   background-size: cover;
   overflow: hidden;
 }
+.main-pic {
+  width: 100%;
+  background-size: cover;
+  margin-left: -74px;
+}
 .char-title {
   height: 100px;
   padding-right: 10px;

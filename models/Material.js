@@ -83,6 +83,11 @@ class Material extends Base {
     return abbr
   }
 
+  get poseType() {
+    if (this.game == "gs") return this.type
+    return this.meta?.poseType
+  }
+
   get img() {
     return `meta-${this.game}/material/${this.type}/${this.name}.webp`
   }

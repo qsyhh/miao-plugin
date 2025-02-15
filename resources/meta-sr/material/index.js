@@ -9,12 +9,13 @@ let abbr2 = {}
 
 lodash.forEach(data, (ds, key) => {
   lodash.forEach(ds, (item) => {
-    let { id, name } = item
+    let { id, type, name, star } = item
     let tmp = {
+      poseType: type,
       type: key,
       id,
       name,
-      star: item.star
+      star
     }
     ret[item.name] = tmp
   })
