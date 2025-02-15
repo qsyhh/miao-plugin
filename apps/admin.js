@@ -158,17 +158,23 @@ async function updateStrategy(e) {
 
   for (let game of games) {
     let command = ""
-    let path = `${resPath}/meta-${game}/info/json/`
+    let path = `./plugins/miao-plugin/resources/meta-${game}/info/json/`
     if (fs.existsSync(path)) {
       e.reply(`[喵喵角色攻略-${game}] ${/安装/.test(e.msg) ? "攻略资源已安装，" : ""}开始尝试更新攻略资源包，请稍后~`)
       command = "git pull"
       if (e.msg.includes("强制")) command = "git  checkout . && git  pull"
 
       let ret = await execPro(command, { cwd: path })
-      if (/(Already up[ -]to[ -]date|已经是最新的)/.test(ret.stdout)) return e.reply(`[喵喵角色攻略-${game}] 已经是最新了~`)
+      if (/(Already up[ -]to[ -]date|已经是最新的)/.test(ret.stdout)) {
+        e.reply(`[喵喵角色攻略-${game}] 已经是最新了~`)
+        continue
+      }
 
       let numRet = /(\d*) files changed,/.exec(ret.stdout)
-      if (numRet && numRet[1]) return e.reply(`[喵喵角色攻略-${game}] 报告主人，更新成功，此次改动了${numRet[1]}个文件~`)
+      if (numRet && numRet[1]) {
+        e.reply(`[喵喵角色攻略-${game}] 报告主人，更新成功，此次改动了${numRet[1]}个文件~`)
+        continue
+      }
       if (ret.error) {
         e.reply(`[喵喵角色攻略-${game}] 更新失败！\nError code: ` + ret.error.code + "\n" + ret.error.stack + "\n 请稍后重试。")
       } else {
