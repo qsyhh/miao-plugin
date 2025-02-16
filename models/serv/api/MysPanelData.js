@@ -55,7 +55,7 @@ let MysPanelData = {
         if (lv != 0 && ret[key] && cons >= lv) ret[key] = Math.max(1, ret[key] - 3)
       })
     }
-    ret.a = aPlus ? value - 1 : value
+    ret.a = aPlus ? ret.a - 1 : ret.a
     return ret
   },
 
