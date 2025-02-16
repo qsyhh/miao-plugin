@@ -36,7 +36,8 @@ let MysPanelData = {
   },
 
   getTalent(char, cons, ds = []) {
-    let { talentId = {}, talentCons = {} } = char.meta
+    let { id, talentId = {}, talentCons = {} } = char.meta
+    let aPlus = id === 10000033
     let idx = 0
     let ret = {}
     lodash.forEach(ds, (talent_data) => {
@@ -54,6 +55,7 @@ let MysPanelData = {
         if (lv != 0 && ret[key] && cons >= lv) ret[key] = Math.max(1, ret[key] - 3)
       })
     }
+    ret.a = aPlus ? value - 1 : value
     return ret
   },
 
