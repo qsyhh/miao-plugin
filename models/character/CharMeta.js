@@ -203,7 +203,7 @@ const CharMeta = {
       if (!mat) return true
       if (cfg.check) {
         if (char.isGs && !cfg.check(char)) return true
-        if (char.isTrailblazer && cfg.check(char)) cfg.num = cfg.check(char)
+        if ((char.isTrailblazer || char.star === 4) && cfg.check(char)) cfg.num = cfg.check(char)
       }
       if (type !== "all" && mat.type !== type) return true
 
