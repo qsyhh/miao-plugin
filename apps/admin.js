@@ -36,7 +36,7 @@ app.reg({
     desc: "【#管理】喵喵更新"
   },
   updatelog: {
-    rule: /^#?喵喵更新日志$/,
+    rule: /^#?(喵喵更新日志|更新日志miao-plugin)$/,
     fn: Miaoupdatelog,
     desc: "【#管理】喵喵更新"
   },
