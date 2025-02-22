@@ -120,10 +120,10 @@ const CharStrategy = {
     let data = Data.readJSON(`resources/meta-${e.game}/info/json/author.json`, "miao")
     let strategyName = await redis.get(`miao-plugin:wiki:strategy${e.game}`)
     let msgs = []
-    lodash.forEach(data.strategy, (name, idx) => msgs.push(`${idx + 1}——${name}`))
+    lodash.forEach(data.strategy, (name, idx) => msgs.push(`${idx + 1}——${name}\n`))
     return e.reply([
-      `当前攻略组：${strategyName || "全部"}`,
-      `【${e.isGs ? "#" : "*"}喵喵设置攻略1,2,4】或【${e.isGs ? "#" : "*"}喵喵设置攻略全部】以设置：`,
+      `当前攻略组：${strategyName || "全部"}\n`,
+      `发送【${e.isGs ? "#" : "*"}喵喵设置攻略1,2,4】或【${e.isGs ? "#" : "*"}喵喵设置攻略全部】以设置：\n`,
       ...msgs,
       "每个数字用逗号隔开"
     ])
