@@ -22,7 +22,7 @@
 
 - [x] ~~更换`#喵喵更新图像`源为[miao-res-plus](https://gitee.com/qsyhh/miao-res-plus) [@DenFengLai](https://gitee.com/DenFengLai)~~
 
-- [x] 新增`#绫华攻略`、`#火主攻略`、`*记忆主攻略`命令，用于查询角色攻略(默认关闭，攻略数据为手动更新[gs](https://gitee.com/qsyhh/resources/tree/gs/)|[sr](https://gitee.com/qsyhh/resources/tree/sr/)，更新不及时，可使用`#喵喵设置攻略关闭`关闭此功能)
+- [x] 新增`#绫华攻略`、`#火主攻略`、`*记忆主攻略`命令，用于查询角色攻略(默认关闭，攻略数据为手动更新[gs](https://gitee.com/qsyhh/resources/tree/gs/)|[sr](https://gitee.com/qsyhh/resources/tree/sr/)，更新不及时，可使用`#喵喵设置攻略关闭`关闭此功能，发送`#喵喵攻略帮助`查看帮助)
 
 ## 安装指令
 
