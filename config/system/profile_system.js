@@ -24,7 +24,8 @@ export const mggApi = {
   url: "http://profile.microgg.cn/",
   userAgent: "Miao-Plugin/3.1",
   listApi: ({ url, uid, diyCfg }) => {
-    return `${url}api/uid/${uid}`
+    // `${url}gi/${uid}` 与 `${url}api/uid/${uid}` 都可
+    return `${url}gi/${uid}`
   }
 }
 
