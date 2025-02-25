@@ -36,7 +36,7 @@ const CharWiki = {
     if (!char || (char.isCustom && mode !== "pic")) return false
 
     e.wikiMode = mode
-    e.msg = "#喵喵WIKI"
+    e.msg = "#喵喵角色WIKI"
     e.char = char
     return true
   },

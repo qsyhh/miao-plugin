@@ -140,6 +140,13 @@ export const cfgSchema = {
         showDesc: false,
         desc: "#刻晴天赋/#刻晴命座 的天赋信息"
       },
+      weapomWiki: {
+        title: "武器图鉴-图鉴",
+        key: "武器图鉴",
+        def: false,
+        showDesc: false,
+        desc: "#雾切图鉴/*于夜色中图鉴 的图鉴信息"
+      },
       charStrategyt: {
         title: "角色图鉴-攻略",
         key: "攻略",

@@ -5,6 +5,7 @@ import TodayMaterial from "./wiki/TodayMaterial.js"
 import CharWiki from "./wiki/CharWiki.js"
 import CalendarSr from "./wiki/CalendarSr.js"
 import CalendarZzz from "./wiki/CalendarZzz.js"
+import WeaponWiki from "./wiki/WeaponWiki.js"
 
 let app = App.init({
   id: "wiki",
@@ -14,9 +15,16 @@ app.reg({
 
   // #神里天赋 #夜兰命座
   wiki: {
-    rule: "^#喵喵WIKI$",
+    rule: "^#喵喵角色WIKI$",
     check: CharWiki.check,
     fn: CharWiki.wiki
+  },
+
+  // #雾切图鉴 *于夜色中图鉴
+  WeaponWiki: {
+    rule: "^#喵喵武器WIKI$",
+    check: WeaponWiki.check,
+    fn: WeaponWiki.render
   },
 
   // #日历

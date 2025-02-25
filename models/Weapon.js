@@ -2,6 +2,7 @@
 import lodash from "lodash"
 import Base from "./Base.js"
 import { Data, Format, Meta } from "#miao"
+import WeaponMeta from "./weapon/WeaponMeta.js"
 
 let weaponSet
 
@@ -27,6 +28,10 @@ class Weapon extends Base {
 
   get img() {
     return `${this.isGs ? "meta-gs" : "meta-sr"}/weapon/${this.type}/${this.name}/icon.webp`
+  }
+
+  get desc() {
+    return this.getDetail().desc.replace(/<\/br>|<br \/>/g, "")
   }
 
   get abbr() {
@@ -108,6 +113,11 @@ class Weapon extends Base {
       if (!w || (type && type !== w.type)) return true
       return await fn(w)
     })
+  }
+
+  // 获取素材
+  getMaterials(type = "all") {
+    return WeaponMeta.getMaterials(this, type)
   }
 
   getDetail() {
@@ -192,11 +202,12 @@ class Weapon extends Base {
       let desc = descFix[this.name] || text || ""
       while ((ret = reg.exec(desc)) !== null) {
         let idx = ret[1]
-        let value = datas?.[idx]?.[affix - 1]
+        let value = affix == "all" ? datas?.[idx]?.join(/\//.test(datas?.[idx]?.[0]) ? ")(" : "/") : datas?.[idx]?.[affix - 1]
+        if (affix == "all" && /\//.test(datas?.[idx]?.[0])) value = `(${value})`
         desc = desc.replaceAll(ret[0], `<nobr>${value}</nobr>`)
       }
       return {
-        name: "",
+        name: this.detail?.affixTitle || "",
         desc
       }
     }
@@ -206,12 +217,15 @@ class Weapon extends Base {
     let ret
     while ((ret = reg.exec(desc)) !== null) {
       let [ txt, idx, format, pct ] = ret
-      let value = tables?.[idx]?.[affix - 1]
-      if (pct === "%") {
-        value = Format.pct(value, format === "f2" ? 2 : 1)
-      } else {
-        value = Format.comma(value)
-      }
+      let values = []
+      lodash.forEach(affix == "all" ? tables?.[idx] : [ tables?.[idx]?.[affix - 1] ], (value) => {
+        if (pct === "%") {
+          values.push(Format.pct(value, format === "f2" ? 2 : 1))
+        } else {
+          values.push(Format.comma(value))
+        }
+      })
+      let value = affix == "all" ? pct === "%" ? values.join("/").replace(/(.00?)?%/g, "") + "%" : values.join("/") : values[0]
       desc = desc.replaceAll(txt, value)
     }
     return {

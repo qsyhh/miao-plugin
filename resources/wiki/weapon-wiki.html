@@ -1,0 +1,53 @@
+{{extend elemLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" type="text/css" href="{{_res_path}}common/tpl.css"/>
+<link rel="stylesheet" type="text/css" href="{{_res_path}}wiki/character-wiki.css"/>
+<link rel="stylesheet" type="text/css" href="{{_res_path}}wiki/weapon-wiki.css"/>
+{{/block}}
+
+{{block 'main'}}
+<div class="basic">
+  <div class="main">
+    <img class="main-icon" src="{{_res_path}}{{icon}}" />
+    <div class="type">
+      <img class="type-icon" src="{{_res_path}}meta-sr/public/icons/type-{{type}}.webp">
+      <div class="type-detail">
+        <div class="type-name">{{type}}</div>
+        <div data-star={{star}} id="type-star" class="star" style="background-image: url('{{_res_path}}meta-sr/public/icons/star-{{star}}.png');background-repeat: repeat-x;background-size: 14px;"></div>
+      </div>
+    </div>
+  </div>
+  <div class="detail">
+    <div class="weapon-title">
+      <div class="weapon-name">{{name}}</div>
+      {{set baseKey = ['hp','atk','def'] }}
+      <div class="base-list">
+      {{each baseKey type}}
+        <div class="base-attr base-{{type}}">{{base[type]}}</div>
+      {{/each}}
+      </div>
+      <div class="weapon-desc">{{@desc}}</div>
+    </div>
+    <div class="skill-detail">
+      <div class="skill-name">{{affixText.name}}</div>
+      <div class="skill-desc">{{@affixText.desc}}</div>
+    </div>
+    
+    <div class="material-list">
+      {{each materials ds}}
+      <div class="material-detail material-{{ds.type}}">
+        <div class="num">{{ds.num}}</div>
+        <div class="item-card material-card">
+          <div class="item-icon star{{ds.star}} opacity-bg">
+            <div class="item-bg" style="background-image:url('{{_res_path}}{{ds.icon}}')"></div>
+          </div>
+          <div class="item-title">{{ds.label}}</div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</div>
+<script>window.onload=function(){document.querySelector("#type-star").style.width=14*document.querySelector("#type-star").dataset.star+'px'}</script>
+{{/block}}
