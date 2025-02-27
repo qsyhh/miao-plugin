@@ -54,7 +54,7 @@ const CharStrategy = {
       return false
     }
     let msglist = []
-    let strategyName = await redis.get(`miao-plugin:wiki:strategy${game}`)
+    let strategyName = await redis.get(`miao-plugin:wiki:strategy:${e.self_id || "5555"}:${game}`)
     let length = 0
     msglist.push({ nickname: "QQ用户" })
     for (let ds of data.strategy) {
@@ -118,7 +118,7 @@ const CharStrategy = {
     if (!fs.existsSync(`${miaoPath}/resources/meta-${e.game}/info/json`)) return e.reply(`尚未安装${e.isGs ? "原神" : "星铁"}攻略资源包，发送 ${e.isGs ? "#" : "*"}喵喵安装攻略资源 以安装`)
 
     let data = Data.readJSON(`resources/meta-${e.game}/info/json/author.json`, "miao")
-    let strategyName = await redis.get(`miao-plugin:wiki:strategy${e.game}`)
+    let strategyName = await redis.get(`miao-plugin:wiki:strategy:${e.self_id || "55555"}:${e.game}`)
     let msgs = []
     lodash.forEach(data.strategy, (name, idx) => msgs.push(`${idx + 1}——${name}\n`))
     return e.reply([
@@ -144,7 +144,7 @@ const CharStrategy = {
       return CharStrategy.helpStrategy(e)
     }
     if (ret == "全部") {
-      await redis.del(`miao-plugin:wiki:strategy${e.game}`)
+      await redis.del(`miao-plugin:wiki:strategy:${e.self_id || "55555"}:${e.game}`)
       return e.reply("设置成功\n当前攻略组：全部")
     }
     let numbers = Array.from(new Set(ret.split(/,|，/)))
@@ -154,7 +154,7 @@ const CharStrategy = {
       if (data.strategy[idx - 1]) names.push(data.strategy[idx - 1])
     })
     if (names.length) {
-      redis.set(`miao-plugin:wiki:strategy${e.game}`, names.join(","))
+      redis.set(`miao-plugin:wiki:strategy:${e.self_id || "55555"}:${e.game}`, names.join(","))
       return e.reply(`设置成功\n当前攻略组：${names.join(",")}`)
     }
     return e.reply("请输入正确的序号")
