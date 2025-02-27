@@ -93,6 +93,18 @@ export default function(staticIdx, keyIdx) {
     "忍事录•音律狩猎": [
       staticIdx(1, "hpPct"),
       keyIdx("损失或回复自身生命值，暴击伤害提高[cdmg]%", "cdmg", 2)
+    ],
+    "血火啊，燃烧前路": [
+      staticIdx(1, "hpPct"),
+      (tables) => {
+        return {
+          title: "施放战技或终结技消耗的生命值高于500点时，使本次攻击造成的伤害提高[eDmg]%。",
+          data: {
+            eDmg: tables[4] * 2,
+            qDmg: tables[4] * 2
+          }
+        }
+      }
     ]
   }
 }

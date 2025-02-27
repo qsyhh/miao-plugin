@@ -1,10 +1,10 @@
 export const details = [
   {
     title: "普攻伤害(主目标)",
-    dmg: ({ talent }, dmg) => dmg(talent.a["目标伤害"], "a")
+    dmg: ({ talent }, dmg) => dmg(talent.a["技能伤害"], "a")
   }, {
     title: "普攻伤害(完整)",
-    dmg: ({ talent }, dmg) => dmg(talent.a["目标伤害"] + talent.a["相邻目标伤害"] * 2, "a")
+    dmg: ({ talent }, dmg) => dmg(talent.a["技能伤害"] + talent.a["相邻目标伤害"] * 2, "a")
   }, {
     title: "终结技伤害(0次天赋追击)",
     dmg: ({ talent }, dmg) => dmg(talent.q["技能伤害"], "q")
@@ -21,11 +21,11 @@ export const details = [
     dmg: ({ talent, attr, calc, cons }, { basic }) => basic(talent.q["附加伤害"] * calc(attr.hp) * (cons > 1 ? 120 / 100 * 2 : 1), "", "skillDot")
   }, {
     title: "天赋追击伤害(0次天赋追击)",
-    dmg: ({ talent, cons }, dmg) => dmg(talent.t["技能伤害"] * (cons === 6 ? 729 / 100 : 1), "t")
+    dmg: ({ talent, cons }, dmg) => dmg(talent.t["追加攻击伤害"] * (cons === 6 ? 729 / 100 : 1), "t")
   }, {
     title: "天赋追击伤害(2次天赋追击)",
     params: { zj: 2 },
-    dmg: ({ talent, cons }, dmg) => dmg(talent.t["技能伤害"] * (cons === 6 ? 729 / 100 : 1), "t")
+    dmg: ({ talent, cons }, dmg) => dmg(talent.t["追加攻击伤害"] * (cons === 6 ? 729 / 100 : 1), "t")
   }, {
     check: ({ cons }) => cons > 0,
     title: "一命额外真实伤害(3次天赋追击)",

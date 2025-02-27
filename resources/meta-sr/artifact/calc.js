@@ -306,13 +306,13 @@ export default {
         title: "基于击破特攻，造成的击破伤害无视敌方[breakIgnore]%防御",
         sort: 9,
         data: {
-          breakIgnore: ({ attr }) => attr.stance >= 150 ? 10 : 0
+          breakIgnore: ({ attr, calc }) => calc(attr.stance) >= 150 ? 10 : 0
         }
       }, {
         title: "基于击破特攻，造成的超击破伤害无视敌方[superBreakIgnore]%防御",
         sort: 9,
         data: {
-          superBreakIgnore: ({ attr }) => attr.stance >= 250 ? 15 : 0
+          superBreakIgnore: ({ attr, calc }) => calc(attr.stance) >= 250 ? 15 : 0
         }
       }
     ]
@@ -347,9 +347,6 @@ export default {
       }
     ]
   },
-  沉陆海域露莎卡: {
-    2: attr("recharge", 5)
-  },
   奇想蕉乐园: {
     2: [
       attr("cdmg", 16), {
@@ -360,25 +357,21 @@ export default {
       }
     ]
   },
+  沉陆海域露莎卡: {
+    2: attr("recharge", 5)
+  },
   重循苦旅的司铎: {
     2: attr("speedPct", 6)
   },
   识海迷坠的学者: {
     2: attr("cpct", 8),
-    4: [
-      {
-        title: "战技和终结技造成的伤害提高[eDmg]%",
-        data: {
-          eDmg: 20,
-          qDmg: 20
-        }
-      }, {
-        title: "施放终结技后，下一次战技时造成的伤害额外提高[eDmg]%",
-        data: {
-          eDmg: 25
-        }
+    4: {
+      title: "终结技造成的伤害提高[qDmg]%，施放终结技后战技伤害提高[eDmg]%",
+      data: {
+        eDmg: 45,
+        qDmg: 20
       }
-    ]
+    }
   },
   凯歌祝捷的英豪: {
     2: attr("atkPct", 12),
@@ -407,11 +400,34 @@ export default {
           speedPct: -8
         }
       }, {
-        check: ({ attr }) => attr.speed < 110,
+        check: ({ attr, calc }) => calc(attr.speed) < 110,
         title: "进入战斗时，若装备者的速度小于[_speed]，使装备者的暴击率提高[cpct]%",
         data: {
-          _speed: ({ attr }) => attr.speed < 95 ? 95 : 110,
-          cpct: ({ attr }) => attr.speed < 95 ? 32 : 20
+          _speed: ({ attr, calc }) => calc(attr.speed) < 95 ? 95 : 110,
+          cpct: ({ attr, calc }) => calc(attr.speed) < 95 ? 32 : 20
+        }
+      }
+    ]
+  },
+  谧宁拾骨地: {
+    2: [
+      attr("hpPct", 12), {
+        check: ({ calc, attr }) => calc(attr.hp) >= 5000,
+        title: "装备者的生命上限大于等于5000点时，使装备者及其忆灵的暴击伤害提高[cdmg]%",
+        data: {
+          cdmg: 28
+        }
+      }
+    ]
+  },
+  渊思寂虑的巨树: {
+    2: [
+      attr("speedPct", 6), {
+        check: ({ attr, calc }) => calc(attr.speed) >= 135,
+        title: "当装备者的速度大于等于[_speed]时，使装备者及其忆灵的治疗量提高[heal]%",
+        data: {
+          _speed: ({ attr, calc }) => calc(attr.speed) >= 180 ? 180 : 135,
+          heal: ({ attr, calc }) => calc(attr.speed) >= 180 ? 20 : 12
         }
       }
     ]
