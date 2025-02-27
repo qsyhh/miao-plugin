@@ -26,7 +26,7 @@ export const details = [
     }
   }, {
     title: "战技衣匠回复",
-    dmg: ({ talent, attr, calc }, { heal }) => heal((calc(attr.hp) * talent.t["生命·百分比"] / 100 + talent.t["生命·固定值"]) * talent.e["生命恢复"])
+    dmg: ({ talent, attr, calc }, { heal }) => heal((calc(attr.hp) * talent.t["生命·百分比"] + talent.t["生命·固定值"]) * talent.e["生命恢复"])
   }, {
     title: "终结技6层速度提高",
     dmg: ({ talent, cons, attr, calc }) => {
@@ -66,7 +66,7 @@ export const buffs = [
     title: "衣匠状态：基础生命值: [_hpBase]，基础速度: [_speedBase]",
     tree: 1,
     data: {
-      _hpBase: ({ talent, attr, calc }) => calc(attr.hp) * talent.t["生命·百分比"] / 100 + talent.t["生命·固定值"],
+      _hpBase: ({ talent, attr, calc }) => calc(attr.hp) * talent.t["生命·百分比"] + talent.t["生命·固定值"],
       _speedBase: ({ attr, calc }) => calc(attr.speed) * 35 / 100
     }
   },
