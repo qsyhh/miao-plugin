@@ -1,7 +1,7 @@
 /* eslint-disable import/no-unresolved */
 import lodash from "lodash"
 import { Format, Common } from "#miao"
-import { Weapon } from "#miao.models"
+import { Character, Weapon } from "#miao.models"
 
 const wikiReg = /^(?:#|喵喵)?(?:星铁)?(.*)(资料|图鉴)$/
 
@@ -16,6 +16,10 @@ const WeaponWiki = {
 
     if (!Common.cfg("weapomWiki")) return false
 
+    if (/专武/.test(ret[1])) {
+      let char = Character.get(ret[1].replace("专武", ""), e.game)
+      if (char) ret[1] = `${char.name}专武`
+    }
     let weapon = Weapon.get(ret[1], e.game)
     if (!weapon) return false
     if (weapon.game !== "sr") return false
