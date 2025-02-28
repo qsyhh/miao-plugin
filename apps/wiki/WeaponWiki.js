@@ -4,6 +4,16 @@ import { Format, Common } from "#miao"
 import { Character, Weapon } from "#miao.models"
 
 const wikiReg = /^(?:#|喵喵)?(?:星铁)?(.*)(资料|图鉴)$/
+const attrName = {
+  hp: "生命值",
+  atk: "攻击力",
+  def: "防御力",
+  cpct: "暴击率",
+  cdmg: "暴击伤害",
+  recharge: "充能效率",
+  mastery: "元素精通",
+  phy: "物伤加成"
+}
 
 const WeaponWiki = {
   check(e) {
@@ -20,9 +30,8 @@ const WeaponWiki = {
       let char = Character.get(ret[1].replace("专武", ""), e.game)
       if (char) ret[1] = `${char.name}专武`
     }
-    let weapon = Weapon.get(ret[1], e.game)
+    let weapon = Weapon.get(ret[1], [ "gs", "sr" ])
     if (!weapon) return false
-    if (weapon.game !== "sr") return false
 
     e.msg = "#喵喵武器WIKI"
     e.weapon = weapon
@@ -31,19 +40,25 @@ const WeaponWiki = {
 
   async render(e) {
     let weapon = e.weapon
+    let data = weapon.getData("typeName,gacha,desc,maxLv,maxPromote")
 
-    let base = weapon.calcAttr(80, 6)
+    let base = weapon.calcAttr(data.maxLv, data.maxPromote)
     lodash.forEach(base, (value, key) => {
+      if (key === "attr") {
+        if (!base.attr.value) return
+        base.attr.key = attrName[base.attr.key]
+        base.attr.value = base.attr.key === "元素精通" ? Format.comma(base[key].value, 1) : Format.pct(base[key].value, 1)
+        return
+      }
       base[key] = Format.comma(value, 1)
     })
     return await Common.render("wiki/weapon-wiki", {
-      ...weapon,
       base,
-      icon: weapon.img,
-      desc: weapon.desc,
+      ...weapon,
+      ...data,
       affixText: weapon.getAffixDesc("all"),
       materials: weapon.getMaterials(),
-      elem: "sr"
+      elem: weapon.game === "gs" ? "hydro" : "sr"
     }, { e, scale: 2.4 })
   }
 }

@@ -4,27 +4,36 @@
 <link rel="stylesheet" type="text/css" href="{{_res_path}}common/tpl.css"/>
 <link rel="stylesheet" type="text/css" href="{{_res_path}}wiki/character-wiki.css"/>
 <link rel="stylesheet" type="text/css" href="{{_res_path}}wiki/weapon-wiki.css"/>
+{{if type!='catalyst'}}<style>.game-gs .icon-box {padding: 0;}.main-icon {width: auto;height: 326px;}</style>{{/if}}
+
 {{/block}}
 
 {{block 'main'}}
-<div class="basic">
+<div class="basic game-{{game}}">
   <div class="main">
-    <img class="main-icon" src="{{_res_path}}{{icon}}" />
+    <div class="icon-box"><img class="main-icon" src="{{_res_path}}{{gacha}}" /></div>
     <div class="type">
-      <img class="type-icon" src="{{_res_path}}meta-sr/public/icons/type-{{type}}.webp">
+      <img class="type-icon" src="{{_res_path}}{{game === "gs" ? "common/item/atk" : "meta-sr/public/icons/type"}}-{{type}}.webp">
       <div class="type-detail">
-        <div class="type-name">{{type}}</div>
-        <div data-star={{star}} id="type-star" class="star" style="background-image: url('{{_res_path}}meta-sr/public/icons/star-{{star}}.png');background-repeat: repeat-x;background-size: 14px;"></div>
+        <div class="type-name">{{typeName}}</div>
+        <div data-star={{star}} id="type-star" class="star" style="background-image: url('{{_res_path}}meta-sr/public/icons/star-{{game == `gs` ? 5 : star}}.png');background-repeat: repeat-x;background-size: 14px;"></div>
       </div>
     </div>
   </div>
   <div class="detail">
-    <div class="weapon-title">
+    <div class="weapon-detail">
       <div class="weapon-name">{{name}}</div>
-      {{set baseKey = ['hp','atk','def'] }}
       <div class="base-list">
+      {{set baseKey = game === "gs" ? ['atkBase', 'attr'] : ['hp','atk','def'] }}
       {{each baseKey type}}
-        <div class="base-attr base-{{type}}">{{base[type]}}</div>
+      <div class="base-attr">
+        {{if game === "gs"}}
+          <div class="base-name">{{type==="atkBase"?"基础攻击":base[type].key}}</div>
+        {{else}}
+          <div class="base-icon base-{{type}}"></div>
+        {{/if}}
+        {{(type == 'attr' ? base[type].value : base[type]) || ''}}
+      </div>
       {{/each}}
       </div>
       <div class="weapon-desc">{{@desc}}</div>

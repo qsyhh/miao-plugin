@@ -6,6 +6,8 @@
 
 > 项目Q群：[517144547](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=2pln8DfZOIwge418mZ2lGK272ulJeABB&authKey=omB8vXIFk0NsTSkShPUrCuoXQsDwmH3DVx0CPakj%2FV4PjZD%2F3WCQrhM9PH08BGj1&noverify=0&group_code=517144547)
 
+> ⚠️请尊重作者的努力，勿将本仓库内所有新增资源、功能传播或上传到除[原版 miao-plugin](https://github.com/yoimiya-kokomi/miao-plugin)的其他仓库或其他社区，如需使用请自行本地修改或pr推送到[原版 miao-plugin](https://github.com/yoimiya-kokomi/miao-plugin)
+
 ## 较原版的新增/修改
 
 - [x] 支持星铁图鉴、星铁技能显示能量上限及削韧值
@@ -14,7 +16,7 @@
 
 - [x] 新增`#喵喵背景设置`、`#喵喵背景帮助`命令，支持自定义面板、面板列表背景图
 
-- [ ] 星铁图鉴增加素材显示
+- [x] 星铁图鉴增加素材显示
 
 - [x] 新增`#复刻统计`、`#四星复刻统计`、`*四星光锥复刻统计`命令，用于查看角色/武器多久未复刻，UI源码来源[windoge-plugin](https://gitee.com/windoge/windoge-plugin)
 
@@ -23,6 +25,8 @@
 - [x] ~~更换`#喵喵更新图像`源为[miao-res-plus](https://gitee.com/qsyhh/miao-res-plus) [@DenFengLai](https://gitee.com/DenFengLai)~~
 
 - [x] 新增`#绫华攻略`、`#火主攻略`、`*记忆主攻略`命令，用于查询角色攻略(默认关闭，攻略数据为手动更新[gs](https://gitee.com/qsyhh/resources/tree/gs/)|[sr](https://gitee.com/qsyhh/resources/tree/sr/)，更新不及时，可使用`#喵喵设置攻略关闭`关闭此功能，发送`#喵喵攻略帮助`查看帮助)
+
+- [x] 新增`#雾切图鉴`，`*于夜色中图鉴`，用于查询武器图鉴（默认关闭，使用`#喵喵设置武器图鉴开启`开启）
 
 ## 安装指令
 
