@@ -35,7 +35,7 @@
 方式1: 首次/重新安装插件：
 
 ```
-git clone --depth=1 https://用户名:个人令牌@gitcode.com/qsyhh_code/miao-plugin.git ./plugin/miao-plugin/
+git clone --depth=1 https://用户名:个人令牌@gitcode.com/qsyhh_code/miao-plugin.git ./plugins/miao-plugin/
 pnpm install --filter=miao-plugin
 ```
 
