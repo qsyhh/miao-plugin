@@ -5,7 +5,6 @@
 此仓库将在原仓库有更新时测试后推送同步，可能更新不及时...推荐使用原版 [miao-plugin](https://gitee.com/yoimiya-kokomi/miao-plugin)
 
 > 项目Q群：[517144547](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=2pln8DfZOIwge418mZ2lGK272ulJeABB&authKey=omB8vXIFk0NsTSkShPUrCuoXQsDwmH3DVx0CPakj%2FV4PjZD%2F3WCQrhM9PH08BGj1&noverify=0&group_code=517144547)
-
 > ⚠️请尊重作者的努力，勿将本仓库内所有新增资源、功能传播或上传到除[原版 miao-plugin](https://github.com/yoimiya-kokomi/miao-plugin)的其他仓库或其他社区，如需使用请自行本地修改或pr推送到[原版 miao-plugin](https://github.com/yoimiya-kokomi/miao-plugin)
 
 ## 较原版的新增/修改
@@ -34,7 +33,7 @@
 
 方式1: 首次/重新安装插件：
 
-```
+```bash
 git clone --depth=1 https://用户名:个人令牌@gitcode.com/qsyhh_code/miao-plugin.git ./plugins/miao-plugin/
 pnpm install --filter=miao-plugin
 ```
@@ -43,7 +42,7 @@ pnpm install --filter=miao-plugin
 
 注: 该方式将会【强制覆盖】本地所有文件，否则无法使用指令更新插件，但面板图、配置文件等文件会保留。自修改过多请勿使用本fork版，自修改报错一律不受理
 
-```
+```bash
 cd plugins/miao-plugin
 git remote set-url origin https://用户名:个人令牌@gitcode.com/qsyhh_code/miao-plugin.git
 // 原fork用户这里可直接执行git pull，无需后续操作
@@ -82,6 +81,18 @@ pnpm install -P
 ```
 
 进行安装。安装完毕后，管理员只需发送 `#喵喵更新` 即可自动更新 miao-plugin。
+
+注：目前gitee源因为不可阻挡的原因无法使用，需要切换到github源请在 Yunzai-Bot 根目录夹打开终端执行以下指令
+
+```
+git -C plugins/miao-plugin remote set-url origin https://github.com/yoimiya-kokomi/miao-plugin
+```
+
+如果网络较差可使用代理加速服务
+
+```
+git -C plugins/miao-plugin remote set-url origin https://ghfast.top/https://github.com/yoimiya-kokomi/miao-plugin
+```
 
 ### 手工下载安装（不推荐）
 
