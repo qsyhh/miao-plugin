@@ -155,6 +155,31 @@ body {
   background-size: 100% auto;
   background-position: left 40%;
 }
+.cal-list .cal-item .char-sr,
+.cal-list .cal-item .weapon-sr {
+  position: absolute;
+  right: 0;
+  display: flex;
+  width: 50%;
+  height: 100%;
+  justify-content: flex-end;
+}
+.cal-list .cal-item .char-sr .banner {
+  position: relative;
+  float: right;
+  height: auto;
+  background-size: 96%;
+  background-repeat: no-repeat;
+  background-position: 0 50%;
+}
+.cal-list .cal-item .weapon-sr .banner {
+  position: relative;
+  float: right;
+  height: auto;
+  background-size: 96%;
+  background-repeat: no-repeat;
+  background-position: 0 50%;
+}
 .cal-list .cal-item strong {
   display: block;
   font-weight: normal;

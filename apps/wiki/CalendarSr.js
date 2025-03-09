@@ -4,6 +4,8 @@ import moment from "moment"
 import fetch from "node-fetch"
 import Calendar from "./Calendar.js"
 import { Common, Data } from "#miao"
+import { Character, Weapon } from "#miao.models"
+import { poolNameSr, poolDetailSr } from "../../resources/meta-sr/info/index.js"
 
 const ignoreIds = [
   257, // 保密测试参与意愿调研
@@ -164,9 +166,11 @@ let CalSr = {
 
     if (/流光定影/.test(title)) {
       type = "weapon"
+      if (ds.banner3) extra.banner3 = ds.banner3
       extra.sort = 2
       banner = gachaImgs.shift()
     } else if (/角色活动跃迁/.test(title)) {
+      if (ds.banner2) extra.banner2 = ds.banner2
       type = "character"
       extra.sort = 1
       banner = gachaImgs.shift()
@@ -234,6 +238,46 @@ let CalSr = {
     lodash.forEach(listData.data.pic_list[0].type_list[0].list, (ds) => CalSr.getList(ds, resultList, { ...dateList, now, timeMap, gachaImgs }))
     lodash.forEach(listData.data.pic_list[0].type_list[1].list, (ds) => CalSr.getList(ds, resultList, { ...dateList, now, timeMap, gachaImgs }))
 
+    let hasBanner = resultList.some((ds) => ds.type === "character" || ds.type === "weapon")
+    // 伪造跃迁信息
+    if (!hasBanner) {
+      let bannerLists = poolDetailSr.slice(-2)
+      let bannerList = []
+      lodash.forEach(bannerLists, (ds) => {
+        let charTitle = "角色活动跃迁："
+        let weaponTitle = "光锥活动跃迁：「流光定影」「溯回忆象」"
+        let banner2 = []
+        let banner3 = []
+        lodash.map(ds.char5, (name) => {
+          let char = Character.get(name, "sr")
+          if (char) banner2.push(char.face)
+          charTitle += `「${poolNameSr[name]}」`
+        })
+        lodash.map(ds.weapon5, (name) => {
+          let weapon = Weapon.get(name, "sr")
+          if (weapon) banner3.push(weapon.img)
+        })
+        bannerList.push({
+          ann_id: 0,
+          title: charTitle,
+          start_time: ds.from,
+          end_time: ds.to,
+          banner: "",
+          banner2,
+          tag_icon: ""
+        })
+        bannerList.push({
+          ann_id: 0,
+          title: weaponTitle,
+          start_time: ds.from,
+          end_time: ds.to,
+          banner: "",
+          banner3,
+          tag_icon: ""
+        })
+      })
+      lodash.forEach(bannerList, (ds) => CalSr.getList(ds, resultList, { ...dateList, now, timeMap, gachaImgs }))
+    }
     let versionStartTime
     lodash.forEach(listData.data.list[0].list, (ds) => {
       if (/版本更新(概览|说明)/.test(ds.title)) versionStartTime = ds.start_time

@@ -69,10 +69,24 @@
         style="{{`margin-left:${li.left}%;width:${li.width}%`}}"
         data-id="{{li.id}}"
         data-type="{{li.type}}">
-      {{if li.banner2}}
-      <div class="banner" style="background-image:url('{{_res_path}}{{li.banner2}}')"></div>
+      {{if li.banner3}}
+        <div class="weapon-sr">
+          {{each li.banner3 banner}}
+          <div class="banner" style="background-image:url('{{_res_path}}{{banner}}')"></div>
+          {{/each}}
+        </div>
+      {{else if li.banner2}}
+        {{if game !== 'gs'}}
+          <div class="char-sr">
+            {{each li.banner2 banner}}
+            <div class="banner" style="background-image:url('{{_res_path}}{{banner}}')"></div>
+            {{/each}}
+          </div>
+        {{else}}
+          <div class="banner" style="background-image:url('{{_res_path}}{{li.banner2}}')"></div>
+        {{/if}}
       {{else if li.banner}}
-      <div class="banner" style="background-image:url('{{li.banner}}')"></div>
+        <div class="banner" style="background-image:url('{{li.banner}}')"></div>
       {{/if}}
       <div class="info">
         {{if li.type === "character" && game === 'gs'}}
