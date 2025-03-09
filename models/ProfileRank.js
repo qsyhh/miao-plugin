@@ -24,10 +24,10 @@ export default class ProfileRank {
   static async getCharacterFromKey(key, game = "gs") {
     if (game === "gs") {
       // 原神的角色id都是8位
-      return /^miao:rank:\d+:(?:mark|dmg|crit|valid):(\d{8})$/.exec(key)
+      return /^miao:rank:[\w-]+:(?:mark|dmg|crit|valid):(\d{8})$/.exec(key)
     } else {
       // 星铁的角色id都是4位
-      return /^miao:rank:\d+:(?:mark|dmg|crit|valid):(\d{4})$/.exec(key)
+      return /^miao:rank:[\w-]+:(?:mark|dmg|crit|valid):(\d{4})$/.exec(key)
     }
   }
 
