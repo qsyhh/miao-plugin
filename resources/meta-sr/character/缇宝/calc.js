@@ -14,25 +14,25 @@ export const details = [
     dmg: ({ talent, attr, calc }, { basic }) => basic(calc(attr.hp) * talent.q["技能伤害"], "q")
   }, {
     title: "终结技附加伤害(0次天赋追击)",
-    dmg: ({ talent, attr, calc, cons }, { basic }) => basic(calc(attr.hp) * talent.q["附加伤害"] * (cons > 1 ? 120 / 100 * 2 : 1), "", "skillDot")
+    dmg: ({ talent, attr, calc, cons }, { basic }) => basic(calc(attr.hp) * talent.q["附加伤害"] * (cons > 1 ? 120 / 100 * 2 : 1), "")
   }, {
     title: "终结技附加伤害(3次天赋追击)",
     params: { zj: 3 },
-    dmg: ({ talent, attr, calc, cons }, { basic }) => basic(calc(attr.hp) * talent.q["附加伤害"] * (cons > 1 ? 120 / 100 * 2 : 1), "", "skillDot")
+    dmg: ({ talent, attr, calc, cons }, { basic }) => basic(calc(attr.hp) * talent.q["附加伤害"] * (cons > 1 ? 120 / 100 * 2 : 1), "")
   }, {
     title: "天赋追击伤害(0次天赋追击)",
-    dmg: ({ talent, attr, calc, cons }, { basic }) => basic(calc(attr.hp) * talent.t["追加攻击伤害"] * (cons === 6 ? 729 / 100 : 1), "t")
+    dmg: ({ talent, attr, calc, cons }, { basic }) => basic(calc(attr.hp) * talent.t["追加攻击伤害"], "t")
   }, {
     title: "天赋追击伤害(2次天赋追击)",
     params: { zj: 2 },
-    dmg: ({ talent, attr, calc, cons }, { basic }) => basic(calc(attr.hp) * talent.t["追加攻击伤害"] * (cons === 6 ? 729 / 100 : 1), "t")
+    dmg: ({ talent, attr, calc, cons }, { basic }) => basic(calc(attr.hp) * talent.t["追加攻击伤害"], "t")
   }, {
     check: ({ cons }) => cons > 0,
     title: "一命额外真实伤害(3次天赋追击)",
     params: { zj: 3 },
     dmg: ({ talent, attr, calc, cons }, { basic }) => {
       let qAvg = basic(calc(attr.hp) * talent.q["技能伤害"], "q").avg
-      let fjAvg = basic(calc(attr.hp) * talent.q["附加伤害"] * (cons > 1 ? 120 / 100 * 2 : 1), "", "skillDot").avg
+      let fjAvg = basic(calc(attr.hp) * talent.q["附加伤害"] * (cons > 1 ? 120 / 100 * 2 : 1), "").avg
       return {
         avg: (qAvg + fjAvg) * 24 / 100
       }
@@ -41,7 +41,7 @@ export const details = [
 ]
 
 export const defDmgIdx = 5
-export const mainAttr = "hp,atk,cpct,cdmg"
+export const mainAttr = "hp,cpct,cdmg"
 
 export const buffs = [
   {
@@ -50,9 +50,9 @@ export const buffs = [
       kx: ({ talent }) => talent.e["抗性穿透提高"] * 100
     }
   }, {
-    title: "终结技-猜猜这里住着谁：结界持续期间，敌方目标受到的伤害提高[dmg]%",
+    title: "终结技-猜猜这里住着谁：结界持续期间，敌方目标受到的伤害提高[enemydmg]%",
     data: {
-      dmg: ({ talent }) => talent.q["受到的伤害提高"] * 100
+      enemydmg: ({ talent }) => talent.q["受到的伤害提高"] * 100
     }
   }, {
     title: "行迹-城墙外的羊羔儿…：施放天赋的追加攻击后，造成的伤害提高72%，最多叠加3层",
@@ -77,7 +77,10 @@ export const buffs = [
     }
   }, {
     title: "缇宝6命：天赋的追加攻击造成的伤害提高729%",
-    cons: 6
+    cons: 6,
+    data: {
+      tDmg: 729
+    }
   }
 ]
 
