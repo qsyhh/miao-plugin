@@ -96,12 +96,16 @@ export default function(staticIdx, keyIdx) {
     ],
     "血火啊，燃烧前路": [
       staticIdx(1, "hpPct"),
+      staticIdx(2, "heal"),
+      keyIdx("施放战技或终结技时，使本次攻击造成的伤害提高[eDmg]%", { eDmg: 4, qDmg: 4 }),
       (tables) => {
         return {
-          title: "施放战技或终结技消耗的生命值高于500点时，使本次攻击造成的伤害提高[eDmg]%。",
+          check: ({ calc, attr }) => calc(attr.hp) * tables[3] / 100 > 500,
+          title: "施放战技或终结技消耗生命值[_hp]，使本次攻击造成的伤害提高[eDmg]%。",
           data: {
-            eDmg: tables[4] * 2,
-            qDmg: tables[4] * 2
+            _hp: ({ calc, attr }) => calc(attr.hp) * tables[3] / 100,
+            eDmg: tables[5],
+            qDmg: tables[5]
           }
         }
       }
