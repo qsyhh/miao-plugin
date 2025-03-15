@@ -269,7 +269,7 @@ class Character extends Base {
     let imgs = this._imgs[cacheId]
     return {
       ...imgs,
-      qFace: Cfg.get("qFace") ? (imgs.qFace || imgs.face) : imgs.face
+      qFace: (Cfg.get("zFace") && imgs.zFace) ? imgs.zFace : (Cfg.get("bFace") && imgs.bFace) ? imgs.bFace : Cfg.get("qFace") ? imgs.qFace : imgs.face
     }
   }
 

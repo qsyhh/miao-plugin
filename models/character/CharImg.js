@@ -74,24 +74,28 @@ const CharImg = {
 
   // 获取角色的图像资源数据
   getImgs(name, costumeIdx = "", travelerElem = "", weaponType = "sword", talentCons) {
-    let fileType = "webp"
     costumeIdx = costumeIdx === "2" ? "2" : ""
     let imgs = {}
     if (![ "空", "荧", "旅行者" ].includes(name)) travelerElem = ""
     const nPath = `/meta-gs/character/${name}/`
     const tPath = `/meta-gs/character/旅行者/${travelerElem}/`
     let add = (key, path, path2) => {
+      let fileType = "webp"
+      // 表情包及自定义头像为png格式
+      if (key === "bFace" || key === "zFace") fileType = "png"
       if (path2 && fs.existsSync(`${rPath}/${nPath}/${path2}.${fileType}`)) {
         imgs[key] = `${nPath}${path2}.${fileType}`
-      } else {
+      } else if (fs.existsSync(`${rPath}/${nPath}/${path}.${fileType}`)) {
         imgs[key] = `${nPath}${path}.${fileType}`
       }
     }
     let tAdd = (key, path) => {
-      imgs[key] = `${travelerElem ? tPath : nPath}${path}.${fileType}`
+      imgs[key] = `${travelerElem ? tPath : nPath}${path}.webp`
     }
     add("face", "imgs/face", `imgs/face${costumeIdx}`)
     add("qFace", "imgs/face", "imgs/face-q")
+    add("bFace", "imgs/face-b")
+    add("zFace", "imgs/face-z")
     add("side", "imgs/side", `imgs/side${costumeIdx}`)
     add("gacha", "imgs/gacha")
     add("splash", "imgs/splash", `imgs/splash${costumeIdx}`)
@@ -112,18 +116,22 @@ const CharImg = {
 
   // 获取星铁角色图像资源
   getImgsSr(name, talentCons) {
-    let fileType = "webp"
     const nPath = `/meta-sr/character/${name}/`
     let imgs = {}
     let add = (key, path, path2) => {
+      let fileType = "webp"
+      // 表情包及自定义头像为png格式
+      if (key === "bFace" || key === "zFace") fileType = "png"
       if (path2 && fs.existsSync(`${rPath}/${nPath}/${path2}.${fileType}`)) {
         imgs[key] = `${nPath}${path2}.${fileType}`
-      } else {
+      } else if (fs.existsSync(`${rPath}/${nPath}/${path}.${fileType}`)) {
         imgs[key] = `${nPath}${path}.${fileType}`
       }
     }
     add("face", "imgs/face")
     add("qFace", "imgs/face", "imgs/face-q")
+    add("bFace", "imgs/face-b")
+    add("zFace", "imgs/face-z")
     add("splash", "imgs/splash")
     add("preview", "imgs/preview")
     for (let i = 1; i <= 3; i++) {

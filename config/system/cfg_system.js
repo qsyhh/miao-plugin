@@ -186,6 +186,16 @@ export const cfgSchema = {
         key: "卡通头像",
         def: true
       },
+      bFace: {
+        title: "表情包版角色头像",
+        key: "表情包头像",
+        def: false
+      },
+      zFace: {
+        title: "自定义角色头像",
+        key: "自定义头像",
+        def: false
+      },
       charPicSe: {
         title: "小清新角色图",
         key: "小清新",
