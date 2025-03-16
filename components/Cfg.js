@@ -1,20 +1,15 @@
 /* eslint-disable import/no-unresolved */
 import fs from "node:fs"
 import lodash from "lodash"
-import { Version } from "#miao"
 import { miaoPath } from "#miao.path"
 import cfgData from "./cfg/CfgData.js"
 
 const _cfgPath = `${miaoPath}/components/`
 let cfg = {}
-let miaoCfg = {}
 
 try {
   cfg = await cfgData.getCfg()
   cfgData.saveCfg(cfg)
-  lodash.forEach(cfgData.getCfgSchemaMap(), (cm) => {
-    if (cm.miao) miaoCfg[cm.cfgKey] = true
-  })
 } catch (e) {}
 
 let profile_cfg = {}
@@ -26,7 +21,6 @@ try {
 
 let Cfg = {
   get(rote, def = "") {
-    if (Version.isMiao && miaoCfg[rote]) return true
     let ret = lodash.get(cfg, rote)
     return lodash.isUndefined(cfg) ? def : ret
   },

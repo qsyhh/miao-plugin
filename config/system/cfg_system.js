@@ -5,44 +5,37 @@ export const cfgSchema = {
       avatarList: {
         title: "#角色 #UID",
         key: "角色列表",
-        def: false,
-        miao: true
+        def: true
       },
       avatarCard: {
         title: "#刻晴 #老婆",
         key: "角色卡片",
-        def: true,
-        miao: true
+        def: false
       },
       uploadAbyssData: {
         title: "#深渊",
         key: "深渊",
-        def: false,
-        miao: true
+        def: true
       },
       roleCombat: {
         title: "#幻想",
         key: "幻想真境剧诗",
-        def: false,
-        miao: true
+        def: true
       },
       profileStat: {
         title: "#练度统计",
         key: "练度统计",
-        def: false,
-        miao: true
+        def: true
       },
       help: {
         title: "#帮助 #菜单",
         key: "帮助",
-        def: false,
-        miao: true
+        def: true
       },
       gachaStat: {
         title: "#抽卡分析 #抽卡统计",
         key: "抽卡",
-        def: false,
-        miao: true
+        def: true
       },
       avatarPoke: {
         title: "戳一戳展示角色卡片",
