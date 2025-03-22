@@ -27,14 +27,14 @@ export const details = [
     title: "弑神登神伤害(主目标)",
     dmg: ({ talent, attr, calc, cons }, { basic }) => {
       let td = talent.e2["弑神登神技能伤害"]
-      if (cons === 1) td += 0.3
+      if (cons > 0) td += 0.3
       return basic(calc(attr.hp) * td, "e2")
     }
   }, {
     title: "弑神登神伤害(完整)",
     dmg: ({ talent, attr, calc, cons }, { basic }) => {
       let td = talent.e2["弑神登神技能伤害"] + talent.e2["弑神登神相邻目标伤害"] * 2
-      if (cons === 1) td = (talent.e2["弑神登神技能伤害"] + 0.3) * 3
+      if (cons > 0) td = (talent.e2["弑神登神技能伤害"] + 0.3) * 3
       return basic(calc(attr.hp) * td, "e2")
     }
   }
