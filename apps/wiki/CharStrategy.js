@@ -66,7 +66,7 @@ const CharStrategy = {
         message: [
           `版主：${ds.author}`,
           segment.image(`file://${img}`),
-          ds.isOther ? ds.articleUrl : `https://www.miyoushe.com/${char.isGs ? "ys" : "sr"}/article/${ds.article}`
+          ds.articleUrl ?? `https://www.miyoushe.com/${char.isGs ? "ys" : "sr"}/article/${ds.article}`
         ]
       })
       length++
@@ -102,6 +102,10 @@ const CharStrategy = {
       logger.mark(`[喵喵:角色攻略] 下载${ds.author}-${name}攻略图`)
       try {
         const res = await fetch(ds.url)
+        if (!res.ok) {
+          logger.error(`[喵喵:角色攻略] 请求${ds.author}-${name}攻略失败\n${res.statusText}`)
+          return false
+        }
         const streamPipeline = promisify(pipeline)
         await streamPipeline(res.body, fs.createWriteStream(imgPath))
         logger.mark(`[喵喵:角色攻略] 下载${ds.author}-${name}攻略成功`)
