@@ -3020,15 +3020,21 @@
     "type": "weekly",
     "star": 5
   },
-  "云岩裂叶": {
-    "id": "n101254",
-    "name": "云岩裂叶",
-    "type": "specialty",
-    "star": 1
-  },
   "琉鳞石": {
     "id": "n101255",
     "name": "琉鳞石",
+    "type": "specialty",
+    "star": 1
+  },
+  "龙像的无智核": {
+    "id": "n113072",
+    "name": "龙像的无智核",
+    "type": "boss",
+    "star": 4
+  },
+  "云岩裂叶": {
+    "id": "n101254",
+    "name": "云岩裂叶",
     "type": "specialty",
     "star": 1
   },
@@ -3038,10 +3044,30 @@
     "type": "weekly",
     "star": 5
   },
-  "龙像的无智核": {
-    "id": "n113072",
-    "name": "龙像的无智核",
-    "type": "boss",
-    "star": 4
+  "明燃的棱状壳": {
+    "id": 112121,
+    "name": "明燃的棱状壳",
+    "type": "monster",
+    "star": 4,
+    "items": {
+      "冷裂壳块": {
+        "id": 112119,
+        "name": "冷裂壳块",
+        "type": "monster",
+        "star": 2
+      },
+      "蕴热的背壳": {
+        "id": 112120,
+        "name": "蕴热的背壳",
+        "type": "monster",
+        "star": 3
+      },
+      "明燃的棱状壳": {
+        "id": 112121,
+        "name": "明燃的棱状壳",
+        "type": "monster",
+        "star": 4
+      }
+    }
   }
 }
