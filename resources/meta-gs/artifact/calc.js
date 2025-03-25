@@ -535,6 +535,32 @@ const buffs = {
         cpct: 40
       }
     }
+  },
+
+  长夜之誓: {
+    2: {
+      title: "下落攻击造成的伤害提升[a3Dmg]%",
+      data: {
+        a3Dmg: 25
+      }
+    },
+    4: {
+      title: "5层Buff下落攻击造成的伤害提升[a3Dmg]%",
+      data: {
+        a3Dmg: 75
+      }
+    }
+  },
+
+  深廊终曲: {
+    2: attr("dmg", 15, "冰"),
+    4: {
+      title: "普攻和元素爆发造成的伤害提升[aDmg]%",
+      data: {
+        aDmg: 60,
+        qDmg: 60
+      }
+    }
   }
 
 }
