@@ -241,11 +241,11 @@ let CalSr = {
     let hasBanner = resultList.some((ds) => ds.type === "character" || ds.type === "weapon")
     // 伪造跃迁信息
     if (!hasBanner) {
-      let bannerLists = poolDetailSr.slice(-2)
+      let bannerLists = poolDetailSr.slice(-3)
       let bannerList = []
       lodash.forEach(bannerLists, (ds) => {
         let charTitle = "角色活动跃迁："
-        let weaponTitle = "光锥活动跃迁：「流光定影」「溯回忆象」"
+        let weaponTitle = ds.char5.length === 1 ? "光锥活动跃迁：「流光定影」" : ds.char5.length === 2 ? "光锥活动跃迁：「流光定影」「溯回忆象」" : "光锥活动跃迁：「流光定影」「真意之汇」"
         let banner2 = []
         let banner3 = []
         lodash.map(ds.char5, (name) => {
