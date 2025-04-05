@@ -60,8 +60,8 @@ export const buffs = [
     cons: 4,
     data: {
       _a3Plus: ({ attr, calc }) => Math.min(calc(attr.atk) * 500 / 100, 20000),
-      a3Plus: ({ params, attr, calc }) => params.zrjq ? 0 : Math.min(calc(attr.atk) * 500 / 100, 20000),
-      qDmg: ({ params }) => params.zrjq ? 100 : 0
+      a3Plus: ({ params, attr, calc }) => params.jxqd ? 0 : Math.min(calc(attr.atk) * 500 / 100, 20000),
+      qDmg: ({ params }) => params.jxqd ? 100 : 0
     }
   }, {
     title: "瓦雷莎6命：下落攻击与元素爆发的暴击率提升[a3Cpct]%,暴击伤害提升[a3Cdmg]%",
