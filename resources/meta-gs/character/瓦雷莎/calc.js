@@ -74,3 +74,5 @@ export const buffs = [
     }
   }
 ]
+
+export const createdBy = "其实雨很好"

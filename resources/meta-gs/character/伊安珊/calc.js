@@ -1,3 +1,6 @@
+/* eslint-disable import/no-unresolved */
+import { Format } from "#miao"
+
 export const details = [
   {
     title: "雷霆飞缒伤害",
@@ -11,6 +14,24 @@ export const details = [
   }, {
     title: "天赋治疗量",
     dmg: ({ attr, calc }, { heal }) => heal(calc(attr.atk) * 60 / 100)
+  }, {
+    title: "Q低夜魂攻击力提高(每点夜魂)",
+    params: { text: true },
+    dmg: ({ talent, attr, calc }) => {
+      return {
+        avg: Format.comma(Math.min(calc(attr.atk) * 0.5 / 100, talent.q["最大攻击力加成"]), 1),
+        type: "text"
+      }
+    }
+  }, {
+    title: "Q高夜魂攻击力提高",
+    params: { text: true },
+    dmg: ({ talent, attr, calc }) => {
+      return {
+        avg: Format.comma(Math.min(calc(attr.atk) * 27 / 100, talent.q["最大攻击力加成"]), 1),
+        type: "text"
+      }
+    }
   }
 ]
 
@@ -21,8 +42,9 @@ export const mainAttr = "atk,cpct,cdmg,dmg"
 export const buffs = [
   {
     title: "元素爆发-力的三原理：拥有至少42点夜魂值时，提高攻击力[atkPlus]点",
+    sort: 9,
     data: {
-      atkPlus: ({ talent, calc, attr }) => Math.min(calc(attr.atk) * 27 / 100, talent.q["最大攻击力加成"])
+      atkPlus: ({ talent, calc, attr, params }) => params.text ? 0 : Math.min(calc(attr.atk) * 27 / 100, talent.q["最大攻击力加成"])
     }
   }, {
     title: "天赋-强化抗阻练习：攻击力提升[atkPct]%",
