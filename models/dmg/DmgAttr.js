@@ -72,7 +72,7 @@ let DmgAttr = {
       ret.weaponTypeName = char.weaponTypeName // 武器类型
       ret.element = Format.elemName(char.elem) // 元素类型
       ret.refine = ((weapon.affix || ret.refine || 1) * 1 - 1) || 0 // 武器精炼
-      ret.staticAttrPct = attr.staticAttrPct // 静态攻击、防御、生命的百分比加成
+      ret.staticAttr = attr.staticAttr // 静态攻击、防御、生命的百分比加成
       ret.multi = 0 // 倍率独立乘区
       ret.kx = 0 // 敌人抗性降低
       if (game === "gs") {
@@ -193,7 +193,7 @@ let DmgAttr = {
         let aRet = /^(hp|def|atk)(Base|Plus|Pct|Inc)?$/.exec(key)
         if (aRet) {
           attr[aRet[1]][aRet[2] ? aRet[2].toLowerCase() : "plus"] += val * 1 || 0
-          if (aRet[2] == "Base") attr[aRet[1]].plus += val * attr.staticAttrPct[aRet[1] + "Pct"] / 100 || 0
+          if (aRet[2] === "Base") attr[aRet[1]].plus += val * attr.staticAttr[aRet[1]].pct / 100 || 0
           return
         }
         aRet = /^(mastery|cpct|cdmg|heal|recharge|dmg|enemydmg|phy|shield|speed|stance)(Plus|Pct|Inc)?$/.exec(key)

@@ -47,7 +47,7 @@ let DmgCalc = {
     if (ele === "phy") dmgNum = (1 + phy.base / 100 + phy.plus / 100 + dynamicPhy / 100)
 
     if (/^scene,.*/.test(ele) || /.*,scene$/.test(ele) || ele === "scene") {
-      let dmgPct = attr.staticAttrPct.dmgPct / 100
+      let dmgPct = attr.staticAttr.dmg.plus / 100
       if (dmgPct > 0) dmgNum = (dmgNum - dmgPct) < 1 ? 1 : (dmgNum - dmgPct)
       if (ele !== "scene") ele = ele.replace(/(,)?scene(,)?/g, "")
     }
