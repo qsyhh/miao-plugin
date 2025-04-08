@@ -15,14 +15,7 @@ export const details = [
   }, {
     title: "强化战技伤害(加死龙)",
     params: { cons1: true },
-    dmg: ({ talent, attr, calc }, { basic }) => {
-      let e2Dmg = basic(calc(attr.hp) * talent.e2["技能伤害"], "e")
-      let meDmg = basic(32000 * talent.e2["技能伤害·死龙"], "e")
-      return {
-        dmg: e2Dmg.dmg + meDmg.dmg,
-        avg: e2Dmg.avg + meDmg.avg
-      }
-    }
+    dmg: ({ talent, attr, calc }, { basic }) => basic(calc(attr.hp) * (talent.e2["技能伤害"] + talent.e2["技能伤害2"]), "e")
   }, {
     title: "忆灵技伤害",
     params: { cons1: true },
