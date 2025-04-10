@@ -14,7 +14,7 @@ export const details = [
     dmg: ({ talent }, dmg) => dmg(talent.q["技能伤害"], "q")
   }, {
     title: "天赋持续伤害",
-    dmg: ({ talent, cons }, dmg) => dmg(talent.t["持续伤害"] + cons > 1 ? 3 : 0, "dot", "skillDot")
+    dmg: ({ talent, cons }, dmg) => dmg(talent.t["持续伤害"] + (cons > 1 ? 3 : 0), "dot", "skillDot")
   }
 ]
 
@@ -44,6 +44,9 @@ export const buffs = [
     data: {
       dmg: 40
     }
+  }, {
+    title: "椒丘2魂：【烬煨】对其造成的火属性持续伤害倍率提高300%",
+    cons: 2
   }, {
     title: "椒丘6魂：9层【烬煨】会使目标的全属性抗性降低[kx]",
     cons: 6,
