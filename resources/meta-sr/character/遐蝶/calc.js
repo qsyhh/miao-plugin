@@ -1,21 +1,18 @@
 export const details = [
   {
-    title: "普攻伤害",
-    dmg: ({ talent, attr, calc }, { basic }) => basic(calc(attr.hp) * talent.a["技能伤害"], "a")
-  }, {
     title: "战技伤害(主目标)",
-    dmg: ({ talent, attr, calc }, { basic }) => basic(calc(attr.hp) * talent.e["目标伤害"], "e")
+    dmg: ({ talent, attr, calc }, { basic }) => basic(calc(attr.hp) * talent.e["技能伤害"], "e")
   }, {
     title: "战技伤害(完整)",
-    dmg: ({ talent, attr, calc }, { basic }) => basic(calc(attr.hp) * (talent.e["目标伤害"] + talent.e["相邻目标伤害"] * 2), "e")
+    dmg: ({ talent, attr, calc }, { basic }) => basic(calc(attr.hp) * (talent.e["技能伤害"] + talent.e["相邻目标伤害"] * 2), "e")
   }, {
     title: "强化战技伤害",
     params: { cons1: true },
-    dmg: ({ talent, attr, calc }, { basic }) => basic(calc(attr.hp) * talent.e2["技能伤害"], "e")
+    dmg: ({ talent, attr, calc }, { basic }) => basic(calc(attr.hp) * talent.e2["遐蝶伤害"], "e")
   }, {
     title: "强化战技伤害(加死龙)",
     params: { cons1: true },
-    dmg: ({ talent, attr, calc }, { basic }) => basic(calc(attr.hp) * (talent.e2["技能伤害"] + talent.e2["技能伤害2"]), "e")
+    dmg: ({ talent, attr, calc }, { basic }) => basic(calc(attr.hp) * (talent.e2["遐蝶伤害"] + talent.e2["死龙伤害"]), "e")
   }, {
     title: "忆灵技伤害",
     params: { cons1: true },
@@ -27,11 +24,11 @@ export const details = [
   }, {
     title: "强化忆灵技伤害(二次释放)",
     params: { cons1: true },
-    dmg: ({ talent, attr, calc }, { basic }) => basic(calc(attr.hp) * talent.me2["二次释放倍率提高"], "me")
+    dmg: ({ talent, attr, calc }, { basic }) => basic(calc(attr.hp) * talent.me2["二次释放伤害"], "me")
   }, {
     title: "强化忆灵技伤害(三次释放)",
     params: { cons1: true },
-    dmg: ({ talent, attr, calc }, { basic }) => basic(calc(attr.hp) * talent.me2["三次释放倍率提高"], "me")
+    dmg: ({ talent, attr, calc }, { basic }) => basic(calc(attr.hp) * talent.me2["三次释放伤害"], "me")
   }, {
     title: "忆灵天赋伤害",
     params: { cons1: true },
@@ -42,7 +39,7 @@ export const details = [
   }
 ]
 
-export const defDmgIdx = 4
+export const defDmgIdx = 3
 export const defParams = { Memosprite: true }
 export const mainAttr = "hp,cpct,cdmg"
 

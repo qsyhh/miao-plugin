@@ -105,6 +105,18 @@ export default function(staticIdx, keyIdx) {
     "向着不可追问处": [
       staticIdx(1, "cpct"),
       keyIdx("装备者施放终结技时，使装备者战技和终结技造成的伤害提高[eDmg]%", { eDmg: 2, qDmg: 2 })
-    ]
+    ],
+    "宇宙大生意": [
+      staticIdx(1, "atkPct"),
+      (tables) => {
+        return {
+          title: "敌方目标每拥有1个不同属性的弱点(计算3个)，装备者对其造成的伤害提高[dmg]%",
+          data: {
+            dmg: tables[2] * 3
+          }
+        }
+      }
+    ],
+    "生命当付之一炬": [ keyIdx("装备者对其造成的伤害提高[dmg]%，受到装备者攻击时，使其防御力降低[ignore]%", { dmg: 1, ignore: 2 }) ]
   }
 }
