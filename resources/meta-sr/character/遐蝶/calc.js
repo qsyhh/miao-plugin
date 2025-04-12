@@ -30,6 +30,17 @@ export const details = [
     params: { cons1: true },
     dmg: ({ talent, attr, calc }, { basic }) => basic(calc(attr.hp) * talent.me2["三次释放伤害"], "me")
   }, {
+    title: "强化忆灵技伤害(完整)",
+    params: { cons1: true },
+    dmg: ({ talent, attr, calc }, { basic }) => {
+      let meDmg1 = basic(calc(attr.hp) * (talent.me2["技能伤害"] + talent.me2["二次释放伤害"] + talent.me2["三次释放伤害"] * 2), "me")
+      let meDmg2 = basic(calc(attr.hp) * talent.me2["灼掠幽墟的晦翼伤害"] * 6, "mt")
+      return {
+        dmg: meDmg1.dmg + meDmg2.dmg,
+        avg: meDmg1.avg + meDmg2.avg
+      }
+    }
+  }, {
     title: "忆灵天赋伤害",
     params: { cons1: true },
     dmg: ({ talent, attr, calc }, { basic }) => basic(calc(attr.hp) * talent.mt2["技能伤害"], "mt")
@@ -39,7 +50,7 @@ export const details = [
   }
 ]
 
-export const defDmgIdx = 3
+export const defDmgIdx = 8
 export const defParams = { Memosprite: true }
 export const mainAttr = "hp,cpct,cdmg"
 
@@ -59,6 +70,11 @@ export const buffs = [
     title: "天赋-掌心淌过的荒芜：3层使遐蝶与死龙造成的伤害提高[dmg]%",
     data: {
       dmg: ({ talent }) => talent.t["伤害提高"] * 100 * 3
+    }
+  }, {
+    title: "忆灵天赋-震彻寂壤的怒啸：我方全体造成的伤害提高[dmg]%",
+    data: {
+      dmg: 10
     }
   }, {
     title: "行迹-倒置的火炬：速度提高[speedPct]%",
