@@ -14,7 +14,7 @@ let MysPanelHSRData = {
       level: ds.level,
       cons: ds.rank,
       weapon: ds.equip ? MysPanelHSRData.getWeapon(ds.equip) : null,
-      talent: MysPanelHSRData.getTalent(char, ds.rank, ds.skills),
+      talent: MysPanelHSRData.getTalent(char, ds.rank, ds.skills, ds.servant_detail?.servant_skills),
       trees: MysPanelHSRData.getTrees(ds.skills),
       artis: MysPanelHSRData.getArtifact([ ...ds.relics, ...ds.ornaments ])
     }, "mysPanelHSR")
@@ -29,22 +29,24 @@ let MysPanelHSRData = {
     }
   },
 
-  getTalent(char, cons, ds = {}) {
-    // 照抄 EnkaData 实现
-    let { talentId = {}, talentCons = {} } = char.meta
-    let idx = 0
+  getTalent(char, cons, ds = [], servant = []) {
+    let { talentCons = {} } = char.meta
+    let remake = {
+      "普攻": "a",
+      "战技": "e",
+      "终结技": "q",
+      "天赋": "t",
+      "秘技": "z",
+      "忆灵技": "me",
+      "忆灵天赋": "mt"
+    }
+    if (servant.length > 0) ds = [ ...ds, ...servant ]
     let ret = {}
     lodash.forEach(ds, (talent_data) => {
-      const id = talent_data.point_id
       const lv = talent_data.level
-      let key
-      if (talentId[id]) {
-        let key = talentId[id]
-        ret[key] = lv
-      } else if (talent_data.point_type == 2) { // 1 属性加成；2 aeqtz；3 额外能力
-        key = [ "a", "e", "q", "t", "z", "me", "mt" ][idx++]
-        ret[key] = ret[key] || lv
-      }
+      // 1 属性加成；2 aeqtz；3 额外能力；4 me mt
+      // if ([ 2, 3 ].includes(talent_data.point_type)) ret[remake[talent_data.remake]] = lv
+      if (remake[talent_data.remake]) ret[remake[talent_data.remake]] = lv
     })
     if (cons >= 3) {
       lodash.forEach(talentCons, (lv, key) => {
