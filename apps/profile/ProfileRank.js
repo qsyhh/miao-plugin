@@ -148,7 +148,7 @@ export async function manageRank(e) {
   e.reply(`当前群排名功能${isClose ? "已禁用..." : "已启用...\n如数据有问题可通过【#刷新排名】命令来刷新当前群内排名"}`)
 }
 
-async function renderCharRankList({ e, uids, char, mode, groupId }) {
+export async function renderCharRankList({ e, uids, char, mode, groupId }) {
   let list = []
   for (let ds of uids) {
     let uid = ds.uid || ds.value
@@ -250,12 +250,14 @@ async function renderCharRankList({ e, uids, char, mode, groupId }) {
     list = lodash.sortBy(list, [ "uid", "_star", "id" ])
   }
 
+  const cont_width = 820 + (list[0]?.talent?.me ? 120 : 0)
   const rankCfg = await ProfileRank.getGroupCfg(groupId)
   // 渲染图像
   return e.reply([
     await Common.render("character/rank-profile-list", {
       save_id: char.id,
       game: e.isSr ? "sr" : "gs",
+      cont_width,
       list,
       title,
       elem: char.elem,
