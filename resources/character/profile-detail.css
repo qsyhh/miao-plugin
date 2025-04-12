@@ -1132,7 +1132,7 @@ body {
   margin: 0 -5px;
 }
 .sr-talent.memosprite {
-  height: 72px;
+  height: 67px;
 }
 .sr-talent.memosprite .char-talents.left {
   width: auto;
@@ -1142,11 +1142,14 @@ body {
   height: 55px;
 }
 .sr-talent.memosprite .char-talents .talent-icon strong {
-  font-size: 10px;
+  font-size: 11px;
   width: 18px;
   height: 16px;
   line-height: 16px;
   margin-left: -9px;
+}
+.sr-talent.memosprite .char-talents .talent-icon span {
+  font-size: 10px;
 }
 .sr-talent.memosprite .char-trees .talent-icon {
   margin: 0 -5px;
