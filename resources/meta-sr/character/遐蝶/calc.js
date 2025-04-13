@@ -42,14 +42,14 @@ export const details = [
         meDmg3.dmg += dmg.dmg
         meDmg3.avg += dmg.avg
       }
-      let meDmg4 = basic(calc(attr.hp) * talent.me2["灼掠幽墟的晦翼伤害"] * 6, "mt", false, { dynamicDmg: 60 + 30 * cost })
+      let meDmg4 = basic(calc(attr.hp) * talent.me2["灼掠幽墟的晦翼伤害"] * (cons === 6 ? 9 : 6), "mt", false, { dynamicDmg: 60 + 30 * cost })
       return {
         dmg: meDmg1.dmg + meDmg2.dmg + meDmg3.dmg + meDmg4.dmg,
         avg: meDmg1.avg + meDmg2.avg + meDmg3.avg + meDmg4.avg
       }
     }
   }, {
-    title: "忆灵天赋伤害",
+    title: "忆灵天赋伤害(单次弹射)",
     params: { cons1: true },
     dmg: ({ talent, attr, calc }, { basic }) => basic(calc(attr.hp) * talent.mt2["技能伤害"], "mt")
   }, {
@@ -109,7 +109,7 @@ export const buffs = [
       heal: 20
     }
   }, {
-    title: "遐蝶6魂：量子属性抗性穿透提高[kx]%",
+    title: "遐蝶6魂：量子属性抗性穿透提高[kx]%，触发天赋【灼掠幽墟的晦翼】的弹射次数额外增加3次",
     cons: 6,
     data: {
       kx: 20
