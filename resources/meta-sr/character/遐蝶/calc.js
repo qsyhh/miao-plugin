@@ -20,24 +20,32 @@ export const details = [
   }, {
     title: "强化忆灵技伤害(首次释放)",
     params: { cons1: true },
-    dmg: ({ talent, attr, calc }, { basic }) => basic(calc(attr.hp) * talent.me2["技能伤害"], "me")
+    dmg: ({ talent, attr, calc }, { basic }) => basic(calc(attr.hp) * talent.me2["技能伤害"], "me", false, { dynamicDmg: 30 })
   }, {
     title: "强化忆灵技伤害(二次释放)",
     params: { cons1: true },
-    dmg: ({ talent, attr, calc }, { basic }) => basic(calc(attr.hp) * talent.me2["二次释放伤害"], "me")
+    dmg: ({ talent, attr, calc }, { basic }) => basic(calc(attr.hp) * talent.me2["二次释放伤害"], "me", false, { dynamicDmg: 60 })
   }, {
     title: "强化忆灵技伤害(三次释放)",
     params: { cons1: true },
-    dmg: ({ talent, attr, calc }, { basic }) => basic(calc(attr.hp) * talent.me2["三次释放伤害"], "me")
+    dmg: ({ talent, attr, calc }, { basic }) => basic(calc(attr.hp) * talent.me2["三次释放伤害"], "me", false, { dynamicDmg: 90 })
   }, {
     title: "强化忆灵技伤害(完整)",
     params: { cons1: true },
-    dmg: ({ talent, attr, calc }, { basic }) => {
-      let meDmg1 = basic(calc(attr.hp) * (talent.me2["技能伤害"] + talent.me2["二次释放伤害"] + talent.me2["三次释放伤害"] * 2), "me")
-      let meDmg2 = basic(calc(attr.hp) * talent.me2["灼掠幽墟的晦翼伤害"] * 6, "mt")
+    dmg: ({ talent, cons, attr, calc }, { basic }) => {
+      let cost = cons > 1 ? 4 : 2
+      let meDmg1 = basic(calc(attr.hp) * talent.me2["技能伤害"], "me", false, { dynamicDmg: 30 })
+      let meDmg2 = basic(calc(attr.hp) * talent.me2["二次释放伤害"], "me", false, { dynamicDmg: 60 })
+      let meDmg3 = basic(calc(attr.hp) * talent.me2["三次释放伤害"], "me", false, { dynamicDmg: 90 })
+      for (let i = 1; i < cost; i++) {
+        let dmg = basic(calc(attr.hp) * talent.me2["三次释放伤害"], "me", false, { dynamicDmg: 90 + 30 * i })
+        meDmg3.dmg += dmg.dmg
+        meDmg3.avg += dmg.avg
+      }
+      let meDmg4 = basic(calc(attr.hp) * talent.me2["灼掠幽墟的晦翼伤害"] * 6, "mt", false, { dynamicDmg: 60 + 30 * cost })
       return {
-        dmg: meDmg1.dmg + meDmg2.dmg,
-        avg: meDmg1.avg + meDmg2.avg
+        dmg: meDmg1.dmg + meDmg2.dmg + meDmg3.dmg + meDmg4.dmg,
+        avg: meDmg1.avg + meDmg2.avg + meDmg3.avg + meDmg4.avg
       }
     }
   }, {
@@ -83,17 +91,17 @@ export const buffs = [
       speedPct: 40
     }
   }, {
-    title: "行迹-西风的驻足：忆灵天赋伤害提高[mtDmg]%",
-    tree: 2,
-    data: {
-      mtDmg: 30
-    }
+    title: "行迹-西风的驻足：每次释放忆灵技【燎尽黯泽的焰息】，伤害提高30%，最高叠加6层",
+    tree: 3
   }, {
     title: "遐蝶1魂：敌方目标当前生命值小于等于自身生命上限50%时，对其造成的伤害为原伤害的140%",
     cons: 1,
     data: {
       dmg: ({ params }) => params.cons1 ? 40 : 0
     }
+  }, {
+    title: "遐蝶2魂：2层【炽意】可抵扣2次死龙忆灵技【燎尽黯泽的焰息】的生命值消耗",
+    cons: 2
   }, {
     title: "遐蝶4魂：回复量提高[heal]%",
     cons: 4,
