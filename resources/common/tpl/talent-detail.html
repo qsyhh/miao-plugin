@@ -22,7 +22,11 @@
     </div>
   </div>
 
-  {{if ds.tables && ds.tables.length > 0 && !ds.tables[0].isSame}}
+  {{if ds.tables && ds.tables.length > 0}}
+  {{set hasValues = false}}
+  {{each ds.tables tr}}
+  {{if !tr.isSame}}<% hasValues = true %>{{/if}}
+  {{/each}}
   <div class="talent-common-info">
     {{each ds.tables tr}}
     {{if tr.isSame}}
@@ -33,6 +37,7 @@
     {{/if}}
     {{/each}}
   </div>
+  {{if hasValues}}
   <table class="talent-table cont-table">
     <tr class="tr">
       <td class="th"></td>
@@ -61,5 +66,6 @@
     </tr>
     {{/each}}
   </table>
+  {{/if}}
   {{/if}}
 </div>
