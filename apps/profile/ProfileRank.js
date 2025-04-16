@@ -255,7 +255,7 @@ export async function renderCharRankList({ e, uids, char, mode, groupId }) {
   const data = {
     title: _dmg?.title,
     isMemosprite,
-    style: `<style>body .container {width: ${isMemosprite ? 970 : 820}px;}</style>`
+    style: `<style>body .container {width: ${isMemosprite ? 970 : e.isSr ? 900 : 820}px;}</style>`
   }
   const rankCfg = await ProfileRank.getGroupCfg(groupId)
   // 渲染图像
