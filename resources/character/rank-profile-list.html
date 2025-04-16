@@ -2,22 +2,10 @@
 
 {{block 'css'}}
 <link rel="stylesheet" type="text/css" href="{{_res_path}}/character/rank-profile-list.css"/>
-{{if game==='sr'}}
-<style>
-body .container {
-  width: {{cont_width+80}}px;
-}
-</style>
-{{else}}
-<style>
-body .container {
-  width: {{cont_width}}px;
-}
-</style>
-{{/if}}
+{{@data.style}}
 {{/block}}
 
-{{set talentMap = game === 'sr' ? (list[0].talent.me ? {a: '普攻', e: '战技', t:'天赋', q: '爆发', me: '忆灵技', mt: '忆灵天赋'} : {a: '普攻', e: '战技', t:'天赋', q: '爆发'}) : {a: '普攻', e: '战技', q: '爆发'} }}
+{{set talentMap = game === 'sr' ? (data.isMemosprite ? {a: '普攻', e: '战技', t:'天赋', q: '爆发', me: '忆灵技', mt: '忆灵天赋'} : {a: '普攻', e: '战技', t:'天赋', q: '爆发'}) : {a: '普攻', e: '战技', q: '爆发'} }}
 {{set gameHash = game === 'gs' ? '#':'*' }}
 
 {{block 'main'}}
@@ -28,7 +16,7 @@ body .container {
 
   <div class="cont group-rank-tip {{groupRank?'has-rank':'no-rank'}}">
     <div class="cont-title">
-      群排名说明
+      群排名说明 {{if mode == 'dmg' && data.title}}<span class="rank-title">当前排行伤害: {{data.title}}</span>{{/if}}
     </div>
     <div class="cont-body">
       <ul class="cont-msg">

@@ -150,6 +150,7 @@ export async function manageRank(e) {
 
 export async function renderCharRankList({ e, uids, char, mode, groupId }) {
   let list = []
+  let _dmg
   for (let ds of uids) {
     let uid = ds.uid || ds.value
     let player = Player.create(uid, e.isSr ? "sr" : "gs")
@@ -168,13 +169,13 @@ export async function renderCharRankList({ e, uids, char, mode, groupId }) {
         ...avatar.getData("id,star,name,sName,level,fetter,cons,weapon,elem,talent,artisSet,imgs"),
         artisMark: Data.getData(mark, "mark,markClass,valid,crit")
       }
-      let dmg = data?.dmg?.data
-      if (dmg && dmg.avg) {
-        let title = dmg.title
+      _dmg = data?.dmg?.data
+      if (_dmg && _dmg.avg) {
+        let title = _dmg.title
         // 稍微缩短下title
         if (title.length > 10) title = title.replace(/[ ·]*/g, "")
         title = title.length > 10 ? title.replace(/伤害$/, "") : title
-        let tmpAvg = dmg.type !== "text" ? Format.comma(dmg.avg, 1) : dmg.avg
+        let tmpAvg = _dmg.type !== "text" ? Format.comma(_dmg.avg, 1) : _dmg.avg
         tmp.dmg = {
           title,
           avg: tmpAvg,
@@ -250,14 +251,19 @@ export async function renderCharRankList({ e, uids, char, mode, groupId }) {
     list = lodash.sortBy(list, [ "uid", "_star", "id" ])
   }
 
-  const cont_width = 820 + (list[0]?.talent?.me ? 120 : 0)
+  const isMemosprite = e.isSr && char.weaponType === "记忆"
+  const data = {
+    title: _dmg?.title,
+    isMemosprite,
+    style: `<style>body .container {width: ${isMemosprite ? 970 : 820}px;}</style>`
+  }
   const rankCfg = await ProfileRank.getGroupCfg(groupId)
   // 渲染图像
   return e.reply([
     await Common.render("character/rank-profile-list", {
       save_id: char.id,
       game: e.isSr ? "sr" : "gs",
-      cont_width,
+      data,
       list,
       title,
       elem: char.elem,
