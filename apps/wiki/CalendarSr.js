@@ -134,7 +134,7 @@ let CalSr = {
     let title3 = "「末日幻影」"
     let exchange = false
     let diff = newAbyssStart.diff(abyss0Start, "days")
-    if (diff % 28 === 0) exchange = true
+    if (diff % 14 === 0) exchange = true
     if (exchange) [ title1, title3 ] = [ title3, title1 ]
 
     check.push([ moment(abyssB1Start), moment(abyssB1End), title1 ])
