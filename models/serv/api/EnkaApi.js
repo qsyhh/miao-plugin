@@ -7,6 +7,7 @@ let HttpsProxyAgent = ""
 
 export default {
   id: "enka",
+  name: "enkaApi", 
   cfgKey: "enkaApi",
   // 处理请求参数
   async request(api) {
