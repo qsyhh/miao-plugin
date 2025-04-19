@@ -21,7 +21,7 @@ export const details = [
     title: "终结技后生命上限提高",
     dmg: ({ talent, attr, calc, cons }) => {
       let cost = talent.q["生命上限提高·百分比"] + (cons > 0 ? 0.5 : 0)
-      let addMaxHp = calc(attr.staticAttr.hp) * cost + talent.q["生命上限提高·固定值"]
+      let addMaxHp = calc(attr.hp.base) * cost + talent.q["生命上限提高·固定值"]
       return {
         avg: Format.comma(addMaxHp, 1),
         type: "text"
@@ -51,7 +51,7 @@ export const buffs = [
   }, {
     title: "终结技-飞入晨昏的我们：处于【雨过天晴】状态时，我方全体目标生命上限提高[hpPlus]",
     data: {
-      hpPlus: ({ talent, attr, calc, cons }) => calc(attr.hp) * (talent.q["生命上限提高·百分比"] + (cons > 0 ? 0.5 : 0)) + talent.q["生命上限提高·固定值"]
+      hpPlus: ({ talent, attr, calc, cons }) => calc(attr.hp.base) * (talent.q["生命上限提高·百分比"] + (cons > 0 ? 0.5 : 0)) + talent.q["生命上限提高·固定值"]
     }
   }, {
     title: "行迹-阴云莞尔：暴击率提高[cpct]%，治疗量提高[heal]%",
