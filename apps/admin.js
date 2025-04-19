@@ -31,12 +31,12 @@ app.reg({
     desc: "【#管理】更新攻略资源"
   },
   update: {
-    rule: /^#喵喵(强制)?更新$/,
+    rule: /^#(喵喵(强制)?更新|(强制)?更新(miao(-plugin)?))$/,
     fn: updateMiaoPlugin,
     desc: "【#管理】喵喵更新"
   },
   updatelog: {
-    rule: /^#?(喵喵更新日志|更新日志miao-plugin)$/,
+    rule: /^#?(喵喵更新日志|更新日志miao(-plugin)?)$/,
     fn: Miaoupdatelog,
     desc: "【#管理】喵喵更新"
   },
