@@ -1,10 +1,9 @@
-/* eslint-disable import/no-unresolved */
 import lodash from "lodash"
 import moment from "moment"
-import { Data } from "#miao"
-import { Character, Weapon } from "#miao.models"
 import { poolDetailSr } from "../../resources/meta-sr/info/index.js"
 import { poolDetail, mixPoolDetail } from "../../resources/meta-gs/info/index.js"
+import { Data } from "#miao"
+import { Character, Weapon } from "#miao.models"
 
 let poolVersion = []
 lodash.forEach(poolDetail, (ds) => {

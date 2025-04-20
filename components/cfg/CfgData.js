@@ -1,10 +1,9 @@
-/* eslint-disable import/no-unresolved */
 import fs from "node:fs"
 import lodash from "lodash"
 import { Data } from "../index.js"
-import { miaoPath } from "#miao.path"
 import { cfgSchema } from "../../config/system/cfg_system.js"
 import { cfgProfile } from "../../config/system/background_system.js"
+import { miaoPath } from "#miao.path"
 
 let cfgData = {
   saveCfg(cfg, isBackground = false) {

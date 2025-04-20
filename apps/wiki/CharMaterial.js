@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 import { Common } from "#miao"
 
 const CharMaterial = {

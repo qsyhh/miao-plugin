@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 import fs from "node:fs"
 import Base from "./Base.js"
 import Character from "./Character.js"

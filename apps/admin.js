@@ -1,11 +1,9 @@
-/* eslint-disable import/no-unresolved */
 import fs from "node:fs"
-import lodash from "lodash"
 import { exec, execSync } from "child_process"
+import lodash from "lodash"
+import fetch from "node-fetch"
 import makemsg from "../../../lib/common/common.js"
 import { Cfg, Common, Data, Version, App } from "#miao"
-
-import fetch from "node-fetch"
 import { miaoPath } from "#miao.path"
 
 let keys = lodash.map(Cfg.getCfgSchemaMap(), (i) => i.key)

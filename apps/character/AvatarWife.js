@@ -1,7 +1,6 @@
-/* eslint-disable import/no-unresolved */
 import lodash from "lodash"
-import { Common } from "#miao"
 import Avatar from "./AvatarCard.js"
+import { Common } from "#miao"
 import { Character, MysApi, Player } from "#miao.models"
 
 const relationMap = {

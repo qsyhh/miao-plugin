@@ -1,7 +1,6 @@
-/* eslint-disable import/no-unresolved */
 import lodash from "lodash"
-import { Meta } from "#miao"
 import ArtisMark from "./ArtisMark.js"
+import { Meta } from "#miao"
 
 const weaponCfg = {
   磐岩结绿: {

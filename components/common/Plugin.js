@@ -1,4 +1,3 @@
-/* eslint-disable jsdoc/check-param-names */
 /*
 * V3版Yunzai plugin
 * */

@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 import lodash from "lodash"
 import EnkaData from "./EnkaData.js"
 import { Data } from "#miao"

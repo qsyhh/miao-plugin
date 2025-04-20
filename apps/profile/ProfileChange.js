@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 /**
  * 面板数据替换相关逻辑
  */

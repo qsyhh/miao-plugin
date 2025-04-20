@@ -1,15 +1,14 @@
-/* eslint-disable import/no-unresolved */
 import lodash from "lodash"
 
 import moment from "moment"
 import Base from "./Base.js"
 import Attr from "./attr/Attr.js"
 import Artis from "./artis/Artis.js"
-import { Data, Format } from "#miao"
 import ArtisMark from "./artis/ArtisMark.js"
 import MysAvatar from "./avatar/MysAvatar.js"
 import ProfileAvatar from "./avatar/ProfileAvatar.js"
 import { Character, ProfileDmg, Weapon } from "./index.js"
+import { Data, Format } from "#miao"
 
 const charKey = "name,abbr,sName,star,imgs,face,side,gacha,weaponTypeName".split(",")
 

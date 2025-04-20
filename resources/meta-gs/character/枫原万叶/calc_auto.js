@@ -1,4 +1,3 @@
-/* eslint-disable no-empty-pattern */
 export const details = [
   {
     title: "E长按伤害",

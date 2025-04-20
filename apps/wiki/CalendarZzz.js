@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 import lodash from "lodash"
 import fetch from "node-fetch"
 import moment from "moment"
@@ -265,8 +264,7 @@ let CalZzz = {
     moment.locale("zh-cn")
     let now = moment()
 
-    // eslint-disable-next-line no-unused-vars
-    let { listData, detailData, timeMap, gachaImgs } = await CalZzz.reqCalData()
+    let { listData, timeMap, gachaImgs } = await CalZzz.reqCalData()
     let dateList = Calendar.getDateList()
 
     let resultList = []

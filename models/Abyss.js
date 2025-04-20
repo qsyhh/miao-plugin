@@ -1,12 +1,11 @@
-/* eslint-disable import/no-unresolved */
 /*
 * Mys深渊数据处理
 * */
 
 import lodash from "lodash"
 import moment from "moment"
+import Base from "./Base.js"
 import { Data } from "#miao"
-import Base from "../models/Base.js"
 
 moment.locale("zh-cn")
 

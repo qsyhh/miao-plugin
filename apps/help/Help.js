@@ -1,8 +1,7 @@
-/* eslint-disable import/no-unresolved */
 import fs from "node:fs"
 import lodash from "lodash"
-import { miaoPath } from "#miao.path"
 import HelpTheme from "./HelpTheme.js"
+import { miaoPath } from "#miao.path"
 import { Cfg, Common, Data, Version } from "#miao"
 
 const helpPath = `${miaoPath}/resources/help`

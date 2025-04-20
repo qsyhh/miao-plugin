@@ -1,13 +1,12 @@
-/* eslint-disable import/no-unresolved */
 /**
  * 面板圣遗物
  */
 import lodash from "lodash"
 import Base from "../Base.js"
 import ArtisSet from "./ArtisSet.js"
-import { Data, Format } from "#miao"
 import ArtisMark from "./ArtisMark.js"
 import ArtisAttr from "./ArtisAttr.js"
+import { Data, Format } from "#miao"
 import { Artifact, ArtifactSet } from "#miao.models"
 
 export default class Artis extends Base {

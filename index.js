@@ -1,6 +1,5 @@
-/* eslint-disable import/no-unresolved */
-import { Version } from "#miao"
 import Index from "./tools/index.js"
+import { Version } from "#miao"
 
 if (!global.segment) { global.segment = (await import("oicq")).segment }
 

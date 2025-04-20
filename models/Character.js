@@ -1,5 +1,3 @@
-/* eslint-disable jsdoc/require-returns-check */
-/* eslint-disable import/no-unresolved */
 /*
 * 角色数据
 *
@@ -12,8 +10,8 @@ import CharId from "./character/CharId.js"
 import CharCfg from "./character/CharCfg.js"
 import CharImg from "./character/CharImg.js"
 import CharMeta from "./character/CharMeta.js"
-import { Data, Format, Cfg, Meta } from "#miao"
 import CharTalent from "./character/CharTalent.js"
+import { Data, Format, Cfg, Meta } from "#miao"
 
 let metaKey = "abbr,star,elem,weapon,talentId,talentCons,eta".split(",")
 const detailKey = "title,allegiance,birth,astro,desc,cncv,jpcv,costume,baseAttr,growAttr,materials,talent,talentData,cons,passive,attr,sp".split(",")

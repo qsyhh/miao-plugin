@@ -1,7 +1,5 @@
-/* eslint-disable import/no-unresolved */
 import { Version } from "#miao"
-import { User } from "./index.js"
-import { Button } from "#miao.models"
+import { Button, User } from "#miao.models"
 
 export default class MysApi {
   constructor(e, uid, mysInfo) {

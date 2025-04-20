@@ -1,7 +1,6 @@
-/* eslint-disable import/no-unresolved */
 import lodash from "lodash"
-import { Data } from "#miao"
 import EnkaData from "./EnkaData.js"
+import { Data } from "#miao"
 
 export default {
   id: "hutao",

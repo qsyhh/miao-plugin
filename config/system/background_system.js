@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 import fs from "node:fs"
 import { miaoPath } from "#miao.path"
 

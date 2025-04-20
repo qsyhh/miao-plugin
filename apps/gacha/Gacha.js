@@ -1,8 +1,7 @@
-/* eslint-disable import/no-unresolved */
-import { Common } from "#miao"
-import GachaData from "./GachaData.js"
-import { Button, Character, Player } from "#miao.models"
 import { getTargetUid } from "../profile/ProfileCommon.js"
+import GachaData from "./GachaData.js"
+import { Common } from "#miao"
+import { Button, Character, Player } from "#miao.models"
 
 let Gacha = {
   async detail(e) {

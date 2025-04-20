@@ -1,13 +1,12 @@
-/* eslint-disable import/no-unresolved */
 import lodash from "lodash"
-import { Data } from "#miao"
 import EnkaData from "./EnkaData.js"
+import { Data } from "#miao"
 
 let HttpsProxyAgent = ""
 
 export default {
   id: "enka",
-  name: "enkaApi", 
+  name: "enkaApi",
   cfgKey: "enkaApi",
   // 处理请求参数
   async request(api) {

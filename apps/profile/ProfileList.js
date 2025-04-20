@@ -1,7 +1,6 @@
-/* eslint-disable import/no-unresolved */
 import lodash from "lodash"
-import { Common, Data } from "#miao"
 import { getTargetUid } from "./ProfileCommon.js"
+import { Common, Data } from "#miao"
 import { Button, ProfileRank, Player, Character } from "#miao.models"
 
 const ProfileList = {

@@ -2,8 +2,8 @@
 * User Class
 * 提供用户实例相关的操作方法
 * */
-import Base from "./Base.js"
 import lodash from "lodash"
+import Base from "./Base.js"
 
 /* User Class Model
 

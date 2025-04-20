@@ -1,5 +1,3 @@
-/* eslint-disable import/no-unresolved */
-import { App, Cfg } from "#miao"
 import ProfileStat from "./profile/ProfileStat.js"
 import ProfileList from "./profile/ProfileList.js"
 import { enemyLv } from "./profile/ProfileUtils.js"
@@ -8,6 +6,7 @@ import { profileHelp } from "./profile/ProfileCommon.js"
 import { profileArtisList } from "./profile/ProfileArtis.js"
 import { groupRank, resetRank, refreshRank, manageRank } from "./profile/ProfileRank.js"
 import { uploadCharacterImg, delProfileImg, profileImgList } from "./character/ImgUpload.js"
+import { App, Cfg } from "#miao"
 
 let app = App.init({
   id: "profile",

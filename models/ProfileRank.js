@@ -1,7 +1,3 @@
-/* eslint-disable jsdoc/check-param-names */
-/* eslint-disable jsdoc/valid-types */
-/* eslint-disable jsdoc/no-undefined-types */
-/* eslint-disable import/no-unresolved */
 import lodash from "lodash"
 import moment from "moment"
 import { Cfg, Common, Data, Version } from "#miao"

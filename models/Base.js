@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 /*
 * Base Model
 *

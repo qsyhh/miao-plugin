@@ -1,5 +1,3 @@
-/* eslint-disable no-empty-pattern */
-
 export const details = [
   {
     title: "普攻伤害",

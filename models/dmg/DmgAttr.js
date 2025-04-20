@@ -1,12 +1,11 @@
-/* eslint-disable import/no-unresolved */
 /*
 * 伤害计算 - 属性计算
 * */
 import lodash from "lodash"
 import AttrItem from "./AttrItem.js"
-import { Format, Meta } from "#miao"
 import DmgMastery from "./DmgMastery.js"
 import { eleBaseDmg } from "./DmgCalcMeta.js"
+import { Format, Meta } from "#miao"
 
 let DmgAttr = {
   // 计算并返回指定属性值

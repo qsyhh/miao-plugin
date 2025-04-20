@@ -1,5 +1,3 @@
-/* eslint-disable no-invalid-this */
-/* eslint-disable import/no-unresolved */
 import lodash from "lodash"
 import ProfileDetail from "./ProfileDetail.js"
 import { Data, Common, Format, Cfg } from "#miao"
@@ -111,7 +109,7 @@ export async function refreshRank(e) {
   let groupId = e.group_id || ""
   if (!groupId) return true
 
-  if (!e.isMaster && !this.e.member?.is_admin) return await e.reply("只有主人及群管理员可刷新排名...")
+  if (!e.isMaster && !e.member?.is_admin) return await e.reply("只有主人及群管理员可刷新排名...")
 
   e.reply("面板数据刷新中，等待时间可能较长，请耐心等待...")
   let game = e.isSr ? "sr" : "gs"
@@ -142,7 +140,7 @@ export async function manageRank(e) {
   if (!groupId) return true
 
   let isClose = /(关闭|禁用)/.test(e.msg)
-  if (!e.isMaster && !this.e.member?.is_admin) return await e.reply(`只有主人及群管理员可${isClose ? "禁用" : "启用"}排名...`)
+  if (!e.isMaster && !e.member?.is_admin) return await e.reply(`只有主人及群管理员可${isClose ? "禁用" : "启用"}排名...`)
 
   await ProfileRank.setGroupStatus(groupId, isClose ? 1 : 0)
   e.reply(`当前群排名功能${isClose ? "已禁用..." : "已启用...\n如数据有问题可通过【#刷新排名】命令来刷新当前群内排名"}`)

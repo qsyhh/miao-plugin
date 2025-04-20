@@ -1,6 +1,5 @@
-/* eslint-disable import/no-unresolved */
-import { App } from "#miao"
 import Help from "./help/Help.js"
+import { App } from "#miao"
 
 let app = App.init({
   id: "help",

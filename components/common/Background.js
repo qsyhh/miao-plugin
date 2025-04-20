@@ -1,10 +1,9 @@
-/* eslint-disable import/no-unresolved */
 import path from "path"
 import fs from "node:fs"
 import lodash from "lodash"
 import fetch from "node-fetch"
-import { miaoPath } from "#miao.path"
 import { Cfg, Format } from "../index.js"
+import { miaoPath } from "#miao.path"
 
 const Background = {
   async getBackground(cfg) {

@@ -1,5 +1,3 @@
-/* eslint-disable jsdoc/valid-types */
-/* eslint-disable no-empty-pattern */
 // 纳西妲、妮露、艾尔海森、心海
 const team2 = createTeam("海妮心妲", [ "纳西妲", "艾尔海森", "心海" ])
 
@@ -45,7 +43,7 @@ export const details = [
   }, {
     title: "海妮心二妲·丰穰之核",
     params: { team: false, bloom: true, ...team2.params },
-    dmg: ({ }, { reaction }) => {
+    dmg: ({}, { reaction }) => {
     // 草神二命固定暴击率20%、暴击伤害100%
       const cpctNum = 20 / 100; const cdmgNum = 100 / 100
       // 计算丰穰之核非暴击伤害
@@ -204,8 +202,7 @@ function createTeam(name, members) {
   // 队伍出战
   team.go = () => {
     const params = {}
-    // eslint-disable-next-line no-return-assign
-    team.members.forEach(k => params[name + "_" + k] = true)
+    team.members.forEach(k => { params[name + "_" + k] = true })
     return params
   }
   team.params = team.go()

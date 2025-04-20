@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 import { Format } from "#miao"
 
 export const details = [

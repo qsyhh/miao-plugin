@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 import { Data, Meta } from "#miao"
 import { alias, abbr } from "./alias.js"
 import { wifeCfg } from "./extra.js"

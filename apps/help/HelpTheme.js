@@ -1,6 +1,5 @@
-/* eslint-disable import/no-unresolved */
-import lodash from "lodash"
 import fs from "node:fs"
+import lodash from "lodash"
 import { Data } from "#miao"
 
 let HelpTheme = {

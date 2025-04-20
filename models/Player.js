@@ -1,5 +1,3 @@
-/* eslint-disable jsdoc/require-returns-check */
-/* eslint-disable import/no-unresolved */
 /**
  * 用户数据文件
  * 数据存储在/data/UserData/${uid}.json 下
@@ -8,11 +6,10 @@
  */
 import lodash from "lodash"
 import Base from "./Base.js"
-import { Data } from "#miao"
-import { Avatar, ProfileRank, Character } from "./index.js"
-
 import MysAvatar from "./avatar/MysAvatar.js"
 import ProfileAvatar from "./avatar/ProfileAvatar.js"
+import { Avatar, ProfileRank, Character } from "./index.js"
+import { Data } from "#miao"
 
 Data.createDir("/data/UserData", "root")
 Data.createDir("/data/PlayerData/gs", "root")

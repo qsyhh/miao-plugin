@@ -1,13 +1,11 @@
-/* eslint-disable import/no-unresolved */
 import lodash from "lodash"
 import ProfileList from "./ProfileList.js"
-import { Cfg, Common, Format } from "#miao"
 import { getTargetUid, getProfileRefresh } from "./ProfileCommon.js"
-import { Button, MysApi, ProfileRank, Character, Weapon, Artifact } from "#miao.models"
-
 import ProfileChange from "./ProfileChange.js"
 import { profileArtis } from "./ProfileArtis.js"
 import { ProfileWeapon } from "./ProfileWeapon.js"
+import { Cfg, Common, Format } from "#miao"
+import { Button, MysApi, ProfileRank, Character, Weapon, Artifact } from "#miao.models"
 
 // let { diyCfg } = await Data.importCfg("profile")
 

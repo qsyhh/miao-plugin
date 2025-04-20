@@ -1,12 +1,11 @@
-/* eslint-disable import/no-unresolved */
 /*
 * 胡桃API Miao-Plugin 封装
 * https://github.com/DGP-Studio/DGP.Genshin.HutaoAPI
 *
 * */
 
-import { Data } from "#miao"
 import fetch from "node-fetch"
+import { Data } from "#miao"
 
 const host = "http://miao.games/api/hutao"
 

@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 import { Avatar, Weapon } from "#miao.models"
 
 export const ProfileWeapon = {

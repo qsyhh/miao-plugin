@@ -1,8 +1,7 @@
-/* eslint-disable import/no-unresolved */
 import lodash from "lodash"
+import { propertyType2attrName } from "./MysPanelHSRMappings.js"
 import { Meta } from "#miao"
 import { Character, Artifact } from "#miao.models"
-import { propertyType2attrName } from "./MysPanelHSRMappings.js"
 
 let MysPanelHSRData = {
   setAvatar(player, ds) {

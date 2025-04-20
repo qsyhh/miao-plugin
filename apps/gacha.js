@@ -1,6 +1,5 @@
-/* eslint-disable import/no-unresolved */
-import { App, Cfg } from "#miao"
 import Gacha from "./gacha/Gacha.js"
+import { App, Cfg } from "#miao"
 
 let app = App.init({
   id: "gacha",

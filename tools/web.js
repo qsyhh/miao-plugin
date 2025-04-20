@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 import express from "express"
 import template from "express-art-template"
 import fs from "node:fs"

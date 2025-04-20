@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 /*
 * 武器资料数据相关
 * */

@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 import { Data, Meta } from "#miao"
 import lodash from "lodash"
 import { abbr } from "./abbr.js"

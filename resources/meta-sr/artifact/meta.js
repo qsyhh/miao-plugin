@@ -1,5 +1,3 @@
-/* eslint-disable jsdoc/check-tag-names */
-/* eslint-disable import/no-unresolved */
 import lodash from "lodash"
 import { Format } from "#miao"
 

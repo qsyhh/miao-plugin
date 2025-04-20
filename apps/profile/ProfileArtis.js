@@ -1,13 +1,12 @@
-/* eslint-disable import/no-unresolved */
 /*
 * 角色圣遗物评分详情
 *
 * */
 import lodash from "lodash"
-import { Cfg, Common, Meta } from "#miao"
 import ArtisMarkCfg from "../../models/artis/ArtisMarkCfg.js"
-import { Artifact, Button, Character, Player } from "#miao.models"
 import { getTargetUid, profileHelp, getProfileRefresh } from "./ProfileCommon.js"
+import { Cfg, Common, Meta } from "#miao"
+import { Artifact, Button, Character, Player } from "#miao.models"
 
 /*
 * 角色圣遗物面板

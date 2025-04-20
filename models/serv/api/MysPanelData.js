@@ -1,8 +1,7 @@
-/* eslint-disable import/no-unresolved */
 import lodash from "lodash"
+import { artifactMainIdMapping, propertyType2attrName, fixedAttrNames } from "./MysPanelMappings.js"
 import { Format, Meta } from "#miao"
 import { Character, Artifact, Weapon } from "#miao.models"
-import { artifactMainIdMapping, propertyType2attrName, fixedAttrNames } from "./MysPanelMappings.js"
 
 let MysPanelData = {
   setAvatar(player, ds) {

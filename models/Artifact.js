@@ -1,12 +1,11 @@
-/* eslint-disable import/no-unresolved */
 /*
 * 圣遗物
 * */
 import Base from "./Base.js"
-import { Meta } from "#miao"
-import { ArtifactSet } from "./index.js"
 import ArtisMark from "./artis/ArtisMark.js"
 import ArtisAttr from "./artis/ArtisAttr.js"
+import { ArtifactSet } from "./index.js"
+import { Meta } from "#miao"
 
 class Artifact extends Base {
   constructor(data, game = "gs") {

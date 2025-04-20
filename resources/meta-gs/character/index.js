@@ -1,8 +1,7 @@
-/* eslint-disable import/no-unresolved */
 import lodash from "lodash"
-import { Data, Meta } from "#miao"
 import { alias } from "./alias.js"
 import { extraChars, wifeCfg } from "./extra.js"
+import { Data, Meta } from "#miao"
 
 let data = Data.readJSON("resources/meta-gs/character/data.json", "miao")
 let meta = Meta.create("gs", "char")
@@ -47,4 +46,5 @@ lodash.forEach(diyWifeData, (txt, type) => {
     if (id) wifeData[type][id] = true
   })
 })
+
 meta.addMeta({ wifeData })

@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 import { Version, Cfg } from "#miao"
 import { miaoPath } from "#miao.path"
 

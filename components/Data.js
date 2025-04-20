@@ -1,7 +1,6 @@
-/* eslint-disable import/no-unresolved */
 import fs from "node:fs"
-import lodash from "lodash"
 import util from "node:util"
+import lodash from "lodash"
 import { rootPath } from "#miao.path"
 
 const _path = rootPath

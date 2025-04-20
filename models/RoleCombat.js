@@ -1,14 +1,12 @@
-/* eslint-disable import/no-unresolved */
 /*
 * Mys幻想真境剧诗数据处理
 * */
 
 import lodash from "lodash"
 import moment from "moment"
-
 import Base from "./Base.js"
-import { Data } from "#miao"
 import Character from "./Character.js"
+import { Data } from "#miao"
 
 moment.locale("zh-cn")
 

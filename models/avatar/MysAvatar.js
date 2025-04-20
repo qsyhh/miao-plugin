@@ -1,9 +1,8 @@
-/* eslint-disable import/no-unresolved */
 import lodash from "lodash"
 import moment from "moment"
-import { Data } from "#miao"
-import AvatarUtil from "./AvatarUtil.js"
 import { chestInfo } from "../../resources/meta-gs/info/index.js"
+import AvatarUtil from "./AvatarUtil.js"
+import { Data } from "#miao"
 
 const MysAvatar = {
   // 检查更新force值

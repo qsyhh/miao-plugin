@@ -1,6 +1,5 @@
-/* eslint-disable import/no-unresolved */
-import HutaoApi from "../stat/HutaoApi.js"
 import lodash from "lodash"
+import HutaoApi from "../stat/HutaoApi.js"
 import { Format } from "#miao"
 import { ArtifactSet, Weapon } from "#miao.models"
 

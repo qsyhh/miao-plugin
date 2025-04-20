@@ -1,8 +1,7 @@
-/* eslint-disable import/no-unresolved */
 import fs from "node:fs"
 import lodash from "lodash"
-import { miaoPath } from "#miao.path"
 import cfgData from "./cfg/CfgData.js"
+import { miaoPath } from "#miao.path"
 
 const _cfgPath = `${miaoPath}/components/`
 let cfg = {}

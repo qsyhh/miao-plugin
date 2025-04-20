@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 import lodash from "lodash"
 import { Data } from "#miao"
 
@@ -50,6 +49,13 @@ class MetaData {
         (isPrivate ? alias2 : alias)[lodash.trim(t + "").toLowerCase()] = alias[id] || alias2[id] || id
       })
     })
+  }
+
+  // 删除别名
+  delAlias(txt) {
+    let { alias2 } = this
+    txt = lodash.trim(txt + "").toLowerCase()
+    if (alias2[txt]) delete alias2[txt]
   }
 
   // 注册别名Fn

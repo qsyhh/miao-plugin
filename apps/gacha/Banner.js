@@ -1,9 +1,8 @@
-/* eslint-disable import/no-unresolved */
 import lodash from "lodash"
-import { Common, Data } from "#miao"
-import { Character, Weapon } from "#miao.models"
 import { poolNameSr, poolDetailSr } from "../../resources/meta-sr/info/index.js"
 import { poolName, poolDetail, mixPoolDetail } from "../../resources/meta-gs/info/index.js"
+import { Common, Data } from "#miao"
+import { Character, Weapon } from "#miao.models"
 
 let dataList = {
   4: "四星",

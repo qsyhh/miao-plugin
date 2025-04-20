@@ -1,14 +1,11 @@
-/* eslint-disable jsdoc/check-param-names */
-/* eslint-disable jsdoc/require-returns-check */
-/* eslint-disable import/no-unresolved */
 /**
  * 面板属性计算
  * @type {{}}
  */
 import lodash from "lodash"
 import Base from "../Base.js"
-import { Format, Meta } from "#miao"
 import AttrData from "./AttrData.js"
+import { Format, Meta } from "#miao"
 import { Weapon, ArtifactSet } from "#miao.models"
 
 class Attr extends Base {

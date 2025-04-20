@@ -1,6 +1,3 @@
-/* eslint-disable jsdoc/require-returns-check */
-/* eslint-disable jsdoc/check-param-names */
-/* eslint-disable import/no-unresolved */
 import lodash from "lodash"
 import moment from "moment"
 import fetch from "node-fetch"

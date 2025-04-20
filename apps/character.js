@@ -1,9 +1,8 @@
-/* eslint-disable import/no-unresolved */
-import { App } from "#miao"
 import Wife from "./character/AvatarWife.js"
 import Avatar from "./character/AvatarCard.js"
 import { uploadCharacterImg } from "./character/ImgUpload.js"
 import { getOriginalPicture } from "./profile/ProfileUtils.js"
+import { App } from "#miao"
 
 let app = App.init({
   id: "character",

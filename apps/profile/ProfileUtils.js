@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 import { Cfg } from "#miao"
 import { MysApi } from "#miao.models"
 import { miaoPath, rootPath } from "#miao.path"

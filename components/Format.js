@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 import lodash from "lodash"
 import Elem from "./common/Elem.js"
 import { Cfg } from "#miao"

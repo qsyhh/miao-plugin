@@ -1,7 +1,6 @@
-/* eslint-disable import/no-unresolved */
 import lodash from "lodash"
-import Base from "../Base.js"
 import fetch from "node-fetch"
+import Base from "../Base.js"
 import { MysApi } from "#miao.models"
 
 export default class ProfileReq extends Base {

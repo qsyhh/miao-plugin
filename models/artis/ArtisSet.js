@@ -1,6 +1,3 @@
-/* eslint-disable jsdoc/require-returns-type */
-/* eslint-disable jsdoc/require-returns-check */
-/* eslint-disable import/no-unresolved */
 // 处理套装相关
 import { ArtifactSet } from "#miao.models"
 

@@ -1,4 +1,3 @@
-/* eslint-disable no-empty-pattern */
 export const details = [
   {
     title: "Q每跳治疗量",

@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 import moment from "moment"
 import lodash from "lodash"
 import fetch from "node-fetch"

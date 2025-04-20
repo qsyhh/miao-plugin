@@ -1,13 +1,12 @@
-/* eslint-disable import/no-unresolved */
 import fs from "node:fs"
 import lodash from "lodash"
 import Base from "./Base.js"
-import { miaoPath } from "#miao.path"
-import { Character } from "./index.js"
 import DmgAttr from "./dmg/DmgAttr.js"
 import DmgCalc from "./dmg/DmgCalc.js"
 import DmgBuffs from "./dmg/DmgBuffs.js"
+import { Character } from "./index.js"
 import { MiaoError, Meta, Common } from "#miao"
+import { miaoPath } from "#miao.path"
 
 export default class ProfileDmg extends Base {
   constructor(profile = {}, game = "gs") {

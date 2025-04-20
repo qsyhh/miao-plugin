@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 import lodash from "lodash"
 import { Character, Artifact, Weapon } from "#miao.models"
 

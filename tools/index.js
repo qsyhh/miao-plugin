@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 import { Data, Version } from "#miao"
 import fs from "node:fs"
 // import Trans from "./trans.js"

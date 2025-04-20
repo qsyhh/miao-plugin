@@ -1,6 +1,5 @@
-/* eslint-disable import/no-unresolved */
-import { App } from "#miao"
 import Wife from "./character/AvatarWife.js"
+import { App } from "#miao"
 
 let app = App.init({
   id: "poke",

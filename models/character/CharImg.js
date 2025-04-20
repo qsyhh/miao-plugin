@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 /**
  * 角色照片及角色图像资源相关
  */

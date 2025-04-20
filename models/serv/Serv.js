@@ -1,8 +1,3 @@
-/* eslint-disable import/no-unresolved */
-import { Cfg, Data } from "#miao"
-import ProfileServ from "./ProfileServ.js"
-import ProfileReq from "./ProfileReq.js"
-
 import enkaApi from "./api/EnkaApi.js"
 import miaoApi from "./api/MiaoApi.js"
 import mggApi from "./api/MggApi.js"
@@ -12,6 +7,10 @@ import avocadoApi from "./api/AvocadoApi.js"
 import enkaHSRApi from "./api/EnkaHSRApi.js"
 import mysPanelApi from "./api/MysPanelApi.js"
 import mysPanelHSRApi from "./api/MysPanelHSRApi.js"
+
+import ProfileServ from "./ProfileServ.js"
+import ProfileReq from "./ProfileReq.js"
+import { Cfg, Data } from "#miao"
 
 let { diyCfg } = await Data.importCfg("profile")
 

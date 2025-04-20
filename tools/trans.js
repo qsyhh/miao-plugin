@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 import { Data } from "#miao"
 import lodash from "lodash"
 import fs from "node:fs"

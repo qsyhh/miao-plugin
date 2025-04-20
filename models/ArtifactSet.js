@@ -1,12 +1,10 @@
-/* eslint-disable import/no-unresolved */
 /*
 * 圣遗物套装
 * */
 import lodash from "lodash"
 import Base from "./Base.js"
-import { Meta } from "#miao"
-
 import { Artifact } from "./index.js"
+import { Meta } from "#miao"
 
 class ArtifactSet extends Base {
   constructor(data, game = "gs") {

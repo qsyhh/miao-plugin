@@ -1,10 +1,8 @@
-/* eslint-disable import/no-unresolved */
 import lodash from "lodash"
-import AvatarUtil from "./AvatarUtil.js"
 import CharImg from "../character/CharImg.js"
-
-import { Cfg } from "#miao"
 import Serv from "../serv/Serv.js"
+import AvatarUtil from "./AvatarUtil.js"
+import { Cfg } from "#miao"
 
 const ProfileAvatar = {
 

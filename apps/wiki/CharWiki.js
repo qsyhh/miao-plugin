@@ -1,11 +1,10 @@
-/* eslint-disable import/no-unresolved */
 import lodash from "lodash"
-import { Cfg, Common } from "#miao"
-import { miaoPath } from "#miao.path"
-import { Character } from "#miao.models"
 import CharTalent from "./CharTalent.js"
 import CharWikiData from "./CharWikiData.js"
 import CharMaterial from "./CharMaterial.js"
+import { Cfg, Common } from "#miao"
+import { miaoPath } from "#miao.path"
+import { Character } from "#miao.models"
 
 const wikiReg = /^(?:#|喵喵)?(?:星铁)?(.*)(天赋|技能|行迹|命座|命之座|星魂|资料|图鉴|照片|写真|图片|图像)$/
 

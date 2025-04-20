@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 import lodash from "lodash"
 import { Cfg, Common, Data } from "#miao"
 import { RoleCombat, MysApi, Player } from "#miao.models"

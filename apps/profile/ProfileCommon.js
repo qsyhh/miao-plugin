@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 /*
 * 面板公共方法及处理
 * */

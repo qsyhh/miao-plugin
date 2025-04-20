@@ -1,7 +1,3 @@
-/* eslint-disable jsdoc/check-param-names */
-/* eslint-disable jsdoc/valid-types */
-/* eslint-disable jsdoc/require-returns-check */
-/* eslint-disable import/no-unresolved */
 import lodash from "lodash"
 import Base from "../Base.js"
 import { Format } from "#miao"

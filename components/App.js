@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 import lodash from "lodash"
 import Plugin from "./common/Plugin.js"
 import { Version, MiaoError } from "#miao"

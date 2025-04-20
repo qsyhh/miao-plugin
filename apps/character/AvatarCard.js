@@ -1,8 +1,7 @@
-/* eslint-disable import/no-unresolved */
 import lodash from "lodash"
 import moment from "moment"
 import { miaoPath } from "#miao.path"
-import { Cfg, Common, Meta } from "#miao"
+import { Cfg, Common } from "#miao"
 import { Button, Character, MysApi, Player } from "#miao.models"
 
 let Avatar = {
@@ -106,18 +105,6 @@ let Avatar = {
     }
     let name = msg.replace(/#|老婆|老公|卡片/g, "").trim()
 
-    if (e?.runtime?.gsCfg) {
-      let gsCfg = e?.runtime?.gsCfg
-      Meta.addAliasFn("gs", "char", (txt) => {
-        let roleRet
-        if (gsCfg._getRole) {
-          roleRet = gsCfg._getRole(txt)
-        } else {
-          roleRet = gsCfg.getRole(txt)
-        }
-        if (roleRet.name) return roleRet.name
-      })
-    }
     let char = Character.get(name.trim(), e.game)
     if (!char) return false
     e.msg = "#喵喵角色卡片"

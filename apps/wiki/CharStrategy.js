@@ -1,9 +1,8 @@
-/* eslint-disable import/no-unresolved */
 import fs from "node:fs"
-import lodash from "lodash"
-import fetch from "node-fetch"
 import { promisify } from "util"
 import { pipeline } from "stream"
+import lodash from "lodash"
+import fetch from "node-fetch"
 import { Cfg, Data } from "#miao"
 import { Character } from "#miao.models"
 import { miaoPath, rootPath } from "#miao.path"

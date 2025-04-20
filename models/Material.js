@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 /*
 * 角色培养及天赋材料
 * */

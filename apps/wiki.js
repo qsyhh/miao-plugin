@@ -1,11 +1,10 @@
-/* eslint-disable import/no-unresolved */
-import { App } from "#miao"
 import Calendar from "./wiki/Calendar.js"
 import TodayMaterial from "./wiki/TodayMaterial.js"
 import CharWiki from "./wiki/CharWiki.js"
 import CalendarSr from "./wiki/CalendarSr.js"
 import CalendarZzz from "./wiki/CalendarZzz.js"
 import WeaponWiki from "./wiki/WeaponWiki.js"
+import { App } from "#miao"
 
 let app = App.init({
   id: "wiki",

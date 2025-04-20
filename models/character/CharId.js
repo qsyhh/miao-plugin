@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 /**
  * 角色别名及角色ID相关
  */

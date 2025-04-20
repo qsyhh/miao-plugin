@@ -1,11 +1,10 @@
-/* eslint-disable import/no-unresolved */
 import lodash from "lodash"
 import moment from "moment"
 import fetch from "node-fetch"
+import { poolNameSr, poolDetailSr } from "../../resources/meta-sr/info/index.js"
 import Calendar from "./Calendar.js"
 import { Common, Data } from "#miao"
 import { Character, Weapon } from "#miao.models"
-import { poolNameSr, poolDetailSr } from "../../resources/meta-sr/info/index.js"
 
 const ignoreIds = [
   257, // 保密测试参与意愿调研

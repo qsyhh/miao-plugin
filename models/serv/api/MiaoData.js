@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 import { Character } from "#miao.models"
 import lodash from "lodash"
 
