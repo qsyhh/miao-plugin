@@ -97,7 +97,7 @@ export const buffs = [
     title: "遐蝶1魂：敌方目标当前生命值小于等于自身生命上限50%时，对其造成的伤害为原伤害的140%",
     cons: 1,
     data: {
-      multi: ({ params }) => params.cons1 ? 40 : 0
+      dmg: ({ params }) => params.cons1 ? 40 : 0
     }
   }, {
     title: "遐蝶2魂：2层【炽意】可抵扣2次死龙忆灵技【燎尽黯泽的焰息】的生命值消耗",
