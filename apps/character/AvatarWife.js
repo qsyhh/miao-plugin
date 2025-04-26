@@ -52,16 +52,13 @@ async function getAvatarList(player, type) {
 const Wife = {
   reg: wifeReg,
   async render(e) {
-    let msg = e.msg || ""
-    if (!msg && !e.isPoke) return false
-
     if (e.isPoke) {
       if (!Common.cfg("avatarPoke")) return false
     } else if (!Common.cfg("avatarCard")) {
       return false
     }
 
-    let msgRet = (new RegExp(wifeReg)).exec(msg)
+    let msgRet = (new RegExp(wifeReg)).exec(e.msg)
     if (e.isPoke) {
       msgRet = []
     } else if (!msgRet) {
@@ -161,9 +158,6 @@ const Wife = {
         break
     }
     return true
-  },
-  async poke(e) {
-    return await Wife.render(e)
   }
 }
 

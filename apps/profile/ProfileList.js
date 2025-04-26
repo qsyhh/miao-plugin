@@ -7,12 +7,14 @@ const ProfileList = {
   /**
    * 实际的刷新面板逻辑
    * @param e
-   * @param fromMys
    * @returns {Promise<boolean|*>}
    */
-  async doRefresh(e, fromMys = false) {
+  async doRefresh(e) {
     let uid = await getTargetUid(e)
     if (!uid) return e._replyNeedUid || e.reply([ `请先发送【${e.isSr ? "*" : "#"}绑定+你的UID】来绑定查询目标\n示例：${e.isSr ? "*" : "#"}绑定100000000`, new Button(e).bindUid() ])
+
+    let fromMys = false
+    if (/米游社/.test(e)) fromMys = true
 
     // 数据更新
     let player = Player.create(e)
@@ -45,16 +47,7 @@ const ProfileList = {
    * @returns {Promise<boolean|*>}
    */
   async refresh(e) {
-    return await ProfileList.doRefresh(e, false)
-  },
-
-  /**
-   * 米游社刷新面板
-   * @param e
-   * @returns {Promise<boolean|*>}
-   */
-  async refreshMys(e) {
-    return await ProfileList.doRefresh(e, true)
+    return await ProfileList.doRefresh(e)
   },
 
   /**

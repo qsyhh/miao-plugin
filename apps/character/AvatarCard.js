@@ -5,10 +5,6 @@ import { Cfg, Common } from "#miao"
 import { Button, Character, MysApi, Player } from "#miao.models"
 
 let Avatar = {
-  render(e) {
-    if (!e.char) return false
-    return Avatar.renderAvatar(e, e.char?.name)
-  },
   async renderAvatar(e, avatar, renderType = "card") {
     // 如果传递的是名字，则获取
     if (typeof (avatar) === "string") {

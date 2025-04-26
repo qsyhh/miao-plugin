@@ -4,42 +4,8 @@ import CharWikiData from "./CharWikiData.js"
 import CharMaterial from "./CharMaterial.js"
 import { Cfg, Common } from "#miao"
 import { miaoPath } from "#miao.path"
-import { Character } from "#miao.models"
-
-const wikiReg = /^(?:#|喵喵)?(?:星铁)?(.*)(天赋|技能|行迹|命座|命之座|星魂|资料|图鉴|照片|写真|图片|图像)$/
 
 const CharWiki = {
-  check(e) {
-    let msg = e.original_msg || e.msg
-    if (!e.msg) return false
-    e.game = /星铁|开拓者/.test(e.msg) ? "sr" : e.game ?? "gs"
-
-    let ret = wikiReg.exec(msg)
-    if (!ret || !ret[1] || !ret[2]) return false
-
-    let mode = "talent"
-    if (/(命|星魂)/.test(ret[2])) {
-      mode = "cons"
-    } else if (/(图鉴|资料)/.test(ret[2])) {
-      mode = "wiki"
-      if (!Common.cfg("charWiki")) return false
-    } else if (/图|画|写真|照片/.test(ret[2])) {
-      mode = "pic"
-      if (!Common.cfg("charPic")) return false
-    } else if (/(材料|养成|成长)/.test(ret[2])) {
-      mode = "material"
-    }
-    if ([ "cons", "talent" ].includes(mode) && !Common.cfg("charWikiTalent")) return false
-
-    let char = Character.get(ret[1], e.game)
-    if (!char || (char.isCustom && mode !== "pic")) return false
-
-    e.wikiMode = mode
-    e.msg = "#喵喵角色WIKI"
-    e.char = char
-    return true
-  },
-
   async wiki(e) {
     let mode = e.wikiMode
     let char = e.char
