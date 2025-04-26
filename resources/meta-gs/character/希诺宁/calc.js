@@ -14,6 +14,14 @@ export const details = [
   }, {
     title: "E后刃轮巡猎四段伤害",
     dmg: ({ talent, calc, attr }, { basic }) => basic(talent.a["刃轮巡猎四段伤害"] * calc(attr.def) / 100, "a,nightsoul")
+  }, {
+    check: ({ cons }) => cons > 3,
+	title: "四命「荣花之赐」伤害提升值",
+    dmg: ({ calc, attr }) => {
+      return {
+        avg: calc(attr.def) * 65 / 100
+      }
+    }
   }
 ]
 
