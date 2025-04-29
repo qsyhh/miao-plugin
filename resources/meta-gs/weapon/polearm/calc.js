@@ -198,6 +198,14 @@ export default function(step, staticStep) {
       refine: {
         atkPct: step(20)
       }
-    }
+    },
+    "香韵奏者": [
+      staticStep("atkPct", 12), {
+        title: "进行治疗时，攻击力提升[atkPct]%",
+        refine: {
+          defPct: step(32)
+        }
+      }
+    ]
   }
 }

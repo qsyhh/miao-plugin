@@ -318,6 +318,12 @@ export default function(step, staticStep) {
       refine: {
         a2Dmg: step(6)
       }
+    },
+    冷寂迸音: {
+      title: "造成[_dmg]范围伤害",
+      data: {
+        _dmg: ({ attr, calc, refine }) => calc(attr.hp) * step(40)[refine] / 100
+      }
     }
   }
 }
