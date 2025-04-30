@@ -14,7 +14,7 @@ const ProfileList = {
     if (!uid) return e._replyNeedUid || e.reply([ `请先发送【${e.isSr ? "*" : "#"}绑定+你的UID】来绑定查询目标\n示例：${e.isSr ? "*" : "#"}绑定100000000`, new Button(e).bindUid() ])
 
     let fromMys = false
-    if (/米游社/.test(e)) fromMys = true
+    if (/米游社|mys/.test(e)) fromMys = true
 
     // 数据更新
     let player = Player.create(e)
