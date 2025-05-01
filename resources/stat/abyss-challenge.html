@@ -1,0 +1,56 @@
+{{extend defaultLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" type="text/css" href="{{_res_path}}/stat/common.css?v=1.0"/>
+<link rel="stylesheet" type="text/css" href="{{_res_path}}/common/tpl.css?v=1.0"/>
+<link rel="stylesheet" type="text/css" href="{{_res_path}}/stat/abyss-summary.css?v=1.0"/>
+<link rel="stylesheet" type="text/css" href="{{_res_path}}/stat/abyss-challenge.css?v=1.0"/>
+{{/block}}
+
+{{block 'main'}}
+<div class="head-box type">
+  <div class="title">*混沌回忆<span>{{abyss.groups[type-1].name_mi18n}} · {{abyss.battle_num}}次战斗</span></div>
+  <div class="uid">UID:{{uid}}</div>
+</div>
+<div class="info_box">
+  {{set cardTypes={1:['wide wide2'],2:['wide','wide'],3:['wide','mini','mini'],4:['mini','mini','mini','mini']} }}
+  {{each abyss?.floor_detail floor}}
+  <div class="cont">
+
+    <div class="cont-body">
+      <div class="abyss-title">
+        <strong>{{floor.name}}</strong>
+        <span class="abyss-round">使用轮数：{{floor.round_num}}</span>
+        <span class="star star{{floor.star_num}}"></span>
+      </div>
+      <div class="abyss-floor-team">
+        <div class="abyss-team">
+          <div class="info">
+            节点一
+            <span class="time">{{floor.node_1.time}}</span>
+          </div>
+          <div class="avatars">
+            {{set ds=floor?.node_1?.avatars.map(avatars => avatars.id)||[] }}
+            {{each ds id idx}}
+            <% include(_tpl_path+'/avatar-card.html', [avatars[id],{_res_path, cardType:cardTypes[ds.length][idx]}]) %>
+            {{/each}}
+          </div>
+        </div>
+        <div class="abyss-team">
+          <div class="info">
+            节点二
+            <span class="time">{{floor.node_2.time}}</span>
+          </div>
+          <div class="avatars">
+            {{set ds=floor?.node_2?.avatars.map(avatars => avatars.id)||[] }}
+            {{each ds id idx}}
+            <% include(_tpl_path+'/avatar-card.html', [avatars[id],{_res_path, cardType:cardTypes[ds.length][idx]}]) %>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
+{{/block}}

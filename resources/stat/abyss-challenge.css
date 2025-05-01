@@ -1,0 +1,59 @@
+body, .container {
+  width: 505px;
+  background: url("./imgs/bg2.png") top left no-repeat #2a3860;
+  background-size: 100% auto;
+}
+.head-box .title {
+  font-size: 35px;
+}
+.head-box .title span {
+  font-size: 17px;
+}
+.head-box .uid {
+  font-size: 14px;
+}
+.abyss-title {
+  margin: 0px;
+}
+.abyss-title .abyss-round {
+  font-size: 15px;
+  color: #fff;
+}
+.abyss-title .star {
+  float: right;
+  height: 18px;
+  background: url(./imgs/star.png);
+  background-size: 18px 18px;
+  margin-left: 5px;
+}
+.abyss-title .star.star1 {
+  width: 18px;
+  margin-right: 36px;
+}
+.abyss-title .star.star2 {
+  width: 36px;
+  margin-right: 18px;
+}
+.abyss-title .star.star3 {
+  width: 54px;
+  margin-right: 0;
+}
+.abyss-team,
+.abyss-floor-team {
+  margin-top: 8px;
+  display: block;
+}
+.abyss-team .avatars {
+  display: flex;
+}
+.abyss-team .info {
+  font-size: 16px;
+  white-space: nowrap;
+  font-weight: bold;
+  padding: 0px 5px;
+}
+.abyss-team .time {
+  float: right;
+  color: #aaa;
+  font-size: 14px;
+}

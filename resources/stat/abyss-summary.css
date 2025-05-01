@@ -7,6 +7,8 @@
 body,
 .container {
   width: 970px;
+  background: url(./imgs/bg1.png) top left no-repeat #2a3860;
+  background-size: 100% auto;
 }
 .container {
   padding: 5px 0 10px 5px;

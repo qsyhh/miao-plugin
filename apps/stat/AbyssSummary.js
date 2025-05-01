@@ -1,4 +1,5 @@
 import lodash from "lodash"
+import moment from "moment"
 import HutaoApi from "./HutaoApi.js"
 import { Cfg, Common, Data } from "#miao"
 import { Abyss, Character, MysApi, Player } from "#miao.models"
@@ -120,4 +121,56 @@ export async function AbyssSummary(e) {
     e.reply(`${ret.message || "上传失败"}，请稍后重试...`)
   }
   return true
+}
+
+export async function AbyssChallenge(e) {
+  if (!Cfg.get("uploadAbyssData", false)) return false
+
+  let mys = await MysApi.init(e, "all")
+  if (!mys || !mys.uid) {
+    e.reply(`请绑定ck后再使用${e.original_msg || e.msg}`)
+    return false
+  }
+  let type = /上期/.test(e.original_msg || e.msg || "") ? 2 : 1
+  let uid = mys.uid
+  let player = Player.create(e)
+  let resDetail, resAbyss
+  try {
+    resAbyss = await mys.getSpiralAbyss(type)
+    resAbyss.floor_detail = resAbyss.all_floor_detail.filter(floor => !floor.is_fast)
+    if (resAbyss.floor_detail.length > 4) resAbyss.floor_detail.splice(4)
+    let lvs = Data.getVal(resAbyss, "floor_detail.0")
+    // 检查是否查询到了混沌信息
+    if (!lvs) return e.reply(`暂未获得${type === 2 ? "上期" : "本期"}混沌回忆挑战数据...`)
+    resDetail = await mys.getCharacter()
+  } catch (err) {
+    // logger.error(err)
+  }
+  // 更新player信息
+  player.setMysCharData(resDetail)
+  if (resAbyss.floor_detail.length === 0) return e.reply(`暂未获得${type === 2 ? "上期" : "本期"}混沌回忆挑战数据...`)
+
+  let avatarIds = []
+  lodash.forEach(resAbyss.floor_detail, (floor, idx) => {
+    resAbyss.floor_detail[idx].node_1.time = moment(floor.node_1.challenge_time).format("MM-DD HH:mm")
+    resAbyss.floor_detail[idx].node_2.time = moment(floor.node_1.challenge_time).format("MM-DD HH:mm")
+    lodash.forEach(floor.node_1.avatars, avatars => {
+      if (!avatarIds.includes(avatars.id)) avatarIds.push(avatars.id)
+    })
+    lodash.forEach(floor.node_2.avatars, avatars => {
+      if (!avatarIds.includes(avatars.id)) avatarIds.push(avatars.id)
+    })
+  })
+
+  await player.refreshTalent(avatarIds)
+  let avatarData = player.getAvatarData(avatarIds)
+  if (Object.keys(avatarData).length !== avatarIds.length) return e.reply("角色信息获取失败")
+
+  return await Common.render("stat/abyss-challenge", {
+    type,
+    abyss: resAbyss,
+    avatars: avatarData,
+    save_id: uid,
+    uid
+  }, { e, scale: 1.6 })
 }

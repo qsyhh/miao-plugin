@@ -2,7 +2,7 @@ import lodash from "lodash"
 import moment from "moment"
 import { chestInfo } from "../../resources/meta-gs/info/index.js"
 import AvatarUtil from "./AvatarUtil.js"
-import { Data } from "#miao"
+import { Format, Data } from "#miao"
 
 const MysAvatar = {
   // 检查更新force值
@@ -55,6 +55,7 @@ const MysAvatar = {
    * @param charData
    */
   setMysCharData(player, charData) {
+    if (!player.isGs) charData.avatars = charData.avatar_list || []
     if (charData && charData.avatars) {
       let role = charData.role || {}
       player.setBasicData({
@@ -63,25 +64,27 @@ const MysAvatar = {
       })
       let charIds = {}
       lodash.forEach(charData.avatars, (ds) => {
-        let avatar = Data.getData(ds, "id,level,cons:actived_constellation_num,fetter")
-        avatar.elem = ds.element.toLowerCase()
+        let avatar = Data.getData(ds, `id,level,cons:${player.isGs ? "actived_constellation_num,fetter" : "rank"}`)
+        avatar.elem = player.isGs ? ds.element.toLowerCase() : Format.elem(ds.element)
         // 处理时装数据
         let costume = (ds?.costumes || [])[0]
-        if (costume && costume.id) avatar.costume = costume.id
+        if (costume && costume.id && player.isGs) avatar.costume = costume.id
 
-        avatar.weapon = Data.getData(ds.weapon, "name,star:rarity,level,promote:promote_level,affix:affix_level")
+        avatar.weapon = Data.getData(ds.weapon || ds.equip, `name,star:rarity,level,promote:promote_level,affix:${player.isGs ? "affix_level" : "rank"}`)
         // 处理圣遗物数据
-        let artis = {}
-        lodash.forEach(ds.reliquaries, (re) => {
-          const posIdx = { 生之花: 1, 死之羽: 2, 时之沙: 3, 空之杯: 4, 理之冠: 5 }
-          if (re && re.name && posIdx[re.pos_name]) {
-            artis[posIdx[re.pos_name]] = {
-              name: re.name,
-              level: re.level
+        if (player.isGs) {
+          let artis = {}
+          lodash.forEach(ds.reliquaries, (re) => {
+            const posIdx = { 生之花: 1, 死之羽: 2, 时之沙: 3, 空之杯: 4, 理之冠: 5 }
+            if (re && re.name && posIdx[re.pos_name]) {
+              artis[posIdx[re.pos_name]] = {
+                name: re.name,
+                level: re.level
+              }
             }
-          }
-        })
-        avatar.artis = artis
+          })
+          avatar.artis = artis
+        }
         player.setAvatar(avatar, "mys")
         charIds[avatar.id] = true
       })

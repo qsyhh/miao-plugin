@@ -1,6 +1,6 @@
 /** 胡桃数据库的统计 */
 import { AbyssTeam } from "./stat/AbyssTeam.js"
-import { AbyssSummary } from "./stat/AbyssSummary.js"
+import { AbyssSummary, AbyssChallenge } from "./stat/AbyssSummary.js"
 import { RoleCombatSummary } from "./stat/RoleCombatSummary.js"
 import { ConsStat, AbyssPct } from "./stat/AbyssStat.js"
 
@@ -29,6 +29,10 @@ export class stat extends plugin {
           fnc: "abyssSummary"
         },
         {
+          reg: "^#星铁(本期|上期)?(深渊|混沌回忆|混沌|忘却之庭|忘却)[ |0-9]*(数据)?$",
+          fnc: "abyssSummary"
+        },
+        {
           reg: "^#*(喵喵)*(幻想|幻境|剧诗|幻想真境剧诗)[ |0-9]*(数据)?$",
           fnc: "roleCombatSummary"
         }
@@ -49,6 +53,7 @@ export class stat extends plugin {
   }
 
   async abyssSummary(e) {
+    if (e.isSr) return await AbyssChallenge(e)
     return await AbyssSummary(e)
   }
 
