@@ -69,6 +69,7 @@ const readLogFile = function(root, versionCount = 4) {
 }
 
 const { changelogs, currentVersion } = readLogFile("miao")
+let yzcurrentVersion = readLogFile("root").currentVersion
 
 const yunzaiVersion = packageJson.version
 const isV3 = yunzaiVersion[0] === "3" || yunzaiVersion[0] === "4"
@@ -96,7 +97,8 @@ let Version = {
     return currentVersion
   },
   get yunzai() {
-    return yunzaiVersion
+    if (!/^fork/.test(yzcurrentVersion)) yzcurrentVersion = yunzaiVersion
+    return yzcurrentVersion
   },
   get changelogs() {
     return changelogs

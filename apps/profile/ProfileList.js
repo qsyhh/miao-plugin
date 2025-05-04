@@ -1,7 +1,7 @@
 import lodash from "lodash"
 import { getTargetUid } from "./ProfileCommon.js"
 import { Common, Data } from "#miao"
-import { Button, ProfileRank, Player, Character } from "#miao.models"
+import { Button, ProfileRank, Player, Character, MysApi } from "#miao.models"
 
 const ProfileList = {
   /**
@@ -13,11 +13,18 @@ const ProfileList = {
     let uid = await getTargetUid(e)
     if (!uid) return e._replyNeedUid || e.reply([ `请先发送【${e.isSr ? "*" : "#"}绑定+你的UID】来绑定查询目标\n示例：${e.isSr ? "*" : "#"}绑定100000000`, new Button(e).bindUid() ])
 
-    let fromMys = false
-    if (/米游社|mys/.test(e)) fromMys = true
-
     // 数据更新
     let player = Player.create(e)
+    player.e.isfromMys = /米游社|mys/.test(e)
+    let fromMys = player.e.isfromMys || Common.cfg("mysRefresh")
+    if (fromMys) {
+      player.e.noTips = fromMys
+      let mys = await MysApi.init(player.e, "cookie")
+      if (!mys || !mys?.ckInfo?.ck || mys?.ckInfo?.uid !== uid) {
+        fromMys = false
+        if (player.e.isfromMys) e.reply(`UID：${uid} 尚未绑定Cookie，将切换至面板服务以更新数据...`)
+      }
+    }
     await player.refreshProfile(2, fromMys)
 
     if (!player?._update?.length) {

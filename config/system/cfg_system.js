@@ -52,6 +52,11 @@ export const cfgSchema = {
         key: "面板查询",
         def: true
       },
+      mysRefresh: {
+        title: "默认使用米游社更新面板",
+        key: "米游社更新",
+        def: false
+      },
       profileChange: {
         title: "面板替换",
         key: "面板替换",

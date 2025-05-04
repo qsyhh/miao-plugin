@@ -1,7 +1,6 @@
 import lodash from "lodash"
 import fetch from "node-fetch"
 import Base from "../Base.js"
-import { MysApi } from "#miao.models"
 
 export default class ProfileReq extends Base {
   constructor(e, game = "gs") {
@@ -69,7 +68,7 @@ export default class ProfileReq extends Base {
     await this.setCd(20)
     // 若3秒后还未响应则返回提示
     setTimeout(() => {
-      if (self._isReq) this.e.reply(`开始获取uid:${uid}的数据，可能会需要一定时间~`)
+      if (self._isReq && !player.e?.isfromMys) this.e.reply(`开始获取uid:${uid}的数据，可能会需要一定时间~`)
     }, 2000)
     // 发起请求
     this.log(`${logger.yellow("开始请求数据")}，面板服务：${serv.name}...`)
@@ -79,27 +78,25 @@ export default class ProfileReq extends Base {
       let params = reqParam.params || {}
       params.timeout = params.timeout || 1000 * 20
       self._isReq = true
-      let mys, character, character_ids, req
+      const mys = player.e._mys
       switch (serv._cfg.id) {
         case "mysPanel":
-          mys = await MysApi.init(player.e, "cookie")
           // 获取所有的 Character ID
           // TODO: 要不要从 player._avatars 里面直接提取所有键作为 character_ids？
           //       不这样做主要是不知道 player._avatars 角色是否为最新
           //
           // TODO: 加入仅利用米游社更新部分角色面板，其中部分角色是所有角色的子集
-          character = await mys.getCharacter()
-          character_ids = lodash.map(character.list, (c) => c.id) // .toString() // .slice(0, 2)
+          const character = await mys.getCharacter()
+          const character_ids = lodash.map(character.list, (c) => c.id) // .toString() // .slice(0, 2)
           data = JSON.stringify(await mys.getCharacterDetail(character_ids)) // 跟下面的保持一致
           break
         case "mysPanelHSR":
-          mys = await MysApi.init(player.e, "cookie")
           // 这里的 MysApi 没有完成对星铁 API 的封装，所以暂时先直接使用 getData 调用获取角色面板
           // 值得注意的是原神的角色面板 API 是需要传带查询角色列表的；但是星铁的角色面板 API 是不需要传待查询角色列表的
           data = JSON.stringify(await mys.getData("avatarInfo")) // 跟下面的保持一致
           break
         default:
-          req = await fetch(reqParam.url, params)
+          const req = await fetch(reqParam.url, params)
           data = await req.text()
       }
       self._isReq = false
