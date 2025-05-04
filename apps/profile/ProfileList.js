@@ -15,7 +15,7 @@ const ProfileList = {
 
     // 数据更新
     let player = Player.create(e)
-    player.e.isfromMys = /米游社|mys/.test(e)
+    player.e.isfromMys = /米游社|mys/.test(e.msg)
     let fromMys = player.e.isfromMys || Common.cfg("mysRefresh")
     if (fromMys) {
       player.e.noTips = fromMys
