@@ -1,3 +1,4 @@
+import fetch from "node-fetch"
 import { Version } from "#miao"
 import { Button, User } from "#miao.models"
 
@@ -74,6 +75,20 @@ export default class MysApi {
       e._replyNeedUid = true
       return false
     }
+  }
+
+  /** 检查ck是否可用 */
+  async checkCk() {
+    let url = {
+      mys: "https://api-takumi.mihoyo.com/binding/api/getUserGameRolesByCookie",
+      hoyolab: "https://sg-public-api.hoyolab.com/binding/api/getUserGameRolesByCookie"
+    }
+    let res = await fetch(url[this.ckUser?.type || "mys"], { method: "get", headers: { Cookie: this.ckUser?.ck } })
+    if (!res.ok) return false
+    res = await res.json()
+    if (res.retcode != 0) return false
+
+    return true
   }
 
   async getMysApi(e, targetType = "all", option = {}) {
