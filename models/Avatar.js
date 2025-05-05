@@ -256,12 +256,12 @@ export default class Avatar extends Base {
     let imgs = this.char.getImgs(this.costume)
     if (this.isGs) {
       return {
-        ...(this.getData(keys || "id,name,level,star,cons,fetter,elem,abbr,weapon,talent,artisSet") || {}),
+        ...(this.getData(keys || "game,id,name,level,star,cons,fetter,elem,abbr,weapon,talent,artisSet") || {}),
         ...Data.getData(imgs, "face,qFace,side,gacha")
       }
     } else {
       return {
-        ...(this.getData(keys || "id,name,level,star,cons,elem,abbr,weapon,talent,artisSet,trees") || {}),
+        ...(this.getData(keys || "game,id,name,level,star,cons,elem,abbr,weapon,talent,artisSet,trees") || {}),
         ...Data.getData(imgs, "face,qFace,gacha,preview")
       }
     }

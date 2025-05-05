@@ -8,7 +8,7 @@
     {{if avatar}}
     <div class="avatar-face item-icon star{{avatar.star==4?4:5}}">
       <div class="img mini" style="background-image:url('{{_res_path}}{{avatar.face}}')"></div>
-      <div class="img wide avatar-{{avatar.name}}" style="background-image:url('{{_res_path}}{{avatar.gacha}}')"></div>
+      <div class="img wide avatar-{{avatar.name}}" style="background-image:url('{{_res_path}}{{avatar.gacha||avatar.preview}}');{{cardType==='wide wide2'&&avatar.game==='sr'?'margin-top: -15px;':''}}"></div>
       <span class="cons cons-{{avatar.cons}} mini">{{avatar.cons}}</span>
       <div class="avatar-level"><span>Lv</span>{{avatar.level}} {{avatar.abbr}}</div>
     </div>
@@ -24,10 +24,9 @@
         <div class="line"></div>
       </div>
       {{if talent.a && talent.a.level }}
-      <div class="avatar-talent">
-        {{each talentMap k}}
-        {{set t = talent[k] || {} }}
-        <span class="talent-item talent-{{k}} talent-{{t.original===10?'crown':'none'}} talent-{{t.level>t.original?'plus':'none'}}">{{t.level}}</span>
+      <div class="avatar-talent" style="{{cardType!=='wide wide2'&&talent.me?'padding: 4.5px 1.5px 3px;font-size:13px':''}}">
+        {{each talent k idx}}
+        <span class="talent-item talent-{{idx}} talent-{{k.original===10?'crown':'none'}} talent-{{k.level>k.original?'plus':'none'}}">{{k.level}}</span>
         {{/each}}
       </div>
       {{else}}

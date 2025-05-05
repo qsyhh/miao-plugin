@@ -229,6 +229,7 @@ const MysAvatar = {
           if (maxLv >= 10 && !talent.q) talent.q = lv
         }
       } else if (game === "sr" && talentRes && talentRes.skills) {
+        if (talentRes.skills_servant) talentRes.skills = [ ...talentRes.skills, ...talentRes.skills_servant ]
         let talentList = lodash.orderBy(talentRes.skills, [ "point_id" ], [ "asc" ])
         for (let val of talentList) {
           let { cur_level: lv, anchor } = val
@@ -246,6 +247,14 @@ const MysAvatar = {
           }
           if (anchor.includes("Point04")) {
             talent.t = lv
+            continue
+          }
+          if (anchor.includes("Point19")) {
+            talent.me = lv
+            continue
+          }
+          if (anchor.includes("Point20")) {
+            talent.mt = lv
             continue
           }
         }

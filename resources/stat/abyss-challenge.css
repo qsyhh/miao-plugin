@@ -5,6 +5,7 @@ body, .container {
 }
 .head-box .title {
   font-size: 35px;
+  width: 100%;
 }
 .head-box .title span {
   font-size: 17px;
