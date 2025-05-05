@@ -270,7 +270,7 @@
   border-radius: 10.5px 0 0 10.5px;
 }
 .avatar-card.card-wide .avatar-face .img {
-  background-size: 100% auto;
+  background-size: cover;
   background-position: 0 10%;
   height: 202.5px;
   margin-top: -13.5px;
