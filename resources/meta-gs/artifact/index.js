@@ -1,9 +1,9 @@
-import { Data, Meta } from "#miao"
 import lodash from "lodash"
 import calc from "./calc.js"
 import { mainAttr, subAttr, attrMap, attrNameMap, mainIdMap, attrIdMap } from "./extra.js"
 import { setAlias, setAbbr } from "./alias.js"
 import { usefulAttr } from "./artis-mark.js"
+import { Data, Meta } from "#miao"
 
 let setMeta = Meta.create("gs", "artiSet")
 let artiMeta = Meta.create("gs", "arti")

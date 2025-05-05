@@ -76,7 +76,7 @@ export const usefulAttr = {
   菲米尼: { hp: 0, atk: 75, def: 0, cpct: 100, cdmg: 100, mastery: 0, dmg: 100, phy: 100, recharge: 55, heal: 0 },
   那维莱特: { hp: 100, atk: 0, def: 0, cpct: 100, cdmg: 100, mastery: 0, dmg: 100, phy: 0, recharge: 55, heal: 0 },
   莱欧斯利: { hp: 0, atk: 75, def: 0, cpct: 100, cdmg: 100, mastery: 75, dmg: 100, phy: 0, recharge: 45, heal: 0 },
-  芙宁娜: { hp: 100, atk: 0, def: 0, cpct: 100, cdmg: 100, mastery: 0, dmg: 95, phy: 0, recharge: 75, heal: 95 },
+  芙宁娜: { hp: 100, atk: 0, def: 0, cpct: 100, cdmg: 100, mastery: 0, dmg: 100, phy: 0, recharge: 75, heal: 100 },
   夏洛蒂: { hp: 0, atk: 85, def: 0, cpct: 50, cdmg: 50, mastery: 0, dmg: 80, phy: 0, recharge: 100, heal: 100 },
   娜维娅: { hp: 0, atk: 75, def: 0, cpct: 100, cdmg: 100, mastery: 0, dmg: 100, phy: 0, recharge: 55, heal: 0 },
   夏沃蕾: { hp: 100, atk: 0, def: 0, cpct: 50, cdmg: 50, mastery: 0, dmg: 80, phy: 0, recharge: 55, heal: 55 },
@@ -97,7 +97,9 @@ export const usefulAttr = {
   玛薇卡: { hp: 0, atk: 75, def: 0, cpct: 100, cdmg: 100, mastery: 85, dmg: 100, phy: 0, recharge: 0, heal: 0 },
   茜特菈莉: { hp: 0, atk: 30, def: 0, cpct: 30, cdmg: 30, mastery: 100, dmg: 80, phy: 0, recharge: 100, heal: 0 },
   蓝砚: { hp: 0, atk: 100, def: 0, cpct: 50, cdmg: 50, mastery: 30, dmg: 80, phy: 0, recharge: 75, heal: 0 },
-  梦见月瑞希: { hp: 0, atk: 50, def: 0, cpct: 50, cdmg: 50, mastery: 100, dmg: 80, phy: 0, recharge: 45, heal: 95 },
+  梦见月瑞希: { hp: 0, atk: 50, def: 0, cpct: 50, cdmg: 50, mastery: 100, dmg: 80, phy: 0, recharge: 45, heal: 100 },
   瓦雷莎: { hp: 0, atk: 75, def: 0, cpct: 100, cdmg: 100, mastery: 0, dmg: 100, phy: 0, recharge: 50, heal: 0 },
-  伊安珊: { hp: 0, atk: 100, def: 0, cpct: 0, cdmg: 0, mastery: 0, dmg: 0, phy: 0, recharge: 100, heal: 50 }
+  伊安珊: { hp: 0, atk: 100, def: 0, cpct: 0, cdmg: 0, mastery: 0, dmg: 0, phy: 0, recharge: 100, heal: 50 },
+  爱可菲: { hp: 0, atk: 100, def: 0, cpct: 100, cdmg: 100, mastery: 0, dmg: 80, phy: 0, recharge: 80, heal: 0 },
+  伊法: { hp: 0, atk: 50, def: 0, cpct: 50, cdmg: 50, mastery: 100, dmg: 80, phy: 0, recharge: 45, heal: 100 }
 }

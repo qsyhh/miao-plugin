@@ -104,8 +104,8 @@ function calcAll(regRet, game) {
       stats.data[i].count++
       stats.data[i].version = k.version + k.half
       stats.data[i].daysDiff = daysSince(k.to)
-      stats.data[i] = { ...stats.data[i], ...k }
-      if (stats.data[i].daysDiff < 0 && daysSince(k.from) < -1) stats.data[i].daysStar = daysSince(k.from)
+      stats.data[i] = { ...k, ...stats.data[i] }
+      if (stats.data[i].daysDiff < 0 && daysSince(k.from) < 0) stats.data[i].daysStar = daysSince(k.from)
     })
   })
   let dataMap = []
