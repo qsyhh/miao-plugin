@@ -34,7 +34,7 @@ const CharStrategy = {
       msglist.push({
         nickname: "QQ用户",
         message: [
-          `版主：${ds.author}`,
+          `版主: ${ds.author}`,
           segment.image(`file://${img}`),
           ds.articleUrl ?? `https://www.miyoushe.com/${char.isGs ? "ys" : "sr"}/article/${ds.article}`
         ]
