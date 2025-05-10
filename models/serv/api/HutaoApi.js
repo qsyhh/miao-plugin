@@ -30,17 +30,18 @@ export default {
   async updatePlayer(player, data) {
     player.setBasicData(Data.getData(data, "name:nickname,face:profilePicture.avatarID,card:nameCardID,level,word:worldLevel,sign:signature"))
     await Promise.all(lodash.map(data.avatarInfoList, async(ds) => {
-      let md5 = await redis.get(`miao:profile:${player.uid}:md5:${ds.avatarId}`)
+      let key = `miao:profile:${player.uid}:md5:${ds.avatarId}`
+      let md5 = await redis.get(key)
       if (!md5) {
         md5 = Format.generateMD5(Data.getData(player._original[ds.avatarId], "id,level,promote,cons,fetter,costume,elem,weapon,talent,artis"))
-        redis.set(`miao:profile:${player.uid}:md5:${ds.avatarId}`, md5)
+        redis.set(key, md5)
       }
       let ret = EnkaData.setAvatar(player, ds, "hutao")
       if (ret) {
         player._update.push(ret.id)
         if (ret.md5 !== md5) {
           player._hasUpdate.push(ret.id)
-          redis.set(`miao:profile:md5:${ds.avatarId}`, ret.md5)
+          redis.set(key, ret.md5)
         }
       }
     }))

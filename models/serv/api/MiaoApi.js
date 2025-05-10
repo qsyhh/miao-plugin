@@ -26,17 +26,18 @@ export default {
   async updatePlayer(player, data) {
     player.setBasicData(data)
     await Promise.all(lodash.map(data.avatars, async(avatar) => {
-      let md5 = await redis.get(`miao:profile:${player.uid}:md5:${avatar.id}`)
+      let key = `miao:profile:${player.uid}:md5:${avatar.id}`
+      let md5 = await redis.get(key)
       if (!md5) {
         md5 = Format.generateMD5(Data.getData(player._original[avatar.id], "id,level,fetter,promote,cons,weapon,costume,artis,elem,talent"))
-        redis.set(`miao:profile:${player.uid}:md5:${avatar.id}`, md5)
+        redis.set(key, md5)
       }
       let ret = MiaoData.setAvatar(player, avatar)
       if (ret) {
         player._update.push(ret.id)
         if (ret.md5 !== md5) {
           player._hasUpdate.push(ret.id)
-          redis.set(`miao:profile:md5:${avatar.id}`, ret.md5)
+          redis.set(key, ret.md5)
         }
       }
     }))
