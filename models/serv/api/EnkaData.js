@@ -1,4 +1,5 @@
 import lodash from "lodash"
+import { Format } from "#miao"
 import { Character, Artifact, Weapon } from "#miao.models"
 
 const artisIdxMap = {
@@ -20,17 +21,20 @@ let EnkaData = {
     if (!char) return
     let avatar = player.getAvatar(char.id, true)
     let talentRet = EnkaData.getTalent(char.id, data.skillLevelMap)
-    avatar.setAvatar({
+    let detail = {
+      id: data.avatarId,
       level: data.propMap["4001"].val * 1,
       promote: data.propMap["1002"].val * 1,
       cons: data.talentIdList ? data.talentIdList.length : 0,
       fetter: data.fetterInfo.expLevel,
       costume: char.checkCostume(data.costumeId) ? data.costumeId : 0,
-      elem: talentRet.elem,
+      elem: talentRet.elem || char.elem,
       weapon: EnkaData.getWeapon(data.equipList),
       talent: talentRet.talent,
       artis: EnkaData.getArtifact(data.equipList)
-    }, dataSource)
+    }
+    avatar.md5 = Format.generateMD5(detail)
+    avatar.setAvatar(detail, dataSource)
     return avatar
   },
 
@@ -87,8 +91,8 @@ let EnkaData = {
       if (!arti) return true
 
       ret[idx] = {
-        name: arti.name,
         level: Math.min(20, ((re.level) || 0) - 1),
+        name: arti.name,
         star: flat.rankLevel || 5,
         mainId: re.mainPropId,
         attrIds: re.appendPropIdList

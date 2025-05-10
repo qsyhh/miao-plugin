@@ -122,7 +122,7 @@ export default class ProfileReq extends Base {
     cdTime = serv.getCdTime(data)
     if (cdTime) await this.setCd(cdTime)
     if (data === false) return false
-    serv.updatePlayer(player, data)
+    await serv.updatePlayer(player, data)
     cdTime = serv.getCdTime(data)
     if (cdTime) await this.setCd(cdTime)
     return player

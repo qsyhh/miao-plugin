@@ -1,3 +1,4 @@
+import crypto from "crypto"
 import lodash from "lodash"
 import Elem from "./common/Elem.js"
 import { Cfg } from "#miao"
@@ -19,6 +20,12 @@ let Format = {
   },
   percent: function(num, fix = 1) {
     return Format.pct(num * 100, fix)
+  },
+  generateMD5(ds) {
+    const data = JSON.stringify(ds)
+    const hash = crypto.createHash("md5")
+    hash.update(data)
+    return hash.digest("hex")
   }
 }
 

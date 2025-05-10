@@ -1,6 +1,6 @@
 import lodash from "lodash"
 import EnkaData from "./EnkaData.js"
-import { Data } from "#miao"
+import { Format, Data } from "#miao"
 
 let HttpsProxyAgent = ""
 
@@ -39,12 +39,23 @@ export default {
     return data
   },
 
-  updatePlayer(player, data) {
+  async updatePlayer(player, data) {
     player.setBasicData(Data.getData(data, "name:nickname,face:profilePicture.avatarID,card:nameCardID,level,word:worldLevel,sign:signature"))
-    lodash.forEach(data.avatarInfoList, (ds) => {
+    await Promise.all(lodash.map(data.avatarInfoList, async(ds) => {
+      let md5 = await redis.get(`miao:profile:${player.uid}:md5:${ds.avatarId}`)
+      if (!md5) {
+        md5 = Format.generateMD5(Data.getData(player._original[ds.avatarId], "id,level,promote,cons,fetter,costume,elem,weapon,talent,artis"))
+        redis.set(`miao:profile:md5:${ds.avatarId}`, md5)
+      }
       let ret = EnkaData.setAvatar(player, ds)
-      if (ret) player._update.push(ret.id)
-    })
+      if (ret) {
+        player._update.push(ret.id)
+        if (ret.md5 !== md5) {
+          player._hasUpdate.push(ret.id)
+          redis.set(`miao:profile:md5:${ds.avatarId}`, ret.md5)
+        }
+      }
+    }))
   },
 
   // 获取冷却时间

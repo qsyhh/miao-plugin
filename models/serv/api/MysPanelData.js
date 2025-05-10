@@ -10,17 +10,19 @@ let MysPanelData = {
     let char = Character.get({ id, elem })
     let avatar = player.getAvatar(id, true)
     if (!char) return false
-
-    avatar.setAvatar({
-      level,
+    let detail = {
+      id: char.id,
       elem,
+      level,
       fetter,
-      cons: actived_constellation_num,
       costume: ds.costumes?.[0]?.id || 0,
-      weapon: MysPanelData.getWeapon(ds.weapon),
+      cons: actived_constellation_num,
       talent: MysPanelData.getTalent(char, actived_constellation_num, ds.skills),
+      weapon: MysPanelData.getWeapon(ds.weapon),
       artis: MysPanelData.getArtifact(ds.relics)
-    }, "mysPanel")
+    }
+    avatar.md5 = Format.generateMD5(detail)
+    avatar.setAvatar(detail, "mysPanel")
     return avatar
   },
 
@@ -70,8 +72,8 @@ let MysPanelData = {
       // 由于 mys 只有属性、强化次数和最终值这三项，没有
       // 因此只能后期“拼凑”出一个大概的强化过程
       ret[idx] = {
-        name: arti.name,
         level: Math.min(20, (ds.level) || 0),
+        name: arti.name,
         star: ds.rarity || 5,
         mainId: MysPanelData.getArtifactMainId(ds.rarity, ds.main_property),
         attrIds: MysPanelData.getArtifactAttrIds(ds.rarity, ds.sub_property_list)
@@ -119,7 +121,7 @@ let MysPanelData = {
 
     for (const curValuesCombination of combinations) {
       const curValueSum = curValuesCombination.reduce((sum, [ v ]) => sum + v, 0)
-      const curArr = curValuesCombination.map(([ , attrId ]) => attrId)
+      const curArr = curValuesCombination.map(([ , attrId ]) => Number(attrId))
 
       const err = Math.abs(destValueSum - curValueSum)
       if (err < bestErr) {

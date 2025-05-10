@@ -32,15 +32,20 @@ const ProfileList = {
       e._isReplyed = true
     } else {
       let ret = {}
+      let update = {}
       lodash.forEach(player._update, (id) => {
         let char = Character.get(id)
-        if (char) ret[char.name] = true
+        if (char) {
+          ret[char.name] = true
+          if (player._hasUpdate.includes(id)) update[char.name] = true
+        }
       })
       if (lodash.isEmpty(ret)) {
         e._isReplyed || e.reply([ `获取${e.isSr ? "星铁" : "原神"}UID：${uid} 角色面板数据失败，未能请求到角色数据。请确认角色已在游戏内橱窗展示，并开放了查看详情。设置完毕后请5分钟后再进行请求~`, new Button(e).profileList(uid) ])
         e._isReplyed = true
       } else {
         e.newChar = ret
+        e.updateChar = update
         e.isNewCharFromMys = fromMys
         return await ProfileList.render(e)
       }
@@ -86,9 +91,11 @@ const ProfileList = {
     let chars = []
     let msg = ""
     let newChar = {}
+    let updateChar = {}
     if (e.newChar) {
       msg = "获取角色面板数据成功"
       newChar = e.newChar
+      updateChar = e.updateChar
     }
     const cfg = await Data.importCfg("cfg")
     // 获取面板数据
@@ -117,8 +124,10 @@ const ProfileList = {
       tmp.level = profile.level || 1
       tmp.cons = profile.cons
       tmp.isNew = 0
+      tmp.isUpdate = 0
       if (newChar[char.name]) {
         tmp.isNew = 1
+        if (updateChar[char.name]) tmp.isUpdate = 1
         newCount++
       }
       if (rank) tmp.groupRank = await rank.getRank(profile, !!tmp.isNew)
@@ -129,7 +138,7 @@ const ProfileList = {
     // if (newCount > 0) hasNew = newCount <= 12
     hasNew = newCount > 0
 
-    chars = lodash.sortBy(chars, [ "isNew", "star", "level", "id" ])
+    chars = lodash.sortBy(chars, [ "isUpdate", "isNew", "star", "level", "id" ])
     chars = chars.reverse()
 
     let background = await Common.getBackground("list")

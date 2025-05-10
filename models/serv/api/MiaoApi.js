@@ -1,5 +1,6 @@
 import lodash from "lodash"
 import MiaoData from "./MiaoData.js"
+import { Format, Data } from "#miao"
 
 export default {
   key: "miao",
@@ -22,12 +23,23 @@ export default {
     }
   },
 
-  updatePlayer(player, data) {
+  async updatePlayer(player, data) {
     player.setBasicData(data)
-    lodash.forEach(data.avatars, (avatar) => {
+    await Promise.all(lodash.map(data.avatars, async(avatar) => {
+      let md5 = await redis.get(`miao:profile:${player.uid}:md5:${avatar.id}`)
+      if (!md5) {
+        md5 = Format.generateMD5(Data.getData(player._original[avatar.id], "id,level,fetter,promote,cons,weapon,costume,artis,elem,talent"))
+        redis.set(`miao:profile:md5:${avatar.id}`, md5)
+      }
       let ret = MiaoData.setAvatar(player, avatar)
-      if (ret) player._update.push(ret.id)
-    })
+      if (ret) {
+        player._update.push(ret.id)
+        if (ret.md5 !== md5) {
+          player._hasUpdate.push(ret.id)
+          redis.set(`miao:profile:md5:${avatar.id}`, ret.md5)
+        }
+      }
+    }))
   },
 
   // 获取冷却时间

@@ -86,6 +86,7 @@ const Serv = {
     let { uid } = player
     try {
       player._update = []
+      player._hasUpdate = []
       await req.requestProfile(player, serv)
       return player._update?.length || 0
     } catch (err) {

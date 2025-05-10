@@ -43,9 +43,12 @@ body,
   display: inline-block;
   width: 8px;
   height: 8px;
-  background: #90e800;
+  background: #9e9e9e;
   border-radius: 50%;
   margin-right: 3px;
+}
+.char-item.update-char .name:before {
+  background: #90e800;
 }
 .char-item .group-rank {
   position: absolute;
@@ -108,8 +111,11 @@ body,
   background: rgba(0, 0, 0, 0.4);
   width: 100%;
 }
-.cont-footer span {
-  width: 50%;
+.cont-footer[data-list-1] span {
+  width: calc(100% / 2);
+}
+.cont-footer[data-list-2] span {
+  width: calc(100% / 3);
 }
 .cont-footer .serv {
   text-align: right;
@@ -119,9 +125,16 @@ body,
   display: inline-block;
   width: 8px;
   height: 8px;
-  background: #90e800;
+  background: #9e9e9e;
   border-radius: 50%;
   margin-right: 3px;
+}
+.cont-footer .update-tip {
+  position: relative;
+  left: -100px;
+}
+.cont-footer .update-tip:before {
+  background: #90e800;
 }
 .group-rank-icon {
   width: 16px;

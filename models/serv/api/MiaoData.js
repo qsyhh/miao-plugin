@@ -1,11 +1,13 @@
-import { Character } from "#miao.models"
 import lodash from "lodash"
+import { Character } from "#miao.models"
+import { Format } from "#miao"
 
 let MiaoData = {
   setAvatar(player, ds) {
     let char = Character.get(ds.id)
     let avatar = player.getAvatar(ds.id, true)
     if (!char) return false
+    let detail = {}
 
     if (player.isSr) {
       avatar.setAvatar({
@@ -13,12 +15,16 @@ let MiaoData = {
         ...MiaoData.getTalentSR(char, ds.talent)
       }, "miao")
     } else {
+      let artis = MiaoData.getArtis(ds.artis)
       let talentRet = MiaoData.getTalent(char, ds.talent)
-      avatar.setAvatar({
+      detail = {
         ...ds,
+        artis,
         elem: talentRet.elem,
         talent: talentRet.talent
-      }, "miao")
+      }
+      avatar.md5 = Format.generateMD5(detail)
+      avatar.setAvatar(detail, "miao")
     }
     return avatar
   },
@@ -58,6 +64,20 @@ let MiaoData = {
       }
     })
     return { talent, trees }
+  },
+
+  getArtis(data) {
+    let ret = {}
+    lodash.forEach(data, (ds, key) => {
+      ret[key] = {
+        level: ds.level,
+        name: ds.name,
+        star: ds.star,
+        mainId: ds.mainId,
+        attrIds: ds.attrIds
+      }
+    })
+    return ret
   }
 }
 export default MiaoData

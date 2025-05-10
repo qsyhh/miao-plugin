@@ -141,6 +141,7 @@ export default class Player extends Base {
     this.sign = ds.sign || this.sign || ""
     this.info = ds.info || this.info || false
     this._avatars = this._avatars || {}
+    this._original = Data.readJSON(this._file, "root")?.avatars || {}
     this._profile = ds._profile || this._profile
     this._mys = ds._mys || this._mys
     this._info = ds._info || this._info
