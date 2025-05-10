@@ -29,7 +29,7 @@ export default {
       let md5 = await redis.get(`miao:profile:${player.uid}:md5:${avatar.id}`)
       if (!md5) {
         md5 = Format.generateMD5(Data.getData(player._original[avatar.id], "id,level,fetter,promote,cons,weapon,costume,artis,elem,talent"))
-        redis.set(`miao:profile:md5:${avatar.id}`, md5)
+        redis.set(`miao:profile:${player.uid}:md5:${avatar.id}`, md5)
       }
       let ret = MiaoData.setAvatar(player, avatar)
       if (ret) {

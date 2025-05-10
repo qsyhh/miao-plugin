@@ -25,7 +25,7 @@ export default {
       let md5 = await redis.get(`miao:profile:${player.uid}:md5:${ds.base.id}`)
       if (!md5) {
         md5 = Format.generateMD5(Data.getData(player._avatars[ds.base.id], "id,elem,level,fetter,costume,cons,talent,weapon,artis"))
-        redis.set(`miao:profile:md5:${ds.base.id}`, md5)
+        redis.set(`miao:profile:${player.uid}:md5:${ds.base.id}`, md5)
       }
       let ret = MysPanelData.setAvatar(player, ds)
       if (ret) {
