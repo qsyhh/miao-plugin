@@ -24,14 +24,14 @@ let EnkaData = {
     let detail = {
       id: data.avatarId,
       level: data.propMap["4001"].val * 1,
+      fetter: data.fetterInfo.expLevel,
       promote: data.propMap["1002"].val * 1,
       cons: data.talentIdList ? data.talentIdList.length : 0,
-      fetter: data.fetterInfo.expLevel,
-      costume: char.checkCostume(data.costumeId) ? data.costumeId : 0,
-      elem: talentRet.elem || char.elem,
       weapon: EnkaData.getWeapon(data.equipList),
-      talent: talentRet.talent,
-      artis: EnkaData.getArtifact(data.equipList)
+      costume: char.checkCostume(data.costumeId) ? data.costumeId : 0,
+      artis: EnkaData.getArtifact(data.equipList),
+      elem: talentRet.elem || char.elem,
+      talent: talentRet.talent
     }
     avatar.md5 = Data.generateMD5(detail)
     avatar.setAvatar(detail, dataSource)

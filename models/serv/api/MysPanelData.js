@@ -12,14 +12,14 @@ let MysPanelData = {
     if (!char) return false
     let detail = {
       id: char.id,
-      elem,
       level,
       fetter,
-      costume: ds.costumes?.[0]?.id || 0,
       cons: actived_constellation_num,
-      talent: MysPanelData.getTalent(char, actived_constellation_num, ds.skills),
       weapon: MysPanelData.getWeapon(ds.weapon),
-      artis: MysPanelData.getArtifact(ds.relics)
+      costume: ds.costumes?.[0]?.id || 0,
+      artis: MysPanelData.getArtifact(ds.relics),
+      elem,
+      talent: MysPanelData.getTalent(char, actived_constellation_num, ds.skills)
     }
     avatar.md5 = Data.generateMD5(detail)
     avatar.setAvatar(detail, "mysPanel")
@@ -75,15 +75,15 @@ let MysPanelData = {
         level: Math.min(20, (ds.level) || 0),
         name: arti.name,
         star: ds.rarity || 5,
-        mainId: MysPanelData.getArtifactMainId(ds.rarity, ds.main_property),
+        mainId: MysPanelData.getArtifactMainId(idx, ds.main_property),
         attrIds: MysPanelData.getArtifactAttrIds(ds.rarity, ds.sub_property_list)
       }
     })
     return ret
   },
 
-  getArtifactMainId(rarity, main_property) {
-    return artifactMainIdMapping[main_property.property_type]
+  getArtifactMainId(idx, main_property) {
+    return artifactMainIdMapping[idx][main_property.property_type]
   },
 
   getArtifactAttrIdCombination(rarity, curTime, propertyType, valueStr) {

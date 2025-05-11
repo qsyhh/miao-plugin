@@ -270,13 +270,18 @@ let Data = {
 
   generateMD5(ds, game = "gs") {
     let data = lodash.cloneDeep(ds)
+    // 排除突破等级使与米游社数据结构一致
+    if (data.promote) data = lodash.omit(data, "promote")
     if (game === "sr") {
-      // 排除突破等级使与米游社数据结构一致
-      if (data.promote) data = lodash.omit(data, "promote")
       if (data.weapon?.promote) data.weapon = lodash.omit(data.weapon, "promote")
       if (data.artis) {
         // 无视速度变化
         for (let idx in data.artis) data.artis[idx].attrIds = data.artis[idx].attrIds.filter((attrId) => !attrId.startsWith("7"))
+      }
+    } else {
+      if (data.artis) {
+        // 无视副词条顺序
+        for (let idx in data.artis) data.artis[idx].attrIds = lodash.sum(data.artis[idx].attrIds)
       }
     }
     data = JSON.stringify(data)

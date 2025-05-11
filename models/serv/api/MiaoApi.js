@@ -31,7 +31,7 @@ export default {
       if (!player.isSr) {
         md5 = await redis.get(key)
         if (!md5) {
-          md5 = Data.generateMD5(Data.getData(player._original[avatar.id], "id,level,fetter,promote,cons,weapon,costume,artis,elem,talent"))
+          md5 = Data.generateMD5(Data.getData(player._original[avatar.id], "id,level,fetter,cons,weapon,costume,artis,elem,talent"))
           redis.set(key, md5)
         }
       }

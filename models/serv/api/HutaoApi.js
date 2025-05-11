@@ -33,7 +33,7 @@ export default {
       let key = `miao:profile:gs:${player.uid}:md5:${ds.avatarId}`
       let md5 = await redis.get(key)
       if (!md5) {
-        md5 = Data.generateMD5(Data.getData(player._original[ds.avatarId], "id,level,promote,cons,fetter,costume,elem,weapon,talent,artis"))
+        md5 = Data.generateMD5(Data.getData(player._original[ds.avatarId], "id,level,fetter,cons,weapon,costume,artis,elem,talent"))
         redis.set(key, md5)
       }
       let ret = EnkaData.setAvatar(player, ds, "hutao")
