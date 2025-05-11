@@ -1,6 +1,6 @@
 import lodash from "lodash"
 import { artifactMainIdMapping, propertyType2attrName, fixedAttrNames } from "./MysPanelMappings.js"
-import { Format, Meta } from "#miao"
+import { Format, Meta, Data } from "#miao"
 import { Character, Artifact, Weapon } from "#miao.models"
 
 let MysPanelData = {
@@ -21,7 +21,7 @@ let MysPanelData = {
       weapon: MysPanelData.getWeapon(ds.weapon),
       artis: MysPanelData.getArtifact(ds.relics)
     }
-    avatar.md5 = Format.generateMD5(detail)
+    avatar.md5 = Data.generateMD5(detail)
     avatar.setAvatar(detail, "mysPanel")
     return avatar
   },

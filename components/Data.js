@@ -1,4 +1,5 @@
 import fs from "node:fs"
+import crypto from "node:crypto"
 import util from "node:util"
 import lodash from "lodash"
 import { rootPath } from "#miao.path"
@@ -265,6 +266,23 @@ let Data = {
       if (ret && ret[idx]) return ret[idx]
     }
     return false
+  },
+
+  generateMD5(ds, game = "gs") {
+    let data = lodash.cloneDeep(ds)
+    if (game === "sr") {
+      // 排除突破等级使与米游社数据结构一致
+      if (data.promote) data = lodash.omit(data, "promote")
+      if (data.weapon?.promote) data.weapon = lodash.omit(data.weapon, "promote")
+      if (data.artis) {
+        // 无视速度变化
+        for (let idx in data.artis) data.artis[idx].attrIds = data.artis[idx].attrIds.filter((attrId) => !attrId.startsWith("7"))
+      }
+    }
+    data = JSON.stringify(data)
+    const hash = crypto.createHash("md5")
+    hash.update(data)
+    return hash.digest("hex")
   }
 }
 

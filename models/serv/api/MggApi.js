@@ -1,6 +1,6 @@
 import lodash from "lodash"
 import EnkaData from "./EnkaData.js"
-import { Format, Data } from "#miao"
+import { Data } from "#miao"
 
 export default {
   id: "mgg",
@@ -30,10 +30,10 @@ export default {
   async updatePlayer(player, data) {
     player.setBasicData(Data.getData(data, "name:nickname,face:profilePicture.avatarID,card:nameCardID,level,word:worldLevel,sign:signature"))
     await Promise.all(lodash.map(data.avatarInfoList, async(ds) => {
-      let key = `miao:profile:${player.uid}:md5:${ds.avatarId}`
+      let key = `miao:profile:gs:${player.uid}:md5:${ds.avatarId}`
       let md5 = await redis.get(key)
       if (!md5) {
-        md5 = Format.generateMD5(Data.getData(player._original[ds.avatarId], "id,level,promote,cons,fetter,costume,elem,weapon,talent,artis"))
+        md5 = Data.generateMD5(Data.getData(player._original[ds.avatarId], "id,level,promote,cons,fetter,costume,elem,weapon,talent,artis"))
         redis.set(key, md5)
       }
       let ret = EnkaData.setAvatar(player, ds, "mgg")

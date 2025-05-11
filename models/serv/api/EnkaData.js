@@ -1,5 +1,5 @@
 import lodash from "lodash"
-import { Format } from "#miao"
+import { Data } from "#miao"
 import { Character, Artifact, Weapon } from "#miao.models"
 
 const artisIdxMap = {
@@ -33,7 +33,7 @@ let EnkaData = {
       talent: talentRet.talent,
       artis: EnkaData.getArtifact(data.equipList)
     }
-    avatar.md5 = Format.generateMD5(detail)
+    avatar.md5 = Data.generateMD5(detail)
     avatar.setAvatar(detail, dataSource)
     return avatar
   },

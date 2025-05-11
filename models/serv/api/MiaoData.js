@@ -1,6 +1,6 @@
 import lodash from "lodash"
 import { Character } from "#miao.models"
-import { Format } from "#miao"
+import { Data } from "#miao"
 
 let MiaoData = {
   setAvatar(player, ds) {
@@ -23,7 +23,7 @@ let MiaoData = {
         elem: talentRet.elem,
         talent: talentRet.talent
       }
-      avatar.md5 = Format.generateMD5(detail)
+      avatar.md5 = Data.generateMD5(detail)
       avatar.setAvatar(detail, "miao")
     }
     return avatar

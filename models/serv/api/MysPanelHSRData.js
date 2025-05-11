@@ -1,6 +1,6 @@
 import lodash from "lodash"
 import { propertyType2attrName } from "./MysPanelHSRMappings.js"
-import { Meta } from "#miao"
+import { Data, Meta } from "#miao"
 import { Character, Artifact } from "#miao.models"
 
 let MysPanelHSRData = {
@@ -9,14 +9,16 @@ let MysPanelHSRData = {
     let avatar = player.getAvatar(ds.id, true)
     if (!char) return false
 
-    avatar.setAvatar({
+    const setData = {
       level: ds.level,
       cons: ds.rank,
       weapon: ds.equip ? MysPanelHSRData.getWeapon(ds.equip) : null,
       talent: MysPanelHSRData.getTalent(char, ds.rank, ds.skills, ds.servant_detail?.servant_skills),
       trees: MysPanelHSRData.getTrees(ds.skills),
       artis: MysPanelHSRData.getArtifact([ ...ds.relics, ...ds.ornaments ])
-    }, "mysPanelHSR")
+    }
+    avatar.md5 = Data.generateMD5(setData, "sr")
+    avatar.setAvatar(setData, "mysPanelHSR")
     return avatar
   },
 
@@ -57,10 +59,7 @@ let MysPanelHSRData = {
   },
 
   getTrees(data) {
-    return lodash(data)
-      .filter(skill => skill.point_type !== 2 && skill.is_activated)
-      .map("point_id")
-      .value()
+    return lodash.sortBy(data.filter(skill => skill.point_type !== 2 && skill.is_activated), "point_id").map(skill => Number(skill.point_id))
   },
 
   getArtifact(data) {
@@ -73,9 +72,8 @@ let MysPanelHSRData = {
 
       // 只需要计算增益个数即可
       ret[idx] = {
-        id: ds.id,
         level: Math.min(15, (ds.level) || 0),
-        star: ds.rarity || 5,
+        id: ds.id,
         mainId: MysPanelHSRData.getArtifactMainId(idx, ds.main_property),
         attrIds: MysPanelHSRData.getArtifactAttrIds(ds.rarity, ds.properties)
       }

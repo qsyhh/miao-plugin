@@ -1,6 +1,6 @@
 import lodash from "lodash"
 import MiaoData from "./MiaoData.js"
-import { Format, Data } from "#miao"
+import { Data } from "#miao"
 
 export default {
   key: "miao",
@@ -26,18 +26,21 @@ export default {
   async updatePlayer(player, data) {
     player.setBasicData(data)
     await Promise.all(lodash.map(data.avatars, async(avatar) => {
-      let key = `miao:profile:${player.uid}:md5:${avatar.id}`
-      let md5 = await redis.get(key)
-      if (!md5) {
-        md5 = Format.generateMD5(Data.getData(player._original[avatar.id], "id,level,fetter,promote,cons,weapon,costume,artis,elem,talent"))
-        redis.set(key, md5)
+      let key = `miao:profile:gs:${player.uid}:md5:${avatar.id}`
+      let md5 = ""
+      if (!player.isSr) {
+        md5 = await redis.get(key)
+        if (!md5) {
+          md5 = Data.generateMD5(Data.getData(player._original[avatar.id], "id,level,fetter,promote,cons,weapon,costume,artis,elem,talent"))
+          redis.set(key, md5)
+        }
       }
       let ret = MiaoData.setAvatar(player, avatar)
       if (ret) {
         player._update.push(ret.id)
-        if (ret.md5 !== md5) {
+        if (ret.md5 !== md5 || player.isSr) {
           player._hasUpdate.push(ret.id)
-          redis.set(key, ret.md5)
+          if (!player.isSr) redis.set(key, ret.md5)
         }
       }
     }))
