@@ -27,7 +27,7 @@ export class banner extends plugin {
       name: "喵喵:复刻统计",
       dsc: "复刻统计",
       event: "message",
-      priority: 50,
+      priority: 60,
       rule: [
         {
           reg: "^#(原神|星铁)?((四星|五星)?(角色|武器|光锥|up)?|.*)(复刻)?(统计|卡池|祈愿)$",
