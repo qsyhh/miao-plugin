@@ -127,8 +127,8 @@ export async function AbyssChallenge(e) {
   if (!Cfg.get("uploadAbyssData", false)) return false
 
   let mys = await MysApi.init(e, "all")
-  if (!mys || !mys.uid) {
-    e.reply(`请绑定ck后再使用${e.original_msg || e.msg}`)
+  if (!mys || !await mys.checkCk()) {
+    e.reply(mys ? "Cookie失效，请重新登录或尝试【#刷新ck】" : `请绑定ck后再使用${e.original_msg || e.msg}`)
     return false
   }
   let type = /上期/.test(e.original_msg || e.msg || "") ? 2 : 1
@@ -137,18 +137,17 @@ export async function AbyssChallenge(e) {
   let resDetail, resAbyss
   try {
     resAbyss = await mys.getSpiralAbyss(type)
-    resAbyss.floor_detail = resAbyss.all_floor_detail.filter(floor => !floor.is_fast)
-    if (resAbyss.floor_detail.length > 4) resAbyss.floor_detail.splice(4)
-    let lvs = Data.getVal(resAbyss, "floor_detail.0")
+    resAbyss.floor_detail = Array.isArray(resAbyss?.all_floor_detail) ? resAbyss.all_floor_detail.filter(floor => !floor.is_fast) : []
+    let lvs = Data.getVal(resAbyss, "floor_detail.0.node_1")
     // 检查是否查询到了混沌信息
-    if (!lvs) return e.reply(`暂未获得${type === 2 ? "上期" : "本期"}混沌回忆挑战数据...`)
+    if (!lvs || resAbyss.floor_detail.length === 0) return e.reply(`暂未获得${type === 2 ? "上期" : "本期"}混沌回忆挑战数据...`)
+    if (resAbyss.floor_detail.length > 4) resAbyss.floor_detail.splice(4)
     resDetail = await mys.getCharacter()
   } catch (err) {
     // logger.error(err)
   }
   // 更新player信息
   player.setMysCharData(resDetail)
-  if (resAbyss.floor_detail.length === 0) return e.reply(`暂未获得${type === 2 ? "上期" : "本期"}混沌回忆挑战数据...`)
 
   let avatarIds = []
   lodash.forEach(resAbyss.floor_detail, (floor, idx) => {

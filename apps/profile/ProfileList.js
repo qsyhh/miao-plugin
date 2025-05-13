@@ -22,7 +22,7 @@ const ProfileList = {
       let mys = await MysApi.init(player.e, "cookie")
       if (!mys || !await mys.checkCk()) {
         fromMys = false
-        if (player.e.isfromMys) e.reply(`UID：${uid} ${mys ? "Cookie失效，请重新登录" : "尚未绑定Cookie"}，将切换至面板服务以更新数据...`)
+        if (player.e.isfromMys) e.reply(`UID：${uid} ${mys ? "Cookie失效，请重新登录或尝试【#刷新ck】" : "尚未绑定Cookie"}，将切换至面板服务以更新数据...`)
       }
     }
     await player.refreshProfile(2, fromMys)

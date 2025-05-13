@@ -55,7 +55,7 @@ const MysAvatar = {
    * @param charData
    */
   setMysCharData(player, charData) {
-    if (!player.isGs) charData.avatars = charData.avatar_list || []
+    if (!player.isGs) charData.avatars = charData?.avatar_list || []
     if (charData && charData.avatars) {
       let role = charData.role || {}
       player.setBasicData({
