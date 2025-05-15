@@ -36,7 +36,7 @@ const CharStrategy = {
         message: [
           `版主: ${ds.author}\n`,
           segment.image(`file://${img}`),
-          "\n" + ds.articleUrl ?? `https://www.miyoushe.com/${char.isGs ? "ys" : "sr"}/article/${ds.article}`
+          `\n${ds.articleUrl ?? `https://www.miyoushe.com/${char.isGs ? "ys" : "sr"}/article/${ds.article}`}`
         ]
       })
       length++
