@@ -34,34 +34,30 @@ const CharStrategy = {
       msglist.push({
         nickname: "QQ用户",
         message: [
-          `版主：${ds.author}\n`,
           segment.image(`file://${img}`),
-          `\n${ds.articleUrl ?? `https://www.miyoushe.com/${char.isGs ? "ys" : "sr"}/article/${ds.article}`}`
+          `版主：${ds.author}\n${ds.articleUrl ?? `https://www.miyoushe.com/${char.isGs ? "ys" : "sr"}/article/${ds.article}`}`
         ]
       })
       length++
     }
+    let msg
     if (!length) {
       e.msg = e.original_msg
       return false
     } else if (length === 1) {
-      try {
-        return e.reply(msglist[1].message)
-      } catch (e) {
-        return e.reply(msglist[1].message[1])
-      }
+      msg = await e.reply(msglist[1].message)
     } else {
-      let msg
       msglist[0].message = [ `${name}攻略，共${length}张` ]
       if (e.group?.makeForwardMsg) {
-        msg = await e.group.makeForwardMsg(msglist)
+        msg = await e.reply(await e.group.makeForwardMsg(msglist))
       } else if (e.friend?.makeForwardMsg) {
-        msg = await e.friend.makeForwardMsg(msglist)
+        msg = await e.reply(await e.friend.makeForwardMsg(msglist))
       } else {
-        msg = await Bot.makeForwardMsg(msglist)
+        msg = await e.reply(await Bot.makeForwardMsg(msglist))
       }
-      return e.reply(msg)
     }
+    if (!msg) return e.reply(msglist[1].message[0])
+    return true
   },
   async downImgs(ds = {}, char = {}) {
     let name = char.name
