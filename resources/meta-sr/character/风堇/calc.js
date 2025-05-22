@@ -12,10 +12,10 @@ export const details = [
     dmg: ({ talent, attr, calc }, { heal }) => heal(calc(attr.hp) * talent.e["小伊卡治疗·百分比生命"] + talent.e["小伊卡治疗·固定值"])
   }, {
     title: "终结技生命回复",
-    dmg: ({ talent, attr, calc }, { heal }) => heal(calc(attr.hp) * talent.q["治疗·百分比生命"] + talent.q["治疗·固定值"])
+    dmg: ({ talent, attr, calc }, { heal }) => heal(calc(attr.staticAttr.hp) * talent.q["治疗·百分比生命"] + talent.q["治疗·固定值"])
   }, {
     title: "终结技伊卡回复",
-    dmg: ({ talent, attr, calc }, { heal }) => heal(calc(attr.hp) * talent.q["小伊卡治疗·百分比生命"] + talent.q["小伊卡治疗·固定值"])
+    dmg: ({ talent, attr, calc }, { heal }) => heal(calc(attr.staticAttr.hp) * talent.q["小伊卡治疗·百分比生命"] + talent.q["小伊卡治疗·固定值"])
   }, {
     title: "终结技后生命上限提高",
     dmg: ({ talent, attr, cons }) => {
@@ -27,8 +27,16 @@ export const details = [
       }
     }
   }, {
-    title: "忆灵技伤害(2w累计治疗)",
-    dmg: ({ talent }, { basic }) => basic(20000 * talent.me["技能伤害"], "me")
+    title: "忆灵技伤害(qeee累计治疗)",
+    dmg: ({ talent, cons, attr, calc }, dmg) => {
+      const cost = cons < 6 ? 0.5 : 0.88
+      const cons1 = cons > 0 ? dmg.heal(calc(attr.hp) * 0.08) : 0
+      const qHeal = dmg.heal(attr.hp.base * (talent.q["治疗·百分比生命"] + talent.q["小伊卡治疗·百分比生命"]) + talent.q["治疗·固定值"] + talent.q["小伊卡治疗·固定值"]).avg * cost
+      const eHeal = dmg.heal(calc(attr.hp) * (talent.e["治疗·百分比生命"] + talent.e["小伊卡治疗·百分比生命"]) + talent.e["治疗·固定值"] + talent.e["小伊卡治疗·固定值"]).avg
+      const eHeal1 = (qHeal + cons1 + eHeal) * cost
+      const eHeal2 = (eHeal1 + cons1 + eHeal) * cost
+      return dmg.basic((eHeal2 + cons1 + eHeal) * talent.me["技能伤害"], "me")
+    }
   }, {
     title: "忆灵天赋生命回复",
     dmg: ({ talent, attr, calc }, { heal }) => heal(calc(attr.hp) * talent.mt["治疗·百分比生命"] + talent.mt["治疗·固定值"])
