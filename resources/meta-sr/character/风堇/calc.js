@@ -6,51 +6,57 @@ export const details = [
     dmg: ({ talent, attr, calc }, { basic }) => basic(calc(attr.hp) * talent.a["技能伤害"], "a")
   }, {
     title: "战技生命回复",
-    dmg: ({ talent, attr, calc }, { heal }) => heal(calc(attr.hp) * talent.e["回复·百分比"] + talent.e["回复·固定值"])
+    dmg: ({ talent, attr, calc }, { heal }) => heal(calc(attr.hp) * talent.e["治疗·百分比生命"] + talent.e["治疗·固定值"])
   }, {
     title: "战技伊卡回复",
-    dmg: ({ talent, attr, calc }, { heal }) => heal(calc(attr.hp) * talent.e["伊卡回复·百分比"] + talent.e["伊卡回复·固定值"])
+    dmg: ({ talent, attr, calc }, { heal }) => heal(calc(attr.hp) * talent.e["小伊卡治疗·百分比生命"] + talent.e["小伊卡治疗·固定值"])
   }, {
     title: "终结技生命回复",
-    dmg: ({ talent, attr, calc }, { heal }) => heal(calc(attr.hp) * talent.q["回复·百分比"] + talent.q["回复·固定值"])
+    dmg: ({ talent, attr, calc }, { heal }) => heal(calc(attr.hp) * talent.q["治疗·百分比生命"] + talent.q["治疗·固定值"])
   }, {
     title: "终结技伊卡回复",
-    dmg: ({ talent, attr, calc }, { heal }) => heal(calc(attr.hp) * talent.q["伊卡回复·百分比"] + talent.q["伊卡回复·固定值"])
+    dmg: ({ talent, attr, calc }, { heal }) => heal(calc(attr.hp) * talent.q["小伊卡治疗·百分比生命"] + talent.q["小伊卡治疗·固定值"])
   }, {
     title: "终结技后生命上限提高",
     dmg: ({ talent, attr, cons }) => {
-      let cost = talent.q["生命上限提高·百分比"] + (cons > 0 ? 0.5 : 0)
-      let addMaxHp = attr.hp.base * cost + talent.q["生命上限提高·固定值"]
+      let cost = talent.q["生命提高·百分比生命"] + (cons > 0 ? 0.5 : 0)
+      let addMaxHp = attr.hp.base * cost + talent.q["生命提高·固定值"]
       return {
         avg: Format.comma(addMaxHp, 1),
         type: "text"
       }
     }
   }, {
-    title: "忆灵技伤害(3w累计治疗)",
-    dmg: ({ talent }, { basic }) => basic(30000 * talent.me["技能伤害"], "me")
+    title: "忆灵技伤害(2w累计治疗)",
+    dmg: ({ talent }, { basic }) => basic(20000 * talent.me["技能伤害"], "me")
   }, {
     title: "忆灵天赋生命回复",
-    dmg: ({ talent, attr, calc }, { heal }) => heal(calc(attr.hp) * talent.mt["回复·百分比"] + talent.mt["回复·固定值"])
+    dmg: ({ talent, attr, calc }, { heal }) => heal(calc(attr.hp) * talent.mt["治疗·百分比生命"] + talent.mt["治疗·固定值"])
   }, {
     title: "忆灵天赋额外回复",
-    dmg: ({ talent, attr, calc }, { heal }) => heal(calc(attr.hp) * talent.mt["额外回复·百分比"] + talent.mt["额外回复·固定值"])
+    dmg: ({ talent, attr, calc }, { heal }) => heal(calc(attr.hp) * talent.mt["额外治疗·百分比生命"] + talent.mt["额外治疗·固定值"])
   }
 ]
 
 export const defDmgIdx = 6
+export const defParams = { Memosprite: true }
 export const mainAttr = "hp,cdmg,heal"
 
 export const buffs = [
   {
     title: "伊卡状态：基础生命值: [_hpBase]，基础速度: 0",
     data: {
-      _hpBase: ({ trees, attr, calc }) => calc(attr.staticAttr.hp) * (trees["103"] ? 1.2 : 1)
+      _hpBase: ({ trees, attr, calc }) => calc(attr.staticAttr.hp) * (trees["103"] ? 0.7 : 0.5)
     }
   }, {
     title: "终结技-飞入晨昏的我们：处于【雨过天晴】状态时，我方全体目标生命上限提高[hpPlus]",
     data: {
-      hpPlus: ({ talent, attr, cons }) => attr.hp.base * (talent.q["生命上限提高·百分比"] + (cons > 0 ? 0.5 : 0)) + talent.q["生命上限提高·固定值"]
+      hpPlus: ({ talent, attr, cons }) => attr.hp.base * (talent.q["生命提高·百分比生命"] + (cons > 0 ? 0.5 : 0)) + talent.q["生命提高·固定值"]
+    }
+  }, {
+    title: "天赋-疗愈世间的晨曦：风堇或小伊卡提供治疗时，小伊卡造成的伤害提高[meDmg]%",
+    data: {
+      meDmg: ({ talent }) => talent.me["伤害提高"] * 100
     }
   }, {
     title: "行迹-阴云莞尔：暴击率提高[cpct]%，治疗量提高[heal]%",

@@ -103,6 +103,10 @@ export default function(staticIdx, keyIdx) {
     长路终有归途: [
       staticIdx(1, "stance"),
       keyIdx("【焚灼】状态下，敌方目标受到的击破伤害提高[breakEnemydmg]%", "breakEnemydmg", 2)
+    ],
+    谎言在风中飘扬: [
+      staticIdx(1, "speedPct"),
+      keyIdx("【茫然】状态下，敌方目标防御力降低[ignore]%", "ignore", 2)
     ]
   }
 }

@@ -57,6 +57,10 @@ export default function(staticIdx, keyIdx) {
     "让告别，更美一些": [
       staticIdx(1, "hpPct"),
       keyIdx("使装备者和装备者的忆灵造成的伤害时，无视目标[ignore]%的防御力", "ignore", 2)
+    ],
+    "愿虹光永驻天空": [
+      staticIdx(1, "speedPct"),
+      keyIdx("装备者的忆灵施放忆灵技时，使敌方全体受到的伤害提高[enemydmg]%", "enemydmg", 4)
     ]
   }
 }

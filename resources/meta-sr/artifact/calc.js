@@ -426,5 +426,24 @@ export default {
         }
       }
     ]
+  },
+  烈阳惊雷的女武神: {
+    2: attr("speedPct", 6),
+    4: {
+      title: "装备者持有【甘霖】时，速度提高[speedPct]%，暴击伤害提高[cdmg]%",
+      data: {
+        speedPct: 6,
+        cdmg: 15
+      }
+    }
+  },
+  恶海逐波的船长: {
+    2: attr("cdmg", 16),
+    4: {
+      title: "消耗两层【助力】，使攻击力提高[atkPct]%",
+      data: {
+        atkPct: 48
+      }
+    }
   }
 }
