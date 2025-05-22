@@ -56,7 +56,7 @@ export const buffs = [
   }, {
     title: "天赋-疗愈世间的晨曦：风堇或小伊卡提供治疗时，小伊卡造成的伤害提高[meDmg]%",
     data: {
-      meDmg: ({ talent }) => talent.me["伤害提高"] * 100
+      meDmg: ({ talent }) => talent.t["伤害提高"] * 100 * 3
     }
   }, {
     title: "行迹-阴云莞尔：暴击率提高[cpct]%，治疗量提高[heal]%",
