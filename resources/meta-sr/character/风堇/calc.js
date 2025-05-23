@@ -30,7 +30,7 @@ export const details = [
     title: "忆灵技伤害(qeee累计治疗)",
     dmg: ({ talent, cons, attr, calc }, dmg) => {
       const cost = cons < 6 ? 0.5 : 0.88
-      const cons1 = cons > 0 ? dmg.heal(calc(attr.hp) * 0.08) : 0
+      const cons1 = cons > 0 ? dmg.heal(calc(attr.hp) * 0.08).avg : 0
       const qHeal = dmg.heal(attr.hp.base * (talent.q["治疗·百分比生命"] + talent.q["小伊卡治疗·百分比生命"]) + talent.q["治疗·固定值"] + talent.q["小伊卡治疗·固定值"]).avg * cost
       const eHeal = dmg.heal(calc(attr.hp) * (talent.e["治疗·百分比生命"] + talent.e["小伊卡治疗·百分比生命"]) + talent.e["治疗·固定值"] + talent.e["小伊卡治疗·固定值"]).avg
       const eHeal1 = (qHeal + cons1 + eHeal) * cost
