@@ -27,12 +27,15 @@ export const details = [
       }
     }
   }, {
-    title: "忆灵技伤害(qeee累计治疗)",
+    title: "忆灵技伤害(eqeee累计治疗)",
     dmg: ({ talent, cons, attr, calc }, dmg) => {
       const cost = cons < 6 ? 0.5 : 0.88
       const cons1 = cons > 0 ? dmg.heal(calc(attr.hp) * 0.08).avg : 0
-      const qHeal = dmg.heal(attr.hp.base * (talent.q["治疗·百分比生命"] + talent.q["小伊卡治疗·百分比生命"]) + talent.q["治疗·固定值"] + talent.q["小伊卡治疗·固定值"]).avg * cost
-      const eHeal = dmg.heal(calc(attr.hp) * (talent.e["治疗·百分比生命"] + talent.e["小伊卡治疗·百分比生命"]) + talent.e["治疗·固定值"] + talent.e["小伊卡治疗·固定值"]).avg
+      const ePct = talent.e["治疗·百分比生命"] + talent.e["小伊卡治疗·百分比生命"]
+      const ePlus = talent.e["治疗·固定值"] + talent.e["小伊卡治疗·固定值"]
+      const eHeal0 = dmg.heal(calc(attr.staticAttr.hp) * ePct + ePlus).avg * 4
+      const qHeal = (eHeal0 + dmg.heal(calc(attr.staticAttr.hp) * (talent.q["治疗·百分比生命"] + talent.q["小伊卡治疗·百分比生命"]) + talent.q["治疗·固定值"] + talent.q["小伊卡治疗·固定值"]).avg * 4) * cost
+      const eHeal = dmg.heal(calc(attr.hp) * ePct + ePlus).avg * 4
       const eHeal1 = (qHeal + cons1 + eHeal) * cost
       const eHeal2 = (eHeal1 + cons1 + eHeal) * cost
       return dmg.basic((eHeal2 + cons1 + eHeal) * talent.me["技能伤害"], "me")
@@ -96,10 +99,10 @@ export const buffs = [
     title: "风堇4魂：行迹【暴风停歇】的增益效果获得增强，每超过1点速度，风堇和伊卡的暴击伤害额外提高2%",
     cons: 4
   }, {
-    title: "风堇6魂：我方全体目标的全属性抗性穿透提高[kx]%",
+    title: "风堇6魂：小伊卡施放忆灵技清空累计治疗数值改为12%，我方全体目标的全属性抗性穿透提高[kx]%",
     cons: 6,
     data: {
-      kx: 24
+      kx: 20
     }
   }
 ]
