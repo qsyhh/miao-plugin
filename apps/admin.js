@@ -156,7 +156,7 @@ export class admin extends plugin {
       let path = `./plugins/miao-plugin/resources/meta-${game}/info/json/`
       if (fs.existsSync(path)) {
         e.reply(`[喵喵角色攻略-${game}] ${/安装/.test(e.msg) ? "攻略资源已安装，" : ""}开始尝试更新攻略资源包，请稍后~`)
-        command = "git pull"
+        command = `git pull origin ${game}`
         if (e.msg.includes("强制")) command = "git  checkout . && git  pull"
 
         let ret = await execPro(command, { cwd: path })
@@ -176,7 +176,7 @@ export class admin extends plugin {
           e.reply(`[喵喵角色攻略-${game}] 攻略资源更新成功~`)
         }
       } else if (/安装/.test(e.msg)) {
-        command = `git clone -b ${game} https://gitee.com/qsyhh/resources.git "${path}" --depth=1`
+        command = `git clone -b ${game} https://gitee.com/qsyhh_res/${game}.git "${path}" --depth=1`
         e.reply(`[喵喵角色攻略-${game}] 开始尝试安装攻略资源包，请稍后~`)
         let ret = await execPro(command)
         if (ret.error) {
