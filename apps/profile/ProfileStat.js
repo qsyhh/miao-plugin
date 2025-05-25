@@ -412,7 +412,7 @@ const ProfileStat = {
       materials: mode === "talent",
       retType: "array",
       sort: true
-    })
+    }, game)
 
     if (avatarRet.length === 0) return e._isReplyed || e.reply(`查询失败，暂未获得#${uid}角色数据，请绑定CK或 #更新面板`)
 

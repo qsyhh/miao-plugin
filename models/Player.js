@@ -263,7 +263,9 @@ export default class Player extends Base {
 
   // 获取所有面板数据
   getProfiles() {
-    let ret = {}
+    let ret = {
+      game: this.game
+    }
     this.forEachAvatar((avatar) => {
       if (avatar.isProfile) ret[avatar.id] = avatar
     })
@@ -344,15 +346,16 @@ export default class Player extends Base {
    * @param cfg.retType 返回类型，默认id为key对象，设置为array时返回数组
    * @param cfg.rank 面板数据是否参与群排序
    * @param cfg.sort 返回为数组时，数据是否排序，排序规则：等级、星级、天赋、命座、武器、好感的顺序排序
+   * @param game 游戏类型
    * @returns {Promise<any[]|{}>}
    */
 
-  async refreshAndGetAvatarData(cfg) {
+  async refreshAndGetAvatarData(cfg, game) {
     await this.refresh(cfg)
 
     let rank = false
     let e = this.e
-    if (cfg.rank === true && e && e.group_id) rank = await ProfileRank.create({ group: e.group_id, uid: this.uid, qq: e.user_id })
+    if (cfg.rank === true && e && e.group_id) rank = await ProfileRank.create({ group: e.group_id, uid: this.uid, qq: e.user_id }, game)
 
     let avatarRet = {}
     this.forEachAvatar((avatar) => {

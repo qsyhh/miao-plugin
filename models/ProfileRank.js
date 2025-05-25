@@ -3,11 +3,12 @@ import moment from "moment"
 import { Cfg, Common, Data, Version } from "#miao"
 
 export default class ProfileRank {
-  constructor(data) {
+  constructor(data, game = "gs") {
     this.groupId = data.groupId || data.groupId || ""
     if (!this.groupId || this.groupId === "undefined") return false
     this.qq = data.qq
     this.uid = data.uid + ""
+    this.game = game
     this.allowRank = false
   }
 
@@ -96,13 +97,13 @@ export default class ProfileRank {
     if (charId === "") await redis.del(`miao:rank:${groupId}:cfg`)
   }
 
-  static async getGroupCfg(groupId) {
+  static async getGroupCfg(groupId, game = "gs") {
     const rankLimitTxt = {
       1: "无限制",
       2: "绑定有CK的用户",
       3: "绑定CK，或列表有16个角色数据",
-      4: "绑定CK，或列表有安柏&凯亚&丽莎的数据",
-      5: "绑定CK，或列表有16个角色数据且包含安柏&凯亚&丽莎"
+      4: `绑定CK，或列表有${game == "gs" ? "安柏&凯亚&丽莎" : "丹恒&三月七"}的数据`,
+      5: `绑定CK，或列表有16个角色数据且包含${game == "gs" ? "安柏&凯亚&丽莎" : "丹恒&三月七"}`
     }
     let rankLimit = Common.cfg("groupRankLimit") * 1 || 1
     let ret = await Data.redisGet(`miao:rank:${groupId}:cfg`, {
@@ -135,12 +136,13 @@ export default class ProfileRank {
   static async setUidInfo({ uid, qq, profiles, uidType = "bind" }) {
     if (!uid) return false
 
-    let basicCount = 0
+    let basicCount = profiles.game == "sr" ? 1 : 0
     let totalCount = 0
     for (let charId in profiles) {
       let profile = profiles[charId]
       if (!profile || !profile.hasData) continue
-      if ([ "安柏", "凯亚", "丽莎" ].includes(profile.name)) basicCount++
+      let name = profile.name
+      if ([ "安柏", "凯亚", "丽莎", "丹恒", "三月七", "三月七·巡猎" ].includes(name)) basicCount++
       totalCount++
     }
     let data = {}

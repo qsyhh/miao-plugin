@@ -43,7 +43,7 @@ export async function groupRank(e) {
     }
   }
   // 正常群排名
-  let groupCfg = await ProfileRank.getGroupCfg(groupId)
+  let groupCfg = await ProfileRank.getGroupCfg(groupId, game)
   if (!groupRank) return e.reply("群面板排名功能已禁用，Bot主人可通过【#喵喵设置】启用...")
   if (groupCfg.status === 1) return e.reply("本群已关闭群排名，群管理员或Bot主人可通过【#启用排名】启用...")
 
@@ -70,7 +70,7 @@ export async function groupRank(e) {
         uids = await ProfileRank.getGroupMaxUidList(groupId, mode, game)
       }
       if (uids.length > 0) {
-        return renderCharRankList({ e, uids, char, mode, groupId })
+        return renderCharRankList({ e, uids, char, mode, groupId }, game)
       } else {
         e.reply([ `暂无排名：请通过【${e.isSr ? "*" : "#"}面板】查看角色面板以更新排名信息...`, new Button(e).profile(char) ])
       }
@@ -122,8 +122,9 @@ export async function refreshRank(e) {
     let profiles = player.getProfiles()
     // 刷新rankLimit
     await ProfileRank.setUidInfo({ uid, profiles, qq, uidType: type })
-    let rank = await ProfileRank.create({ groupId, uid, qq })
+    let rank = await ProfileRank.create({ groupId, uid, qq }, game)
     for (let id in profiles) {
+      if (id == "game") continue
       let profile = profiles[id]
       if (!profile.hasData) continue
       await rank.getRank(profile, true)
@@ -146,7 +147,7 @@ export async function manageRank(e) {
   e.reply(`当前群排名功能${isClose ? "已禁用..." : "已启用...\n如数据有问题可通过【#刷新排名】命令来刷新当前群内排名"}`)
 }
 
-export async function renderCharRankList({ e, uids, char, mode, groupId }) {
+export async function renderCharRankList({ e, uids, char, mode, groupId }, game = "gs") {
   let list = []
   let _dmg
   for (let ds of uids) {
@@ -158,7 +159,7 @@ export async function renderCharRankList({ e, uids, char, mode, groupId }) {
     let profile = avatar.getProfile()
 
     if (profile) {
-      let profileRank = await ProfileRank.create({ groupId, uid })
+      let profileRank = await ProfileRank.create({ groupId, uid }, game)
       let data = await profileRank.getRank(profile, true)
       let mark = data?.mark?.data
       let tmp = {
@@ -255,7 +256,7 @@ export async function renderCharRankList({ e, uids, char, mode, groupId }) {
     isMemosprite,
     style: `<style>body .container {width: ${isMemosprite ? 970 : e.isSr ? 900 : 820}px;}</style>`
   }
-  const rankCfg = await ProfileRank.getGroupCfg(groupId)
+  const rankCfg = await ProfileRank.getGroupCfg(groupId, game)
   // 渲染图像
   return e.reply([
     await Common.render("character/rank-profile-list", {

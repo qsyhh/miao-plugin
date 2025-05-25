@@ -111,11 +111,12 @@ const ProfileList = {
     await ProfileRank.setUidInfo({ uid, profiles, qq, uidType: isSelfUid ? "ck" : "bind" })
 
     let groupId = e.group_id
-    if (groupId) rank = await ProfileRank.create({ groupId, uid, qq: e.user_id })
+    if (groupId) rank = await ProfileRank.create({ groupId, uid, qq: e.user_id }, player.game)
 
-    const rankCfg = await ProfileRank.getGroupCfg(groupId)
+    const rankCfg = await ProfileRank.getGroupCfg(groupId, player.game)
     const groupRank = rank && (cfg?.diyCfg?.groupRank || false) && rankCfg.status !== 1
     for (let id in profiles) {
+      if (id == "game") continue
       let profile = profiles[id]
       let char = profile.char
       let tmp = char.getData("id,face,name,abbr,element,star")
