@@ -12,10 +12,10 @@ export const details = [
     dmg: ({ talent, attr, calc }, { heal }) => heal(calc(attr.hp) * talent.e["小伊卡治疗·百分比生命"] + talent.e["小伊卡治疗·固定值"])
   }, {
     title: "终结技生命回复",
-    dmg: ({ talent, attr, calc }, { heal }) => heal(calc(attr.staticAttr.hp) * talent.q["治疗·百分比生命"] + talent.q["治疗·固定值"])
+    dmg: ({ talent, attr, calc }, { heal }) => heal((calc(attr.staticAttr.hp) + (calc(attr.speed) > 200 ? attr.hp.base * 0.2 : 0)) * talent.q["治疗·百分比生命"] + talent.q["治疗·固定值"])
   }, {
     title: "终结技伊卡回复",
-    dmg: ({ talent, attr, calc }, { heal }) => heal(calc(attr.staticAttr.hp) * talent.q["小伊卡治疗·百分比生命"] + talent.q["小伊卡治疗·固定值"])
+    dmg: ({ talent, attr, calc }, { heal }) => heal((calc(attr.staticAttr.hp) + (calc(attr.speed) > 200 ? attr.hp.base * 0.2 : 0)) * talent.q["小伊卡治疗·百分比生命"] + talent.q["小伊卡治疗·固定值"])
   }, {
     title: "终结技后生命上限提高",
     dmg: ({ talent, attr, cons }) => {
@@ -28,17 +28,15 @@ export const details = [
     }
   }, {
     title: "忆灵技伤害(eqeee累计治疗)",
-    dmg: ({ talent, cons, attr, calc }, dmg) => {
+    dmg: ({ talent, cons, attr, calc }, { heal, basic }) => {
+      let staticHp = calc(attr.staticAttr.hp)
+      if (calc(attr.speed) > 200) staticHp += attr.staticAttr.hp.base * 0.2
       const cost = cons < 6 ? 0.5 : 0.88
-      const cons1 = cons > 0 ? dmg.heal(calc(attr.hp) * 0.08).avg : 0
-      const ePct = talent.e["治疗·百分比生命"] + talent.e["小伊卡治疗·百分比生命"]
-      const ePlus = talent.e["治疗·固定值"] + talent.e["小伊卡治疗·固定值"]
-      const eHeal0 = dmg.heal(calc(attr.staticAttr.hp) * ePct + ePlus).avg * 4
-      const qHeal = (eHeal0 + dmg.heal(calc(attr.staticAttr.hp) * (talent.q["治疗·百分比生命"] + talent.q["小伊卡治疗·百分比生命"]) + talent.q["治疗·固定值"] + talent.q["小伊卡治疗·固定值"]).avg * 4) * cost
-      const eHeal = dmg.heal(calc(attr.hp) * ePct + ePlus).avg * 4
-      const eHeal1 = (qHeal + cons1 + eHeal) * cost
-      const eHeal2 = (eHeal1 + cons1 + eHeal) * cost
-      return dmg.basic((eHeal2 + cons1 + eHeal) * talent.me["技能伤害"], "me")
+      const cons1 = cons > 0 ? heal(calc(attr.hp) * 0.08).avg : 0
+      const Dmg = (hp, key) => heal(hp * talent[key]["治疗·百分比生命"] + talent[key]["治疗·固定值"]).avg * 4 + heal(hp * talent[key]["小伊卡治疗·百分比生命"] + talent[key]["小伊卡治疗·固定值"]).avg
+      let healPlus = (Dmg(staticHp, "e") + Dmg(staticHp, "q")) * cost;
+      (function healCalc(i = 1) { healPlus = (healPlus + cons1 + Dmg(calc(attr.hp), "e")) * (i < 3 ? cost : 1); if (i < 3) healCalc(i + 1) })()
+      return basic(healPlus * talent.me["技能伤害"], "me")
     }
   }, {
     title: "忆灵天赋生命回复",
@@ -77,7 +75,7 @@ export const buffs = [
       heal: 25
     }
   }, {
-    title: "行迹-暴风停歇：当前速度[_speed]，速度大于200时，风堇与伊卡的生命上限提高[hpPct]%，治疗量提高[heal]%，四魂爆伤提高[cdmg]%",
+    title: ({ cons }) => `行迹-暴风停歇：当前速度[_speed]，速度大于200时，风堇与伊卡的生命上限提高[hpPct]%，治疗量提高[heal]%${cons > 3 ? "，四魂爆伤提高[cdmg]%" : ""}`,
     sort: 9,
     tree: 3,
     data: {

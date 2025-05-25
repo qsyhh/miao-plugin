@@ -152,7 +152,7 @@ let DmgAttr = {
         if (!ds.trees[`10${buff.tree}`]) return
       }
 
-      let title = buff.title
+      let title = typeof buff.title === "function" ? buff.title(ds) : buff.title
 
       if (buff.mastery) {
         let mKey = {
