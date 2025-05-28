@@ -33,9 +33,9 @@ export const details = [
       if (calc(attr.speed) > 200) staticHp += attr.staticAttr.hp.base * 0.2
       const cost = cons < 6 ? 0.5 : 0.88
       const cons1 = cons > 0 ? heal(calc(attr.hp) * 0.08).avg : 0
-      const Dmg = (hp, key) => heal(hp * talent[key]["治疗·百分比生命"] + talent[key]["治疗·固定值"]).avg * 4 + heal(hp * talent[key]["小伊卡治疗·百分比生命"] + talent[key]["小伊卡治疗·固定值"]).avg
-      let healPlus = (Dmg(staticHp, "e") + Dmg(staticHp, "q")) * cost;
-      (function healCalc(i = 1) { healPlus = (healPlus + cons1 + Dmg(calc(attr.hp), "e")) * (i < 3 ? cost : 1); if (i < 3) healCalc(i + 1) })()
+      const healCalc = (hp, key) => heal(hp * talent[key]["治疗·百分比生命"] + talent[key]["治疗·固定值"]).avg * 4 + heal(hp * talent[key]["小伊卡治疗·百分比生命"] + talent[key]["小伊卡治疗·固定值"]).avg
+      let healPlus = (healCalc(staticHp, "e") + healCalc(staticHp, "q")) * cost;
+      (function healCalc(i = 1) { healPlus = (healPlus + cons1 + healCalc(calc(attr.hp), "e")) * (i < 3 ? cost : 1); if (i < 3) healCalc(i + 1) })()
       return basic(healPlus * talent.me["技能伤害"], "me")
     }
   }, {
