@@ -133,10 +133,10 @@ export default class ProfileRank {
     await Data.redisSet(`miao:rank:${groupId}:cfg`, cfg, 3600 * 24 * 365)
   }
 
-  static async setUidInfo({ uid, qq, profiles, uidType = "bind" }) {
+  static async setUidInfo({ uid, qq, profiles, uidType = "bind" }, game = "gs") {
     if (!uid) return false
 
-    let basicCount = profiles.game == "sr" ? 1 : 0
+    let basicCount = game == "sr" ? 1 : 0
     let totalCount = 0
     for (let charId in profiles) {
       let profile = profiles[charId]

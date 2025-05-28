@@ -121,10 +121,9 @@ export async function refreshRank(e) {
     let player = new Player(uid, game)
     let profiles = player.getProfiles()
     // 刷新rankLimit
-    await ProfileRank.setUidInfo({ uid, profiles, qq, uidType: type })
+    await ProfileRank.setUidInfo({ uid, profiles, qq, uidType: type }, game)
     let rank = await ProfileRank.create({ groupId, uid, qq }, game)
     for (let id in profiles) {
-      if (id == "game") continue
       let profile = profiles[id]
       if (!profile.hasData) continue
       await rank.getRank(profile, true)
@@ -159,7 +158,7 @@ export async function renderCharRankList({ e, uids, char, mode, groupId }, game 
     let profile = avatar.getProfile()
 
     if (profile) {
-      let profileRank = await ProfileRank.create({ groupId, uid }, game)
+      let profileRank = await ProfileRank.create({ groupId, uid, game })
       let data = await profileRank.getRank(profile, true)
       let mark = data?.mark?.data
       let tmp = {

@@ -108,7 +108,7 @@ const ProfileList = {
 
     // 检测标志位
     let qq = (e.at && !e.atBot) ? e.at : e.user_id
-    await ProfileRank.setUidInfo({ uid, profiles, qq, uidType: isSelfUid ? "ck" : "bind" })
+    await ProfileRank.setUidInfo({ uid, profiles, qq, uidType: isSelfUid ? "ck" : "bind" }, player.game)
 
     let groupId = e.group_id
     if (groupId) rank = await ProfileRank.create({ groupId, uid, qq: e.user_id }, player.game)
@@ -116,7 +116,6 @@ const ProfileList = {
     const rankCfg = await ProfileRank.getGroupCfg(groupId, player.game)
     const groupRank = rank && (cfg?.diyCfg?.groupRank || false) && rankCfg.status !== 1
     for (let id in profiles) {
-      if (id == "game") continue
       let profile = profiles[id]
       let char = profile.char
       let tmp = char.getData("id,face,name,abbr,element,star")
