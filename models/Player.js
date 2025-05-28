@@ -353,7 +353,7 @@ export default class Player extends Base {
 
     let rank = false
     let e = this.e
-    if (cfg.rank === true && e && e.group_id) rank = await ProfileRank.create({ group: e.group_id, uid: this.uid, qq: e.user_id, game })
+    if (cfg.rank === true && e && e.group_id) rank = await ProfileRank.create({ group: e.group_id, uid: this.uid, qq: e.user_id }, game)
 
     let avatarRet = {}
     this.forEachAvatar((avatar) => {
