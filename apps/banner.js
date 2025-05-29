@@ -10,7 +10,7 @@ let dataList = {
   char: "角色,up",
   weapon: "武器,光锥"
 }
-let Blacklist = [ "刻晴", "提纳里", "迪希雅", "狼的末路", "风鹰剑", "阿莫斯之弓", "四风原典", "和璞鸢", "天空之翼", "天空之刃", "天空之傲", "天空之卷", "天空之脊" ]
+let Blacklist = [ "刻晴", "提纳里", "迪希雅", "梦见月瑞希", "狼的末路", "风鹰剑", "阿莫斯之弓", "四风原典", "和璞鸢", "天空之翼", "天空之刃", "天空之傲", "天空之卷", "天空之脊" ]
 let dataLists = {}
 lodash.forEach(dataList, (txt, key) => {
   Data.eachStr(txt, (t) => (dataLists[t] = key))
