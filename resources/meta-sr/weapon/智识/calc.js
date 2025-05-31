@@ -117,6 +117,6 @@ export default function(staticIdx, keyIdx) {
         }
       }
     ],
-    "生命当付之一炬": [ keyIdx("装备者对其造成的伤害提高[dmg]%，受到装备者攻击时，使其防御力降低[ignore]%", { dmg: 1, ignore: 2 }) ]
+    "生命当付之一炬": [ keyIdx("装备者对其造成的伤害提高[dmg]%，受到装备者攻击时，使其防御力降低[enemyDef]%", { dmg: 1, enemyDef: 2 }) ]
   }
 }

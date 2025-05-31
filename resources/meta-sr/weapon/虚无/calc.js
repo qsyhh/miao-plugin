@@ -106,7 +106,7 @@ export default function(staticIdx, keyIdx) {
     ],
     谎言在风中飘扬: [
       staticIdx(1, "speedPct"),
-      keyIdx("【茫然】状态下，敌方目标防御力降低[ignore]%", "ignore", 2)
+      keyIdx("【茫然】状态下，敌方目标防御力降低[enemyDef]%", "enemyDef", 2)
     ]
   }
 }
