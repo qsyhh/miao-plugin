@@ -19,6 +19,31 @@ let MysPanelHSRData = {
     }
     avatar.md5 = Data.generateMD5(setData, "sr")
     avatar.setAvatar(setData, "mysPanelHSR")
+    if (ds.properties[3].final - avatar.attr.speed > 0.2) {
+      let errNum = Math.ceil((ds.properties[3].final - avatar.attr.speed) / 0.3)
+      let eachCalc = (errNums) => {
+        lodash.forEach(setData.artis, (ds, key) => {
+          lodash.forEach(ds.attrIds, (values, idx) => {
+            if (values.startsWith("7")) {
+              let [ id, time, time2 ] = values.split(",")
+              // 判断1：误差值/0.3大于0；判断2：限制0.3可出现的最大值；判断3：原速度的整数部分是否等于原速度+0.3的整数部分
+              if (errNums > 0 && time2 < (time > 2 ? 6 : time * 2) && Math.floor((time * 2) + (time2 * 0.3)) === Math.floor((time * 2) + ((time2 * 1 + 1) * 0.3))) {
+                setData.artis[key].attrIds[idx] = `${id},${time},${time2 * 1 + 1}`
+                errNums--
+              }
+            }
+          })
+        })
+        return errNums
+      }
+      for (let i = 1; i <= 3; i++) {
+        if (errNum <= 0) break
+        errNum = eachCalc(errNum)
+      }
+      avatar.md5 = Data.generateMD5(setData, "sr")
+      // 这里静态attr没更新，但计算伤害时是正确的，先打个标记
+      avatar.setAvatar(setData, "mysPanelHSR")
+    }
     return avatar
   },
 
@@ -89,31 +114,28 @@ let MysPanelHSRData = {
     return ret
   },
 
-  getArtifactAttrId(rarity, curTime, propertyType, valueStr) {
-    const { metaData } = Meta.getMeta("sr", "arti")
-    const propertyName = propertyType2attrName[propertyType]
-    const subAttrInfo = metaData.starData[rarity].sub
-    const propertyId = lodash.findKey(subAttrInfo, obj => obj.key === propertyName)
-    // base: 最大取值
-    // step: 减去的多少
-    const { base, step } = subAttrInfo[propertyId]
-    // Is valueStr a fixed value or a percentage?
-    let destValueSum
-    if (valueStr.substring(-1) == "%") {
-      destValueSum = parseFloat(valueStr.slice(0, -1))
-    } else {
-      destValueSum = parseFloat(valueStr)
-    }
-    const numSteps = Math.round((destValueSum - (curTime * base)) / step)
-    return `${propertyId},${curTime},${numSteps}`
-  },
-
   getArtifactAttrIds(rarity, sub_property_list) {
     let attrIds = []
+    const { metaData } = Meta.getMeta("sr", "arti")
+    const starData = metaData.starData[rarity]
+    const getArtifactAttrId = (sub, curTime, propertyId, valueStr) => {
+      const { key, base, step } = sub
+      let destValueSum
+      if (valueStr.substring(-1) == "%") {
+        destValueSum = parseFloat(valueStr.slice(0, -1))
+      } else {
+        destValueSum = parseFloat(valueStr)
+      }
+      if (key === "speed") curTime = Math.floor(destValueSum / base) || 1
+      const numSteps = Math.ceil((destValueSum - (curTime * base)) / step)
+      return `${propertyId},${curTime},${numSteps}`
+    }
     lodash.forEach(sub_property_list, (sub_property) => {
       const { property_type, value, times } = sub_property
-      const combination = MysPanelHSRData.getArtifactAttrId(rarity, times, property_type, value)
-      attrIds = [ ...attrIds, combination ]
+      const propertyId = lodash.findKey(starData.sub, obj => obj.key === propertyType2attrName[property_type])
+      const sub = starData.sub[propertyId]
+      const combination = getArtifactAttrId(sub, times, propertyId, value)
+      attrIds.push(combination)
     })
     return attrIds
   }
