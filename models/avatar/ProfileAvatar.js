@@ -29,7 +29,7 @@ const ProfileAvatar = {
 
   isProfile(avatar) {
     // 检查数据源
-    if (!avatar._source || ![ "enka", "enkaHSR", "change", "miao", "mgg", "hutao", "homo", "avocado", "mysPanel", "mysPanelHSR" ].includes(avatar._source)) return false
+    if (!avatar._source || ![ "enka", "EnkaHSR", "change", "miao", "mgg", "hutao", "homo", "avocado.wiki", "mysPanel", "mysPanelHSR" ].includes(avatar._source)) return false
     // 检查武器及天赋
     if (!avatar.weapon || lodash.isUndefined(avatar.weapon.promote) || !avatar.talent) return false
     // 检查圣遗物词条是否完备
