@@ -98,8 +98,6 @@ export default {
   },
 
   hasAttr(arti) {
-    if (arti.isSr) return true
-
     let ret = true
     arti.forEach((ds) => {
       if (ds.name) return !!(ds.mainId && ds.attrIds)

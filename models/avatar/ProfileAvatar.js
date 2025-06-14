@@ -28,15 +28,14 @@ const ProfileAvatar = {
   },
 
   isProfile(avatar) {
-    if (avatar.isSr) return true
     // 检查数据源
-    if (!avatar._source || ![ "enka", "change", "miao", "mgg", "hutao", "homo", "mysPanel" ].includes(avatar._source)) return false
+    if (!avatar._source || ![ "enka", "enkaHSR", "change", "miao", "mgg", "hutao", "homo", "avocado", "mysPanel", "mysPanelHSR" ].includes(avatar._source)) return false
     // 检查武器及天赋
-    if (avatar.isGs && (!avatar.weapon || lodash.isUndefined(avatar.weapon.promote) || !avatar.talent)) return false
+    if (!avatar.weapon || lodash.isUndefined(avatar.weapon.promote) || !avatar.talent) return false
     // 检查圣遗物词条是否完备
     if (!avatar.artis || !avatar.artis.hasAttr) return false
     // 检查旅行者
-    if ([ "空", "荧" ].includes(avatar.name)) return !!avatar.elem
+    if (avatar.isGs && [ "空", "荧" ].includes(avatar.name)) return !!avatar.elem
 
     return true
   },
