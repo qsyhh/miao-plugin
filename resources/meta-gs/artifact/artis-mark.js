@@ -101,5 +101,6 @@ export const usefulAttr = {
   瓦雷莎: { hp: 0, atk: 75, def: 0, cpct: 100, cdmg: 100, mastery: 0, dmg: 100, phy: 0, recharge: 50, heal: 0 },
   伊安珊: { hp: 0, atk: 100, def: 0, cpct: 0, cdmg: 0, mastery: 0, dmg: 0, phy: 0, recharge: 100, heal: 50 },
   爱可菲: { hp: 0, atk: 100, def: 0, cpct: 100, cdmg: 100, mastery: 0, dmg: 80, phy: 0, recharge: 80, heal: 0 },
-  伊法: { hp: 0, atk: 50, def: 0, cpct: 50, cdmg: 50, mastery: 100, dmg: 80, phy: 0, recharge: 45, heal: 100 }
+  伊法: { hp: 0, atk: 50, def: 0, cpct: 50, cdmg: 50, mastery: 100, dmg: 80, phy: 0, recharge: 45, heal: 100 },
+  丝柯克: { hp: 0, atk: 75, def: 0, cpct: 100, cdmg: 100, mastery: 0, dmg: 100, phy: 0, recharge: 50, heal: 0 }
 }
