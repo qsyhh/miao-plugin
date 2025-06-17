@@ -10,17 +10,17 @@ export const details = [
     title: "短E后重击伤害",
     dmg: ({ talent }, dmg) => dmg(talent.e["重击伤害"], "a2")
   }, {
-    title: "Q斩击伤害",
+    title: "Q斩击伤害(<50点蛇之狡谋)",
     dmg: ({ talent }, dmg) => dmg(talent.q["斩击伤害"], "q")
   }, {
-    title: "Q斩击最终段伤害",
+    title: "Q斩击最终段伤害(<50点蛇之狡谋)",
     dmg: ({ talent }, dmg) => dmg(talent.q["斩击最终段伤害"], "q")
   }, {
-    title: "100点蛇之狡谋Q斩击伤害",
+    title: "Q斩击伤害(100点蛇之狡谋)",
     params: { szjmBuff: true },
     dmg: ({ talent }, dmg) => dmg(talent.q["斩击伤害"], "q")
   }, {
-    title: "100点蛇之狡谋Q斩击最终段伤害",
+    title: "Q斩击最终段伤害(100点蛇之狡谋)",
     params: { szjmBuff: true },
     dmg: ({ talent }, dmg) => dmg(talent.q["斩击最终段伤害"], "q")
   }, {
