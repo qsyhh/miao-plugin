@@ -68,7 +68,7 @@ export const buffs = [
     title: "丝柯克2命：施放七相一闪模式下的特殊元素爆发极恶技·尽后，攻击力提升[atkPct]%",
     cons: 2,
     data: {
-      atkPct: 30
+      atkPct: 70
     }
   }, {
     title: "丝柯克4命：3层死河渡断效果还会使丝柯克的攻击力提升[atkPct]%",

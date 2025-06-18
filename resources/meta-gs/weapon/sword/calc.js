@@ -325,6 +325,15 @@ export default function(step, staticStep) {
         aCpct: step(8),
         a2Cpct: step(8)
       }
+    },
+    苍耀: {
+      title: "施放元素战技后，攻击力提升[_atkPct0]%，元素能量为0时，攻击力还会提升[_atkPct1]%，暴击伤害提升[cdmg]%。",
+      refine: {
+        _atkPct0: step(24),
+        _atkPct1: step(24),
+        atkPct: step(24 * 2),
+        cdmg: step(40)
+      }
     }
   }
 }
