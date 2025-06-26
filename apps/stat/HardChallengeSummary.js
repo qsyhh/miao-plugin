@@ -33,7 +33,7 @@ export async function HardChallengeSummary(e) {
   let avatarIds = hc.getAvatars()
   let rawAvatarData = player.getAvatarData(avatarIds)
   let avatarData = hc.applyPopularity(rawAvatarData)
-  logger.info(hc, avatarIds, avatarData)
+
   return await Common.render("stat/hard-summary", {
     hard: hcData,
     avatars: avatarData,
