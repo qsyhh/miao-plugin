@@ -22,6 +22,11 @@ export const cfgSchema = {
         key: "幻想真境剧诗",
         def: true
       },
+      hardChallenge: {
+        title: "#幽境",
+        key: "幽境危战",
+        def: true
+      },
       profileStat: {
         title: "#练度统计",
         key: "练度统计",

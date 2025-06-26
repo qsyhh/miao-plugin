@@ -2,6 +2,7 @@
 import { AbyssTeam } from "./stat/AbyssTeam.js"
 import { AbyssSummary, AbyssChallenge } from "./stat/AbyssSummary.js"
 import { RoleCombatSummary } from "./stat/RoleCombatSummary.js"
+import { HardChallengeSummary } from "./stat/HardChallengeSummary.js"
 import { ConsStat, AbyssPct } from "./stat/AbyssStat.js"
 
 export class stat extends plugin {
@@ -35,6 +36,10 @@ export class stat extends plugin {
         {
           reg: "^#*(喵喵)*(幻想|幻境|剧诗|幻想真境剧诗)[ |0-9]*(数据)?$",
           fnc: "roleCombatSummary"
+        },
+        {
+          reg: "^#*(喵喵)*(幽境|危战|幽境危战)[ |0-9]*(数据)?$",
+          fnc: "HardChallengeSummary"
         }
       ]
     })
@@ -59,5 +64,9 @@ export class stat extends plugin {
 
   async roleCombatSummary(e) {
     return await RoleCombatSummary(e)
+  }
+
+  async HardChallengeSummary(e) {
+    return await HardChallengeSummary(e)
   }
 }

@@ -72,6 +72,10 @@ export const helpList = [
         title: "#幻想 #幻想真境剧诗",
         desc: "幻想真境剧诗数据"
       }, {
+        icon: 64,
+        title: "#幽境 #幽境危战",
+        desc: "幽境危战数据"
+      }, {
         icon: 55,
         title: "#202407幻想角色列表",
         desc: "幻想真境剧诗入场角色查询"
