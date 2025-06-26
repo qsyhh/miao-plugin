@@ -46,7 +46,8 @@ export const poolName = {
   茜特菈莉: "星边夜语",
   梦见月瑞希: "浮枕朝颜",
   瓦雷莎: "饫宴角戏",
-  爱可菲: "莓色香颂"
+  爱可菲: "莓色香颂",
+  丝坷克: "虚星临渡"
 }
 
 export const poolDetail = [
