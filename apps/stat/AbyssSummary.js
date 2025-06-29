@@ -10,8 +10,8 @@ export async function AbyssSummary(e) {
     return false
   }
   let mys = await MysApi.init(e, "all")
-  if (!mys || !mys.uid) {
-    if (isMatch) e.reply(`请绑定ck后再使用${e.original_msg || e.msg}`)
+  if (!mys || !await mys.checkCk()) {
+    if (isMatch) e.reply(mys ? `UID: ${mys.uid} Cookie失效，请重新登录或尝试【#刷新ck】` : `请绑定ck后再使用${e.original_msg || e.msg}`)
     return false
   }
   let ret = {}
@@ -128,7 +128,7 @@ export async function AbyssChallenge(e) {
 
   let mys = await MysApi.init(e, "all")
   if (!mys || !await mys.checkCk()) {
-    e.reply(mys ? "Cookie失效，请重新登录或尝试【#刷新ck】" : `请绑定ck后再使用${e.original_msg || e.msg}`)
+    e.reply(mys ? `UID: ${mys.uid} Cookie失效，请重新登录或尝试【#刷新ck】` : `请绑定ck后再使用${e.original_msg || e.msg}`)
     return false
   }
   let type = /上期/.test(e.original_msg || e.msg || "") ? 2 : 1

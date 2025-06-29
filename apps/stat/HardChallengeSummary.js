@@ -7,8 +7,8 @@ export async function HardChallengeSummary(e) {
 
   // 需要自身 ck 查询
   let mys = await MysApi.init(e, "cookie")
-  if (!mys || !mys.uid) {
-    if (isMatch) e.reply(`请绑定ck后再使用${e.original_msg || e.msg}`)
+  if (!mys || !await mys.checkCk()) {
+    if (isMatch) e.reply(mys ? `UID: ${mys.uid} Cookie失效，请重新登录或尝试【#刷新ck】` : `请绑定ck后再使用${e.original_msg || e.msg}`)
     return false
   }
   let uid = mys.uid
