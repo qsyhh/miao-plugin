@@ -2,7 +2,7 @@ import { Cfg, Common, Data } from "#miao"
 import { HardChallenge, MysApi, Player } from "#miao.models"
 
 export async function HardChallengeSummary(e) {
-  let isMatch = /^#(喵喵)(幽境|危战|幽境危战)(数据)?$/.test(e.original_msg || e.msg || "")
+  let isMatch = /^#(喵喵)?(幽境|危战|幽境危战)(数据)?$/.test(e.original_msg || e.msg || "")
   if (!Cfg.get("hardChallenge", false) && !isMatch) return false
 
   // 需要自身 ck 查询
