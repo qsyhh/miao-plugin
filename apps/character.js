@@ -85,6 +85,7 @@ export class character extends plugin {
         source = (await e.friend.getChatHistory(e.source.time, 1)).pop()
       }
       // 引用的不是纯图片
+      if (source?.message?.length === 2 && source?.message[0]?.type === "image" && source?.message[1]?.type === "text" && !source?.message[1]?.data?.text) source.message = [ source.message[0] ]
       if (!(source?.message?.length === 1 && source?.message[0]?.type === "image")) return false
     }
     let originalPic = Cfg.get("originalPic") * 1

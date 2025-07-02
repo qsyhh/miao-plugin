@@ -19,6 +19,7 @@ let MysPanelHSRData = {
     }
     avatar.md5 = Data.generateMD5(setData, "sr")
     avatar.setAvatar(setData, "mysPanelHSR")
+    if (!avatar.attr) return avatar
     if (ds.properties[3].final - avatar.attr.speed > 0.2) {
       let errNum = Math.ceil((ds.properties[3].final - avatar.attr.speed) / 0.3)
       let eachCalc = (errNums) => {
@@ -84,7 +85,7 @@ let MysPanelHSRData = {
   },
 
   getTrees(data) {
-    return lodash.sortBy(data.filter(skill => skill.point_type !== 2 && skill.is_activated), "point_id").map(skill => Number(skill.point_id))
+    return lodash.sortBy(data.filter(skill => skill.point_type !== 2 && skill.is_activated), "point_id").map(skill => skill.point_id)
   },
 
   getArtifact(data) {
