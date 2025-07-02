@@ -67,7 +67,7 @@ export default class ProfileDmg extends Base {
 
   trees() {
     let ret = {}
-    let reg = /\d{4}(\d{3})/
+    let reg = /1?\d{4}(\d{3})/
     lodash.forEach(this.profile.trees, (t) => {
       let regRet = reg.exec(t)
       if (regRet && regRet[1]) ret[regRet[1]] = true
