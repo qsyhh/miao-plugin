@@ -22,7 +22,7 @@ export default function(staticIdx, keyIdx) {
         }
       }
     ],
-    "物穰": [ keyIdx("释放战技与终结技时，治疗量提高[eHeal]%", { eHeal: 1, qHeal: 1 }) ],
+    "物穰": [ keyIdx("释放战技与终结技时，治疗量提高[heal]%", { heal: 1 }) ],
     "等价交换": [],
     "蕃息": [],
     "棺的回响": [
@@ -57,6 +57,10 @@ export default function(staticIdx, keyIdx) {
         }
       }
     ],
-    "梦的蒙太奇": [ staticIdx(1, "speedPct") ]
+    "梦的蒙太奇": [ staticIdx(1, "speedPct") ],
+    "直到明天的明天": [
+      staticIdx(1, "heal"),
+      keyIdx("造成的伤害提高[dmg]%", "dmg", 2)
+    ]
   }
 }

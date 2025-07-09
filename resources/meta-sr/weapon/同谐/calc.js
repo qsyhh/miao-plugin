@@ -50,6 +50,7 @@ export default function(staticIdx, keyIdx) {
     "如果时间是一朵花": [
       staticIdx(1, "cdmg"),
       keyIdx("装备者持有【谕示】时，使我方全体暴击伤害提高[cdmg]%", "cdmg", 2)
-    ]
+    ],
+    "追逐风的时候": [ keyIdx("进入战斗后，使我方全体造成的击破伤害提高[breakEnemydmg]%", "breakEnemydmg", 1) ]
   }
 }

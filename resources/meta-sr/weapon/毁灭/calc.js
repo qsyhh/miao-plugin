@@ -109,6 +109,32 @@ export default function(staticIdx, keyIdx) {
           }
         }
       }
+    ],
+    "一行往日的血": [ keyIdx("暴击率提高[cpct]%。战技和终结技造成的伤害提高[eDmg]%", { cpct: 1, eDmg: 2, qDmg: 2 }) ],
+    "黎明恰如此燃烧": [
+      (tables) => {
+        return {
+          title: "基础速度提高[_speed]%。",
+          sort: 1,
+          data: {
+            _speed: ({ calc, attr }) => calc(attr.hp) * tables[3] / 100
+          }
+        }
+      },
+      keyIdx("造成伤害时无视目标[ignore]%的防御力。施放终结技后，造成的伤害提高[dmg]%", { ignore: 2, dmg: 2 })
+    ],
+    "没有回报的加冕": [
+      staticIdx(1, "cdmg"),
+      keyIdx("施放终结技时，攻击力提高[atkPct]%", "atkPct", 2),
+      (tables) => {
+        return {
+          check: ({ attr }) => attr.sp >= 300,
+          title: "能量上限大于等于300点，攻击力提高[atkPct]%",
+          data: {
+            atkPct: tables[3]
+          }
+        }
+      }
     ]
   }
 }

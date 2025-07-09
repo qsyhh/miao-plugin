@@ -107,6 +107,10 @@ export default function(staticIdx, keyIdx) {
     谎言在风中飘扬: [
       staticIdx(1, "speedPct"),
       keyIdx("【茫然】状态下，敌方目标防御力降低[enemyDef]%", "enemyDef", 2)
+    ],
+    假日浴场大冒险: [
+      staticIdx(1, "dmg"),
+      keyIdx("使受到攻击的目标陷入易伤状态，受到的伤害提高[enemydmg]%", "enemydmg", 2)
     ]
   }
 }

@@ -111,6 +111,22 @@ export default function(staticIdx, keyIdx) {
           }
         }
       }
+    ],
+    "于那终点再见": [
+      staticIdx(1, "cdmg"),
+      keyIdx("装备者战技和追加攻击造成的伤害提高[eDmg]%", { eDmg: 2, tDmg: 2 })
+    ],
+    "理想燃烧的地狱": [
+      staticIdx(1, "cpct"),
+      keyIdx("我方的战技点上限大于等于6点，使装备者的攻击力提高[atkPct]%", "atkPct", 2),
+      (tables) => {
+        return {
+          title: "装备者每次施放战技后，使装备者的攻击力提高[atkPct]%，叠加4层",
+          data: {
+            atkPct: tables[3] * 4
+          }
+        }
+      }
     ]
   }
 }

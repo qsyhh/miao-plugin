@@ -445,5 +445,25 @@ export default {
         atkPct: 48
       }
     }
+  },
+  妖精织梦的乐园: {
+    2: {
+      title: "单目标使装备者及其忆灵造成的伤害提高[dmg]%",
+      data: {
+        dmg: 12 * 3
+      }
+    }
+  },
+  沉欢醉饮的海隅: {
+    2: [
+      attr("atkPct", 12), {
+        check: ({ attr, calc }) => calc(attr.atk) >= 2400,
+        title: "当装备者的攻击力大于等于[_atk]时，使造成的持续伤害额外提高[dotDmg]%",
+        data: {
+          _atk: ({ attr, calc }) => calc(attr.atk) >= 3600 ? 3600 : 2400,
+          dotDmg: ({ attr, calc }) => calc(attr.atk) >= 3600 ? 24 : 12
+        }
+      }
+    ]
   }
 }
