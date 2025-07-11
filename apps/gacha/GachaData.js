@@ -1,6 +1,6 @@
 import lodash from "lodash"
 import moment from "moment"
-import { poolDetailSr } from "../../resources/meta-sr/info/index.js"
+import { poolDetailSr, mixPoolDetailSr } from "../../resources/meta-sr/info/index.js"
 import { poolDetail, mixPoolDetail } from "../../resources/meta-gs/info/index.js"
 import { Data } from "#miao"
 import { Character, Weapon } from "#miao.models"
@@ -57,6 +57,24 @@ mixPoolVersion.push({
   from: mixLast.to,
   to: "2025-12-31 23:59:59",
   start: mixLast.end,
+  end: new Date("2025-12-31 23:59:59")
+})
+
+let mixPoolVersionSr = []
+lodash.forEach(mixPoolDetailSr, (ds) => {
+  mixPoolVersionSr.push({
+    ...ds,
+    start: new Date(ds.from),
+    end: new Date(ds.to)
+  })
+})
+let mixLastSr = mixPoolVersionSr[mixPoolVersionSr.length - 1]
+mixPoolVersionSr.push({
+  version: "新版本",
+  half: "?",
+  from: mixLastSr.to,
+  to: "2025-12-31 23:59:59",
+  start: mixLastSr.end,
   end: new Date("2025-12-31 23:59:59")
 })
 
@@ -147,7 +165,7 @@ let GachaData = {
     let bigNum = 0
     let allNum = 0
     let isMix = false
-    if (type === 500) isMix = true
+    if (type === 500 || type === 21 || type === 22) isMix = true
 
     let itemMap = logData.itemMap
     if (logData.items.length === 0) return false
@@ -300,6 +318,14 @@ let GachaData = {
     }
     if ([ "up", "char", "all" ].includes(type)) isSr ? loadData(11) : loadData(301)
     if ([ "up", "weapon", "all" ].includes(type)) isSr ? loadData(12) : loadData(302)
+    if ([ "up", "char_linkage", "all" ].includes(type) && isSr) {
+      isMix = true
+      loadData(21)
+    }
+    if ([ "up", "weapon_linkage", "all" ].includes(type) && isSr) {
+      isMix = true
+      loadData(22)
+    }
     if ([ "all", "normal" ].includes(type)) {
       hasVersion = false
       isSr ? loadData(1) : loadData(200)
@@ -428,7 +454,8 @@ let GachaData = {
 
   getVersion(time, hasVersion = true, isMix = false, game) {
     if (isMix) {
-      for (let ds of mixPoolVersion) {
+      let mixPoolVersions = game === "gs" ? mixPoolVersion : mixPoolVersionSr
+      for (let ds of mixPoolVersions) {
         if (time > ds.start && time < ds.end) return ds
       }
     }

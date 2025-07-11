@@ -16,7 +16,7 @@
     <div class="pool pool-{{data.version}}">
       <div class="type">
         <span>{{data.version}} {{data.half}}</span>{{if data.diffDay}}距上次复刻{{data.diffDay}}天{{else}}首次UP{{/if}}
-        <p>{{data.from}} ~ {{data.to}}</p>
+        <p>{{data.from}}{{data.to.startsWith("2099") ? "后长期开放" : ` ~ ${data.to}`}}</p>
       </div>
       <hr />
       <div class="char-pool">

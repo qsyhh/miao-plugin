@@ -1,5 +1,5 @@
 import lodash from "lodash"
-import { poolNameSr, poolDetailSr } from "../resources/meta-sr/info/index.js"
+import { poolNameSr, poolDetailSr, mixPoolDetailSr } from "../resources/meta-sr/info/index.js"
 import { poolName, poolDetail, mixPoolDetail } from "../resources/meta-gs/info/index.js"
 import { Common, Data } from "#miao"
 import { Character, Weapon } from "#miao.models"
@@ -19,6 +19,10 @@ lodash.forEach(dataList, (txt, key) => {
 mixPoolDetail.forEach(k => {
   k.half += "(混池)"
   poolDetail.push(k)
+})
+mixPoolDetailSr.forEach(k => {
+  k.half += "(联动池)"
+  poolDetailSr.push(k)
 })
 
 export class banner extends plugin {

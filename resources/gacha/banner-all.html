@@ -41,7 +41,7 @@
         {{if item.daysDiff > 0 }}
         <div class="td-poolcount">{{item.daysDiff}}天</div>
         {{else}}
-        <div class="td-poolcount">{{item?.daysStar < 0 ? `下期up(${item.daysStar*-1}天后开启)` : item.daysStar == 0 ? "当期UP(今天开启)" : item.daysDiff == 0 ? "上期UP(今天关闭)": `当期UP(${item.daysDiff*-1}天后关闭)`}}</div>
+        <div class="td-poolcount">{{item?.daysStar < 0 ? `下期up(${item.daysStar*-1}天后开启)` : item.daysStar == 0 ? "当期UP(今天开启)" : item.daysDiff == 0 ? "上期UP(今天关闭)": item.daysDiff < -99 ? "当期UP(长期开放)": `当期UP(${item.daysDiff*-1}天后关闭)`}}</div>
         {{/if}}
       </div>
       {{/each}}

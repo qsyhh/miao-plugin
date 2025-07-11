@@ -36,7 +36,9 @@ export const poolNameSr = {
   "那刻夏": "胚中万物",
   "风堇": "虹隽晨昏",
   "赛飞儿": "捷足盗天",
-  "白厄": "永劫燔阳"
+  "白厄": "永劫燔阳",
+  "Saber": "圣剑辉烈之誓",
+  "Archer": "此身剑所天成"
 }
 
 export const poolDetailSr = [
@@ -400,5 +402,16 @@ export const poolDetailSr = [
     char4: [ "寒鸦", "玲可", "卢卡" ],
     weapon5: [ "梦应归于何处", "此身为剑", "到不了的彼岸" ],
     weapon4: [ "秘密誓心", "点个关注吧！", "决心如汗珠般闪耀" ]
+  }
+]
+
+export const mixPoolDetailSr = [
+  {
+    version: "3.4",
+    half: "上半",
+    from: "2025-07-11 12:00:00",
+    to: "2099-12-31 23:59:59",
+    char5: [ "Saber", "Archer" ],
+    weapon5: [ "没有回报的加冕", "理想燃烧的地狱" ]
   }
 ]

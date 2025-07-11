@@ -12,19 +12,19 @@ export class gacha extends plugin {
       priority: 50,
       rule: [
         {
-          reg: "^#*(星铁)?喵喵(抽卡|抽奖|角色|武器|光锥|常驻|集录|up)+池?(记录|祈愿|分析)$",
+          reg: "^#*(星铁)?喵喵(抽卡|抽奖|(联动)?(角色|武器|光锥)(联动)?|常驻|集录|up)+池?(记录|祈愿|分析)$",
           fnc: "detail"
         },
         {
-          reg: "^#*(星铁)?(抽卡|抽奖|角色|武器|光锥|常驻|集录|up)+池?(记录|祈愿|分析)$",
+          reg: "^#*(星铁)?(抽卡|抽奖|(联动)?(角色|武器|光锥)(联动)?|常驻|集录|up)+池?(记录|祈愿|分析)$",
           fnc: "Yzdetail"
         },
         {
-          reg: "^#*(星铁)?喵喵(全部|抽卡|抽奖|角色|武器|光锥|常驻|集录|up|版本)+池?统计$",
+          reg: "^#*(星铁)?喵喵(全部|抽卡|抽奖|(联动)?(角色|武器|光锥)(联动)?|常驻|集录|up|版本)+池?统计$",
           fnc: "stat"
         },
         {
-          reg: "^#*(星铁)?(全部|抽卡|抽奖|角色|武器|光锥|常驻|集录|up|版本)+池?统计$",
+          reg: "^#*(星铁)?(全部|抽卡|抽奖|(联动)?(角色|武器|光锥)(联动)?|常驻|集录|up|版本)+池?统计$",
           fnc: "Yzstat"
         }
       ]
@@ -57,6 +57,16 @@ export class gacha extends plugin {
           break
         case "常驻":
           type = 1
+          break
+        case "联动角色":
+        case "角色联动":
+          type = 21
+          break
+        case "联动武器":
+        case "武器联动":
+        case "联动光锥":
+        case "光锥联动":
+          type = 22
           break
         case "武器":
         case "光锥":
@@ -112,8 +122,10 @@ export class gacha extends plugin {
     let type = "up"
     if (/武器|光锥/.test(msg)) {
       type = "weapon"
+      if (/联动/.test(msg)) type = "weapon_linkage"
     } else if (/角色/.test(msg)) {
       type = "char"
+      if (/联动/.test(msg)) type = "char_linkage"
     } else if (/常驻/.test(msg)) {
       type = "normal"
     } else if (/集录/.test(msg)) {
