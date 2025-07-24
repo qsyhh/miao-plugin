@@ -3,9 +3,9 @@ import EnkaData from "./EnkaData.js"
 import { Data } from "#miao"
 
 export default {
-  id: "hutao",
-  name: "Hutao-Enka",
-  cfgKey: "hutaoApi",
+  id: "lyln",
+  name: "Lyln-Enka",
+  cfgKey: "lylnApi",
   // 处理请求参数
   async request(api) {
     let params = {
@@ -36,7 +36,7 @@ export default {
         md5 = Data.generateMD5(Data.getData(player._original[ds.avatarId], "id,level,fetter,cons,weapon,costume,artis,elem,talent"))
         redis.set(key, md5)
       }
-      let ret = EnkaData.setAvatar(player, ds, "hutao")
+      let ret = EnkaData.setAvatar(player, ds, "lyln")
       if (ret) {
         player._update.push(ret.id)
         if (ret.md5 !== md5) {

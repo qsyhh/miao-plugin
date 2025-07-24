@@ -29,19 +29,19 @@ export const mggApi = {
   }
 }
 
-export const hutaoApi = {
-  url: "http://enka-api.hut.ao/",
-  userAgent: "Snap Hutao/miao",
+export const xApi = {
+  url: "https://enka.928100.xyz/",
+  userAgent: "Miao-Plugin/3.1",
   listApi: ({ url, uid, diyCfg }) => {
-    return `${url}/${uid}`
+    return `${url}api/uid/${uid}`
   }
 }
 
-export const homoApi = {
-  url: "https://api.mihomo.me/sr_info",
-  // userAgent: 'Miao-Plugin/3.1',
+export const lylnApi = {
+  url: "http://enka.lyln114514.top/",
+  userAgent: "Miao-Plugin/3.1",
   listApi: ({ url, uid, diyCfg }) => {
-    return `${url}/${uid}`
+    return `${url}api/uid/${uid}`
   }
 }
 

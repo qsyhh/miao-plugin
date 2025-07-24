@@ -1,7 +1,8 @@
 import enkaApi from "./api/EnkaApi.js"
 import miaoApi from "./api/MiaoApi.js"
 import mggApi from "./api/MggApi.js"
-import hutaoApi from "./api/HutaoApi.js"
+import xApi from "./api/XApi.js"
+import lylnApi from "./api/LylnApi.js"
 import homoApi from "./api/HomoApi.js"
 import avocadoApi from "./api/AvocadoApi.js"
 import enkaHSRApi from "./api/EnkaHSRApi.js"
@@ -18,7 +19,8 @@ const apis = {
   miao: miaoApi,
   mgg: mggApi,
   enka: enkaApi,
-  hutao: hutaoApi,
+  hanxuan: xApi,
+  lyln: lylnApi,
   homo: homoApi,
   mysPanel: mysPanelApi,
   avocado: avocadoApi,
@@ -51,13 +53,14 @@ const Serv = {
     if ((servIdx === "0" || servIdx === "1") && hasToken) return Serv.serv("miao")
 
     // 如果指定了序号，则返回对应服务。0和1已前置判断
-    // 原神：0自动，1喵，2Enka，3Mgg，4:Hutao，5:米游社
-    // 星铁：0自动，1喵，2Mihomo，3Avocado，4EnkaHSR，5:米游社
+    // 原神：0自动，1喵，2Enka，3Mgg，4:x，5:lyln
+    // 星铁：0自动，1喵，2Mihomo，3Avocado，4EnkaHSR
     let servKey = isGs
       ? {
           2: "enka",
           3: "mgg",
-          4: "hutao"
+          4: "hanxuan",
+          5: "lyln"
         }
       : {
           2: "homo",

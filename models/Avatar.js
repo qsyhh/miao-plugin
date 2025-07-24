@@ -68,7 +68,8 @@ export default class Avatar extends Base {
       enka: "Enka.Network",
       miao: "喵喵Api",
       mgg: "MiniGG-Api",
-      hutao: "Hutao-Enka",
+      hanxuan: "X-Enka",
+      lyln: "Lyln-Enka",
       mys: "米游社",
       homo: "Mihomo"
     }[this._source] || this._source
