@@ -60,6 +60,7 @@ hr {
 .pool .pool-item {
   display: flex;
   margin-top: 10px;
+  flex-wrap: wrap;
 }
 .pool .pool-item .item-icon,
 .pool .pool-item .icon {
