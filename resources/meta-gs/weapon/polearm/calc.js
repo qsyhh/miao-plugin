@@ -206,6 +206,13 @@ export default function(step, staticStep) {
           atkPct: step(32)
         }
       }
-    ]
+    ],
+    "支离轮光": {
+      title: "施放战技或爆发后，攻击力提升[atkPct]%。若装备者创造了护盾，月感电反应造成的伤害提升[lunarCharged]%",
+      refine: {
+        atkPct: step(24),
+        lunarCharged: step(40)
+      }
+    }
   }
 }
