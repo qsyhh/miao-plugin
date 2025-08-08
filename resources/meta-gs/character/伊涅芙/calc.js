@@ -40,17 +40,20 @@ export const buffs = [
   {
     check: ({ params }) => params.Lunar,
     title: "天赋-象拟中继：触发感电反应时转为触发月感电反应,基础伤害提升[fypct]%",
+    sort: 9,
     data: {
       fypct: ({ attr, calc }) => Math.min((calc(attr.atk) / 100 * 0.7), 14)
     }
   }, {
     title: "天赋-全相重构协议：施放元素爆发后元素精通提升[mastery]",
+    sort: 9,
     data: {
       mastery: ({ attr, calc }) => calc(attr.atk) * 6 / 100
     }
   }, {
     check: ({ params }) => params.Lunar,
     title: "伊涅芙1命：展开护盾时月感电反应伤害提升[lunarCharged]%",
+    sort: 9,
     cons: 1,
     data: {
       lunarCharged: ({ attr, calc }) => Math.min((calc(attr.atk) / 100 * 2.5), 50)
