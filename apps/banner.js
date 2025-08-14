@@ -15,14 +15,18 @@ let dataLists = {}
 lodash.forEach(dataList, (txt, key) => {
   Data.eachStr(txt, (t) => (dataLists[t] = key))
 })
+let poolLists = {
+  "gs": lodash.cloneDeep(poolDetail),
+  "sr": lodash.cloneDeep(poolDetailSr)
+}
 // 添加混池
 mixPoolDetail.forEach(k => {
   k.half += "(混池)"
-  poolDetail.push(k)
+  poolLists.gs.push(k)
 })
 mixPoolDetailSr.forEach(k => {
   k.half += "(联动池)"
-  poolDetailSr.push(k)
+  poolLists.sr.push(k)
 })
 
 export class banner extends plugin {
@@ -62,7 +66,7 @@ export class banner extends plugin {
 
 function calcSingle(data) {
   let type = /^character/.test(data._uuid) ? "char" : "weapon"
-  let poolData = _sort(data.game == "sr" ? poolDetailSr : poolDetail, "version")
+  let poolData = _sort(poolLists[data.game], "version")
   const result = { type, name: data.name, game: data.game, version_list: [] }
   let pool_list = []
   poolData.forEach(k => {
@@ -99,7 +103,7 @@ function calcAll(regRet, game) {
   if (regRet[3] || regRet[4]) mode = `${regRet[4] ? dataLists[regRet[4]] : "char"}${regRet[3] ? dataLists[regRet[3]] : 5}`
   let type = /(char|weapon)(4|5)/.exec(mode)
   let stats = { game, type: regRet[4] || "角色", star: type[2] || 5, data: {}, new_pool: { name: [], data: [] } }
-  let data = _sort(game == "sr" ? poolDetailSr : poolDetail, "version", true)
+  let data = _sort(poolLists[game], "version", true)
   data.forEach(k => {
     if (!k[mode]) return
     k[mode].forEach(i => {

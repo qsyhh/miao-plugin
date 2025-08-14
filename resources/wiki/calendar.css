@@ -189,7 +189,7 @@ body {
   font-size: 12px;
 }
 .cal-list .cal-item.type-character {
-  overflow: visible;
+  /* overflow: visible; */
   margin-top: 20px;
 }
 .cal-list .cal-item.type-character .info {

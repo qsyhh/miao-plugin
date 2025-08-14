@@ -113,7 +113,7 @@ export default function(staticIdx, keyIdx) {
       keyIdx("使受到攻击的目标陷入易伤状态，受到的伤害提高[enemydmg]%", "enemydmg", 2)
     ],
     海洋为何而歌: [
-      staticIdx(1, "atkPct"),
+      staticIdx(1, "effPct"),
       (tables) => {
         return {
           title: "【魂迷】状态下，6个装备者施加的负面效果，受到的持续伤害提高[dotEnemydmg]%，受到我方目标攻击时，使攻击者速度提高[speedPct]%",
