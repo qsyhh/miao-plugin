@@ -261,7 +261,7 @@ export default function(step, staticStep) {
     天光的纺琴: {
       title: "施放元素战技后元素精通提升[mastery]",
       refine: {
-        mastery: step(120)
+        mastery: step(100)
       }
     },
     乌髓孑灯: {

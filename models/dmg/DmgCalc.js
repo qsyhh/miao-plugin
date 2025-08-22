@@ -43,6 +43,8 @@ let DmgCalc = {
 
     let fypct = attr.fypct / 100
     let fybase = attr.fybase
+    let fyinc = attr.fyinc / 100
+
     // 增伤区
     let elevatedNum = attr.elevated / 100
     let dmgNum = (1 + dmg.base / 100 + dmg.plus / 100 + dynamicDmg / 100)
@@ -178,24 +180,21 @@ let DmgCalc = {
       case "bloom":
       case "burgeon":
       case "hyperBloom": {
-        ret = { avg: (eleBaseDmg[level] * eleBase * (1 + fypct) * eleNum + (eleBaseDmg[level] * (1 + fybase)) + fyplus) * kNum }
+        ret = { avg: ((eleBaseDmg[level] * (1 + fypct) + fybase) * eleBase * eleNum + (eleBaseDmg[level] * fyinc) + fyplus) * kNum }
         break
       }
 
-      case "lunarBloom": {
-        ret = {
-          avg: (dmgBase * eleBase * (1 + fypct) * (1 + elevatedNum) * 2.8 + (dmgBase * (1 + fybase)) + fyplus) * kNum * (1 + cpctNum * cdmgNum),
-          dmg: (dmgBase * eleBase * (1 + fypct) * (1 + elevatedNum) * 2.8 + (dmgBase * (1 + fybase)) + fyplus) * kNum * (1 + cdmgNum)
-        }
-        break
-      }
-
+      case "lunarBloom":
       case "lunarCharged": {
         let lunarBase = dmgBase || eleBaseDmg[level]
-        eleNum = dmgBase ? 3 : eleNum
+        if (ele === "lunarCharged") {
+          eleNum = dmgBase ? 3 : eleNum
+        } else {
+          eleNum = 1
+        }
         ret = {
-          avg: (lunarBase * eleBase * (1 + fypct) * (1 + elevatedNum) * eleNum + (lunarBase * (1 + fybase)) + fyplus) * kNum * (1 + cpctNum * cdmgNum),
-          dmg: (lunarBase * eleBase * (1 + fypct) * (1 + elevatedNum) * eleNum + (lunarBase * (1 + fybase)) + fyplus) * kNum * (1 + cdmgNum)
+          avg: ((lunarBase * (1 + fypct) + fybase) * eleBase * eleNum + (lunarBase * fyinc) + fyplus) * (1 + elevatedNum) * kNum * (1 + cpctNum * cdmgNum),
+          dmg: ((lunarBase * (1 + fypct) + fybase) * eleBase * eleNum + (lunarBase * fyinc) + fyplus) * (1 + elevatedNum) * kNum * (1 + cdmgNum)
         }
         break
       }

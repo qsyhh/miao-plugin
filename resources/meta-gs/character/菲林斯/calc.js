@@ -73,7 +73,7 @@ export const buffs = [
     title: "菲林斯6命：对敌人造成的月感电反应伤害擢升[lunarChargedEle]%",
     cons: 6,
     data: {
-      elevated: 40
+      elevated: 45
     }
   }
 ]
