@@ -238,6 +238,10 @@ export class admin extends plugin {
     return true
   }
 
+  async Miaoupdatelog(e) {
+    return await Miaoupdatelog(e)
+  }
+
   async bgHelp(e) {
     return e.reply(
       "【#喵喵背景设置帮助】\n" +
@@ -258,9 +262,7 @@ export class admin extends plugin {
   }
 
   async miaoApiInfo(e) {
-    if (!await checkAuth(e)) {
-      return true
-    }
+    if (!await checkAuth(e)) return true
     let { diyCfg } = await Data.importCfg("profile")
     let { qq, token } = (diyCfg?.miaoApi || {})
     if (!qq || !token) return e.reply("未正确填写miaoApi token，请检查miao-plugin/config/profile.js文件")

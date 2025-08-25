@@ -1,17 +1,21 @@
 import fs from "node:fs"
 import Index from "./tools/index.js"
+// import { installPromise } from "./init.js"
 import { Version } from "#miao"
 
 if (!global.segment) { global.segment = (await import("oicq")).segment }
 
 if (!segment.button) segment.button = () => ""
 
+logger.info("---------^_^---------")
+logger.info(`喵喵插件${Version.version}初始化~`)
+
+let apps = {}
+
+// if (await installPromise()) {
 const files = fs.readdirSync("./plugins/miao-plugin/apps").filter(file => file.endsWith(".js"))
 
 let ret = []
-
-logger.info("---------^_^---------")
-logger.info(`喵喵插件${Version.version}初始化~`)
 
 files.forEach((file) => {
   ret.push(import(`./apps/${file}`))
@@ -19,7 +23,6 @@ files.forEach((file) => {
 
 ret = await Promise.allSettled(ret)
 
-let apps = {}
 for (let i in files) {
   let name = files[i].replace(".js", "")
 
@@ -30,6 +33,8 @@ for (let i in files) {
   }
   apps[name] = ret[i].value[Object.keys(ret[i].value)[0]]
 }
+// }
+
 export { apps }
 
 setTimeout(Index.init, 1000)
