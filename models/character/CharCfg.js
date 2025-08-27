@@ -1,6 +1,6 @@
 import fs from "node:fs"
 import lodash from "lodash"
-// import { installPromise } from "../../init.js"
+import { installPromise } from "../../installMeta.js"
 import { Data } from "#miao"
 import { miaoPath } from "#miao.path"
 
@@ -8,7 +8,7 @@ let cfgMap = {
   char: {},
   game: "gs",
   async init(game = "gs") {
-    // await installPromise()
+    await installPromise()
     this.game = game
     let chars = fs.readdirSync(`${miaoPath}/resources/meta-${game}/character`)
     for (let char of chars) {

@@ -33,6 +33,8 @@
 - [x] 面板列表区分本次更新/获取角色
   > ~~⚠️原神的米游社更新可能与其其他的面板服务无法互通，导致无法正确判断是否为`更新角色`~~
 
+- [x] meta资源外置，资源仓库[meta-gs](https://cnb.cool/qsyhh_res/meta/-/tree/meta-gs)、[meta-gs](https://cnb.cool/qsyhh_res/meta/-/tree/meta-sr)
+
 - [ ] 极限面板可通过`#更新面板`更新，默认更新源为[100000000.json](https://profile.qsyhh.icu/100000000.json)，可自定义
 
 ## 安装指令
@@ -42,8 +44,10 @@
 方式1: 首次/重新安装插件：
 
 ```bash
-git clone --depth=1 https://用户名:个人令牌@gitcode.com/qsyhh_code/miao-plugin.git ./plugins/miao-plugin/
+git clone --depth=1 https://用户名:个人令牌@gitcode.com/qsyhh_code/miao-plugin.git ./plugins/miao-plugin/ --depth=1
 pnpm install --filter=miao-plugin
+git clone -b meta-gs https://cnb.cool/qsyhh_res/meta.git "./plugins/miao-plugin/resources/meta-gs" --depth=1
+git clone -b meta-sr https://cnb.cool/qsyhh_res/meta.git "./plugins/miao-plugin/resources/meta-sr" --depth=1
 ```
 
 方式2: 🔐 换源
@@ -57,6 +61,37 @@ git remote set-url origin https://用户名:个人令牌@gitcode.com/qsyhh_code/
 git fetch origin master
 git reset --hard origin/master
 ```
+### ⚠️meta资源外置
+
+最新版本中已移除meta资源，首次安装插件需下载meta资源(或启动Yunzai即可自动安装)，以进行角色数据热更新
+
+> 推荐手动安装，以防其他插件不兼容导致监听事件错误
+
+CNB源下载(暂无其他源)：
+
+```bash
+git clone -b meta-gs https://cnb.cool/qsyhh_res/meta.git "./plugins/miao-plugin/resources/meta-gs" --depth=1
+git clone -b meta-sr https://cnb.cool/qsyhh_res/meta.git "./plugins/miao-plugin/resources/meta-sr" --depth=1
+```
+
+<details><summary>如何兼容？ 点击此处展开/收起</summary>
+
+示例js：Yunzai/plugins/example-plugin/apps/example.js
+
+```bash
+监听事件错误：login.js
+Error: ENOENT: no such file or directory, scandir 'Yunzai\plugins\miao-plugin\resources\meta-gs\character'
+    at Object.readdirSync (node:fs:1502:26)
+    at Object.init (file:///C:/Yunzai/example-plugin/apps/example.js:13:20)
+
+```
+```JavaScript
+import { installPromise } from "../../../miao-plugin/installMeta.js"
+
+await installPromise() // 报错行上行写入
+```
+
+</details>
 
 以下为原版仓库说明
 

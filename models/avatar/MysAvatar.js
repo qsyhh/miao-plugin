@@ -1,17 +1,17 @@
 import lodash from "lodash"
 import moment from "moment"
-import { chestInfo } from "../../resources/meta-gs/info/index.js"
-// import { installMeta } from "../../init.js"
+import { installMeta } from "../../installMeta.js"
 import AvatarUtil from "./AvatarUtil.js"
 import { Format, Data } from "#miao"
 
-// let chestInfo
-// try {
-//   await installMeta()
-//   chestInfo = (await import("../../resources/meta-gs/info/index.js")).chestInfo
-// } catch {
-//   logger.error("资源包加载失败，请尝试重新安装资源包，或手动下载资源包放置到 ./plugins/miao-plugin/resources/ 目录下")
-// }
+let chestInfo
+try {
+  await installMeta()
+  // eslint-disable-next-line import/no-unresolved
+  chestInfo = (await import("../../resources/meta-gs/info/index.js")).chestInfo
+} catch {
+  logger.error("资源包安装失败，请尝试重新安装资源包，或手动下载资源包放置到 ./plugins/miao-plugin/resources/ 目录下")
+}
 
 const MysAvatar = {
   // 检查更新force值

@@ -1,5 +1,5 @@
-import { Data, Version } from "#miao"
 import fs from "node:fs"
+import { Data, Version } from "#miao"
 // import Trans from "./trans.js"
 import { rootPath } from "#miao.path"
 

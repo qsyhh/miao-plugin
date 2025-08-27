@@ -12,7 +12,6 @@ logger.info(`喵喵插件${Version.version}初始化~`)
 
 let apps = {}
 
-// if (await installPromise()) {
 const files = fs.readdirSync("./plugins/miao-plugin/apps").filter(file => file.endsWith(".js"))
 
 let ret = []
@@ -33,7 +32,6 @@ for (let i in files) {
   }
   apps[name] = ret[i].value[Object.keys(ret[i].value)[0]]
 }
-// }
 
 export { apps }
 
