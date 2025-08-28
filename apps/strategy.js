@@ -80,7 +80,7 @@ export class strategy extends plugin {
     if (/开启|关闭/.test(ret)) return false
     if (!ret) {
       e.msg = `${e.isGs ? "#" : "*"}喵喵攻略帮助`
-      return CharStrategy.helpStrategy(e)
+      return this.helpStrategy(e)
     }
     if (ret == "全部") {
       await redis.del(`miao-plugin:wiki:strategy:${e.self_id || "55555"}:${e.game}`)

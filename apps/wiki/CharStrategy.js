@@ -19,7 +19,7 @@ const CharStrategy = {
     name = char.isTraveler ? "旅行者" : char.isTrailblazer ? "开拓者" : name
     let type = game == "gs" ? elemName : weapon
     let data = Data.readJSON(`resources/meta-${game}/info/json/${type}/${name}.json`, "miao")
-    if (!data.strategy && !data.strategy.length) {
+    if (!data.strategy || (data.strategy && !data.strategy.length)) {
       e.msg = e.original_msg
       return false
     }
