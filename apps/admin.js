@@ -4,6 +4,7 @@ import lodash from "lodash"
 import fetch from "node-fetch"
 import makemsg from "../../../lib/common/common.js"
 import { Cfg, Common, Data, Version } from "#miao"
+import { Base } from "#miao.models"
 import { miaoPath } from "#miao.path"
 
 const resPath = `${miaoPath}/resources/`
@@ -35,11 +36,15 @@ export class admin extends plugin {
       rule: [
         {
           reg: "^#喵喵(强制)?(更新图像|图像更新)$",
-          fnc: "updateRes"
+          fnc: "updateImage"
         },
         {
           reg: "^#(星铁)?喵喵(安装|(强制)?更新)攻略资源$",
-          fnc: "updateStrategy"
+          fnc: "updateRes"
+        },
+        {
+          reg: "^#(星铁)?喵喵((强制)?更新)meta资源$",
+          fnc: "updateRes"
         },
         {
           reg: "^#(喵喵(强制)?更新|(强制)?更新(miao(-plugin)?))$",
@@ -111,7 +116,7 @@ export class admin extends plugin {
     }, { e, scale: 1.4 })
   }
 
-  async updateRes(e) {
+  async updateImage(e) {
     if (!await checkAuth(e)) return true
 
     let isForce = e.msg.includes("强制")
@@ -146,36 +151,41 @@ export class admin extends plugin {
     return true
   }
 
-  async updateStrategy(e) {
+  async updateRes(e) {
     if (!await checkAuth(e)) return true
+    let mode = /meta/.test(e.msg) ? "meta" : "角色攻略"
     let games = /安装/.test(e.msg) ? [ "gs" ] : [ "gs", "sr" ]
     if (/星铁/.test(e.msg)) games = [ "sr" ]
 
-    await e.reply(`[喵喵角色攻略] 开始尝试${/安装/.test(e.msg) ? "安装" : "更新"}攻略资源包，请稍后~`)
+    let hasUpdate = false
+    await e.reply(`[喵喵${mode}] 开始尝试${/安装/.test(e.msg) ? "安装" : "更新"}${mode}资源包，请稍后~`)
     let msg = []
     for (let game of games) {
       let command = ""
-      let path = `./plugins/miao-plugin/resources/meta-${game}/info/json/`
+      let branchName = /meta/.test(e.msg) ? `meta-${game}` : game
+      let path = `./plugins/miao-plugin/resources/meta-${game}/${/meta/.test(e.msg) ? "" : "info/json/"}`
       if (fs.existsSync(path)) {
-        if (/安装/.test(e.msg)) msg.push(`[喵喵角色攻略-${game}] 攻略资源包已安装，开始尝试更新~`)
-        command = `git pull origin ${game}`
-        if (e.msg.includes("强制")) command = "git  checkout . && git  pull"
+        if (/安装/.test(e.msg)) msg.push(`[喵喵${mode}-${game}] ${mode}资源包已安装，开始尝试更新~`)
+        command = `git pull origin ${branchName}`
+        if (e.msg.includes("强制")) command = `git  checkout . && git  pull origin ${branchName}`
 
         let ret = await execPro(command, { cwd: path })
         if (/(Already up[ -]to[ -]date|已经是最新的)/.test(ret.stdout)) {
-          msg.push(`[喵喵角色攻略-${game}] 已经是最新了~`)
+          msg.push(`[喵喵${mode}-${game}] 已经是最新了~`)
           continue
         }
 
         let numRet = /(\d*) files changed,/.exec(ret.stdout)
         if (numRet && numRet[1]) {
-          msg.push(`[喵喵角色攻略-${game}] 报告主人，更新成功，此次改动了${numRet[1]}个文件~`)
+          hasUpdate = true
+          msg.push(`[喵喵${mode}-${game}] 报告主人，更新成功，此次改动了${numRet[1]}个文件~`)
           continue
         }
         if (ret.error) {
-          msg.push(`[喵喵角色攻略-${game}] 更新失败！\nError code: ` + ret.error.code + "\n" + ret.error.stack + "\n 请稍后重试。")
+          msg.push(`[喵喵${mode}-${game}] 更新失败！\nError code: ` + ret.error.code + "\n" + ret.error.stack + "\n 请稍后重试。")
         } else {
-          msg.push(`[喵喵角色攻略-${game}] 攻略资源更新成功~`)
+          hasUpdate = true
+          msg.push(`[喵喵${mode}-${game}] ${mode}资源更新成功~`)
         }
       } else if (/安装/.test(e.msg)) {
         command = `git clone -b ${game} https://gitee.com/qsyhh_res/${game}.git "${path}" --depth=1`
@@ -189,7 +199,17 @@ export class admin extends plugin {
         if (/星铁/.test(e.msg) || game === "gs") msg.push(`[喵喵角色攻略-${game}] 尚未安装${game == "gs" ? "原神" : "星铁"}攻略资源包，发送 ${game == "gs" ? "#" : "*"}喵喵安装攻略资源 以安装`)
       }
     }
-    return e.reply(msg.join("\n"))
+    await e.reply(msg.join("\n"))
+    if (/meta/.test(e.msg) && hasUpdate) {
+      try {
+        Base._resetCaches()
+        e.reply("清除缓存成功，已应用最新meta资源~")
+      } catch (error) {
+        e.reply("清除meta缓存失败，可能会导致部分数据异常，请重启以应用最新meta资源~")
+        logger.error(`清除meta缓存失败\n${error}`)
+      }
+    }
+    return true
   }
 
   async updateMiaoPlugin(e) {

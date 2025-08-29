@@ -86,6 +86,12 @@ export default class Base {
     delete metaMap[id]
   }
 
+  static _resetCaches() {
+    cacheMap = {}
+    reFn = {}
+    metaMap = {}
+  }
+
   get isSr() {
     return this.game === "sr"
   }
