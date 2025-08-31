@@ -127,7 +127,7 @@ const ProfileStat = {
     const request_url = "https://homdgcat.wiki/gi/CH/maze.js"
     let resData, match, overallMazeInfo
     try {
-      overallMazeInfo = await (await fetch("https://overall.qsyhh.xyz")).text()
+      overallMazeInfo = await (await fetch("https://overall.257800180.xyz")).text()
       if (overallMazeInfo.startsWith("[")) {
         overallMazeInfo = JSON.parse(overallMazeInfo)
       } else {
