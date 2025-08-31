@@ -128,7 +128,7 @@ const ProfileStat = {
     let resData, match, overallMazeInfo
     try {
       overallMazeInfo = await (await fetch("https://overall.qsyhh.xyz")).text()
-      if (overallMazeInfo) {
+      if (overallMazeInfo.startsWith("[")) {
         overallMazeInfo = JSON.parse(overallMazeInfo)
       } else {
         resData = await (await ProfileStat.fetchWithTimeout(request_url)).text()
