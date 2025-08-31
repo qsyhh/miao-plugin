@@ -125,20 +125,24 @@ const ProfileStat = {
 
   async getOverallMazeData() {
     const request_url = "https://homdgcat.wiki/gi/CH/maze.js"
-    let resData = false
+    let resData, match, overallMazeInfo
     try {
-      resData = await (await ProfileStat.fetchWithTimeout(request_url)).text()
+      overallMazeInfo = await (await fetch("https://overall.qsyhh.xyz")).text()
+      if (overallMazeInfo) {
+        overallMazeInfo = JSON.parse(overallMazeInfo)
+      } else {
+        resData = await (await ProfileStat.fetchWithTimeout(request_url)).text()
+        match = /var _overall = (.*?)var/s.exec(resData)
+        if (match) {
+          overallMazeInfo = JSON.parse(match[1])
+        } else {
+          logger.error("响应内容格式不对劲")
+          return false
+        }
+      }
     } catch (error) {
       logger.error("请求失败:", error)
       return false // 直接返回以停止后续逻辑
-    }
-    const match = /var _overall = (.*?)var/s.exec(resData)
-    let overallMazeInfo = []
-    if (match) {
-      overallMazeInfo = JSON.parse(match[1])
-    } else {
-      logger.error("响应内容格式不对劲")
-      return false
     }
 
     return overallMazeInfo
