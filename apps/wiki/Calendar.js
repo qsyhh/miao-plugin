@@ -34,9 +34,9 @@ let Cal = {
       if (detailData && detailData.data && detailData.data.list) {
         let versionTime = {}
         lodash.forEach(detailData.data.list, (ds) => {
-          let vRet = /(\d\.\d)版本更新(通知|说明|维护预告)/.exec(ds.title)
+          let vRet = /(\d\.\d|「[^」]*」)版本更新(通知|说明|维护预告)/.exec(ds.title)
           if (vRet && vRet[1]) {
-            let content = /(?:更新时间)\s*〓([^〓]+)(?:〓|$)/.exec(ds.content)
+            let content = /(?:更新(维护)?时间)\s*〓([^〓]+)(?:〓|$)/.exec(ds.content)
             if (content && content[1]) {
               let tRet = /([0-9\\/\\: ]){9,}/.exec(content[1])
               if (tRet && tRet[0]) versionTime[vRet[1]] = versionTime[vRet[1]] || tRet[0].replace("06:00", "11:00")
@@ -65,8 +65,9 @@ let Cal = {
           let timeRet = /(?:活动时间)?(?:〓|\s)*([0-9\\/\\: ~]{6,})/.exec(content)
           if (timeRet && timeRet[1]) annTime = timeRet[1].split("~")
 
-          if (/\d\.\d版本更新(?:完成)?后/.test(content)) {
-            let vRet = /(\d\.\d)版本更新(?:完成)?后/.exec(content)
+          if (/(\d\.\d|「[^」]*」)版本更新(?:完成)?后/.test(content)) {
+            let vRet = /(\d\.\d|「[^」]*」)版本更新(?:完成)?后/.exec(content)
+            logger.info(vRet)
             let vTime = ""
             if (vRet && vRet[1] && versionTime[vRet[1]]) vTime = versionTime[vRet[1]]
             if (!vTime) return true
@@ -77,8 +78,8 @@ let Cal = {
               timeRet = /([0-9\\/\\: ]){9,}/.exec(content)
               if (timeRet && timeRet[0]) annTime = [ vTime, timeRet[0] ]
             }
-          } else if (/\d\.\d版本期间持续开放/.test(content)) {
-            let vRet = /(\d\.\d)版本期间持续开放/.exec(content)
+          } else if (/(\d\.\d|「[^」]*」)版本期间持续开放/.test(content)) {
+            let vRet = /(\d\.\d|「[^」]*」)版本期间持续开放/.exec(content)
             let vTime = ""
             if (vRet && vRet[1] && versionTime[vRet[1]]) vTime = versionTime[vRet[1]]
             if (!vTime) return true
