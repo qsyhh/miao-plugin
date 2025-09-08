@@ -36,7 +36,7 @@ let Cal = {
         lodash.forEach(detailData.data.list, (ds) => {
           let vRet = /(\d\.\d|「[^」]*」)版本更新(通知|说明|维护预告)/.exec(ds.title)
           if (vRet && vRet[1]) {
-            let content = /(?:更新(维护)?时间)\s*〓([^〓]+)(?:〓|$)/.exec(ds.content)
+            let content = /(?:更新(?:维护)?时间)\s*〓([^〓]+)(?:〓|$)/.exec(ds.content)
             if (content && content[1]) {
               let tRet = /([0-9\\/\\: ]){9,}/.exec(content[1])
               if (tRet && tRet[0]) versionTime[vRet[1]] = versionTime[vRet[1]] || tRet[0].replace("06:00", "11:00")
@@ -67,7 +67,6 @@ let Cal = {
 
           if (/(\d\.\d|「[^」]*」)版本更新(?:完成)?后/.test(content)) {
             let vRet = /(\d\.\d|「[^」]*」)版本更新(?:完成)?后/.exec(content)
-            logger.info(vRet)
             let vTime = ""
             if (vRet && vRet[1] && versionTime[vRet[1]]) vTime = versionTime[vRet[1]]
             if (!vTime) return true
