@@ -3,7 +3,7 @@ import { exec, execSync } from "child_process"
 import lodash from "lodash"
 import fetch from "node-fetch"
 import makemsg from "../../../lib/common/common.js"
-import { Cfg, Common, Data, Version } from "#miao"
+import { Cfg, Common, Data, Meta, Version } from "#miao"
 import { Base } from "#miao.models"
 import { miaoPath } from "#miao.path"
 
@@ -203,6 +203,7 @@ export class admin extends plugin {
     if (/meta/.test(e.msg) && hasUpdate) {
       try {
         Base._resetCaches()
+        // Meta.resetCreate()
         e.reply("清除缓存成功，已应用最新meta资源~")
       } catch (error) {
         e.reply("清除meta缓存失败，可能会导致部分数据异常，请重启以应用最新meta资源~")

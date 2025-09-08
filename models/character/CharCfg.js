@@ -37,15 +37,24 @@ let cfgMap = {
     return cfg
   }
 }
-await cfgMap.init("gs")
-let cfgMapGs = { ...cfgMap }
-await cfgMap.init("sr")
-let cfgMapSr = { ...cfgMap }
+let cfgMapGs = {}
+let cfgMapSr = {}
+let reloadCfg = async() => {
+  await cfgMap.init("gs")
+  cfgMapGs = { ...cfgMap }
+  await cfgMap.init("sr")
+  cfgMapSr = { ...cfgMap }
+}
+
+await reloadCfg()
 
 /**
  * 角色相关配置
  */
 let CharCfg = {
+  // 初始化/重载评分和伤害计算配置
+  // reloadCfg,
+
   // 获取角色伤害计算相关配置
   getCalcRule(char) {
     let cfg = cfgMap.char[char.isTraveler ? `旅行者/${char.elem}` : char.name]?.calc

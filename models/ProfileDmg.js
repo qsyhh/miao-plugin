@@ -5,7 +5,7 @@ import DmgAttr from "./dmg/DmgAttr.js"
 import DmgCalc from "./dmg/DmgCalc.js"
 import DmgBuffs from "./dmg/DmgBuffs.js"
 import { Character } from "./index.js"
-import { MiaoError, Meta, Common } from "#miao"
+import { MiaoError, Data, Meta, Common } from "#miao"
 import { miaoPath } from "#miao.path"
 
 export default class ProfileDmg extends Base {
@@ -86,6 +86,7 @@ export default class ProfileDmg extends Base {
     const cfgPath = ProfileDmg.dmgRulePath(ruleName, this.char?.game)
     let cfg = {}
     if (cfgPath) {
+      // cfg = await Data.importModule(cfgPath.path.replace(`${miaoPath}/`, ""), "miao")
       cfg = await import(`file://${cfgPath.path}`)
       // 文件中定义了createBy的话，优先进行展示
       let createdBy = cfg.createdBy || cfgPath.createdBy || "喵喵"

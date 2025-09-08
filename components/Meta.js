@@ -135,6 +135,12 @@ const Meta = {
 
     return MetaStore[key]
   },
+
+  // 清除存储
+  // resetCreate() {
+  //   MetaStore = {}
+  // },
+
   getId: MetaFn("getId"),
   getIds: MetaFn("getIds"),
   getData: MetaFn("getData"),
