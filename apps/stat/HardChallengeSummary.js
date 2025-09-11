@@ -2,9 +2,12 @@ import { Cfg, Common, Data } from "#miao"
 import { HardChallenge, MysApi, Player } from "#miao.models"
 
 export async function HardChallengeSummary(e) {
-  let isMatch = /^#(喵喵)?(幽境|危战|幽境危战)(数据)?$/.test(e.original_msg || e.msg || "")
+  let rawMsg = e.original_msg || e.msg || ""
+  let isMatch = /^#(喵喵)?(本期|上期)?(幽境|危战|幽境危战)(数据)?$/.test(rawMsg)
   if (!Cfg.get("hardChallenge", false) && !isMatch) return false
 
+  let isCurrent = !(/上期/.test(rawMsg))
+  let periodText = isCurrent ? "本期" : "上期"
   // 需要自身 ck 查询
   let mys = await MysApi.init(e, "cookie")
   if (!mys || !await mys.checkCk()) {
@@ -15,9 +18,9 @@ export async function HardChallengeSummary(e) {
   let player = Player.create(e)
   let hardChallenge = await mys.getHardChallenge()
   let hardChallengePopularity = await mys.getHardChallengePopularity()
-  let lvs = Data.getVal(hardChallenge, "data.0")
+  let lvs = Data.getVal(hardChallenge, isCurrent ? "data.0" : "data.1")
   // 检查是否查询到了幽境危战信息
-  if (!lvs || !lvs.single.has_data) return e.reply("暂未获得本期幽境危战挑战数据...")
+  if (!lvs || !lvs.single.has_data) return e.reply(`暂未获得${periodText}幽境危战挑战数据...`)
 
   let resDetail = await mys.getCharacter()
   if (!resDetail || !hardChallenge || !resDetail.avatars || resDetail.avatars.length <= 3) return e.reply("角色信息获取失败")
@@ -26,9 +29,9 @@ export async function HardChallengeSummary(e) {
 
   // 更新player信息
   player.setMysCharData(resDetail)
-  if (hardChallenge.data.length === 0) return e.reply("暂未获得本期幽境危战挑战数据...")
+  if (hardChallenge.data.length === 0) return e.reply(`暂未获得${periodText}幽境危战挑战数据...`)
 
-  let hc = new HardChallenge(hardChallenge.data[0], hardChallengePopularity.avatar_list)
+  let hc = new HardChallenge(lvs, hardChallengePopularity.avatar_list)
   let hcData = hc.getData()
   let avatarIds = hc.getAvatars()
   let rawAvatarData = player.getAvatarData(avatarIds)

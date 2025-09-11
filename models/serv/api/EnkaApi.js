@@ -40,7 +40,7 @@ export default {
   },
 
   async updatePlayer(player, data) {
-    player.setBasicData(Data.getData(data, "name:nickname,face:profilePicture.avatarID,card:nameCardID,level,word:worldLevel,sign:signature"))
+    player.setBasicData(Data.getData(data.playerInfo, "name:nickname,face:profilePicture.avatarID,card:nameCardID,level,word:worldLevel,sign:signature"))
     await Promise.all(lodash.map(data.avatarInfoList, async(ds) => {
       let key = `miao:profile:gs:${player.uid}:md5:${ds.avatarId}`
       let md5 = await redis.get(key)

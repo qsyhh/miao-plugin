@@ -69,11 +69,11 @@ export const helpList = [
         desc: "深渊数据，打完请2小时后查询"
       }, {
         icon: 64,
-        title: "#幻想 #幻想真境剧诗",
+        title: "#幻想 #幻想真境剧诗 #上期幻想",
         desc: "幻想真境剧诗数据"
       }, {
         icon: 64,
-        title: "#幽境 #幽境危战",
+        title: "#幽境 #幽境危战 #上期幽境",
         desc: "幽境危战数据"
       }, {
         icon: 55,

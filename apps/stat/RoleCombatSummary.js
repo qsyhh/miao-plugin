@@ -3,8 +3,12 @@ import { Cfg, Common, Data } from "#miao"
 import { RoleCombat, MysApi, Player } from "#miao.models"
 
 export async function RoleCombatSummary(e) {
-  let isMatch = /^#(喵喵)?(幻想|幻境|剧诗|幻想真境剧诗)(数据)?$/.test(e.original_msg || e.msg || "")
+  let rawMsg = e.original_msg || e.msg || ""
+  let isMatch = /^#(喵喵)?(本期|上期)?(幻想|幻境|剧诗|幻想真境剧诗)(数据)?$/.test(rawMsg)
   if (!Cfg.get("roleCombat", false) && !isMatch) return false
+
+  let isCurrent = !(/上期/.test(rawMsg))
+  let periodText = isCurrent ? "本期" : "上期"
   // 需要自身 ck 查询
   let mys = await MysApi.init(e, "cookie")
   if (!mys || !await mys.checkCk()) {
@@ -13,12 +17,12 @@ export async function RoleCombatSummary(e) {
   }
   let uid = mys.uid
   let player = Player.create(e)
-  let resDetail, resRole
+  let resDetail, resRole, lvs
   try {
     resRole = await mys.getRoleCombat(true)
-    let lvs = Data.getVal(resRole, "data.0")
+    lvs = Data.getVal(resRole, isCurrent ? "data.0" : "data.1")
     // 检查是否查询到了幻想真境剧诗信息
-    if (!lvs || !lvs.has_detail_data) return e.reply("暂未获得本期幻想真境剧诗挑战数据...")
+    if (!lvs || !lvs.has_detail_data) return e.reply(`暂未获得${periodText}幻想真境剧诗挑战数据...`)
 
     resDetail = await mys.getCharacter()
     if (!resDetail || !resRole || !resDetail.avatars || resDetail.avatars.length <= 3) return e.reply("角色信息获取失败")
@@ -31,8 +35,8 @@ export async function RoleCombatSummary(e) {
   // 更新player信息
   player.setMysCharData(resDetail)
 
-  if (resRole.data.length === 0) return e.reply("暂未获得本期幻想真境剧诗挑战数据...")
-  let role = new RoleCombat(resRole.data[0])
+  if (resRole.data.length === 0) return e.reply(`暂未获得${periodText}幻想真境剧诗挑战数据...`)
+  let role = new RoleCombat(lvs)
   let roleData = role.getData()
   let ownAvatarIds = role.getOwnAvatars()
   let ownAvatarData = player.getAvatarData(ownAvatarIds)

@@ -34,11 +34,11 @@ export class stat extends plugin {
           fnc: "abyssSummary"
         },
         {
-          reg: "^#*(喵喵)*(幻想|幻境|剧诗|幻想真境剧诗)[ |0-9]*(数据)?$",
+          reg: "^#*(喵喵)*(本期|上期)?(幻想|幻境|剧诗|幻想真境剧诗)[ |0-9]*(数据)?$",
           fnc: "roleCombatSummary"
         },
         {
-          reg: "^#*(喵喵)*(幽境|危战|幽境危战)[ |0-9]*(数据)?$",
+          reg: "^#*(喵喵)*(本期|上期)?(幽境|危战|幽境危战)[ |0-9]*(数据)?$",
           fnc: "HardChallengeSummary"
         }
       ]
