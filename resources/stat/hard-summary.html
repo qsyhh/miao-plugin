@@ -23,9 +23,7 @@
       </div>
     </div>
   </div>
-      
 
-  </div>
   {{set cardTypes={1:['wide wide2'],2:['wide','wide'],3:['wide','mini','mini'],4:['mini','mini','mini','mini']} }}
   {{each hard?.challs chall chall_index}}
   <div class="cont">
@@ -85,6 +83,13 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="hard-chall-desc">
+        <ul>
+          {{each monster.desc desc}}
+            <li class="hard-chall-desc-item">{{@desc}}</li>
+          {{/each}}
+        </ul>
       </div>
     </div>
   </div>

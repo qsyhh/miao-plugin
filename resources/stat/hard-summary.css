@@ -6,7 +6,7 @@
 }
 body,
 .container {
-  width: 800px;
+  width: 840px;
 }
 .container {
   padding: 5px 0 10px 5px;
@@ -206,4 +206,13 @@ body,
 .hard-info .hard-info-line + .hard-info-line {
   margin-top: 4%;
   /* 两个子元素之间的间距4% */
+}
+.hard-chall-desc {
+  margin: 3px 0;
+}
+.hard-chall-desc ul {
+  list-style-position: inside;
+}
+.hard-chall-desc ul li {
+  font-size: 15px;
 }
