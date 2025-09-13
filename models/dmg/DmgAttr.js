@@ -197,13 +197,13 @@ let DmgAttr = {
           attr[tRet[1]][tRet[2].toLowerCase()] += val * 1 || 0
           return
         }
-        let aRet = /^(hp|def|atk)(Base|Plus|Pct|Inc)?$/.exec(key)
+        let aRet = /^(hp|def|atk|speed)(Base|Plus|Pct|Inc)?$/.exec(key)
         if (aRet) {
           attr[aRet[1]][aRet[2] ? aRet[2].toLowerCase() : "plus"] += val * 1 || 0
           if (aRet[2] === "Base") attr[aRet[1]].plus += val * attr.staticAttr[aRet[1]].pct / 100 || 0
           return
         }
-        aRet = /^(mastery|cpct|cdmg|heal|recharge|dmg|enemydmg|phy|shield|speed|stance)(Plus|Pct|Inc)?$/.exec(key)
+        aRet = /^(mastery|cpct|cdmg|heal|recharge|dmg|enemydmg|phy|shield|stance)(Plus|Pct|Inc)?$/.exec(key)
         if (aRet) {
           attr[aRet[1]][aRet[2] ? aRet[2].toLowerCase() : "plus"] += val * 1 || 0
           return
