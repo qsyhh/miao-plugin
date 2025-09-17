@@ -45,6 +45,7 @@ class Attr extends Base {
       this.addAttr("recharge", 100, true)
       this.addAttr("cpct", 5, true)
       this.addAttr("cdmg", 50, true)
+      if (profile.char.id === 10000119) this.addAttr("mastery", 200, true)
     }
     this.setCharAttr()
     this.setWeaponAttr()
