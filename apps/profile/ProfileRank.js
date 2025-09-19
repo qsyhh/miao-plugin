@@ -113,7 +113,7 @@ export async function refreshRank(e) {
 
   e.reply("面板数据刷新中，等待时间可能较长，请耐心等待...")
   let game = e.isSr ? "sr" : "gs"
-  await ProfileRank.resetRank({ groupId, game })
+  await ProfileRank.resetRank(groupId, "", game)
   let uidMap = await ProfileRank.getUserUidMap(e, game)
   let count = 0
   for (let uid in uidMap) {
