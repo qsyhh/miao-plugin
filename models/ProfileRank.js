@@ -12,8 +12,8 @@ export default class ProfileRank {
     this.allowRank = false
   }
 
-  static async create(data) {
-    let rank = new ProfileRank(data)
+  static async create(data, game = "gs") {
+    let rank = new ProfileRank(data, game)
     rank.allowRank = await ProfileRank.checkRankLimit(rank.uid)
     return rank
   }

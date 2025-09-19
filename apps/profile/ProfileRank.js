@@ -158,7 +158,7 @@ export async function renderCharRankList({ e, uids, char, mode, groupId }, game 
     let profile = avatar.getProfile()
 
     if (profile) {
-      let profileRank = await ProfileRank.create({ groupId, uid, game })
+      let profileRank = await ProfileRank.create({ groupId, uid }, game)
       let data = await profileRank.getRank(profile, true)
       let mark = data?.mark?.data
       let tmp = {
