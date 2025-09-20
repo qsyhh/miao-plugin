@@ -181,7 +181,7 @@ export async function renderCharRankList({ e, uids, char, mode, groupId }, game 
         }
       }
       if (uid) {
-        let userInfo = await ProfileRank.getUidInfo(uid)
+        let userInfo = await ProfileRank.getUidInfo(uid, game)
         try {
           if (userInfo?.qq && e?.group?.pickMember) {
             let member = e.group.pickMember(userInfo.qq)

@@ -14,7 +14,7 @@ export default class ProfileRank {
 
   static async create(data, game = "gs") {
     let rank = new ProfileRank(data, game)
-    rank.allowRank = await ProfileRank.checkRankLimit(rank.uid)
+    rank.allowRank = await ProfileRank.checkRankLimit(rank.uid, game)
     return rank
   }
 
@@ -147,7 +147,7 @@ export default class ProfileRank {
     }
     let data = {}
     try {
-      let uData = await redis.get(`miao:rank:uid-info:${uid}`)
+      let uData = await redis.get(`miao:rank:uid-info:${game}:${uid}`)
       if (uData) data = JSON.parse(uData)
     } catch (e) {
       data = {}
@@ -170,7 +170,7 @@ export default class ProfileRank {
         data.qq = qq || data.qq || ""
       }
     }
-    await redis.set(`miao:rank:uid-info:${uid}`, JSON.stringify(data), { EX: 3600 * 24 * 365 })
+    await redis.set(`miao:rank:uid-info:${game}:${uid}`, JSON.stringify(data), { EX: 3600 * 24 * 365 })
   }
 
   static async delUidInfo(uid, game = "gs") {
@@ -183,9 +183,9 @@ export default class ProfileRank {
     }
   }
 
-  static async getUidInfo(uid) {
+  static async getUidInfo(uid, game = "gs") {
     try {
-      let data = await redis.get(`miao:rank:uid-info:${uid}`)
+      let data = await redis.get(`miao:rank:uid-info:${game}:${uid}`)
       return JSON.parse(data)
     } catch (e) {}
     return false
@@ -208,12 +208,13 @@ export default class ProfileRank {
       qqMap[qq] = true
     }
 
-    let keys = await redis.keys("miao:rank:uid-info:*")
+    let keys = await redis.keys(`miao:rank:uid-info:${game}:*`)
     for (let key of keys) {
       let data = await Data.redisGet(key)
       let { qq, uidType } = data
       if (!users[qq]) continue
-      let uidRet = /miao:rank:uid-info:(\d{9,10})/.exec(key)
+
+      let uidRet = new RegExp(`miao:rank:uid-info:${game}:(\\d{9,10})`).exec(key)
       if (qq && uidType && uidRet?.[1]) add(qq, uidRet[1], uidType === "ck" ? "ck" : "bind")
     }
 
@@ -258,7 +259,7 @@ export default class ProfileRank {
    * @param uid
    * @returns {Promise<boolean>}
    */
-  static async checkRankLimit(uid) {
+  static async checkRankLimit(uid, game = "gs") {
     if (!uid) return false
     // 预设面板不参与排名
     if (uid * 1 < 100000006) return false
@@ -266,7 +267,7 @@ export default class ProfileRank {
     try {
       let rankLimit = Common.cfg("groupRankLimit") * 1 || 1
       if (rankLimit === 1) return true
-      let data = await redis.get(`miao:rank:uid-info:${uid}`)
+      let data = await redis.get(`miao:rank:uid-info:${game}:${uid}`)
       data = JSON.parse(data)
       if (data.isSelfUid || data.uidType === "ck") return true
       if (rankLimit === 2) return false
