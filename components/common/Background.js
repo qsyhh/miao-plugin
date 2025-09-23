@@ -10,21 +10,22 @@ const Background = {
     const def_background = Number(Cfg.getProfile("def_background"))
     if (def_background == 0) return
     let background = { url: "", text: "" }
-    let tip = false
     if (def_background > 2) {
       let url = Cfg.getProfile(`background_${cfg}`)
       if (url?.startsWith("http")) {
         const startTime = new Date() * 1
-        let res = await fetch(url)
-        if (res.ok) {
-          res = await res.arrayBuffer()
+        let res
+        try {
+          res = await (await fetch(url)).arrayBuffer()
           const reqTime = new Date() * 1 - startTime
           logger.mark(`[喵喵:背景][${cfg}] 喵喵背景图请求成功 ${Format.comma(res.byteLength / 1024, 2)}kb ${logger.green(`${reqTime}ms`)}`)
           background.url = `data:image/jpeg;base64,${Buffer.from(res).toString("base64")}`
-        } else if (!fs.existsSync(url)) tip = true
-      }
+        } catch (error) {
+          background.url = Background.getDefBackground(def_background, cfg, true)
+        }
+      } else logger.mark(`[喵喵:背景][${cfg}] ${logger.red("未设置图链或链接不完整 将使用本地背景图")}`)
     }
-    if (!background.url) background.url = Background.getDefBackground(def_background, cfg, tip)
+    if (!background.url) background.url = Background.getDefBackground(def_background, cfg)
     background.text = `<style>.background{position:absolute;background-image:url(${background.url});background-size:cover;width:100%;height:100%;filter:blur(${Cfg.getProfile(`filter_${cfg}`)}px);}</style><div class="background"></div>`
     return background
   },

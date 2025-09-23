@@ -192,7 +192,7 @@ let DmgAttr = {
         title = title.replace(`[${key}]`, Format.comma(val, 1))
 
         // 技能提高
-        let tRet = /^(a|a2|a3|e|q|t|dot|break|nightsoul)(Def|Ignore|Dmg|Enemydmg|Plus|Pct|Cpct|Cdmg|Multi|Elevated)$/.exec(key)
+        let tRet = /^(a|a2|a3|e|q|t|me|mt|dot|break|nightsoul)(Def|Ignore|Dmg|Enemydmg|Plus|Pct|Cpct|Cdmg|Multi|Elevated)$/.exec(key)
         if (tRet) {
           attr[tRet[1]][tRet[2].toLowerCase()] += val * 1 || 0
           return
