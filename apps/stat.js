@@ -68,7 +68,7 @@ export class stat extends plugin {
     return await AbyssSummary(e)
   }
 
-  async RoleCard(e) {
+  async roleCard(e) {
     let rawMsg = e.original_msg || e.msg || ""
     let isMatch = /^#(喵喵)(月谕|越狱|幻想|幻境|剧诗|幻想真境剧诗)(圣牌|卡片|卡牌|塔罗牌|card|tarot)(收藏|收集)?$/.test(rawMsg)
     if (!Cfg.get("roleCard", false) && !isMatch) return false

@@ -19,14 +19,13 @@ export const cfgSchema = {
       },
       roleCombat: {
         title: "#幻想",
-        key: "幻想真境剧诗",
+        key: "幻想",
         def: true
       },
       roleCard: {
         title: "#月谕圣牌",
-        key: "「月谕圣牌」收藏",
-        def: false,
-        miao: true
+        key: "圣牌收藏",
+        def: true
       },
       hardChallenge: {
         title: "#幽境",
