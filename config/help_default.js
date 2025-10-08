@@ -80,6 +80,10 @@ export const helpList = [
         title: "#202407幻想角色列表",
         desc: "幻想真境剧诗入场角色查询"
       }, {
+        icon: 35,
+        title: "#月谕圣牌",
+        desc: "「月谕圣牌」收藏查询"
+      }, {
         icon: 67,
         title: "#五星 #武器 #今日素材",
         desc: "你的原神角色详情数据"

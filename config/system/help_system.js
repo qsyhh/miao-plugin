@@ -56,6 +56,10 @@ export const helpList = [
         title: "#幻想 #幻想真境剧诗 #上期幻想",
         desc: "幻想真境剧诗数据"
       }, {
+        icon: 35,
+        title: "#月谕圣牌",
+        desc: "「月谕圣牌」收藏查询"
+      }, {
         icon: 64,
         title: "#幽境 #幽境危战 #上期幽境",
         desc: "幽境危战数据"

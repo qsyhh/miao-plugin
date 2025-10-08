@@ -6,9 +6,8 @@ import { Abyss, Character, MysApi, Player } from "#miao.models"
 
 export async function AbyssSummary(e) {
   let isMatch = /^#(喵喵|上传)深渊(数据)?$/.test(e.original_msg || e.msg || "")
-  if (!Cfg.get("uploadAbyssData", false) && !isMatch) {
-    return false
-  }
+  if (!Cfg.get("uploadAbyssData", false) && !isMatch) return false
+
   let mys = await MysApi.init(e, "all")
   if (!mys || !await mys.checkCk()) {
     if (isMatch) e.reply(mys ? `UID: ${mys.uid} Cookie失效，请重新登录或尝试【#刷新ck】` : `请绑定ck后再使用${e.original_msg || e.msg}`)

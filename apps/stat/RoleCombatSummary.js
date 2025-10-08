@@ -4,7 +4,7 @@ import { RoleCombat, MysApi, Player } from "#miao.models"
 
 export async function RoleCombatSummary(e) {
   let rawMsg = e.original_msg || e.msg || ""
-  let isMatch = /^#(喵喵)?(本期|上期)?(幻想|幻境|剧诗|幻想真境剧诗)(数据)?$/.test(rawMsg)
+  let isMatch = /^#(喵喵)(本期|上期)?(幻想|幻境|剧诗|幻想真境剧诗)(数据)?$/.test(rawMsg)
   if (!Cfg.get("roleCombat", false) && !isMatch) return false
 
   let isCurrent = !(/上期/.test(rawMsg))

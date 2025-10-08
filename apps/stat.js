@@ -4,6 +4,8 @@ import { AbyssSummary, AbyssChallenge } from "./stat/AbyssSummary.js"
 import { RoleCombatSummary } from "./stat/RoleCombatSummary.js"
 import { HardChallengeSummary } from "./stat/HardChallengeSummary.js"
 import { ConsStat, AbyssPct } from "./stat/AbyssStat.js"
+import { Cfg, Common, Data } from "#miao"
+import { MysApi } from "#miao.models"
 
 export class stat extends plugin {
   constructor() {
@@ -34,11 +36,15 @@ export class stat extends plugin {
           fnc: "abyssSummary"
         },
         {
+          reg: "^#*(喵喵)*(月谕|越狱|幻想|幻境|剧诗|幻想真境剧诗)(圣牌|卡片|卡牌|塔罗牌|card|tarot)(收藏|收集)?[ |0-9]*(数据)?$",
+          fnc: "roleCard"
+        },
+        {
           reg: "^#*(喵喵)*(本期|上期)?(幻想|幻境|剧诗|幻想真境剧诗)[ |0-9]*(数据)?$",
           fnc: "roleCombatSummary"
         },
         {
-          reg: "^#*(喵喵)*(本期|上期)?(幽境|危战|幽境危战)[ |0-9]*(数据)?$",
+          reg: "^#*(喵喵)*(本期|上期)?(幽境|危战|幽境危战)(单人|单挑|组队|多人|合作|最佳)?[ |0-9]*(数据)?$",
           fnc: "HardChallengeSummary"
         }
       ]
@@ -60,6 +66,35 @@ export class stat extends plugin {
   async abyssSummary(e) {
     if (e.isSr) return await AbyssChallenge(e)
     return await AbyssSummary(e)
+  }
+
+  async RoleCard(e) {
+    let rawMsg = e.original_msg || e.msg || ""
+    let isMatch = /^#(喵喵)(月谕|越狱|幻想|幻境|剧诗|幻想真境剧诗)(圣牌|卡片|卡牌|塔罗牌|card|tarot)(收藏|收集)?$/.test(rawMsg)
+    if (!Cfg.get("roleCard", false) && !isMatch) return false
+
+    // 需要自身 ck 查询
+    let mys = await MysApi.init(e, "cookie")
+    if (!mys || !mys.uid) {
+      if (isMatch) e.reply(`请绑定ck后再使用${e.original_msg || e.msg}`)
+      return false
+    }
+    let uid = mys.uid
+    let resRole
+    let lvs
+    try {
+      resRole = await mys.getRoleCombat(true)
+      lvs = Data.getVal(resRole, "tarot_card_state")
+      // 检查是否查询到了幻想真境剧诗信息
+      if (!lvs) return e.reply("暂未获得「月谕圣牌」收藏数据...")
+      delete resRole._res
+    } catch (err) {
+      // logger.error(err);
+    }
+    return await Common.render("stat/role-card", {
+      tarot_card_state: lvs,
+      uid
+    }, { e, scale: 1.2 })
   }
 
   async roleCombatSummary(e) {
