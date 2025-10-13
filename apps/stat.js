@@ -32,7 +32,7 @@ export class stat extends plugin {
           fnc: "abyssSummary"
         },
         {
-          reg: "^#星铁(本期|上期)?(深渊|混沌回忆|混沌|忘却之庭|忘却)[ |0-9]*(数据)?$",
+          reg: "^#*星铁(本期|上期)?(深渊|混沌回忆|混沌|忘却之庭|忘却)[ |0-9]*(数据)?$",
           fnc: "abyssSummary"
         },
         {
@@ -45,8 +45,12 @@ export class stat extends plugin {
         },
         {
           reg: "^#*(喵喵)*(本期|上期)?(幽境|危战|幽境危战)(单人|单挑|组队|多人|合作|最佳)?[ |0-9]*(数据)?$",
-          fnc: "HardChallengeSummary"
+          fnc: "hardChallengeSummary"
         }
+        // {
+        //   reg: "^#*星铁(本期|上期)?(异相|仲裁|异相仲裁)[ |0-9]*(数据)?$",
+        //   fnc: "challengePeak"
+        // }
       ]
     })
   }
@@ -101,7 +105,11 @@ export class stat extends plugin {
     return await RoleCombatSummary(e)
   }
 
-  async HardChallengeSummary(e) {
+  async hardChallengeSummary(e) {
     return await HardChallengeSummary(e)
+  }
+
+  async challengePeak(e) {
+    return false
   }
 }

@@ -56,98 +56,97 @@
   </div>
       
 
-  </div>
-  {{set cardTypes={1:['wide wide2'],2:['wide','wide'],3:['wide','mini','mini'],4:['mini','mini','mini','mini']} }}
-  {{each role?.rounds round}}
-  <div class="cont">
-    <div class="cont-body">
-      <div class="role-title">
-        {{if round.is_get_medal}}
-        <div class="role-star" style="background-image:url('{{_res_path}}/stat/imgs/medal.png')"></div>
-        {{else}}
-        <div class="role-star" style="background-image:url('{{_res_path}}/stat/imgs/nomedal.png')"></div>
-        {{/if}}
-        <strong>{{round.title}}</strong>
-        <span>{{round?.finish_time}}</span>
+</div>
+{{set cardTypes={1:['wide wide2'],2:['wide','wide'],3:['wide','mini','mini'],4:['mini','mini','mini','mini']} }}
+{{each role?.rounds round}}
+<div class="cont">
+  <div class="cont-body">
+    <div class="role-title">
+      {{if round.is_get_medal}}
+      <div class="role-star" style="background-image:url('{{_res_path}}/stat/imgs/medal.png')"></div>
+      {{else}}
+      <div class="role-star" style="background-image:url('{{_res_path}}/stat/imgs/nomedal.png')"></div>
+      {{/if}}
+      <strong>{{round.title}}</strong>
+      <span>{{round?.finish_time}}</span>
+    </div>
+    <div class="role-floor-team">
+      <div class="role-team">
+        {{set current_avatars=round?.avatars||[] }}
+        {{each current_avatars avatar idx}}
+        <% include(_tpl_path+'/avatar-card.html', [avatars[avatar.avatar_id],{_res_path, cardType:cardTypes[current_avatars.length][idx]}]) %>
+        {{/each}}
       </div>
-      <div class="role-floor-team">
-        <div class="role-team">
-          {{set current_avatars=round?.avatars||[] }}
-          {{each current_avatars avatar idx}}
-          <% include(_tpl_path+'/avatar-card.html', [avatars[avatar.avatar_id],{_res_path, cardType:cardTypes[current_avatars.length][idx]}]) %>
-          {{/each}}
+      <div class="line"></div>
+      {{set enemies=round?.enemies }}
+      <div class="role-enemy">
+        <div class="role-enemy-container">
+          <div class="role-enemy-header">讨伐列表</div>
+          <div class="role-enemy-content">
+            {{each enemies display_enemy}}
+              <div class="role-content-container">
+                <div class="role-content-icon" style="background:url('{{display_enemy.icon}}') no-repeat 0 0 / cover"></div>
+                <div class="role-content-detail">
+                  <p class="role-content-name">{{display_enemy.name}}</p>
+                  <p class="role-content-level">Lv.{{display_enemy.level}}</p>
+                </div>
+              </div>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+    </div>
+    {{set choice_cards=round?.choice_cards }}
+    {{set buffs=round?.splendour_buff?.buffs}}
+    {{set splendour_summary=round?.splendour_buff?.summary}}
+    <div class="role-buff">
+      <div class="role-splendour-buff">
+        <div class="role-buff-container">
+          <div class="role-buff-header">辉彩祝福</div>
+          <div class="role-buff-content">
+            <div class="role-content-container">
+              <div class="role-content-icon" style="background-image:url('{{_res_path}}/stat/imgs/role/total-level-icon.png')"></div>
+              <div class="role-content-level">Lv.{{splendour_summary?.total_level}}</div>
+            </div>
+            {{each buffs buff}}
+            <div class="role-content-container">
+              <div class="role-content-icon" style="background-image:url('{{buff.icon}}')"></div>
+              <div class="role-content-level">Lv.{{buff.level}}</div>
+            </div>
+            {{/each}}
+          </div>
         </div>
         <div class="line"></div>
-        {{set enemies=round?.enemies }}
-        <div class="role-enemy">
-          <div class="role-enemy-container">
-            <div class="role-enemy-header">讨伐列表</div>
-            <div class="role-enemy-content">
-              {{each enemies display_enemy}}
-                <div class="role-content-container">
-                  <div class="role-content-icon" style="background:url('{{display_enemy.icon}}') no-repeat 0 0 / cover"></div>
-                  <div class="role-content-detail">
-                    <p class="role-content-name">{{display_enemy.name}}</p>
-                    <p class="role-content-level">Lv.{{display_enemy.level}}</p>
-                  </div>
-                </div>
-              {{/each}}
-            </div>
+        <div class="role-buff-container role-choice-cards">
+          <div class="role-buff-header">神秘收获 * {{choice_cards.length}}</div>
+          <div class="role-buff-content">
+            {{each choice_cards choice_card}}
+              <div class="role-content-container">
+                <div class="role-content-icon" style="background-image:url('{{choice_card.icon}}')"></div>
+                <div class="role-content-level">{{choice_card.name.replace(/·.*/g, '')}}·<br />{{choice_card.name.replace(/.*·/g, '')}}</div>
+              </div>
+            {{/each}}
           </div>
         </div>
       </div>
-      {{set choice_cards=round?.choice_cards }}
-      {{set buffs=round?.splendour_buff?.buffs}}
-      {{set splendour_summary=round?.splendour_buff?.summary}}
-      <div class="role-buff">
-        <div class="role-splendour-buff">
-          <div class="role-buff-container">
-            <div class="role-buff-header">辉彩祝福</div>
-            <div class="role-buff-content">
-              <div class="role-content-container">
-                <div class="role-content-icon" style="background-image:url('{{_res_path}}/stat/imgs/role/total-level-icon.png')"></div>
-                <div class="role-content-level">Lv.{{splendour_summary?.total_level}}</div>
-              </div>
-              {{each buffs buff}}
-              <div class="role-content-container">
-                <div class="role-content-icon" style="background-image:url('{{buff.icon}}')"></div>
-                <div class="role-content-level">Lv.{{buff.level}}</div>
-              </div>
-              {{/each}}
-            </div>
-          </div>
-          <div class="line"></div>
-          <div class="role-buff-container role-choice-cards">
-            <div class="role-buff-header">神秘收获 * {{choice_cards.length}}</div>
-            <div class="role-buff-content">
-              {{each choice_cards choice_card}}
-                <div class="role-content-container">
-                  <div class="role-content-icon" style="background-image:url('{{choice_card.icon}}')"></div>
-                  <div class="role-content-level">{{choice_card.name.replace(/·.*/g, '')}}·<br />{{choice_card.name.replace(/.*·/g, '')}}</div>
-                </div>
-              {{/each}}
-            </div>
-          </div>
-        </div>
-        <ul>
-          <li>祝福等级<span style="color:#f39001">{{splendour_summary?.total_level}}</span>：演出挑战中，角色生命值上限提升<span style="color:#f39001">{{splendour_summary?.hp_increase}}</span>点，攻击力提升<span style="color:#f39001">{{splendour_summary?.atk_increase}}</span>点，防御力提升<span style="color:#f39001">{{splendour_summary?.def_increase}}</span>点，元素精通提升<span style="color:#f39001">{{splendour_summary?.em_increase}}</span>点。</li>
-          <li><span style="color:#f39001">特邀角色</span>获得的祝福等级效果提升<span style="color:#f39001">100%</span>。</li>
-          <li>获取辉彩祝福或携带额外角色开启玩法以提升祝福等级。</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  {{/each}}
-
-  <div class="cont role-notice">
-    <div class="cont-body">
-      <ul class="cont-msg">
-        <li><strong>明星挑战星章</strong>不仅作为展示用，<strong>也会</strong>影响挑战的奖励领取~</li>
-        <li>各关卡按照<strong>挑战时间顺序</strong>展示</li>
-        <li>仅展示<strong>已挑战成功</strong>的<strong>圣牌挑战</strong>，未挑战成功的<strong>圣牌挑战</strong>不会被展示</li>
-        <li>角色装备与圣遗物为当前最新状态</li>
+      <ul>
+        <li>祝福等级<span style="color:#f39001">{{splendour_summary?.total_level}}</span>：演出挑战中，角色生命值上限提升<span style="color:#f39001">{{splendour_summary?.hp_increase}}</span>点，攻击力提升<span style="color:#f39001">{{splendour_summary?.atk_increase}}</span>点，防御力提升<span style="color:#f39001">{{splendour_summary?.def_increase}}</span>点，元素精通提升<span style="color:#f39001">{{splendour_summary?.em_increase}}</span>点。</li>
+        <li><span style="color:#f39001">特邀角色</span>获得的祝福等级效果提升<span style="color:#f39001">100%</span>。</li>
+        <li>获取辉彩祝福或携带额外角色开启玩法以提升祝福等级。</li>
       </ul>
     </div>
+  </div>
+</div>
+{{/each}}
+
+<div class="cont role-notice">
+  <div class="cont-body">
+    <ul class="cont-msg">
+      <li><strong>明星挑战星章</strong>不仅作为展示用，<strong>也会</strong>影响挑战的奖励领取~</li>
+      <li>各关卡按照<strong>挑战时间顺序</strong>展示</li>
+      <li>仅展示<strong>已挑战成功</strong>的<strong>圣牌挑战</strong>，未挑战成功的<strong>圣牌挑战</strong>不会被展示</li>
+      <li>角色装备与圣遗物为当前最新状态</li>
+    </ul>
   </div>
 </div>
 {{/block}}
