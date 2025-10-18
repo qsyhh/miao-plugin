@@ -1,3 +1,4 @@
+import lodash from "lodash"
 /** 胡桃数据库的统计 */
 import { AbyssTeam } from "./stat/AbyssTeam.js"
 import { AbyssSummary, AbyssChallenge } from "./stat/AbyssSummary.js"
@@ -5,7 +6,7 @@ import { RoleCombatSummary } from "./stat/RoleCombatSummary.js"
 import { HardChallengeSummary } from "./stat/HardChallengeSummary.js"
 import { ConsStat, AbyssPct } from "./stat/AbyssStat.js"
 import { Cfg, Common, Data } from "#miao"
-import { MysApi } from "#miao.models"
+import { MysApi, Player } from "#miao.models"
 
 export class stat extends plugin {
   constructor() {
@@ -46,11 +47,11 @@ export class stat extends plugin {
         {
           reg: "^#*(喵喵)*(本期|上期)?(幽境|危战|幽境危战)(单人|单挑|组队|多人|合作|最佳)?[ |0-9]*(数据)?$",
           fnc: "hardChallengeSummary"
+        },
+        {
+          reg: "^#*星铁(本期|上期)?(异相|仲裁|异相仲裁)[ |0-9]*(数据)?$",
+          fnc: "challengePeak"
         }
-        // {
-        //   reg: "^#*星铁(本期|上期)?(异相|仲裁|异相仲裁)[ |0-9]*(数据)?$",
-        //   fnc: "challengePeak"
-        // }
       ]
     })
   }
@@ -110,6 +111,50 @@ export class stat extends plugin {
   }
 
   async challengePeak(e) {
-    return false
+    if (!Cfg.get("challengePeak", false)) return false
+
+    // 需要自身 ck 查询
+    let mys = await MysApi.init(e, "cookie")
+    if (!mys || !mys.uid) return e.reply(`请绑定ck后再使用${e.original_msg || e.msg}`)
+
+    let type = /上期/.test(e.original_msg || e.msg || "") ? 2 : 1
+    let uid = mys.uid
+    let player = Player.create(e)
+    let resDetail, resRole
+    try {
+      resRole = await mys.getChallengePeak(type)
+      let lvs = Data.getVal(resRole, "challenge_peak_records.0.has_challenge_record")
+      // 检查是否查询到了异相仲裁信息
+      if (!lvs) return e.reply(`暂未获得${type === 2 ? "上期" : "本期"}异相仲裁数据...`)
+      resDetail = await mys.getCharacter()
+    } catch (err) {
+      logger.error(err)
+    }
+    // 更新player信息
+    player.setMysCharData(resDetail)
+
+    let avatarIds = []
+    lodash.forEach(resRole.challenge_peak_records[0]?.mob_records, (records, idx) => {
+      lodash.forEach(records?.avatars, avatars => {
+        if (!avatarIds.includes(avatars.id)) avatarIds.push(avatars.id)
+      })
+    })
+    lodash.forEach(resRole.challenge_peak_records[0]?.boss_record?.avatars, avatars => {
+      if (!avatarIds.includes(avatars.id)) avatarIds.push(avatars.id)
+    })
+
+    await player.refreshTalent(avatarIds)
+    let avatarData = player.getAvatarData(avatarIds)
+    if (Object.keys(avatarData).length !== avatarIds.length) return e.reply("角色信息获取失败")
+    return await Common.render("stat/challenge-peak", {
+      ...resRole,
+      challenge_peak_records: resRole.challenge_peak_records[0],
+      save_id: uid,
+      uid,
+      type,
+      avatars: avatarData,
+      Array: (num) => num ? Array(num) : [],
+      timeCalc: (t) => `${t.year}.${t.month}.${t.day}`
+    }, { e, scale: 1.4 })
   }
 }

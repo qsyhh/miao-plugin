@@ -1,0 +1,143 @@
+{{extend defaultLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" type="text/css" href="{{_res_path}}/stat/common.css?v=1.0"/>
+<link rel="stylesheet" type="text/css" href="{{_res_path}}/common/tpl.css?v=1.0"/>
+<link rel="stylesheet" type="text/css" href="{{_res_path}}/stat/challenge-peak.css?v=1.0"/>
+{{if !challenge_peak_records.boss_record}}<style type="text/css">.boss-cont{background-size: auto;}.boss-icon{width: 120px;left: 418px}</style>{{/if}}
+{{/block}}
+
+{{block 'main'}}
+<div class="head-box type">
+  <div class="title">*异相仲裁</div>
+  <div class="uid">UID:{{uid}}</div>
+</div>
+<div class="time">统计周期：{{timeCalc(challenge_peak_records.group.begin_time)}} - {{timeCalc(challenge_peak_records.group.end_time)}}</div>
+<div class="info_box">
+  <div class="hard-battle-cont">
+    <div class="hard-battle">
+      <div class="battle-star">
+        <div class="star-left-icon"><img src="{{challenge_peak_records.group.theme_pic_path}}" /></div>
+        <div class="star-list">
+          <div class="star-detail star-boss"><img src="{{_res_path}}/stat/imgs/challenge/peak/boss_star.png">{{challenge_peak_best_record_brief?.boss_stars||"-"}}</div>
+          <div class="star-detail star-mob"><img src="{{_res_path}}/stat/imgs/challenge/peak/mob_star.png">{{challenge_peak_best_record_brief?.mob_stars||"-"}}</div>
+        </div>
+      </div>
+      <div class="battle-total">
+        <div class="total-name">{{challenge_peak_records.group?.name_mi18n}}</div>
+        <div class="total-num">挑战次数：{{challenge_peak_best_record_brief?.total_battle_num||"-"}}</div>
+      </div>
+    </div>
+  </div>
+
+  {{set cardTypes={1:['wide wide2'],2:['wide','wide'],3:['wide','mini','mini'],4:['mini','mini','mini','mini']} }}
+  <div class="boss-title">王棋通关战绩</div>
+  <div class="boss-cont">
+    <div class="boss-info">
+      <div class="boss-icon"><img src="{{challenge_peak_records.boss_info.icon}}" /></div>
+      {{if challenge_peak_records.boss_record}}
+      <div class="boss-name">
+        {{challenge_peak_records.boss_info.name_mi18n}}
+        <div class="boss-record">
+          使用轮次 {{challenge_peak_records.boss_record.round_num}}
+          <div class="pass-info">
+            <div class="pass-info-left">
+              <div class="status-icon">
+                <img src="{{_res_path}}/stat/imgs/challenge/peak/status_icon.png"/>
+              </div>
+              <span class="status-text">已通关</span>
+            </div>
+            <div class="pass-star">
+              {{each Array(challenge_peak_records.boss_record.star_num) i}}
+              <img src="{{_res_path}}/stat/imgs/challenge/peak/boss_star.png">
+              {{/each}}
+              {{each Array(3 - challenge_peak_records.boss_record.star_num) i}}
+              <img src="{{_res_path}}/stat/imgs/challenge/peak/boss_star.png">
+              {{/each}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="boss-list">
+        {{timeCalc(challenge_peak_records.boss_record.challenge_time)}}
+        <div class="boss-team">
+          {{set current_avatars=challenge_peak_records.boss_record?.avatars||[] }}
+          {{each current_avatars avatar idx}}
+          <% include(_tpl_path+'/avatar-card.html', [avatars[avatar.id],{_res_path, cardType:cardTypes[current_avatars.length][idx]}]) %>
+          {{/each}}
+        </div>
+      </div>
+      {{else}}
+      <div class="boss-name">
+        {{challenge_peak_records.boss_info.name_mi18n}}
+        <div class="boss-record">暂无通关战绩</div>
+      </div>
+      {{/if}}
+    </div>
+    {{if challenge_peak_records.boss_record}}
+    <div class="buff-body">
+      <ul class="buff-msg">
+        <li><img src="{{challenge_peak_records.boss_record.buff.icon}}"/><strong>{{challenge_peak_records.boss_record.buff.name_mi18n}}</strong></li>
+        <li>{{challenge_peak_records.boss_record.buff.desc_mi18n}}</li>
+      </ul>
+    </div>
+    {{/if}}
+  </div>
+
+  <div class="boss-title">骑士关卡战绩</div>
+  <div class="mob-cont">
+    {{each challenge_peak_records.mob_infos mob_info idx}}
+    {{set mob_record=challenge_peak_records.mob_records?.[idx]||"" }}
+    <div class="mob-body">
+      {{if challenge_peak_records.mob_records && mob_record?.challenge_time}}
+      <div class="mob-name">
+        {{mob_info.name}}
+        <div class="mob-record">
+          使用轮次 {{mob_record.round_num}}
+          <div class="pass-info">
+            <div class="pass-info-left">
+              <div class="status-icon">
+                <img src="{{_res_path}}/stat/imgs/challenge/peak/status_icon.png"/>
+              </div>
+              <span class="status-text">已通关</span>
+            </div>
+            <div class="pass-star">
+              {{each Array(mob_record.star_num) i}}
+                <img src="{{_res_path}}/stat/imgs/challenge/peak/mob_star.png">
+              {{/each}}
+              {{each Array(3 - mob_record.star_num) i}}
+                <img src="{{_res_path}}/stat/imgs/challenge/peak/mob_star.png">
+              {{/each}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mob-list">
+        <div class="mob-team">
+          {{set current_avatars=mob_record?.avatars||[] }}
+          {{each current_avatars avatar idx}}
+          <% include(_tpl_path+'/avatar-card.html', [avatars[avatar.id],{_res_path, cardType:cardTypes[current_avatars.length][idx]}]) %>
+          {{/each}}
+        </div>
+      </div>
+      {{else}}
+      <div class="mob-name">
+        {{mob_info.name}}
+        <div class="mob-record">
+          <div class="pass-info">
+            <div class="pass-info-left">
+              <div class="status-icon">
+                <img src="{{_res_path}}/stat/imgs/challenge/peak/status_icon_fail.png"/>
+              </div>
+              <span class="status-text" style="color:#ccc">未通关</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/if}}
+    </div>
+    {{if idx !== challenge_peak_records.mob_infos.length - 1}}<div class="line"></div>{{/if}}
+    {{/each}}
+  </div>
+</div>
+{{/block}}

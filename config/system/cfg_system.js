@@ -32,6 +32,11 @@ export const cfgSchema = {
         key: "幽境危战",
         def: true
       },
+      challengePeak: {
+        title: "*异相",
+        key: "异相仲裁",
+        def: true
+      },
       profileStat: {
         title: "#练度统计",
         key: "练度统计",

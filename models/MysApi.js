@@ -164,6 +164,21 @@ export default class MysApi {
     return await this.getData("hard_challenge_popularity")
   }
 
+  // 获取星铁虚构叙事信息
+  async getChallengeStory(type = 1) {
+    return await this.getData("challengeStory", { schedule_type: type })
+  }
+
+  // 获取星铁末日幻影信息
+  async getChallengeBoss(type = 1) {
+    return await this.getData("challengeBoss", { schedule_type: type })
+  }
+
+  // 获取星铁异相仲裁信息
+  async getChallengePeak(type = 1) {
+    return await this.getData("challengePeak", { schedule_type: type })
+  }
+
   async getDetail(id) {
     if (this.e.isSr) return await this.getData("detail", { avatar_id: id, tab_from: "TabOwned" })
     return await this.getData("detail", { avatar_id: id })

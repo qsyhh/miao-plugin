@@ -76,6 +76,10 @@ export const helpList = [
         title: "#幽境 #幽境危战 #上期幽境",
         desc: "幽境危战数据"
       }, {
+        icon: 254,
+        title: "*异相 *异相仲裁 *上期异相",
+        desc: "异相仲裁数据"
+      }, {
         icon: 55,
         title: "#202407幻想角色列表",
         desc: "幻想真境剧诗入场角色查询"
