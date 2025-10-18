@@ -36,12 +36,12 @@
 
   {{set cardTypes={1:['wide wide2'],2:['wide','wide'],3:['wide','mini','mini'],4:['mini','mini','mini','mini']} }}
   <div class="boss-title">王棋通关战绩</div>
-  <div class="boss-cont{{if isUltra}} hell{{/if}}">
+  <div class="boss-cont{{if has_more_boss_record}} hell{{/if}}">
     <div class="boss-info">
       <div class="boss-icon"><img src="{{challenge_peak_records.boss_info.icon}}" /></div>
       {{if challenge_peak_records.boss_record}}
       <div class="boss-name">
-        {{if isUltra}}{{challenge_peak_records.boss_info.hard_mode_name_mi18n}}{{else}}{{challenge_peak_records.boss_info.name_mi18n}}{{/if}}
+        {{challenge_peak_records.boss_info[`${has_more_boss_record ? "hard_mode_" : ""}name_mi18n`]}}
         <div class="boss-record">
           使用轮次 {{challenge_peak_records.boss_record.round_num}}
           <div class="pass-info">

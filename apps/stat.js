@@ -153,7 +153,6 @@ export class stat extends plugin {
       save_id: uid,
       uid,
       type,
-      isUltra: icon_type === 4,
       rank_icon: icon_type > 0 ? icon_type : 0,
       avatars: avatarData,
       Array: (num) => num ? Array(num) : [],
