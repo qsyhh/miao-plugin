@@ -17,7 +17,11 @@
   <div class="hard-battle-cont">
     <div class="hard-battle">
       <div class="battle-star">
-        <div class="star-left-icon"><img src="{{challenge_peak_records.group.theme_pic_path}}" /></div>
+        <div class="star-left-icon">
+          <div class="icon_type" style="background-image: url('{{_res_path}}/stat/imgs/challenge/peak/icon_type_{{rank_icon}}.png')">
+            {{if rank_icon !== 0}}<img class="rank_icon_mid" src="{{_res_path}}/stat/imgs/challenge/peak/icon_type_{{rank_icon}}_mid.png" />{{/if}}
+          </div>
+        </div>
         <div class="star-list">
           <div class="star-detail star-boss"><img src="{{_res_path}}/stat/imgs/challenge/peak/boss_star.png">{{challenge_peak_best_record_brief?.boss_stars||"-"}}</div>
           <div class="star-detail star-mob"><img src="{{_res_path}}/stat/imgs/challenge/peak/mob_star.png">{{challenge_peak_best_record_brief?.mob_stars||"-"}}</div>
@@ -32,12 +36,12 @@
 
   {{set cardTypes={1:['wide wide2'],2:['wide','wide'],3:['wide','mini','mini'],4:['mini','mini','mini','mini']} }}
   <div class="boss-title">王棋通关战绩</div>
-  <div class="boss-cont">
+  <div class="boss-cont{{if isUltra}} hell{{/if}}">
     <div class="boss-info">
       <div class="boss-icon"><img src="{{challenge_peak_records.boss_info.icon}}" /></div>
       {{if challenge_peak_records.boss_record}}
       <div class="boss-name">
-        {{challenge_peak_records.boss_info.name_mi18n}}
+        {{if isUltra}}{{challenge_peak_records.boss_info.hard_mode_name_mi18n}}{{else}}{{challenge_peak_records.boss_info.name_mi18n}}{{/if}}
         <div class="boss-record">
           使用轮次 {{challenge_peak_records.boss_record.round_num}}
           <div class="pass-info">
@@ -52,7 +56,7 @@
               <img src="{{_res_path}}/stat/imgs/challenge/peak/boss_star.png">
               {{/each}}
               {{each Array(3 - challenge_peak_records.boss_record.star_num) i}}
-              <img src="{{_res_path}}/stat/imgs/challenge/peak/boss_star.png">
+              <img src="{{_res_path}}/stat/imgs/challenge/peak/boss_star_fail.png">
               {{/each}}
             </div>
           </div>
@@ -106,7 +110,7 @@
                 <img src="{{_res_path}}/stat/imgs/challenge/peak/mob_star.png">
               {{/each}}
               {{each Array(3 - mob_record.star_num) i}}
-                <img src="{{_res_path}}/stat/imgs/challenge/peak/mob_star.png">
+                <img src="{{_res_path}}/stat/imgs/challenge/peak/mob_star_fail.png">
               {{/each}}
             </div>
           </div>

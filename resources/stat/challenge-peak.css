@@ -35,6 +35,8 @@ img {
 .head-box {
   display: flex;
   width: 100%;
+  margin-top: 10px;
+  padding: 10px;
 }
 .head-box .title {
   font-size: 40px;
@@ -54,7 +56,7 @@ img {
   font-size: 24px;
 }
 .time {
-  padding: 0 20px;
+  padding: 0 10px;
   font-size: 18px;
   color: #ffffff;
 }
@@ -73,6 +75,19 @@ img {
 .star-left-icon {
   width: 80px;
   height: 80px;
+}
+.icon_type {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%;
+  align-items: center;
+  justify-content: space-around;
+}
+
+img.rank_icon_mid {
+  width: 40%;
+  height: 40%;
 }
 .hard-battle {
   display: flex;
@@ -103,6 +118,11 @@ img {
   background-size: contain;
   flex-direction: column;
   overflow: hidden;
+}
+.boss-cont.hell {
+  background: url(./imgs/challenge/peak/hell_boss_bg_top.png) left top no-repeat,
+  url(./imgs/challenge/peak/hell_boss_bg_mid.png) left center repeat,
+  url(./imgs/challenge/peak/hell_boss_bg_bottom.png) left bottom no-repeat;
 }
 .boss-cont::before,
 .mob-cont::before {

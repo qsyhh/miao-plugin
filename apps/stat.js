@@ -133,6 +133,7 @@ export class stat extends plugin {
     // 更新player信息
     player.setMysCharData(resDetail)
 
+    let icon_type = [ "ChallengePeakRankIconTypeNone", "ChallengePeakRankIconTypeBronze", "ChallengePeakRankIconTypeGold", "ChallengePeakRankIconTypeSilver", "ChallengePeakRankIconTypeUltra" ].indexOf(resRole.challenge_peak_best_record_brief.challenge_peak_rank_icon_type)
     let avatarIds = []
     lodash.forEach(resRole.challenge_peak_records[0]?.mob_records, (records, idx) => {
       lodash.forEach(records?.avatars, avatars => {
@@ -152,6 +153,8 @@ export class stat extends plugin {
       save_id: uid,
       uid,
       type,
+      isUltra: icon_type === 4,
+      rank_icon: icon_type > 0 ? icon_type : 0,
       avatars: avatarData,
       Array: (num) => num ? Array(num) : [],
       timeCalc: (t) => `${t.year}.${t.month}.${t.day}`
