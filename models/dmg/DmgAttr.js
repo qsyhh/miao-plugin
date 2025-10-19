@@ -64,7 +64,7 @@ let DmgAttr = {
 
     ret.shield = AttrItem.create(originalAttr?.shield || {
       base: 100, // 基础
-      plus: 0, // 护盾强效
+      plus: attr.shield * 1 || 0, // 护盾强效
       inc: 100 // 吸收倍率
     })
 
