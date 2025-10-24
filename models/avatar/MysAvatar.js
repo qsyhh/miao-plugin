@@ -83,7 +83,7 @@ const MysAvatar = {
         // 处理圣遗物数据
         if (player.isGs) {
           let artis = {}
-          lodash.forEach(ds.reliquaries, (re) => {
+          lodash.forEach(ds.relics, (re) => {
             const posIdx = { 生之花: 1, 死之羽: 2, 时之沙: 3, 空之杯: 4, 理之冠: 5 }
             if (re && re.name && posIdx[re.pos_name]) {
               artis[posIdx[re.pos_name]] = {

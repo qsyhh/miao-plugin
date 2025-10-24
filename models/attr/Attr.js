@@ -45,7 +45,19 @@ class Attr extends Base {
       this.addAttr("recharge", 100, true)
       this.addAttr("cpct", 5, true)
       this.addAttr("cdmg", 50, true)
-      if (profile.char.id === 10000119) this.addAttr("mastery", 200, true)
+      // 特有角色自带属性
+      const Characters = [
+        { id: 10000119, attrs: { mastery: 200 } },
+        { id: 10000122, attrs: { mastery: 100 } }
+      ]
+
+      const charBuff = Characters.find(c => c.id === profile.char.id)
+
+      if (charBuff) {
+        for (const key in charBuff.attrs) {
+          this.addAttr(key, charBuff.attrs[key], true)
+        }
+      }
     }
     this.setCharAttr()
     this.setWeaponAttr()
