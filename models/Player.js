@@ -226,8 +226,9 @@ export default class Player extends Base {
   }
 
   // 循环Avatar
-  async forEachAvatar(fn) {
+  async forEachAvatar(fn, isRole = false) {
     for (let id in this._avatars) {
+      if (isRole && [ 10000117, 10000118 ].includes(id * 1)) continue
       let avatar = this.getAvatar(id)
       if (avatar && avatar.hasData && avatar.game === this.game) {
         let ret = fn(avatar, id)
@@ -373,7 +374,7 @@ export default class Player extends Base {
       if (cfg.materials) {
         ds.materials = avatar.getMaterials()
       }
-    })
+    }, cfg.isRole)
     if (cfg.retType !== "array") return avatarRet
     avatarRet = lodash.values(avatarRet)
     if (cfg.sort) {
