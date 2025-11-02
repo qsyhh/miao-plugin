@@ -43,29 +43,37 @@
   </div>
   <div class="cont avatar-cont">
     <div class="gacha-list">
-      {{each gacha.fiveLog ds idx}}
-      {{set item = gacha.items[ds.id]}}
-      {{set max = type === 'weapon'?80:90}}
-      {{set hasDate = (idx===0 || idx ===gacha.items.length-1 || (idx>0 && gacha.fiveLog[idx-1].date !== ds.date)) }}
-      {{set nameWidth = (game==='sr' && type==='weapon'? 120 : 90)}}
-      <div class="gacha-item {{!hasDate?'no-date':'has-date'
-            }} {{ds.isUp ?'up':'wai'}} {{item.abbr==='已抽'?'no-avatar':''}}">
-        <div class="date ">
-          <div class="dot {{idx===0?'first':''}} {{idx===gacha.items.length-1?'last':''}}"></div>
-          <div class="txt">{{ds.date}}</div>
+      {{each gacha.yearLists year}}
+      <div class="year-item">
+        <div class="year">
+          <div class="line"></div>
+          {{year}}
+          <div class="line"></div>
         </div>
-        <div class="name" style="width:{{nameWidth}}px">{{item.abbr}}</div>
-        <div class="icon">
-          <div class="icon-bg star{{item.star}}">
-            <span class="img mini" style="background-image:url('{{_res_path}}{{item.img}}')"></span>
+        {{each gacha.fiveLog[year] ds idx}}
+        {{set item = gacha.items[ds.id]}}
+        {{set max = isChar?90:80}}
+        {{set hasDate = (idx===0 || idx ===gacha.items.length-1 || (idx>0 && gacha.fiveLog[year][idx-1].date !== ds.date)) }}
+        <div class="gacha-item {{!hasDate?'no-date':'has-date'
+              }} {{ds.isUp ?'up':'wai'}} {{item.abbr==='已抽'?'no-avatar':''}}">
+          <div class="date" style="width:{{isChar?'97px':'82px'}}">
+            <div class="dot {{idx===0?'first':''}} {{idx===gacha.items.length-1?'last':''}}"></div>
+            <div class="txt">{{ds.date}}</div>
+          </div>
+          <div class="name" style="width:{{isChar?'90px':'105px'}}">{{item.abbr}}</div>
+          <div class="icon">
+            <div class="icon-bg star{{item.star}}">
+              <span class="img mini" style="background-image:url('{{_res_path}}{{item.img}}')"></span>
+            </div>
+          </div>
+          <div class="process">
+            {{set count = ds.count}}
+            <div class="bar  {{count<=10?'gold': (count<max*0.5 ? 'good' : (count<max*0.83) ? 'normal': 'bad')}}"
+              style="width:{{count/max*100}}%">{{count}}
+            </div>
           </div>
         </div>
-        <div class="process">
-          {{set count = ds.count}}
-          <div class="bar  {{count<=10?'gold': (count<max*0.5 ? 'good' : (count<max*0.83) ? 'normal': 'bad')}}"
-            style="width:{{count/max*100}}%">{{count}}
-          </div>
-        </div>
+        {{/each}}
       </div>
       {{/each}}
     </div>

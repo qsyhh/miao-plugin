@@ -100,7 +100,6 @@ export class gacha extends plugin {
     let gacha = GachaData.analyse(qq, uid, type, game)
     if (!gacha) return e.reply([ `UID:${uid} 本地暂无抽卡信息，请通过【#抽卡帮助】获得绑定帮助...`, new Button(e).gacha() ])
 
-    if (type === 302 || type === 12) type = "weapon"
     this.reply([
       await Common.render("gacha/gacha-detail", {
         save_id: uid,
@@ -108,7 +107,7 @@ export class gacha extends plugin {
         gacha,
         face: getFace(uid, game),
         game,
-        type,
+        isChar: [ 301, 21, 11 ].includes(type),
         elem: e.isSr ? "sr" : "hydro"
       }, { e, scale: 1.4, retType: "base64" }), new Button(e).gacha()
     ])

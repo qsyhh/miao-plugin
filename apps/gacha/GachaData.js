@@ -151,7 +151,7 @@ let GachaData = {
   // 卡池分析
   analyse(qq, uid, type, game) {
     let logData = GachaData.readJSON(qq, uid, type, game)
-    let fiveLog = []
+    let fiveLog = {}
     let fourLog = []
     let fiveNum = 0
     let fourNum = 0
@@ -169,7 +169,9 @@ let GachaData = {
 
     let itemMap = logData.itemMap
     if (logData.items.length === 0) return false
+    let yearLists = []
     let currVersion
+    let yearNow = moment().format("YYYY")
     lodash.forEach(logData.items, (item) => {
       if (!currVersion || (item.time < currVersion.start)) currVersion = GachaData.getVersion(item.time, true, isMix, game)
 
@@ -192,10 +194,16 @@ let GachaData = {
 
       if (star === 5) {
         fiveNum++
-        if (fiveLog.length > 0) {
-          fiveLog[fiveLog.length - 1].count = fiveLogNum
+        let year = moment(item.time).format("YYYY")
+        if (fiveLog[year]) {
+          fiveLog[year][fiveLog[year].length - 1].count = fiveLogNum
         } else {
-          noFiveNum = fiveLogNum
+          fiveLog[year] = []
+          if (fiveLog[year * 1 + 1]) {
+            fiveLog[year * 1 + 1][fiveLog[year * 1 + 1].length - 1].count = fiveLogNum
+          } else {
+            noFiveNum = fiveLogNum
+          }
         }
         fiveLogNum = 0
         let isUp = false
@@ -214,17 +222,19 @@ let GachaData = {
           }
         }
 
-        fiveLog.push({
+        fiveLog[year].push({
           id: item.id,
           isUp,
           date: moment(item.time).format("MM-DD")
         })
+        if (!yearLists.includes(year)) yearLists.push(year)
+        yearNow = year
       }
       fiveLogNum++
     })
 
-    if (fiveLog.length > 0) {
-      fiveLog[fiveLog.length - 1].count = fiveLogNum
+    if (fiveLog[yearNow]) {
+      fiveLog[yearNow][fiveLog[yearNow].length - 1].count = fiveLogNum
     } else {
       // 没有五星
       noFiveNum = allNum
@@ -244,9 +254,11 @@ let GachaData = {
 
     // 有效抽卡
     let isvalidNum = 0
+    yearNow = moment().format("YYYY")
+    if (!fiveLog[yearNow]) fiveLog[yearNow] = []
     if (fiveNum > 0 && fiveNum > wai) {
-      if (fiveLog.length > 0 && !fiveLog[0].isUp) {
-        isvalidNum = (allNum - noFiveNum - fiveLog[0].count) / (fiveNum - wai)
+      if (fiveLog[yearNow].length > 0 && !fiveLog[yearNow][0].isUp) {
+        isvalidNum = (allNum - noFiveNum - fiveLog[yearNow][0].count) / (fiveNum - wai)
       } else {
         isvalidNum = (allNum - noFiveNum) / (fiveNum - wai)
       }
@@ -268,11 +280,13 @@ let GachaData = {
     }
 
     if (noFiveNum > 0) {
-      fiveLog.unshift({
+      if (!yearLists.includes(yearNow)) yearLists.push(yearNow)
+      fiveLog[yearNow].unshift({
         id: 888,
         isUp: true,
         count: noFiveNum,
-        date: moment().format("MM-DD")
+        date: moment().format("MM-DD"),
+        year: yearNow
       })
       itemMap["888"] = {
         name: "已抽",
@@ -297,6 +311,7 @@ let GachaData = {
         weaponFourNum,
         upYs
       },
+      yearLists,
       maxFour: fourItem[0],
       fiveLog,
       noWaiRate,
