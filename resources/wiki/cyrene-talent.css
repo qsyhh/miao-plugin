@@ -1,0 +1,56 @@
+.container {
+  width: 1600px;
+}
+.head-box .head {
+  width: 140px;
+  height: 140px;
+}
+.head-box .head img {
+  width: 140px;
+  height: 140px;
+}
+.head-box .head-detail {
+  width: 85%;
+}
+.head-box .name {
+  font-size: 46px;
+}
+.head-box .desc {
+  font-size: 24px;
+}
+.tab-label {
+  font-size: 24px;
+}
+.num {
+  font-size: 48px;
+}
+.data-box .label {
+  font-size: 22px;
+}
+.talent-box-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+.talent-box {
+  width: 48%;
+}
+.elem-cryo .talent-icon {
+  background-image: url();
+}
+.talent-icon img {
+  width: 115%;
+  height: auto;
+  position: absolute;
+  top: 0;
+  left: -7%;
+  margin: 0;
+}
+.talent-info {
+  min-height: 216px;
+}
+.talent-desc {
+  font-size: 20px;
+}
+.copyright {
+  font-size: 18px;
+}

@@ -1,6 +1,7 @@
 import lodash from "lodash"
 import Calendar from "./wiki/Calendar.js"
 import TodayMaterial from "./wiki/TodayMaterial.js"
+import CharTalent from "./wiki/CharTalent.js"
 import CharWiki from "./wiki/CharWiki.js"
 import CalendarSr from "./wiki/CalendarSr.js"
 import CalendarZzz from "./wiki/CalendarZzz.js"
@@ -41,6 +42,10 @@ export class wiki extends plugin {
         {
           reg: "^#(今日|今天|每日|我的|明天|明日|周([1-7]|一|二|三|四|五|六|日))*(素材|材料|天赋)[ |0-9]*$",
           fnc: "today"
+        },
+        {
+          reg: "^#(星铁)?昔涟忆灵技$",
+          fnc: "cyreneSkill"
         }
       ]
     })
@@ -128,5 +133,29 @@ export class wiki extends plugin {
 
   async today(e) {
     return await TodayMaterial.render(e)
+  }
+
+  async cyreneSkill(e) {
+    let char = Character.get(1415, e.game)
+    let lvs = []
+    for (let i = 1; i <= 15; i++) {
+      lvs.push("Lv" + i)
+    }
+    let detail = JSON.parse(JSON.stringify(char.getDetail()))
+    lodash.forEach(detail.talent.me2list, (ds, idx) => {
+      let desc = CharTalent.getDesc(ds.desc, ds.tables, 5)
+      ds.desc = desc.desc
+      ds.tables = desc.tables
+    })
+    return await Common.render("wiki/cyrene-talent", {
+      saveId: `talent-${char.id}`,
+      game: "sr",
+      mode: "talent",
+      ...char.getData(),
+      detail,
+      imgs: char.getImgs(),
+      lvs,
+      line: CharTalent.getLineData(char)
+    }, { e, scale: 1.6 })
   }
 }

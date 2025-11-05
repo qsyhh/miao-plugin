@@ -1,0 +1,66 @@
+{{extend elemLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" type="text/css" href="{{_res_path}}/wiki/character-talent.css"/>
+<link rel="stylesheet" type="text/css" href="{{_res_path}}/wiki/cyrene-talent.css"/>
+{{/block}}
+
+{{block 'main'}}
+<div class="head-box" style="background-image:url('{{_miao_path}}{{imgs.card}}');height:460px;">
+  <div class="head">
+    <img src="{{_miao_path}}{{imgs.qFace||imgs.face}}"/>
+  </div>
+  <div class="head-detail">
+    <div class="name">{{name}}</div>
+    <div class="desc">{{detail.desc}}</div>
+  </div>
+  {{ if line[0]?.num !== 'NaN'}}
+  <div class="data-box">
+    <div class="tab-label">80级满行迹基础数据</div>
+    <div class="data-line">
+      {{each line.ret item}}
+      <div class="data_line_item">
+        <div class="num">{{item.num}}</div>
+        <div class="label">{{item.label}}</div>
+      </div>
+      {{/each}}
+    </div>
+    <hr>
+    <div class="data-line">
+      <div class="data_line_item">
+        <div class="num">{{detail.sp}}</div>
+        <div class="label">能量上限</div>
+      </div>
+      {{each line.growret item}}
+      <div class="data_line_item">
+        <div class="num">{{item.num}}</div>
+        <div class="label">{{item.label}}</div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+  {{else}}
+  <div class="data-box">
+    <div class="tab-label">80级满行迹基础数据</div>
+    <div class="data-line">
+      暂无详细数据
+    </div>
+  </div>
+  {{/if}}
+</div>
+
+{{set talentNum = [0,1,2,3,4,5,6,7,8,9,10,11,12,13] }}
+<div class="talent-box-wrap">
+{{each talentNum type}}
+  {{if detail.talent.me2list[type]}}
+  <div class="talent-box elem-bg">
+    <div class="talent-detail cont">
+      {{set minLv = 1}}
+      {{set maxLv = 7 }}
+      <% include(_tpl_path+'/talent-detail.html', [detail.talent.me2list[type], {_res_path,lvs,type,icon:`meta-sr/character/昔涟/imgs/talent-me2-${type}.webp`,minLv,maxLv,game}]) %>
+    </div>
+  </div>
+  {{/if}}
+{{/each}}
+</div>
+{{/block}}
