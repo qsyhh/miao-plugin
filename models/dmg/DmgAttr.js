@@ -157,7 +157,7 @@ let DmgAttr = {
         if (ds.cons * 1 > buff.maxCons * 1) return
       }
       if (buff.tree) {
-        if (!ds.trees[`10${buff.tree}`]) return
+        if (!ds.trees[`10${buff.tree}`] || buff.tree != 501) return
       }
 
       let title = typeof buff.title === "function" ? buff.title(ds) : buff.title

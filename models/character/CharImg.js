@@ -133,7 +133,7 @@ const CharImg = {
     add("zFace", "imgs/face-z")
     add("splash", "imgs/splash")
     add("preview", "imgs/preview")
-    for (let i = 1; i <= 3; i++) {
+    for (let i = 1; i <= 4; i++) {
       add(`tree${i}`, `imgs/tree-${i}`)
     }
     for (let key of [ "a", "e", "q", "t", "z", "a2", "e2", "q2", "me", "me2", "mt", "mt1", "mt2" ]) {

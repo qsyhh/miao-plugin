@@ -14,7 +14,7 @@ let MysPanelHSRData = {
       cons: ds.rank,
       weapon: ds.equip ? MysPanelHSRData.getWeapon(ds.equip) : null,
       talent: MysPanelHSRData.getTalent(char, ds.rank, ds.skills, ds.servant_detail?.servant_skills),
-      trees: MysPanelHSRData.getTrees(ds.skills),
+      trees: MysPanelHSRData.getTrees(ds.skills, ds?.special_skills),
       artis: MysPanelHSRData.getArtifact([ ...ds.relics, ...ds.ornaments ])
     }
     avatar.md5 = Data.generateMD5(setData, "sr")
@@ -84,7 +84,10 @@ let MysPanelHSRData = {
     return ret
   },
 
-  getTrees(data) {
+  getTrees(data, special_data) {
+    if (special_data && special_data?.length > 0) {
+      data = [ ...data, ...special_data ]
+    }
     return lodash.sortBy(data.filter(skill => skill.point_type !== 2 && skill.is_activated), "point_id").map(skill => skill.point_id)
   },
 

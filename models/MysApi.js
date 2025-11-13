@@ -144,6 +144,11 @@ export default class MysApi {
     return await this.getData("index")
   }
 
+  // 首页个人日历信息
+  async getActCalendar() {
+    return await this.getData("act_calendar")
+  }
+
   // 获取深渊信息
   async getSpiralAbyss(type = 1) {
     return await this.getData("spiralAbyss", { schedule_type: type })

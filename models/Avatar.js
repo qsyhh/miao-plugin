@@ -173,6 +173,7 @@ export default class Avatar extends Base {
       for (let i = 0; i <= 3; i++) {
         map[`10${i}`] = `${prefix}10${i}`
       }
+      map[501] = `${prefix}501`
     }
     lodash.forEach(ds, (id) => {
       let ret = /1?\d{4}(\d{3})/.exec(id)
