@@ -114,7 +114,7 @@ export class stat extends plugin {
     if (!Cfg.get("challengePeak", false)) return false
 
     // 需要自身 ck 查询
-    let mys = await MysApi.init(e, "cookie")
+    let mys = await MysApi.init(e, "all")
     if (!mys || !mys.uid) return e.reply(`请绑定ck后再使用${e.original_msg || e.msg}`)
 
     let type = /上期/.test(e.original_msg || e.msg || "") ? 2 : 1
