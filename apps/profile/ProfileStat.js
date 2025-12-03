@@ -125,7 +125,7 @@ const ProfileStat = {
 
   async getOverallMazeData() {
     let cacheData = await Data.getCacheJSON("miao:cache:overall")
-    if (cacheData && cacheData.startsWith("[")) return cacheData
+    if (cacheData && typeof cacheData === "array") return cacheData
 
     const request_url = "https://homdgcat.wiki/gi/CH/maze.js"
     let resData, match, overallMazeInfo
