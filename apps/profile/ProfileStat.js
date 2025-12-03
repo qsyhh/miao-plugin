@@ -2,7 +2,7 @@ import moment from "moment"
 import lodash from "lodash"
 import fetch from "node-fetch"
 import * as cheerio from "cheerio"
-import { Common, Cfg } from "#miao"
+import { Data, Common, Cfg } from "#miao"
 import { MysApi, Player, Character } from "#miao.models"
 
 const ProfileStat = {
@@ -124,16 +124,21 @@ const ProfileStat = {
   },
 
   async getOverallMazeData() {
+    let cacheData = await Data.getCacheJSON("miao:cache:overall")
+    if (cacheData && cacheData.startsWith("[")) return cacheData
+
     const request_url = "https://homdgcat.wiki/gi/CH/maze.js"
     let resData, match, overallMazeInfo
     try {
       overallMazeInfo = await (await fetch("https://overall.257800180.xyz")).text()
       if (overallMazeInfo.startsWith("[")) {
+        await Data.setCacheJSON("miao:cache:overall", overallMazeInfo, 3600)
         overallMazeInfo = JSON.parse(overallMazeInfo)
       } else {
         resData = await (await ProfileStat.fetchWithTimeout(request_url)).text()
         match = /var _overall = (.*?)var/s.exec(resData)
         if (match) {
+          await Data.setCacheJSON("miao:cache:overall", match[1], 3600)
           overallMazeInfo = JSON.parse(match[1])
         } else {
           logger.error("响应内容格式不对劲")
