@@ -1,10 +1,15 @@
+.cont-body {
+  padding: 10px 10px 10px 0;
+}
 .card-list {
+  position: relative;
+  width: 100%;
   display: flex;
+  gap: 10px;
+  margin-left: 5%;
   flex-wrap: wrap;
-  justify-content: center;
 }
 .card-list .item {
-  margin: 0 0 10px 10px;
   border-radius: 7px;
   box-shadow: 0 2px 6px 0 rgba(132, 93, 90, 0.3);
   height: 88px;
@@ -59,17 +64,34 @@
 .card-list .item .num_name {
   font-size: 16px;
 }
-.line_box {
-  height: 32px;
-  width: 100%;
+.info_box_border {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  font-size: 16px;
+  margin: 10px 0;
+  padding: 12px 0;
+  border-radius: 0 10px 10px 0;
+}
+.info_box_border.level_s1 {
+  background-image: linear-gradient(to right, #03ec0ee0 10%, rgba(0, 0, 0, 0.5) 1%);
+}
+.info_box_border.level_s {
+  background-image: linear-gradient(to right, #bfff7fe0 10%, rgba(0, 0, 0, 0.5) 1%);
+}
+.info_box_border.level_a {
+  background-image: linear-gradient(to right, #ffff7fe0 10%, rgba(0, 0, 0, 0.5) 1%);
+}
+.info_box_border.level_b {
+  background-image: linear-gradient(to right, #ffdf7fe0 10%, rgba(0, 0, 0, 0.5) 1%);
+}
+.info_box_border.level_f {
+  background-image: linear-gradient(to right, #fc4a4ae0 10%, rgba(0, 0, 0, 0.5) 1%);
+}
+.line_box {
+  display: flex;
+  width: 10%;
   color: #fff;
-  padding-bottom: 5px;
-  margin-top: 15px;
-  margin-bottom: 5px;
+  justify-content: center;
+  position: relative;
 }
 .line_box .line {
   height: 1px;

@@ -1,23 +1,17 @@
 /*
-* 胡桃API Miao-Plugin 封装
-* https://github.com/DGP-Studio/DGP.Genshin.HutaoAPI
-*
+* 微信小程序：提瓦特小助手API 已获得授权使用
 * */
 
 import fetch from "node-fetch"
 import { Data } from "#miao"
 
-const host = "http://miao.games/api/hutao"
+const host = "https://game.257800180.xyz/api"
 
-function getApi(api) {
-  return `${host}?api=${api}`
-}
-
-let HutaoApi = {
+let LelaerApi = {
   async req(url, param = {}, EX = 3600) {
-    let cacheData = await Data.getCacheJSON(`miao:hutao:${url}`)
+    let cacheData = await Data.getCacheJSON(`miao:lelaer:${url}`)
     if (cacheData && cacheData.data && param.method !== "POST") return cacheData
-    let response = await fetch(getApi(`${url}`), {
+    let response = await fetch(host + url, {
       ...param,
       method: param.method || "GET"
     })
@@ -25,39 +19,37 @@ let HutaoApi = {
     if (retData && retData.data && param.method !== "POST") {
       let d = new Date()
       retData.lastUpdate = `${d.toLocaleDateString()} ${d.toTimeString().substr(0, 5)}`
-      await Data.setCacheJSON(`miao:hutao:${url}`, retData, EX)
+      await Data.setCacheJSON(`miao:lelaer:${url}`, retData, EX)
     }
     return retData
   },
 
   // 角色持有及命座分布
   async getCons() {
-    return await HutaoApi.req("/Statistics/Constellation")
+    return await LelaerApi.req("/Statistics/Constellation")
   },
 
-  async getAbyssPct() {
-    return await HutaoApi.req("/Statistics/AvatarParticipation")
+  // 获取深渊使用率排行
+  async getAbyssRank() {
+    return await LelaerApi.req("/Statistics/AvatarParticipation")
   },
 
+  // 获取深渊使用率统计
   async getAbyssUse() {
-    return await HutaoApi.req("/Statistics2/AvatarParticipation")
+    return await LelaerApi.req("/Statistics2/AvatarParticipation")
   },
 
   async getAbyssTeam() {
-    return await HutaoApi.req("/Statistics/Team/Combination")
-  },
-
-  async getOverview() {
-    return await HutaoApi.req("/Statistics/Overview")
+    return await LelaerApi.req("/Statistics/Team/Combination")
   },
 
   async getUsage() {
-    return await HutaoApi.req("/Statistics/Avatar/AvatarCollocation")
+    return await LelaerApi.req("/Statistics/Avatar/AvatarCollocation")
   },
 
   async uploadData(data = {}) {
     let body = JSON.stringify(data)
-    return await HutaoApi.req("/Record/UploadData", {
+    return await LelaerApi.req("/Record/UploadData", {
       method: "POST",
       headers: {
         "User-Agent": "Yunzai-Bot/Miao-Plugin",
@@ -68,4 +60,4 @@ let HutaoApi = {
   }
 }
 
-export default HutaoApi
+export default LelaerApi
