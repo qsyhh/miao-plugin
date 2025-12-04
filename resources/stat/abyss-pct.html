@@ -8,17 +8,17 @@
 {{block 'main'}}
 <div class="info_box">
   <div class="head-box type{{bgType}}">
-    <div class="title">#深渊{{modeName}}</div>
-    <div class="label">【#深渊出场率】出场总数/总记录数</div>
-    <div class="label">【#深渊使用率】出场总数/持有该角色的记录数</div>
+    <div class="title">#{{modeName}}使用率</div>
+    <div class="label">【#{{modeName}}出场率】出场总数/总记录数</div>
+    <div class="label">【#{{modeName}}使用率】出场总数/持有该角色的记录数</div>
     <div class="genshin-logo"></div>
   </div>
   <div class="cont msg-cont">
-    <div class="cont-title">深渊{{modeName}}统计</div>
+    <div class="cont-title">{{modeName}}使用率统计</div>
     <div class="cont-body">
       <ul class="cont-msg">
         {{each tips tip}}
-        <li>{{@tip}}</li>
+        {{if tip}}<li>{{@tip}}</li>{{/if}}
         {{/each}}
       </ul>
     </div>

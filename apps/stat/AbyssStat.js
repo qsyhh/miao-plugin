@@ -79,12 +79,12 @@ export async function ConsStat(e) {
 }
 
 export async function AbyssPct(e) {
-  const mode = /使用/.test(e.msg) ? "use" : "pct"
-  if (mode === "pct") return e.reply("出场率统计暂未适配，敬请期待~")
-  const modeName = mode === "use" ? "使用率" : "出场率"
-  const abyssData = await LelaerApi[mode === "use" ? "getAbyssRank" : "getAbyssUse"]()
+  if (!/使用/.test(e.msg)) return e.reply("出场率统计暂未适配，敬请期待~")
+  const mode = /深渊/.test(e.msg) ? "abyss" : "hardchallenge"
+  const modeName = mode === "abyss" ? "深渊" : "幽境危战"
+  const abyssData = await LelaerApi.getAbyssRank(mode)
 
-  if (!abyssData) return e.reply(`深渊${modeName}数据获取失败，请稍后重试~`)
+  if (!abyssData) return e.reply(`${modeName}深渊率数据获取失败，请稍后重试~`)
 
   let data = abyssData.data
   data = lodash.sortBy(data, "use_rate")

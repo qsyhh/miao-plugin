@@ -21,7 +21,7 @@ export class stat extends plugin {
           fnc: "consStat"
         },
         {
-          reg: "^#(喵喵)?深渊(角色)?(出场|使用)(率|统计)*$",
+          reg: "^#(喵喵)?(深渊|幽境|危战|幽境危战)(角色)?(出场|使用)(率|统计)*$",
           fnc: "abyssPct"
         },
         {

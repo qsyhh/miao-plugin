@@ -5,21 +5,35 @@
 import fetch from "node-fetch"
 import { Data } from "#miao"
 
-const host = "https://game.257800180.xyz/api"
+const host = "https://api.lelaer.com/ys/"
 
 let LelaerApi = {
-  async req(url, param = {}, EX = 3600) {
-    let cacheData = await Data.getCacheJSON(`miao:lelaer:${url}`)
+  getKey(mode, key) {
+    mode = mode.replace(/\.(.*)/g, "")
+    return `miao:lelaer:${mode}:${key}`
+  },
+
+  log(msg) {
+    logger.mark(`【Miao fork & Lelaer Api】：${msg}`)
+  },
+
+  async req(url, param = {}, dealFn = (data) => data, key = "default", EX = 3600) {
+    key = LelaerApi.getKey(url, key)
+    const cacheData = await Data.getCacheJSON(key)
     if (cacheData && cacheData.data && param.method !== "POST") return cacheData
+    this.log(`${logger.yellow("开始请求数据")}，${url}...`)
+    const startTime = new Date() * 1
+    if (param.body) url += "?" + new URLSearchParams(param.body).toString()
     let response = await fetch(host + url, {
-      ...param,
+      headers: param.headers || {},
       method: param.method || "GET"
     })
     let retData = await response.json()
-    if (retData && retData.data && param.method !== "POST") {
-      let d = new Date()
-      retData.lastUpdate = `${d.toLocaleDateString()} ${d.toTimeString().substr(0, 5)}`
-      await Data.setCacheJSON(`miao:lelaer:${url}`, retData, EX)
+    const reqTime = new Date() * 1 - startTime
+    this.log(`${logger.green(`请求结束，请求用时${reqTime}ms`)}`)
+    if (retData && retData.code === 200 && param.method !== "POST") {
+      if (dealFn) retData = await dealFn(retData)
+      await Data.setCacheJSON(key, retData, EX)
     }
     return retData
   },
@@ -30,8 +44,32 @@ let LelaerApi = {
   },
 
   // 获取深渊使用率排行
-  async getAbyssRank() {
-    return await LelaerApi.req("/Statistics/AvatarParticipation")
+  async getAbyssRank(mode, star = "all") {
+    return await LelaerApi.req(mode === "abyss" ? "getAbyssRank.php" : "getAbyssRank2.php", {
+      body: {
+        star,
+        lang: "zh-Hans"
+      }
+    }, (data) => {
+      return {
+        title: data.title,
+        nowTime: (new Date()).toLocaleString("zh-Cn", { timeZone: "Asia/Shanghai" }),
+        last_update: data.last_update,
+        update: data.update,
+        top_own: data.top_own,
+        tips: [
+          "数据来自微信小程序<strong>提瓦特小助手</strong>，为提瓦特小助手用户自主上传",
+          `仅统计${mode === "abyss" ? "十二层满星" : "幽境危战（难度5/6）"}数据，您可以前往微信小程序<strong>提瓦特小助手</strong>上传挑战记录，来帮助我们统计的更加及时准确。（上传命令仅会上传您的角色列表及当期${mode === "abyss" ? "深渊" : "幽境危战"}挑战数据，不会上传其他额外信息）`,
+          "由于是用户自主上传，数据可能有一定滞后，数据会在深渊开启后一段时间逐步稳定",
+          data.tips
+        ],
+        data: data.has_list.map(item => {
+          return Object.fromEntries(
+            Object.entries(item).filter(([ key ]) => [ "name", "use_rate", "rank_class" ].includes(key))
+          )
+        })
+      }
+    }, star)
   },
 
   // 获取深渊使用率统计
