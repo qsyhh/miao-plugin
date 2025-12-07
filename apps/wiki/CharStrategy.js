@@ -1,11 +1,25 @@
 import fs from "node:fs"
 import { promisify } from "util"
 import { pipeline } from "stream"
+import lodash from "lodash"
 import fetch from "node-fetch"
 import { Data } from "#miao"
 import { miaoPath, rootPath } from "#miao.path"
 
 const _path = `${rootPath}/temp/miao/strategy/`
+function customSort(item) {
+  const article = item.article
+  if (/^\d+$/.test(article)) {
+    const articleValue = parseInt(article)
+    if (articleValue > 60000000) {
+      return [ 1, articleValue ]
+    } else {
+      return [ 3, articleValue ]
+    }
+  } else {
+    return [ 2, article ]
+  }
+}
 
 const CharStrategy = {
   async strategy(e) {
@@ -26,14 +40,21 @@ const CharStrategy = {
     let msglist = []
     let strategyName = await redis.get(`miao-plugin:wiki:strategy:${e.self_id || "5555"}:${game}`)
     let length = 0
+    let strategy = lodash.orderBy(data.strategy, [ customSort ])
     msglist.push({ nickname: "QQ用户" })
-    for (let ds of data.strategy) {
+    for (let ds of strategy) {
       if (!ds.author || (strategyName && !strategyName.split(",").includes(ds.author))) continue
       let img = await CharStrategy.downImgs(ds, { name, game, type })
       if (!img) continue
+      let tip = []
+      if (!ds.articleUrl) {
+        let article = parseInt(ds.article)
+        if (article && article < 60000000) tip.push("⚠️该攻略发布时间较早，攻略中的部分内容可能与当前游戏内存在差异，请谨慎参考\n")
+      }
       msglist.push({
         nickname: "QQ用户",
         message: [
+          ...tip,
           segment.image(`file://${img}`),
           `版主：${ds.author}\n${ds.articleUrl ?? `https://www.miyoushe.com/${char.isGs ? "ys" : "sr"}/article/${ds.article}`}`
         ]
