@@ -84,8 +84,8 @@ class Cfg {
   initCfg() {
     if (!fs.existsSync(this.configPath)) fs.mkdirSync(this.configPath)
     lodash.forEach(cfgSchema, (group, key) => {
+      changeCfg(group, key, this.getCfg(key))
       this.config[key] = this.getCfg(key)
-      changeCfg(group, key, this.config[key])
       if (!this.watcher[key]) this.watch(`${this.configPath}/${key}.yaml`, key)
     })
   }
