@@ -1,6 +1,6 @@
 import lodash from "lodash"
 import { getTargetUid } from "./ProfileCommon.js"
-import { Common, Data } from "#miao"
+import { Cfg, Common, Data } from "#miao"
 import { Button, ProfileRank, Player, Character, MysApi } from "#miao.models"
 
 const ProfileList = {
@@ -16,7 +16,7 @@ const ProfileList = {
     // 数据更新
     let player = Player.create(e)
     player.e.isfromMys = /米游社|mys/.test(e.msg)
-    let fromMys = player.e.isfromMys || Common.cfg("mysRefresh")
+    let fromMys = player.e.isfromMys || Cfg.get("mysRefresh")
     if (fromMys) {
       player.e.noTips = fromMys
       let mys = await MysApi.init(player.e, "cookie")

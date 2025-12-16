@@ -14,8 +14,7 @@
 /config/character.js
 /config/profile.js
 /config/help.js
-/config/cfg.js
-/config/background.js
+/config/cfg/
 /config/roleName.yaml
 /resources/profile/super-character/*
 /resources/profile/normal-character/*

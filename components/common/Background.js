@@ -7,11 +7,11 @@ import { miaoPath } from "#miao.path"
 
 const Background = {
   async getBackground(cfg) {
-    const def_background = Number(Cfg.getProfile("def_background"))
+    const def_background = Cfg.get("def_background") * 1
     if (def_background == 0) return
     let background = { url: "", text: "" }
     if (def_background > 2) {
-      let url = Cfg.getProfile(`background_${cfg}`)
+      let url = Cfg.get(`background_${cfg}`)
       if (url?.startsWith("http")) {
         const startTime = new Date() * 1
         let res
@@ -26,12 +26,12 @@ const Background = {
       } else logger.mark(`[喵喵:背景][${cfg}] ${logger.red("未设置图链或链接不完整 将使用本地背景图")}`)
     }
     if (!background.url) background.url = Background.getDefBackground(def_background, cfg)
-    background.text = `<style>.background{position:absolute;background-image:url(${background.url});background-size:cover;width:100%;height:100%;filter:blur(${Cfg.getProfile(`filter_${cfg}`)}px);}</style><div class="background"></div>`
+    background.text = `<style>.background{position:absolute;background-image:url(${background.url});background-size:cover;width:100%;height:100%;filter:blur(${Cfg.get(`filter_${cfg}`)}px);}</style><div class="background"></div>`
     return background
   },
   getDefBackground(def_background, cfg, tip = false) {
     if (tip) logger.mark(`[喵喵:背景][${cfg}] ${logger.red("喵喵背景图请求失败 将使用本地背景图")}`)
-    let image = Cfg.getProfile("def_image")
+    let image = Cfg.get("def_image")
     if (def_background % 2 === 0) {
       let _path = miaoPath + "/resources/profile/background"
       let imgs = fs.readdirSync(_path).filter(i => !(fs.statSync(path.join(_path, i)).isDirectory()) && /.(png|jpg|webp)$/.test(path.extname(i)))

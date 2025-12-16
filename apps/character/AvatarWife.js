@@ -1,6 +1,6 @@
 import lodash from "lodash"
 import Avatar from "./AvatarCard.js"
-import { Common } from "#miao"
+import { Cfg } from "#miao"
 import { Character, MysApi, Player } from "#miao.models"
 
 const relationMap = {
@@ -53,8 +53,8 @@ const Wife = {
   reg: wifeReg,
   async render(e) {
     if (e.isPoke) {
-      if (!Common.cfg("avatarPoke")) return false
-    } else if (!Common.cfg("avatarCard")) {
+      if (!Cfg.get("avatarPoke")) return false
+    } else if (!Cfg.get("avatarCard")) {
       return false
     }
 

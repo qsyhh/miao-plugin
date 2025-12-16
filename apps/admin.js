@@ -3,6 +3,7 @@ import { exec, execSync } from "child_process"
 import lodash from "lodash"
 import fetch from "node-fetch"
 import makemsg from "../../../lib/common/common.js"
+// eslint-disable-next-line no-unused-vars
 import { Cfg, Common, Data, Meta, Version } from "#miao"
 import { Base } from "#miao.models"
 import { miaoPath } from "#miao.path"
@@ -18,11 +19,10 @@ const checkAuth = async function(e) {
   return true
 }
 
+let types = lodash.map(Cfg.getCfgSchema(), (i) => i.key).filter((it) => it)
 let keys = lodash.map(Cfg.getCfgSchemaMap(), (i) => i.key)
-let profil_keys = lodash.map(Cfg.getCfgSchemaMap(true), (i) => i.key)
 
-let sysCfgReg = new RegExp(`^#喵喵(?:背景)?设置\\s*(${keys.join("|")})?\\s*(.*)$`)
-let profileCfgReg = new RegExp(`^#喵喵背景设置\\s*(${profil_keys.join("|")})?\\s*(.*)$`)
+let sysCfgReg = new RegExp(`^#喵喵(${types.join("|")})?设置\\s*(${keys.join("|")})?\\s*(.*)$`)
 
 let timer
 
@@ -72,46 +72,24 @@ export class admin extends plugin {
 
   async sysCfg(e) {
     if (!await checkAuth(e)) return true
-    let isBackground = false
-    if (/^#喵喵背景设置/.exec(e.msg)) isBackground = true
 
-    let cfgReg = isBackground ? profileCfgReg : sysCfgReg
-    let regRet = cfgReg.exec(e.msg)
-    let cfgSchemaMap = Cfg.getCfgSchemaMap(isBackground)
-
+    let regRet = sysCfgReg.exec(e.msg)
     if (!regRet) return true
 
-    if (regRet[1]) {
+    let type = regRet[1] || ""
     // 设置模式
-      let val = regRet[2] || ""
+    if (regRet[2]) Cfg.writeCfg(Cfg.getCfgSchemaMap()[regRet[2]].cfgKey, type, regRet[3] ?? "")
 
-      let cfgSchema = cfgSchemaMap[regRet[1]]
-      val = valDeal(val, cfgSchema)
-      Cfg.set(cfgSchema.cfgKey, val, isBackground)
-    } else if ((isBackground && /^全部/.exec(regRet[2]))) {
-      let type = "str"
-      if (/^全部模糊/.exec(regRet[2])) type = "num"
-      lodash.forEach(Object.keys(cfgSchemaMap), (cm) => {
-        if (/^def/.test(cfgSchemaMap[cm].cfgKey)) return
-        let val = regRet[2].replace(/^全部(模糊)?/, "") || ""
-        if (val == "默认") val = cfgSchemaMap[cm].def
-        if (cfgSchemaMap[cm].type == type) {
-          val = valDeal(val, cfgSchemaMap[cm])
-          Cfg.set(cfgSchemaMap[cm].cfgKey, val, isBackground)
-        }
-      })
-    }
-
-    let schema = Cfg.getCfgSchema(isBackground)
-    let cfg = Cfg.getCfg(isBackground)
+    let schema = Cfg.getCfgSchema()
+    let cfg = Cfg.getCfgMap(type, true)
     let imgPlus = fs.existsSync(plusPath)
 
     // 渲染图像
     return await Common.render("admin/index", {
+      type,
       schema,
       cfg,
       imgPlus,
-      isBackground,
       isMiao: Version.isMiao
     }, { e, scale: 1.4 })
   }
@@ -274,9 +252,6 @@ export class admin extends plugin {
     "#喵喵背景设置列表模糊[0-50] --- 设置面板列表背景图模糊度\n" +
     "#喵喵背景设置面板模糊[0-50] --- 设置面板背景图模糊度\n" +
     "-------------------\n" +
-    "#喵喵背景设置全部(xxx|默认) --- 一键设置面板、面板列表背景图\n" +
-    "#喵喵背景设置全部模糊([0-50]|默认) --- 一键设置面板、面板列表模糊度\n" +
-    "-------------------\n" +
     "#喵喵背景设置默认为1或2时可在插件目录/resources/profile/background下放入背景图，并使用#喵喵背景设置默认图+文件全名(为2时则不需要设置)\n" +
     `插件绝对路径：${e.isMaster && e.isPrivate ? miaoPath : e.isMaster ? "请私聊查看" : "null"}\n` +
     "插件相对路径：../../../../../plugins/miao-plugin/", true
@@ -334,17 +309,6 @@ async function Miaoupdatelog(e) {
   let end = "更多详细信息，请前往gitee查看\nhttps://gitee.com/yoimiya-kokomi/miao-plugin"
   log = await makemsg.makeForwardMsg(e, [ log, end ], `miao-plugin更新日志，共${line}条`)
   return await e.reply(log)
-}
-
-function valDeal(val, cfgSchema) {
-  if (cfgSchema.input) {
-    val = cfgSchema.input(val)
-  } else if (cfgSchema.type === "str") {
-    val = (val || cfgSchema.def) + ""
-  } else {
-    val = cfgSchema.type === "num" ? (val * 1 || cfgSchema.def) : !/关闭/.test(val)
-  }
-  return val
 }
 
 async function execPro(cmd, ds = {}) {

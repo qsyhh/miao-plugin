@@ -5,7 +5,8 @@ import DmgAttr from "./dmg/DmgAttr.js"
 import DmgCalc from "./dmg/DmgCalc.js"
 import DmgBuffs from "./dmg/DmgBuffs.js"
 import { Character } from "./index.js"
-import { MiaoError, Data, Meta, Common } from "#miao"
+// eslint-disable-next-line no-unused-vars
+import { Cfg, MiaoError, Data, Meta, Common } from "#miao"
 import { miaoPath } from "#miao.path"
 
 export default class ProfileDmg extends Base {
@@ -23,7 +24,7 @@ export default class ProfileDmg extends Base {
   static dmgRulePath(name, game = "gs") {
     let dmgFile = [
       { file: "calc_user", name: "自定义伤害" },
-      { file: "calc_auto", name: "组团伤害", test: () => Common.cfg("teamCalc") },
+      { file: "calc_auto", name: "组团伤害", test: () => Cfg.get("teamCalc") },
       { file: "calc", name: "喵喵" }
     ]
     for (let ds of dmgFile) {

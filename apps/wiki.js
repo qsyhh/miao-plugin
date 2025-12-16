@@ -5,7 +5,7 @@ import CharTalent from "./wiki/CharTalent.js"
 import CharWiki from "./wiki/CharWiki.js"
 import CalendarSr from "./wiki/CalendarSr.js"
 import CalendarZzz from "./wiki/CalendarZzz.js"
-import { Format, Common } from "#miao"
+import { Cfg, Format, Common } from "#miao"
 import { Character, Weapon } from "#miao.models"
 
 const attrName = {
@@ -64,14 +64,14 @@ export class wiki extends plugin {
       mode = "cons"
     } else if (/(图鉴|资料)/.test(ret[2])) {
       mode = "wiki"
-      if (!Common.cfg("charWiki")) return false
+      if (!Cfg.get("charWiki")) return false
     } else if (/图|画|写真|照片/.test(ret[2])) {
       mode = "pic"
-      if (!Common.cfg("charPic")) return false
+      if (!Cfg.get("charPic")) return false
     } else if (/(材料|养成|成长)/.test(ret[2])) {
       mode = "material"
     }
-    if ([ "cons", "talent" ].includes(mode) && !Common.cfg("charWikiTalent")) return false
+    if ([ "cons", "talent" ].includes(mode) && !Cfg.get("charWikiTalent")) return false
 
     let char = Character.get(ret[1], e.game)
     if (!char || (char.isCustom && mode !== "pic")) return false
@@ -87,7 +87,7 @@ export class wiki extends plugin {
   }
 
   async weaponWiki(e) {
-    if (!Common.cfg("weapomWiki")) return false
+    if (!Cfg.get("weapomWiki")) return false
 
     let ret = /^(?:#|喵喵)?(?:星铁)?(.*)(资料|图鉴)$/.exec(e.msg)
     if (!ret || !ret[1] || !ret[2]) return false

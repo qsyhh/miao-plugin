@@ -93,7 +93,7 @@ let Avatar = {
   check(e) {
     let msg = e.original_msg || e.msg
     if (!msg || !/^#/.exec(msg)) return false
-    if (!Common.cfg("avatarCard")) return false
+    if (!Cfg.get("avatarCard")) return false
     let uidRet = /(18|[1-9])[0-9]{8}/g.exec(msg)
     if (uidRet) {
       e.uid = uidRet[0]

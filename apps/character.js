@@ -1,7 +1,7 @@
 import Wife from "./character/AvatarWife.js"
 import Avatar from "./character/AvatarCard.js"
 import { uploadCharacterImg } from "./character/ImgUpload.js"
-import { Cfg, Common } from "#miao"
+import { Cfg } from "#miao"
 import { Character } from "#miao.models"
 import { miaoPath, rootPath } from "#miao.path"
 
@@ -36,7 +36,7 @@ export class character extends plugin {
   accept(e) {
     let msg = e.original_msg || e.msg
     if (!msg || !/^#/.exec(msg)) return false
-    if (!Common.cfg("avatarCard")) return false
+    if (!Cfg.get("avatarCard")) return false
     let uidRet = /(18|[1-9])[0-9]{8}/g.exec(msg)
     if (uidRet) {
       e.uid = uidRet[0]

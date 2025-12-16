@@ -1,6 +1,6 @@
 import lodash from "lodash"
 import moment from "moment"
-import { Cfg, Common, Data, Version } from "#miao"
+import { Cfg, Data, Version } from "#miao"
 
 export default class ProfileRank {
   constructor(data, game = "gs") {
@@ -105,7 +105,7 @@ export default class ProfileRank {
       4: `绑定CK，或列表有${game == "gs" ? "安柏&凯亚&丽莎" : "丹恒&三月七"}的数据`,
       5: `绑定CK，或列表有16个角色数据且包含${game == "gs" ? "安柏&凯亚&丽莎" : "丹恒&三月七"}`
     }
-    let rankLimit = Common.cfg("groupRankLimit") * 1 || 1
+    let rankLimit = Cfg.get("groupRankLimit") * 1 || 1
     let ret = await Data.redisGet(`miao:rank:${groupId}:cfg`, {
       timestamp: (new Date()) * 1,
       status: 0
@@ -265,7 +265,7 @@ export default class ProfileRank {
     if (uid * 1 < 100000006) return false
 
     try {
-      let rankLimit = Common.cfg("groupRankLimit") * 1 || 1
+      let rankLimit = Cfg.get("groupRankLimit") * 1 || 1
       if (rankLimit === 1) return true
       let data = await redis.get(`miao:rank:uid-info:${game}:${uid}`)
       data = JSON.parse(data)

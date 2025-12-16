@@ -8,7 +8,7 @@ body {
   width: 660px;
 }
 .head-box {
-  margin: 0 0 80px 0;
+  margin: 0;
 }
 .cfg-box {
   border-radius: 15px;
@@ -42,7 +42,7 @@ body {
   font-weight: bold;
   border-radius: 16px;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
-  background: url("./imgs/cfg-right.jpg") right top #cbc4be no-repeat;
+  background: url("./imgs/cfg-right.png") right top #cbc4be no-repeat;
   background-size: auto 36px;
 }
 .cfg-hint {
