@@ -161,7 +161,7 @@ class Cfg {
   writeCfg(item, type, val) {
     let cfgType = cfgTypeMap?.[item]?.[0] ?? ""
     if (!this.getCfgMap(type)[cfgType]) return false
-    val = valDeal(val, cfgSchema[cfgType].cfg[item])
+    val = valDeal(val, this.config[cfgType][item], cfgSchema[cfgType].cfg[item])
 
     const config = this.getCfg(cfgType, true)
     try {
