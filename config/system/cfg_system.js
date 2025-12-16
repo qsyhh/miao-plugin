@@ -263,7 +263,7 @@ export const cfgSchema = {
         def: 4,
         type: "num",
         componentProps: { min: 0, max: 4 },
-        input: (n) => Math.min(4, Math.max(0, (n * 1 || 4))),
+        input: (n) => Math.min(4, Math.max(0, (n * 1 ?? 4))),
         desc: "默认背景模式选择：0:不使用，1:单图默认/自定义，2:文件夹随机，3:图片api/图链请求失败后使用本地默认图，4:图片api/图链请求失败后使用本地随机图"
       },
       def_image: {
