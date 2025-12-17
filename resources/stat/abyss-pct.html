@@ -14,7 +14,9 @@
     <div class="genshin-logo"></div>
   </div>
   <div class="cont msg-cont">
-    <div class="cont-title">{{modeName}}使用率统计</div>
+    <div class="cont-title">
+      {{modeName}}使用率统计 {{if version}}<span class="ver-title">{{version}}</span>{{/if}}
+      </div>
     <div class="cont-body">
       <ul class="cont-msg">
         {{each tips tip}}

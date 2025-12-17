@@ -1,4 +1,3 @@
-import Cfg from "./Cfg.js"
 import Render from "./common/Render.js"
 import Background from "./common/Background.js"
 
@@ -14,7 +13,8 @@ const Common = {
       return Render.render(arg1, arg2, arg3)
     }
   },
-  cfg: Cfg.get,
+  // 弃用
+  // cfg: Cfg.get,
   sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms))
   },

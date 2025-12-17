@@ -53,6 +53,7 @@ let LelaerApi = {
     }, (data) => {
       return {
         title: data.title,
+        version: `${data.version} (${data?.update.replace(/(.*)：/, "")})`,
         nowTime: (new Date()).toLocaleString("zh-Cn", { timeZone: "Asia/Shanghai" }),
         last_update: data.last_update,
         update: data.update,
