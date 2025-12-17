@@ -201,7 +201,7 @@ class Cfg {
     let scale = this.get("renderScale", 100)
     scale = Math.min(2, Math.max(0.5, scale / 100))
     pct = pct * scale
-    return `style="transform:scale(${pct})"`
+    return `style=transform:scale(${pct})`
   }
 
   /**
