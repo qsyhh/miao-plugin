@@ -36,7 +36,11 @@ const CharWiki = {
 
   async render({ e, char }) {
     let data = char.getData()
-    if (char.isGs) lodash.extend(data, char.getData("weaponTypeName,elemName"))
+    let role = {}
+    if (char.isGs) {
+      lodash.extend(data, char.getData("weaponTypeName,elemName"))
+      role = await CharWikiData.getRole(char.name) || {}
+    }
 
     let datas = {
       game: char.game,
@@ -44,7 +48,7 @@ const CharWiki = {
       attr: char.getAttrList(),
       detail: char.getDetail(),
       imgs: char.getImgs(),
-      ...(await CharWikiData.getRole(char.name) || {}),
+      ...role,
       materials: char.getMaterials(),
       elem: char.elem
     }
