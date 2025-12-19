@@ -82,8 +82,25 @@ let LelaerApi = {
     return await LelaerApi.req("/Statistics/Team/Combination")
   },
 
-  async getUsage() {
-    return await LelaerApi.req("/Statistics/Avatar/AvatarCollocation")
+  // 获取角色平均练度统计
+  async getRole(role = "all", star = "all") {
+    return await LelaerApi.req("getRoleAvg.php", {
+      body: {
+        role,
+        star
+      }
+    }, (retData) => {
+      if (!retData?.result?.length) return { data: {} }
+      let data = retData.result
+      if (retData.result.length === 1) data = retData.result[0]
+      return {
+        title: retData.title,
+        version: retData.version,
+        nowTime: (new Date()).toLocaleString("zh-Cn", { timeZone: "Asia/Shanghai" }),
+        last_update: retData.last_update,
+        data
+      }
+    }, `${star}:${role}`)
   },
 
   async uploadData(data = {}) {

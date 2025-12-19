@@ -65,38 +65,39 @@
     </div>
     {{/each}}
   </div>
+  <div class="talent-notice">输入<strong>#{{data.abbr}}天赋、#{{data.abbr}}命座</strong>可查看详细天赋/命座信息</div>
 </div>
 
 <div class="wiki-cont">
-  {{if holding.num}}
+  {{if num}}
   {{set cNum ='零一二三四五满'.split('')}}
   <div class="cont cont-bg">
     <div class="char-holding">
       <div class="char-pct">
-        <strong>{{holding.num}}</strong>
-        <div class="cons-title">角色持有率</div>
+        <strong>{{num}}</strong>
+        <div class="cons-title">平均命座</div>
       </div>
       <div class="char-cons">
-        {{each holding.cons cons}}
-        <div class="cons-item cons{{cons.cons}}">
+        {{each holding rate cons}}
+        <div class="cons-item cons{{cons}}">
           <div class="talent-icon">
-            {{if cons.cons > 0}}
-            <div class="talent-icon-img" style="background-image:url('{{_res_path}}{{imgs[`cons${cons.cons}`]}}')"></div>
+            {{if cons > 0}}
+            <div class="talent-icon-img" style="background-image:url('{{_res_path}}{{imgs[`cons${cons}`]}}')"></div>
             {{else}}
             <div class="talent-icon-img" style="background-image:url('{{_res_path}}common/item/cons0.webp')"></div>
             {{/if}}
           </div>
-          <div class="cons-num">{{cons.num}}</div>
-          <div class="cons-title">{{cNum[cons.cons]}}命</div>
+          <div class="cons-num">{{rate}}</div>
+          <div class="cons-title">{{cNum[cons]}}命</div>
         </div>
         {{/each}}
       </div>
     </div>
   </div>
+  <div class="talent-notice">持有率、武器、圣遗物统计来自<strong>提瓦特小助手API</strong>，该数据非官方数据，统计结果仅供参考</div>
   {{/if}}
 
-  <div class="talent-notice">输入<strong>#{{data.abbr}}天赋、#{{data.abbr}}命座</strong>可查看详细天赋/命座信息</div>
-  {{set weapons = usage.weapons || [] }}
+  {{set weapons = usage?.weapons || [] }}
   {{if weapons.length >0}}
   <div class="cont">
     <div class="cont-title border-less">常用武器</div>
@@ -115,10 +116,10 @@
     </div>
   </div>
   {{/if}}
-  {{set artis = usage.artis || [] }}
+  {{set artis = usage?.artis || [] }}
   {{if artis.length >0}}
   <div class="cont">
-    <div class="cont-title border-less">常用圣遗物<span>持有率、武器、圣遗物统计来自胡桃API，未经允许请勿使用此数据</span></div>
+    <div class="cont-title border-less">常用圣遗物</div>
     <div class="item-list weapon-list artis-list">
       {{each artis arti idx}}
       {{if idx < 7}}
@@ -136,7 +137,6 @@
       {{/each}}
     </div>
   </div>
-  <div class="talent-notice"></div>
   {{/if}}
 </div>
 {{/block}}

@@ -44,9 +44,7 @@ const CharWiki = {
       attr: char.getAttrList(),
       detail: char.getDetail(),
       imgs: char.getImgs(),
-      // 命座持有
-      holding: await CharWikiData.getHolding(char.id) || {},
-      usage: await CharWikiData.getUsage(char.id) || {},
+      ...(await CharWikiData.getRole(char.name) || {}),
       materials: char.getMaterials(),
       elem: char.elem
     }

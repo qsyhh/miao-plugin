@@ -1,115 +1,86 @@
-// import lodash from "lodash"
-// import { Format } from "#miao"
-// import { ArtifactSet, Weapon } from "#miao.models"
+import lodash from "lodash"
+import LelaerApi from "../stat/LelaerApi.js"
+import { ArtifactSet, Weapon } from "#miao.models"
 
 let CharWikiData = {
   /**
    * 角色命座持有
-   * @param id
-   * @returns {Promise<{}>}
+   * @param ud 数据
    */
-  async getHolding(id) {
-    return {}
-    // let consData = (await HutaoApi.getCons()).data || {}
-    // consData = lodash.find(consData, (ds) => ds.avatar === id)
-    // let holding = {}
-    // if (consData) {
-    //   let { holdingRate, rate } = consData
-    //   rate = lodash.sortBy(rate, "id")
-    //   holding.num = Format.percent(holdingRate)
-    //   holding.cons = []
-    //   lodash.forEach(rate, (ds) => {
-    //     holding.cons.push({
-    //       cons: ds.id,
-    //       num: Format.percent(ds.value)
-    //     })
-    //   })
-    // }
-    // return holding
+  getHolding(ud) {
+    let holding = {}
+    lodash.forEach(("0,1,2,3,4,5,6").split(","), (ds) => { holding[ds] = ud[`c${ds}`] + "%" })
+    return holding
   },
 
   /**
    * 角色武器、圣遗物使用
-   * @param id
-   * @returns {Promise<{}|{artis: *[], weapons: *[]}>}
+   * @param name 角色名
    */
-  async getUsage(id) {
-    return {
-      weapons: [],
-      artis: []
-    }
-    //   weapons: CharWikiData.getWeaponsData(ud.weapons),
-    //   artis: CharWikiData.getArtisData(ud.artis)
-    // }
-    // let ud = (await HutaoApi.getUsage()).data || {}
-    // if (!ud[id]) return {}
+  async getRole(name) {
+    let ud = (await LelaerApi.getRole(name))?.data || {}
+    if (!ud.role) return {}
 
-    // ud = ud[id]
-    // return {
-    //   weapons: CharWikiData.getWeaponsData(ud.weapons),
-    //   artis: CharWikiData.getArtisData(ud.artis)
-    // }
-  }
+    return {
+      num: ud.avg_class,
+      holding: CharWikiData.getHolding(ud),
+      usage: {
+        weapons: CharWikiData.getWeaponsData(ud.weapon),
+        artis: CharWikiData.getArtisData(ud.artifacts_set)
+      }
+    }
+  },
 
   /**
    * 武器使用
    * @param data
-   * @returns {*[]}
    */
-  // getWeaponsData(data = []) {
-  //   let weapons = []
+  getWeaponsData(data = []) {
+    let weapons = []
 
-  //   lodash.forEach(data, (ds) => {
-  //     let weapon = Weapon.get(ds.item) || {}
-  //     weapons.push({
-  //       ...weapon.getData("name,abbr,img,star"),
-  //       value: ds.rate
-  //     })
-  //   })
-
-  //   weapons = lodash.sortBy(weapons, "value")
-  //   weapons = weapons.reverse()
-  //   lodash.forEach(weapons, (ds) => {
-  //     ds.value = Format.percent(ds.value, 1)
-  //   })
-  //   return weapons
-  // },
+    lodash.forEach(data, (ds) => {
+      let weapon = Weapon.get(ds.name) || {}
+      weapons.push({
+        ...weapon.getData("name,abbr,img,star"),
+        value: ds.rate + "%"
+      })
+    })
+    return weapons
+  },
 
   /**
    * 圣遗物使用
    * @param data
-   * @returns {*[]}
    */
-  // getArtisData(data = []) {
-  //   let artis = []
+  getArtisData(data = []) {
+    let artis = []
 
-  //   lodash.forEach(data, (ds) => {
-  //     let imgs = []
-  //     let abbrs = []
-  //     let ss = ds.item.split(",")
-  //     lodash.forEach(ss, (t) => {
-  //       t = t.split(":")
-  //       let artiSet = ArtifactSet.get(t[0])
-  //       if (artiSet) {
-  //         imgs.push(artiSet.img)
-  //         abbrs.push(artiSet.abbr + (ss.length === 1 ? t[1] : ""))
-  //       }
-  //     })
+    lodash.forEach(data, (ds) => {
+      let imgs = []
+      let abbrs = []
+      let ss = ds.name.split("+")
+      lodash.forEach(ss, (t) => {
+        if (t === "暂无套装") {
+          imgs.push("common/item/artifact-icon.webp")
+          abbrs.push("其他")
+        } else {
+          t = /([\s\S]*?)(2|4)/.exec(t)
+          let artiSet = ArtifactSet.get(t[1])
+          if (artiSet) {
+            imgs.push(artiSet.img)
+            abbrs.push(artiSet.abbr + (ss.length === 1 ? t[2] : ""))
+          }
+        }
+      })
 
-  //     artis.push({
-  //       imgs,
-  //       title: abbrs.join("+"),
-  //       value: ds.rate
-  //     })
-  //   })
-
-  //   artis = lodash.sortBy(artis, "value")
-  //   artis = artis.reverse()
-  //   artis.forEach((ds) => {
-  //     ds.value = Format.percent(ds.value)
-  //   })
-  //   return artis
-  // }
+      artis.push({
+        imgs,
+        title: abbrs.join("+"),
+        value: ds.rate + "%"
+      })
+    })
+    return artis
+  }
 }
 
 export default CharWikiData
