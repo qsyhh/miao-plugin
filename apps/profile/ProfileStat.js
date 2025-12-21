@@ -125,7 +125,7 @@ const ProfileStat = {
 
   async getOverallMazeData() {
     let cacheData = await Data.getCacheJSON("miao:cache:overall")
-    if (cacheData) return cacheData
+    if (cacheData && !lodash.isEmpty(cacheData)) return cacheData
 
     let resData, match, overallMazeInfo
     try {
