@@ -131,19 +131,19 @@ const ProfileStat = {
     try {
       overallMazeInfo = await (await fetch("https://gitee.com/qsyhh_res/json/raw/master/overall.js")).text()
       if (overallMazeInfo.startsWith("[")) {
-        await Data.setCacheJSON("miao:cache:overall", overallMazeInfo, 3600)
         overallMazeInfo = JSON.parse(overallMazeInfo)
+        await Data.setCacheJSON("miao:cache:overall", overallMazeInfo, 3600)
       } else {
         overallMazeInfo = await (await fetch("https://overall.257800180.xyz")).text()
         if (overallMazeInfo.startsWith("[")) {
-          await Data.setCacheJSON("miao:cache:overall", overallMazeInfo, 3600)
           overallMazeInfo = JSON.parse(overallMazeInfo)
+          await Data.setCacheJSON("miao:cache:overall", overallMazeInfo, 3600)
         } else {
           resData = await (await ProfileStat.fetchWithTimeout("https://homdgcat.wiki/gi/CH/maze.js")).text()
           match = /var _overall = (.*?)var/s.exec(resData)
           if (match) {
-            await Data.setCacheJSON("miao:cache:overall", match[1], 3600)
             overallMazeInfo = JSON.parse(match[1])
+            await Data.setCacheJSON("miao:cache:overall", match[1], 3600)
           } else {
             logger.error("响应内容格式不对劲")
             return false
