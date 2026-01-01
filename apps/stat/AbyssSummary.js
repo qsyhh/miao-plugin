@@ -2,7 +2,7 @@ import lodash from "lodash"
 import moment from "moment"
 import LelaerApi from "./LelaerApi.js"
 import { Cfg, Common, Data } from "#miao"
-import { Abyss, Character, MysApi, Player } from "#miao.models"
+import { Abyss, MysApi, Player } from "#miao.models"
 
 export async function AbyssSummary(e) {
   let isMatch = /^#(喵喵|上传)深渊(数据)?$/.test(e.original_msg || e.msg || "")
@@ -17,7 +17,7 @@ export async function AbyssSummary(e) {
   let player = Player.create(e)
   let resDetail, resAbyss
   try {
-    resAbyss = await mys.getSpiralAbyss(1)
+    resAbyss = await mys.getSpiralAbyss(/上期/.test(e.original_msg || e.msg || "") ? 2 : 1)
     let lvs = Data.getVal(resAbyss, "floors.0.levels.0")
     // 检查是否查询到了深渊信息
     if (!lvs || !lvs.battles) {
@@ -33,7 +33,7 @@ export async function AbyssSummary(e) {
     delete resDetail._res
     delete resAbyss._res
   } catch (err) {
-    // logger.error(err);
+    logger.error(err)
   }
   // 更新player信息
   player.setMysCharData(resDetail)
@@ -44,51 +44,13 @@ export async function AbyssSummary(e) {
   let abyss = new Abyss(resAbyss)
   let abyssData = abyss.getData()
   let avatarIds = abyss.getAvatars()
-  let addMsg = function(title, ds) {
-    let tmp = {}
-    if (!ds) return false
-    if (!ds.avatarId && !ds.id) return false
-
-    let char = Character.get(ds.avatarId || ds.id)
-    tmp.title = title
-    tmp.id = char.id
-    tmp.value = `${(ds.value / 10000).toFixed(1)} W`
-    let msg = []
-    tmp.msg = msg
-    let pct = (percent, name) => {
-      if (percent < 0.2) {
-        msg.push({
-          title: "少于",
-          value: (Math.max(0.1, 100 - percent * 100)).toFixed(1),
-          name
-        })
-      } else {
-        msg.push({
-          title: "超过",
-          value: (Math.min(99.9, percent * 100)).toFixed(1),
-          name
-        })
-      }
-    }
-    if (ds.percent) {
-      pct(ds.percent, char.abbr)
-      pct(ds.percentTotal, "总记录")
-    } else {
-      msg.push({
-        txt: "暂无统计信息"
-      })
-    }
-    stat.push(tmp)
-  }
-  addMsg("最强一击", abyssData?.stat?.dmg || {})
-  addMsg("最高承伤", abyssData?.stat.takeDmg || {})
   let abyssStat = abyssData?.stat || {}
-  lodash.forEach({ defeat: "最多击破", e: "元素战技", q: "元素爆发" }, (title, key) => {
+  lodash.forEach({ dmg: "最强一击", takeDmg: "最高承伤", defeat: "最多击破", e: "元素战技", q: "元素爆发" }, (title, key) => {
     if (abyssStat[key]) {
       stat.push({
         title,
         id: abyssStat[key]?.id || 0,
-        value: `${abyssStat[key]?.value}次`
+        value: [ "dmg", "takeDmg" ].includes(key) ? `${(abyssStat[key]?.value / 10000).toFixed(1)} W` : `${abyssStat[key]?.value}次`
       })
     } else {
       stat.push({})
@@ -101,6 +63,7 @@ export async function AbyssSummary(e) {
   return await Common.render("stat/abyss-summary", {
     abyss: abyssData,
     avatars: avatarData,
+    msg: upTip ? "上传" : /上期/.test(e.original_msg || e.msg || "") ? "上期" : "",
     upTip,
     stat,
     save_id: uid,

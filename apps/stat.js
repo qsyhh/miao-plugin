@@ -29,7 +29,7 @@ export class stat extends plugin {
           fnc: "abyssTeam"
         },
         {
-          reg: "^#*(喵喵|上传|本期)*(深渊|深境|深境螺旋)[ |0-9]*(数据)?$",
+          reg: "^#*(喵喵|上传|上期|本期)*(深渊|深境|深境螺旋)[ |0-9]*(数据)?$",
           fnc: "abyssSummary"
         },
         {
