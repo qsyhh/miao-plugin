@@ -1,7 +1,7 @@
 /*
 * 微信小程序：提瓦特小助手API 已获得授权使用
 * */
-
+import lodash from "lodash"
 import fetch from "node-fetch"
 import { Data } from "#miao"
 
@@ -18,16 +18,20 @@ let LelaerApi = {
   },
 
   async req(url, param = {}, dealFn = (data) => data, key = "default", EX = 3600) {
-    key = LelaerApi.getKey(url, key)
-    const cacheData = await Data.getCacheJSON(key)
-    if (cacheData && cacheData.data && param.method !== "POST") return cacheData
+    if (param.method !== "POST") {
+      key = LelaerApi.getKey(url, key)
+      const cacheData = await Data.getCacheJSON(key)
+      if (cacheData && cacheData.data) return cacheData
+    }
     this.log(`${logger.yellow("开始请求数据")}，${url}...`)
     const startTime = new Date() * 1
-    if (param.body) url += "?" + new URLSearchParams(param.body).toString()
-    let response = await fetch(host + url, {
+    let data = {
       headers: param.headers || {},
       method: param.method || "GET"
-    })
+    }
+    if (param.method === "POST" && param.body && typeof param.body === "string") data.body = param.body
+    else url += "?" + new URLSearchParams(param.body).toString()
+    let response = await fetch(host + url, data)
     let retData = await response.json()
     const reqTime = new Date() * 1 - startTime
     this.log(`${logger.green(`请求结束，请求用时${reqTime}ms`)}`)
@@ -103,16 +107,40 @@ let LelaerApi = {
     }, `${star}:${role}`)
   },
 
-  async uploadData(data = {}) {
-    let body = JSON.stringify(data)
-    return await LelaerApi.req("/Record/UploadData", {
-      method: "POST",
-      headers: {
-        "User-Agent": "Yunzai-Bot/Miao-Plugin",
-        "Content-Type": "text/json; charset=utf-8"
-      },
-      body
-    })
+  async uploadData(uid, data, avatarData) {
+    let abyss_result = []
+    let box_result = {}
+    let pushFn = (data) => {
+      let result = []
+      lodash.forEach(data, id => {
+        result.push(avatarData[id].name)
+        box_result[avatarData[id].name] = avatarData[id].cons * 1
+      })
+      abyss_result.push(result)
+    }
+    try {
+      lodash.forEach(data, ds => {
+        pushFn(ds.up.avatars)
+        pushFn(ds.down.avatars)
+      })
+      if (abyss_result.length !== 6) return false
+      return await LelaerApi.req("postAbyssResult.php", {
+        method: "POST",
+        headers: {
+          "User-Agent": "Yunzai-Bot/Miao-Plugin",
+          "Content-Type": "text/json; charset=utf-8"
+        },
+        body: JSON.stringify({
+          from: "Miao-Plugin/3.1",
+          uid,
+          abyss_result,
+          box_result
+        })
+      })
+    } catch (error) {
+      logger.error("上传深渊数据请求失败：", error)
+      return false
+    }
   }
 }
 

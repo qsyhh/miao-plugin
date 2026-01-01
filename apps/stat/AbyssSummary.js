@@ -1,5 +1,6 @@
 import lodash from "lodash"
 import moment from "moment"
+import LelaerApi from "./LelaerApi.js"
 import { Cfg, Common, Data } from "#miao"
 import { Abyss, Character, MysApi, Player } from "#miao.models"
 
@@ -95,9 +96,12 @@ export async function AbyssSummary(e) {
   })
   await player.refreshTalent(avatarIds)
   let avatarData = player.getAvatarData(avatarIds)
+  let upTip
+  if (isMatch && abyssData?.floors?.["12"].star === 9) upTip = await LelaerApi.uploadData(uid, abyssData.floors["12"].levels, avatarData)
   return await Common.render("stat/abyss-summary", {
     abyss: abyssData,
     avatars: avatarData,
+    upTip,
     stat,
     save_id: uid,
     uid
