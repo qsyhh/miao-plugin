@@ -226,6 +226,7 @@ class Character extends Base {
         "003": "q",
         "004": "t",
         "007": "z",
+        "020": "j",
         "301": "me",
         "302": "mt"
       }[id]

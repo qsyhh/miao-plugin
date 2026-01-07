@@ -136,7 +136,7 @@ const CharImg = {
     for (let i = 1; i <= 4; i++) {
       add(`tree${i}`, `imgs/tree-${i}`)
     }
-    for (let key of [ "a", "e", "q", "t", "z", "a2", "e2", "q2", "me", "me2", "mt", "mt1", "mt2" ]) {
+    for (let key of [ "a", "e", "q", "t", "z", "j", "a2", "e2", "q2", "me", "me2", "mt", "mt1", "mt2" ]) {
       add(key, `imgs/talent-${key}`)
     }
     for (let i = 1; i <= 6; i++) {

@@ -3,7 +3,7 @@
 * */
 import lodash from "lodash"
 import DmgMastery from "./DmgMastery.js"
-import { eleBaseDmg, erTitle, breakBaseDmg, cryBaseDmg } from "./DmgCalcMeta.js"
+import { eleBaseDmg, erTitle, breakBaseDmg, cryBaseDmg, elationBaseDmg } from "./DmgCalcMeta.js"
 
 let DmgCalc = {
   calcRet(fnArgs = {}, data = {}) {
@@ -252,6 +252,20 @@ let DmgCalc = {
         break
       }
 
+      // 欢愉伤害 = 基础伤害 * (1+欢愉度%) * (1+增笑%) * (1+(6*笑点/笑点+200)) * 易伤区 * 减伤区 * 防御区 * 抗性区 * 暴击区
+      case "elation": {
+        let elationBase = 1
+        elationBase *= elationBaseDmg[80]
+        let elationNum = 1 + calc(attr.elation) / 100
+        let merryMakeNum = 1 + calc(attr.merryMake) / 100
+        let punchlineNum = 1 + (6 * basicNum / (basicNum + 200))
+        ret = {
+          dmg: elationBase * elationNum * merryMakeNum * punchlineNum * enemydmgNum * dmgReduceNum * defNum * kNum * (1 + cdmgNum),
+          avg: elationBase * elationNum * merryMakeNum * punchlineNum * enemydmgNum * dmgReduceNum * defNum * kNum * (1 + cpctNum * cdmgNum)
+        }
+        break
+      }
+
       default: {
         ret = {
           dmg: dmgBase * dmgNum * enemydmgNum * (1 + cdmgNum) * defNum * kNum * dmgReduceNum,
@@ -283,6 +297,11 @@ let DmgCalc = {
 
     dmgFn.basic = function(basicNum = 0, talent = false, ele = false, dynamicData = false) {
       return dmgFn(0, talent, ele, basicNum, "basic", dynamicData)
+    }
+
+    // 计算欢愉伤害
+    dmgFn.elation = function(punchlineNum = 0, talent = false, ele = "elation") {
+      return dmgFn(0, talent, ele, punchlineNum, "basic")
     }
 
     dmgFn.reaction = function(ele = false, talent = "fy") {

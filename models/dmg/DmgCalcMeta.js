@@ -39,7 +39,9 @@ export const erType = {
   imaginaryBreak: { type: "break", num: () => 0.5, title: "虚数击破" },
   iceBreak: { type: "break", num: () => 1.0, title: "冰击破" },
   // 超击破伤害
-  superBreak: { type: "break", num: () => 1.0, title: "超击破" }
+  superBreak: { type: "break", num: () => 1.0, title: "超击破" },
+  // 欢愉伤害
+  elation: { type: "elation", num: () => 1.0, title: "欢愉" }
 }
 let erTmp = {}
 lodash.forEach(erType, (er, key) => {
@@ -318,5 +320,10 @@ export const breakBaseDmg = {
   77: 3456.92,
   78: 3562.38,
   79: 3665.91,
+  80: 3767.55
+}
+
+// 各等级欢愉基础伤害
+export const elationBaseDmg = {
   80: 3767.55
 }

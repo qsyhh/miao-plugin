@@ -101,6 +101,8 @@ let DmgAttr = {
         ret.fybase = 0 // 反应基础伤害值提升（数值/受精通加成）
       } else if (game === "sr") {
         ret.sp = char.sp * 1
+        ret.elation = 0 // 欢愉度
+        ret.merryMake = 0 // 增笑
         // 超击破
         ret.superBreak = {
           ignore: 0 // 无视防御
@@ -217,7 +219,7 @@ let DmgAttr = {
           return
         }
 
-        if ([ "vaporize", "melt", "crystallize", "burning", "superConduct", "swirl", "electroCharged", "shatter", "overloaded", "bloom", "burgeon", "hyperBloom", "aggravate", "spread", "elevated", "lunarCharged", "lunarBloom", "kx", "fykx", "multi", "fyplus", "fypct", "fybase", "fyinc" ].includes(key)) {
+        if ([ "vaporize", "melt", "crystallize", "burning", "superConduct", "swirl", "electroCharged", "shatter", "overloaded", "bloom", "burgeon", "hyperBloom", "aggravate", "spread", "elevated", "lunarCharged", "lunarBloom", "kx", "fykx", "multi", "fyplus", "fypct", "fybase", "fyinc", "elation", "merryMake" ].includes(key)) {
           attr[key] += val * 1 || 0
           return
         }
