@@ -77,15 +77,17 @@ let DmgCalc = {
         if (attr[t]) {
           let ds = attr[t]
 
-          pctNum += ds.pct / 100
-          dmgNum += ds.dmg / 100
-          enemydmgNum += game === "gs" ? 0 : ds.enemydmg / 100
-          cpctNum += ds.cpct / 100
-          cdmgNum += ds.cdmg / 100
+          if (t !== "elation") {
+            pctNum += ds.pct / 100
+            dmgNum += ds.dmg / 100
+            enemydmgNum += game === "gs" ? 0 : ds.enemydmg / 100
+            cpctNum += ds.cpct / 100
+            cdmgNum += ds.cdmg / 100
+            multiNum += ds.multi / 100
+            plusNum += ds.plus
+          }
           enemyDef += ds.def / 100
           enemyIgnore += ds.ignore / 100
-          multiNum += ds.multi / 100
-          plusNum += ds.plus
         }
       })
     }
@@ -256,8 +258,8 @@ let DmgCalc = {
       case "elation": {
         let elationBase = 1
         elationBase *= elationBaseDmg[80]
-        let elationNum = 1 + calc(attr.elation) / 100
-        let merryMakeNum = 1 + calc(attr.merryMake) / 100
+        let elationNum = 1 + attr.elation.pct / 100
+        let merryMakeNum = 1 + attr.elation.merrymake / 100
         let punchlineNum = 1 + (6 * basicNum / (basicNum + 200))
         ret = {
           dmg: elationBase * elationNum * merryMakeNum * punchlineNum * enemydmgNum * dmgReduceNum * defNum * kNum * (1 + cdmgNum),
@@ -300,8 +302,8 @@ let DmgCalc = {
     }
 
     // 计算欢愉伤害
-    dmgFn.elation = function(punchlineNum = 0, talent = false, ele = "elation") {
-      return dmgFn(0, talent, ele, punchlineNum, "basic")
+    dmgFn.elation = function(punchlineNum = 0) {
+      return dmgFn(0, "elation", "elation", punchlineNum)
     }
 
     dmgFn.reaction = function(ele = false, talent = "fy") {

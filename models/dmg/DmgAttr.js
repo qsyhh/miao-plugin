@@ -56,6 +56,15 @@ let DmgAttr = {
       }
     })
 
+    ret.elation = ret.elation || {
+      pct: 0, // 欢愉度
+
+      enemydmg: 0, // 承受伤害提高
+      merrymake: 0, // 增笑
+      def: 0, // 防御降低
+      ignore: 0 // 无视防御
+    }
+
     ret.enemy = ret.enemy || {
       def: 0, // 降低防御
       ignore: 0, // 无视防御
@@ -101,8 +110,6 @@ let DmgAttr = {
         ret.fybase = 0 // 反应基础伤害值提升（数值/受精通加成）
       } else if (game === "sr") {
         ret.sp = char.sp * 1
-        ret.elation = 0 // 欢愉度
-        ret.merryMake = 0 // 增笑
         // 超击破
         ret.superBreak = {
           ignore: 0 // 无视防御
@@ -197,6 +204,11 @@ let DmgAttr = {
         let tRet = /^(a|a2|a3|e|q|t|me|mt|dot|break|nightsoul)(Def|Ignore|Dmg|Enemydmg|Plus|Pct|Cpct|Cdmg|Multi|Elevated)$/.exec(key)
         if (tRet) {
           attr[tRet[1]][tRet[2].toLowerCase()] += val * 1 || 0
+          return
+        }
+        tRet = /^(elation)(Pct|Enemydmg|Merrymake|Def|Ignore)?$/.exec(key)
+        if (tRet) {
+          attr[tRet[1]][tRet[2] ? tRet[2].toLowerCase() : "pct"] += val * 1 || 0
           return
         }
         let aRet = /^(hp|def|atk|speed)(Base|Plus|Pct|Inc)?$/.exec(key)

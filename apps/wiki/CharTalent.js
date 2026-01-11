@@ -60,7 +60,8 @@ const CharTalent = {
         heal: "治疗加成",
         stance: "击破特攻",
         effPct: "效果命中",
-        effDef: "效果抵抗"
+        effDef: "效果抵抗",
+        elation: "欢愉度"
       }
     }
     if (char.isSr) {
