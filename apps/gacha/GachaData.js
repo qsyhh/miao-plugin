@@ -295,6 +295,7 @@ let GachaData = {
         img: "gacha/imgs/no-avatar.webp"
       }
     }
+    yearLists = lodash.orderBy(yearLists, num => Number(num), "desc")
 
     return {
       stat: {
