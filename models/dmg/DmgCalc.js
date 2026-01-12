@@ -46,8 +46,8 @@ let DmgCalc = {
     let fyinc = attr.fyinc / 100
 
     // 增伤区
-    let elevatedNum = attr.elevated / 100
-    let dmgNum = (1 + dmg.base / 100 + dmg.plus / 100 + dynamicDmg / 100)
+    let dmgNum = (1 + dmg.base / 100 + dmg.plus / 100 + dynamicDmg / 100) // 常规增伤
+    let elevatedNum = attr.elevated / 100 // 擢升
 
     if (ele === "phy") dmgNum = (1 + phy.base / 100 + phy.plus / 100 + dynamicPhy / 100)
 
@@ -187,13 +187,16 @@ let DmgCalc = {
       }
 
       case "lunarBloom":
-      case "lunarCharged": {
+      case "lunarCharged":
+      case "lunarCrystallize": {
         let lunarBase = dmgBase || eleBaseDmg[level]
-        if (ele === "lunarCharged") {
-          eleNum = dmgBase ? 3 : eleNum
-        } else {
-          eleNum = 1
+        const eleNumBase = {
+          // 月感电
+          lunarCharged: 3,
+          // 月姐姐
+          lunarCrystallize: 1.6
         }
+        eleNum = eleNumBase[ele] ? (dmgBase ? eleNumBase[ele] : eleNum) : 1
         ret = {
           avg: ((lunarBase * (1 + fypct) + fybase) * eleBase * eleNum + (lunarBase * fyinc) + fyplus) * (1 + elevatedNum) * kNum * (1 + cpctNum * cdmgNum),
           dmg: ((lunarBase * (1 + fypct) + fybase) * eleBase * eleNum + (lunarBase * fyinc) + fyplus) * (1 + elevatedNum) * kNum * (1 + cdmgNum)
