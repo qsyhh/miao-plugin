@@ -22,7 +22,7 @@ const checkAuth = async function(e) {
 let types = lodash.map(Cfg.getCfgSchema(), (i) => i.key).filter((it) => it)
 let keys = lodash.map(Cfg.getCfgSchemaMap(), (i) => i.key)
 
-let sysCfgReg = new RegExp(`^#喵喵(${types.join("|")})?设置\\s*(${keys.join("|")})?\\s*(.*)$`)
+let sysCfgReg = new RegExp(`^#喵喵(${types.join("|")})?设置\\s*(幻想数据库|${keys.join("|")})?\\s*(.*)$`)
 
 let timer
 
