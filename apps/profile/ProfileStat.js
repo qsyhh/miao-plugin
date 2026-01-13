@@ -1,8 +1,7 @@
 import moment from "moment"
 import lodash from "lodash"
 import fetch from "node-fetch"
-import * as cheerio from "cheerio"
-import { Data, Common, Cfg } from "#miao"
+import { Data, Common, Cfg, Format } from "#miao"
 import { MysApi, Player, Character } from "#miao.models"
 
 const ProfileStat = {
@@ -99,12 +98,17 @@ const ProfileStat = {
     // 组合函数
     let combinedFilter = lodash.overSome([ invitationCharacterFilter, elementFilter ])
     let levelFilter = ProfileStat.getLevelFilterFunc()
-    combinedFilter = lodash.overEvery([ combinedFilter, levelFilter ])
+    let notManekinFilter = ProfileStat.getNotManekinFilterFunc()
+    combinedFilter = lodash.overEvery([ combinedFilter, levelFilter, notManekinFilter ])
     return combinedFilter
   },
 
   getLevelFilterFunc() {
     return ds => ds.level >= 70
+  },
+
+  getNotManekinFilterFunc() {
+    return ds => ds.id !== 10000117 && ds.id !== 10000118
   },
 
   async fetchWithTimeout(url, options = {}) {
@@ -123,169 +127,6 @@ const ProfileStat = {
     return response
   },
 
-  async getOverallMazeData() {
-    let cacheData = await Data.getCacheJSON("miao:cache:overall")
-    if (cacheData && !lodash.isEmpty(cacheData)) return cacheData
-
-    let resData, match, overallMazeInfo
-    try {
-      overallMazeInfo = await (await fetch("https://gitee.com/qsyhh_res/json/raw/master/overall.js")).text()
-      if (overallMazeInfo.startsWith("[")) {
-        overallMazeInfo = JSON.parse(overallMazeInfo)
-        await Data.setCacheJSON("miao:cache:overall", overallMazeInfo, 3600)
-      } else {
-        overallMazeInfo = await (await fetch("https://overall.257800180.xyz")).text()
-        if (overallMazeInfo.startsWith("[")) {
-          overallMazeInfo = JSON.parse(overallMazeInfo)
-          await Data.setCacheJSON("miao:cache:overall", overallMazeInfo, 3600)
-        } else {
-          resData = await (await ProfileStat.fetchWithTimeout("https://homdgcat.wiki/gi/CH/maze.js")).text()
-          match = /var _overall = (.*?)var/s.exec(resData)
-          if (match) {
-            overallMazeInfo = JSON.parse(match[1])
-            await Data.setCacheJSON("miao:cache:overall", match[1], 3600)
-          } else {
-            logger.error("响应内容格式不对劲")
-            return false
-          }
-        }
-      }
-    } catch (error) {
-      logger.error("请求失败:", error)
-      return false // 直接返回以停止后续逻辑
-    }
-
-    return overallMazeInfo
-  },
-
-  sendRoleCombatInfo(e, elements, initialCharacterIds, invitationCharacterIds) {
-    const response = [
-      ProfileStat.getElementInfo(elements),
-      ProfileStat.getInitialCharacterInfo(initialCharacterIds),
-      ProfileStat.getInvitationCharacterInfo(invitationCharacterIds)
-    ].join("\n")
-    e.reply(response)
-  },
-
-  getElementInfo(elements) {
-    // 让我们说中文！
-    const englishToChineseElements = {
-      "anemo": "风",
-      "geo": "岩",
-      "electro": "雷",
-      "dendro": "草",
-      "hydro": "水",
-      "pyro": "火",
-      "cryo": "冰"
-    }
-    // 使用 lodash 将元素转换为中文名称，并用'、'组合成'风、岩'
-    const chineseElements = lodash.map(elements, (element) => englishToChineseElements[element]).join("、")
-    return `限制元素：${chineseElements}`
-  },
-
-  getInitialCharacterInfo(initialCharacterIds) {
-    let characters = lodash.compact(lodash.map(initialCharacterIds, (id) => Character.get(id)))
-    let characterNames = lodash.map(characters, (character) => character.name).join("、")
-    return `开幕角色：${characterNames}`
-  },
-
-  getInvitationCharacterInfo(invitationCharacterIds) {
-    let characters = lodash.compact(lodash.map(invitationCharacterIds, (id) => Character.get(id)))
-    let characterNames = lodash.map(characters, (character) => character.name).join("、")
-    return `特邀角色：${characterNames}`
-  },
-
-  // TODO: BWiki 源的数据暂时没弄完，没接入逻辑中，暂时没啥必要？
-  async getOverallMazeLinkFromBWiki() {
-    const request_url = "https://wiki.biligame.com/ys/%E5%B9%BB%E6%83%B3%E7%9C%9F%E5%A2%83%E5%89%A7%E8%AF%97"
-    try {
-      // 发送 GET 请求
-      const html = await (await ProfileStat.fetchWithTimeout(request_url)).text()
-
-      // 加载 HTML
-      const $ = cheerio.load(html)
-
-      // 存储 href 属性的数组
-      const links = []
-
-      // 查找 id="每期详情" 下的所有 <a> 标签
-      $("#每期详情").closest("h2").next("p").find("a").each((index, element) => {
-        const href = $(element).attr("href")
-        if (href) links.push(href)
-      })
-
-      return links
-    } catch (error) {
-      console.error("Error fetching the URL:", error.message)
-    }
-  },
-
-  async getRequestedMazeDataFromBWiki(e, links) {
-    const mazeId = ProfileStat.getMazeId(e)
-    if (mazeId >= 0 && mazeId < links.length) {
-      const request_url = `https://wiki.biligame.com/${links[mazeId]}`
-
-      // 发送 GET 请求
-      const html = await (await ProfileStat.fetchWithTimeout(request_url)).text()
-
-      // 加载 HTML
-      const $ = cheerio.load(html)
-
-      // 存储 href 属性的数组
-      const elements = []
-
-      $("#限定元素").closest("h2").next("p").find("img").each((index, element) => {
-        const alt = $(element).attr("alt")
-        const match = /卡牌UI-元素-(.*?)\.png/.exec(alt)
-        if (match) elements.push(match[1])
-      })
-
-      // 转换成和 HomDGCat 相同的格式
-      const elementConvertingMapping = {
-        "风": "Wind",
-        "岩": "Rock",
-        "雷": "Elec",
-        "草": "Grass",
-        "水": "Water",
-        "火": "Fire",
-        "冰": "Ice"
-      }
-      const convertedElements = lodash.map(elements, (element) => elementConvertingMapping[element])
-
-      // 存储开幕角色的数组
-      const initialAvatarIds = []
-
-      $("#开幕角色").closest("h2").next("p").children("a").each((index, element) => {
-        const avatarName = $(element).text()
-        const avatarId = Character.get(avatarName).id
-        initialAvatarIds.push(avatarId)
-      })
-
-      // 转换成和 HomDGCat 相同的格式
-      const convertedInitialAvatarIds = lodash.map(initialAvatarIds, (id) => ({ "ID": id - 10000000 }))
-
-      // 存储特邀角色的数组
-      const invitationAvatarIds = []
-
-      $("#特邀角色").closest("h2").next("p").children("a").each((index, element) => {
-        const avatarName = $(element).text()
-        const avatarId = Character.get(avatarName).id
-        invitationAvatarIds.push(avatarId)
-      })
-
-      // 转换成和 HomDGCat 相同的格式
-      const convertedInvitationAvatarIds = lodash.map(invitationAvatarIds, (id) => ({ "ID": id - 10000000 }))
-
-      return {
-        "Initial": convertedInitialAvatarIds,
-        "Invitation": convertedInvitationAvatarIds,
-        "Elem": convertedElements
-      }
-    } else {
-      return false
-    }
-  },
-
   getMazeId(e) {
     const match = /202(\d{3})/.exec(e.msg)
     if (!match) return false
@@ -297,6 +138,51 @@ const ProfileStat = {
     return mazeId
   },
 
+  async getOverallMazeData() {
+    let cacheData = await Data.getCacheJSON("miao:cache:homdgcat:overall")
+    if (cacheData && !lodash.isEmpty(cacheData)) return cacheData
+
+    let resData, match, overallMazeInfo, overallMazeData, levelMapping, monsterMapping
+    try {
+      overallMazeInfo = await (await fetch("https://gitee.com/qsyhh_res/json/raw/master/overall.json")).json()
+      if (overallMazeInfo.overallMazeData) {
+        await Data.setCacheJSON("miao:cache:homdgcat:overall", overallMazeInfo, 3600);
+        ({ overallMazeData, levelMapping, monsterMapping } = overallMazeInfo)
+      } else {
+        resData = await (await ProfileStat.fetchWithTimeout("https://homdgcat.wiki/gi/CH/maze.js")).text()
+        match = /var _overall = (.*?)var/s.exec(resData)
+        if (match) overallMazeData = JSON.parse(match[1])
+        match = /var _mp = (.*?)var/s.exec(resData)
+        if (match) levelMapping = JSON.parse(match[1])
+        match = /var _mons = (.*?)var/s.exec(resData)
+        if (match) monsterMapping = JSON.parse(match[1])
+
+        await Data.setCacheJSON("miao:cache:homdgcat:overall", { overallMazeData, levelMapping, monsterMapping }, 3600)
+      }
+    } catch (error) {
+      logger.error("请求失败:", error)
+      return false // 直接返回以停止后续逻辑
+    }
+
+    return { overallMazeData, levelMapping, monsterMapping }
+  },
+
+  async getOverallMazeDataFromHakushIn() {
+    let cacheData = await Data.getCacheJSON("miao:cache:hakush:rolecombat")
+    if (cacheData && !lodash.isEmpty(cacheData)) return cacheData
+
+    let overallMazeData
+    try {
+      overallMazeData = await (await ProfileStat.fetchWithTimeout("https://api.hakush.in/gi/data/rolecombat.json")).json()
+    } catch (error) {
+      logger.error("请求失败:", error)
+      return false // 直接返回以停止后续逻辑
+    }
+    overallMazeData = Object.values(overallMazeData) // 乱序，不直接用
+    await Data.setCacheJSON("miao:cache:hakush:rolecombat", { overallMazeData }, 3600)
+    return { overallMazeData }
+  },
+
   extractRequestedMazeData(e, overallMazeData) {
     const mazeId = ProfileStat.getMazeId(e)
     if (mazeId >= 0 && mazeId < overallMazeData.length) {
@@ -306,12 +192,111 @@ const ProfileStat = {
     }
   },
 
-  extractInitialCharacterIds(mazeData) {
-    return lodash.map(mazeData.Initial, item => item.ID + 10000000)
+  async getRequestedMazeDataFromHakushIn(e, overallMazeData) {
+    const mazeId = ProfileStat.getMazeId(e)
+    if (mazeId >= 0 && mazeId < overallMazeData.length) {
+      let cacheData = await Data.getCacheJSON(`miao:cache:hakush:rolecombat${mazeId + 3}`)
+      if (cacheData && !lodash.isEmpty(cacheData)) return cacheData
+
+      let currentRawMazeData
+      try {
+        currentRawMazeData = await (await ProfileStat.fetchWithTimeout(`https://api.hakush.in/gi/data/zh/rolecombat/${mazeId + 3}.json`)).json()
+      } catch (error) {
+        logger.error("请求失败:", error)
+        return false // 直接返回以停止后续逻辑
+      }
+      // 转换成和 HomDGCat 相同的格式
+      const elementConvertingMapping = {
+        0: null,
+        2: "Fire",
+        3: "Water",
+        4: "Grass",
+        5: "Elec",
+        6: "Ice",
+        7: "Wind",
+        8: "Rock"
+      }
+      const currentMazeData = {
+        "Initial": lodash.map(currentRawMazeData.AvatarConfig.BuffAvatarList, (item) => ({ "ID": item.Id - 10000000 })),
+        "Invitation": lodash.map(currentRawMazeData.AvatarConfig.InviteAvatarList, (id) => ({ "ID": id - 10000000 })),
+        "Elem": lodash.map(currentRawMazeData.AvatarConfig.ElementList, (item) => elementConvertingMapping[item]).filter(item => item !== null),
+        "RawData": currentRawMazeData
+      }
+      await Data.setCacheJSON(`miao:cache:hakush:rolecombat${mazeId + 3}`, currentMazeData, 3600)
+      return currentMazeData
+    } else {
+      return false
+    }
   },
 
-  extractInvitationCharacterIds(mazeData) {
-    return lodash.map(mazeData.Invitation, item => item.ID + 10000000)
+  getMonsterInfo(currentMazeData, levelMapping, monsterMapping) {
+    let chambers = currentMazeData.Chambers
+    let displayedChambers = {
+      "第三幕": chambers[0][2],
+      "第六幕": chambers[1][2],
+      "第八幕": chambers[2][1],
+      "第十幕": chambers[3][1],
+      "圣牌挑战 I": chambers[4][0],
+      "圣牌挑战 II": chambers[4][1]
+    }
+    let monsterInfo = []
+    for (let [ k, v ] of Object.entries(displayedChambers)) {
+      if (v) {
+        let chamberInfo = `${k}：`
+        let levelId = v.Configs[0]
+        let time = v.Time
+        if (levelId) {
+          let monsterIds = levelMapping[Number(levelId)]
+          if (monsterIds) {
+            let monsterNames = []
+            for (let monsterId of monsterIds) {
+              let monsterName = monsterMapping[Number(monsterId)].Name
+              if (monsterName) monsterNames.push(monsterName.replace(/<.*?>/g, ""))
+            }
+            chamberInfo += monsterNames.join("、")
+            chamberInfo += `（${time}）`
+          }
+        }
+        monsterInfo.push(chamberInfo)
+      }
+    }
+    return monsterInfo.join("\n")
+  },
+
+  getMonsterInfoFromHakushIn(currentMazeData) {
+    const DifficultyConfig = lodash.get(currentMazeData, "RawData.DifficultyConfig")
+    const roomInfo = lodash.get(lodash.last(Object.values(DifficultyConfig)), "Room")
+    const bossIndex = {
+      "第三幕": "3", "第六幕": "6", "第八幕": "8", "第十幕": "10"
+    }
+    let monsterInfo = []
+    for (const [ k, v ] of Object.entries(bossIndex)) {
+      const MonsterList = lodash.get(roomInfo, `${v}.MonsterPreviewList`)
+      if (MonsterList) {
+        let currentMonsterInfo = `${k}：`
+        let monsterNames = []
+        for (const monster of MonsterList) {
+          monsterNames.push(monster.Name)
+        }
+        currentMonsterInfo += monsterNames.join(" 、")
+        monsterInfo.push(currentMonsterInfo)
+      }
+    }
+    return monsterInfo.join("\n")
+  },
+
+  sendRoleCombatInfo(e, elements, initialCharacterIds, invitationCharacterIds, monsterInfo) {
+    let initialCharacter = lodash.compact(lodash.map(initialCharacterIds, (id) => Character.get(id)))
+    let invitationCharacter = lodash.compact(lodash.map(invitationCharacterIds, (id) => Character.get(id)))
+    let response = [
+      `限制元素：${lodash.map(elements, (element) => Format.elemName(element)).join("、")}`,
+      `开幕角色：${lodash.map(initialCharacter, (character) => character.name).join("、")}`,
+      `特邀角色：${lodash.map(invitationCharacter, (character) => character.name).join("、")}`
+    ]
+    if (monsterInfo) response.push(monsterInfo)
+
+    response = response.join("\n")
+    e.reply(response)
   },
 
   extractElements(mazeData) {
@@ -433,26 +418,16 @@ const ProfileStat = {
 
     let filterFunc = (x) => true
     if (isRole) {
-      let c = Cfg.get("roleCharInfoSource", 1)
-      let datasetName
-      let overallMazeData
-      if (c == 1) {
-        datasetName = "HomDGCat"
-        overallMazeData = await ProfileStat.getOverallMazeData() // data
-      } else if (c == 2) {
-        datasetName = "BWiki"
-        overallMazeData = await ProfileStat.getOverallMazeLinkFromBWiki() // links
-      }
+      let infoSource = Cfg.get("roleCharInfoSource", 1)
+      let datasetName = infoSource == 1 ? "HomDGCat" : "hakush"
+      let { overallMazeData, levelMapping, monsterMapping } = await ProfileStat[infoSource == 1 ? "getOverallMazeData" : "getOverallMazeDataFromHakushIn"]()
+
       if (!overallMazeData) {
         e.reply(`请求 ${datasetName} 数据库出错`)
         return false
       }
-      let currentMazeData
-      if (c == 1) {
-        currentMazeData = ProfileStat.extractRequestedMazeData(e, overallMazeData)
-      } else if (c == 2) {
-        currentMazeData = await ProfileStat.getRequestedMazeDataFromBWiki(e, overallMazeData)
-      }
+      let monsterInfo
+      let currentMazeData = await ProfileStat[infoSource == 1 ? "extractRequestedMazeData" : "getRequestedMazeDataFromHakushIn"](e, overallMazeData)
       if (!currentMazeData) {
         const n = overallMazeData.length - 1 + 4 * 12 + 7 - 1
         const maxYear = Math.floor(n / 12)
@@ -465,12 +440,15 @@ const ProfileStat = {
         e.reply(response)
         return false
       }
-      let initialCharacterIds = ProfileStat.extractInitialCharacterIds(currentMazeData)
-      let invitationCharacterIds = ProfileStat.extractInvitationCharacterIds(currentMazeData)
+      // 获取怪物信息
+      monsterInfo = ProfileStat[infoSource == 1 ? "getMonsterInfo" : "getMonsterInfoFromHakushIn"](currentMazeData, levelMapping, monsterMapping)
+      // 筛选角色
+      let initialCharacterIds = lodash.map(currentMazeData.Initial, item => item.ID + 10000000)
+      let invitationCharacterIds = lodash.map(currentMazeData.Invitation, item => item.ID + 10000000)
       let elements = ProfileStat.extractElements(currentMazeData)
 
       // 发送简要的信息
-      ProfileStat.sendRoleCombatInfo(e, elements, initialCharacterIds, invitationCharacterIds)
+      ProfileStat.sendRoleCombatInfo(e, elements, initialCharacterIds, invitationCharacterIds, monsterInfo)
 
       avatarRet = ProfileStat.mergeStart(avatarRet, initialCharacterIds)
       filterFunc = ProfileStat.getRoleFilterFunc(e, elements, invitationCharacterIds)
