@@ -12,9 +12,9 @@ function customSort(item) {
   if (/^\d+$/.test(article)) {
     const articleValue = parseInt(article)
     if (articleValue > 60000000) {
-      return [ 1, articleValue ]
-    } else {
       return [ 3, articleValue ]
+    } else {
+      return [ 1, articleValue ]
     }
   } else {
     return [ 2, article ]
@@ -40,7 +40,7 @@ const CharStrategy = {
     let msglist = []
     let strategyName = await redis.get(`miao-plugin:wiki:strategy:${e.self_id || "5555"}:${game}`)
     let length = 0
-    let strategy = lodash.orderBy(data.strategy, [ customSort ])
+    let strategy = lodash.orderBy(data.strategy, [ customSort ], [ "desc" ])
     msglist.push({ nickname: "QQ用户" })
     for (let ds of strategy) {
       if (!ds.author || (strategyName && !strategyName.split(",").includes(ds.author))) continue
@@ -84,7 +84,8 @@ const CharStrategy = {
     let name = char.name
     if (/旅行者|开拓者/.test(name)) name = `${name}_${char.type}`
     if (!fs.existsSync(_path + `${char.game}/${name}`)) Data.createDir(`temp/miao/strategy/${char.game}/${name}`, "root")
-    let imgPath = `${_path}${char.game}/${name}/${ds.author}_${ds.article}.png`
+    let fileName = `${ds.author}_${ds.article}${ds.update ? `_${ds.update}` : ""}`
+    let imgPath = `${_path}${char.game}/${name}/${fileName}.png`
     if (!fs.existsSync(imgPath)) {
       logger.mark(`[喵喵:角色攻略] 下载${ds.author}-${name}攻略图`)
       try {
