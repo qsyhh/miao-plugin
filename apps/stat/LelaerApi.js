@@ -131,7 +131,7 @@ let LelaerApi = {
           "Content-Type": "text/json; charset=utf-8"
         },
         body: JSON.stringify({
-          from: "Miao-Plugin/3.1",
+          from: "Miao-Plugin/fork2.0.0",
           uid,
           abyss_result,
           box_result
