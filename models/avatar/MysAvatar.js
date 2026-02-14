@@ -260,6 +260,10 @@ const MysAvatar = {
             talent.mt = lv
             continue
           }
+          if (anchor.includes("Point22")) {
+            talent.j = lv
+            continue
+          }
         }
       }
       let ret = char.getAvatarTalent(talent, avatar.cons, "original")

@@ -80,12 +80,12 @@ let DmgCalc = {
           if (t !== "elation") {
             pctNum += ds.pct / 100
             dmgNum += ds.dmg / 100
-            enemydmgNum += game === "gs" ? 0 : ds.enemydmg / 100
-            cpctNum += ds.cpct / 100
-            cdmgNum += ds.cdmg / 100
-            multiNum += ds.multi / 100
-            plusNum += ds.plus
           }
+          enemydmgNum += game === "gs" ? 0 : ds.enemydmg / 100
+          cpctNum += ds.cpct / 100
+          cdmgNum += ds.cdmg / 100
+          plusNum += ds.plus
+          multiNum += ds.multi / 100
           enemyDef += ds.def / 100
           enemyIgnore += ds.ignore / 100
         }
@@ -136,6 +136,7 @@ let DmgCalc = {
     }
 
     let stanceNum = 1
+    let punchlineNum = 1
     if (game === "sr") {
       switch (ele) {
         case "shock":
@@ -150,9 +151,13 @@ let DmgCalc = {
         case "quantumBreak":
         case "imaginaryBreak":
         case "iceBreak":
-        case "superBreak":{
+        case "superBreak": {
           eleNum = DmgMastery.getBasePct(ele, attr.element)
-          stanceNum = 1 + calc(attr.stance) / 100
+          stanceNum += calc(attr.stance) / 100
+          break
+        }
+        case "elation": {
+          punchlineNum += 6 * basicNum / (basicNum + 200)
           break
         }
         default:
@@ -259,11 +264,10 @@ let DmgCalc = {
 
       // 欢愉伤害 = 基础伤害 * (1+欢愉度%) * (1+增笑%) * (1+(6*笑点/笑点+200)) * 易伤区 * 减伤区 * 防御区 * 抗性区 * 暴击区
       case "elation": {
-        let elationBase = 1
-        elationBase *= elationBaseDmg[80]
+        let elationBase = elationBaseDmg[level]
+        elationBase *= pctNum / 100
         let elationNum = 1 + attr.elation.pct / 100
         let merryMakeNum = 1 + attr.elation.merrymake / 100
-        let punchlineNum = 1 + (6 * basicNum / (basicNum + 200))
         ret = {
           dmg: elationBase * elationNum * merryMakeNum * punchlineNum * enemydmgNum * dmgReduceNum * defNum * kNum * (1 + cdmgNum),
           avg: elationBase * elationNum * merryMakeNum * punchlineNum * enemydmgNum * dmgReduceNum * defNum * kNum * (1 + cpctNum * cdmgNum)
@@ -305,8 +309,8 @@ let DmgCalc = {
     }
 
     // 计算欢愉伤害
-    dmgFn.elation = function(punchlineNum = 0) {
-      return dmgFn(0, "elation", "elation", punchlineNum)
+    dmgFn.elation = function(pctNum, punchlineNum = 0, dynamicData = false) {
+      return dmgFn(pctNum, "elation", "elation", punchlineNum, "elation", dynamicData)
     }
 
     dmgFn.reaction = function(ele = false, talent = "fy") {

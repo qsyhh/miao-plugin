@@ -216,7 +216,6 @@ class Character extends Base {
   }
 
   getTalentKey(id) {
-    if (this.talentId[id]) return this.talentId[id]
     if (this.isSr) {
       let reg = new RegExp(`^1?${this.id}`)
       id = (id + "").replace(reg, "")
@@ -226,11 +225,12 @@ class Character extends Base {
         "003": "q",
         "004": "t",
         "007": "z",
-        "020": "j",
         "301": "me",
-        "302": "mt"
+        "302": "mt",
+        "420": "j"
       }[id]
     }
+    if (this.talentId[id]) return this.talentId[id]
     return false
   }
 

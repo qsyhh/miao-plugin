@@ -65,7 +65,8 @@ let MysPanelHSRData = {
       "天赋": "t",
       "秘技": "z",
       "忆灵技": "me",
-      "忆灵天赋": "mt"
+      "忆灵天赋": "mt",
+      "欢愉技": "j"
     }
     if (servant.length > 0) ds = [ ...ds, ...servant ]
     let ret = {}
@@ -77,7 +78,7 @@ let MysPanelHSRData = {
     })
     if (cons >= 3) {
       lodash.forEach(talentCons, (lv, key) => {
-        let addTalent = { a: 1, e: 2, q: 2, t: 2, me: 1, mt: 1 }
+        let addTalent = { a: 1, e: 2, q: 2, t: 2, me: 1, mt: 1, j: cons > 4 ? 2 : 1 }
         if (lv != 0 && ret[key] && cons >= lv) ret[key] = Math.max(1, ret[key] - addTalent[key])
       })
     }
@@ -88,7 +89,7 @@ let MysPanelHSRData = {
     if (special_data && special_data?.length > 0) {
       data = [ ...data, ...special_data ]
     }
-    return lodash.sortBy(data.filter(skill => skill.point_type !== 2 && skill.is_activated), "point_id").map(skill => skill.point_id)
+    return lodash.sortBy(data.filter(skill => skill.point_type % 2 !== 0), "point_id").map(skill => skill.point_id)
   },
 
   getArtifact(data) {

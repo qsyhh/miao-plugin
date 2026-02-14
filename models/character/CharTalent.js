@@ -14,7 +14,7 @@ const CharTalent = {
     }
     lodash.forEach(addTalent[game], (addNum, key) => {
       let ds = talent[key]
-      if (!ds) return false
+      if (!ds) return
 
       let value
       let level

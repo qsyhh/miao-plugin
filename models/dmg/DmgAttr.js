@@ -38,7 +38,7 @@ let DmgAttr = {
     })
 
     // 技能属性记录
-    lodash.forEach((game === "gs" ? "a,a2,a3,e,q,nightsoul" : "a,a2,a3,e,e2,q,q2,t,me,me2,mt,mt2,dot,break").split(","), (key) => {
+    lodash.forEach((game === "gs" ? "a,a2,a3,e,q,nightsoul" : "a,a2,a3,e,e2,q,q2,t,me,me2,mt,mt2,j,j2,dot,break").split(","), (key) => {
       ret[key] = ret[key] || {
         pct: 0, // 倍率加成
         multi: 0, // 独立倍率乘区加成，宵宫E等
@@ -110,9 +110,14 @@ let DmgAttr = {
         // 欢愉伤害
         ret.elation = ret.elation || {
           pct: 0, // 欢愉度
+          multi: 0, // 独立倍率乘区加成
 
-          enemydmg: 0, // 承受伤害提高
+          plus: 0, // 伤害值提高
           merrymake: 0, // 增笑
+          enemydmg: 0, // 承受伤害提高
+          cpct: 0, // 暴击提高
+          cdmg: 0, // 爆伤提高
+
           def: 0, // 防御降低
           ignore: 0 // 无视防御
         }
@@ -203,12 +208,12 @@ let DmgAttr = {
         title = title.replace(`[${key}]`, Format.comma(val, 1))
 
         // 技能提高
-        let tRet = /^(a|a2|a3|e|q|t|me|mt|dot|break|nightsoul)(Def|Ignore|Dmg|Enemydmg|Plus|Pct|Cpct|Cdmg|Multi|Elevated)$/.exec(key)
+        let tRet = /^(a|a2|a3|e|q|t|me|mt|j|dot|break|nightsoul)(Def|Ignore|Dmg|Enemydmg|Plus|Pct|Cpct|Cdmg|Multi|Elevated)$/.exec(key)
         if (tRet) {
           attr[tRet[1]][tRet[2].toLowerCase()] += val * 1 || 0
           return
         }
-        tRet = /^(elation)(Pct|Enemydmg|Merrymake|Def|Ignore)?$/.exec(key)
+        tRet = /^(elation)(Pct|Plus|Multi|Cpct|Cdmg|Enemydmg|Merrymake|Def|Ignore)?$/.exec(key)
         if (tRet) {
           attr[tRet[1]][tRet[2] ? tRet[2].toLowerCase() : "pct"] += val * 1 || 0
           return
@@ -233,7 +238,7 @@ let DmgAttr = {
           return
         }
 
-        if ([ "vaporize", "melt", "crystallize", "burning", "superConduct", "swirl", "electroCharged", "shatter", "overloaded", "bloom", "burgeon", "hyperBloom", "aggravate", "spread", "elevated", "lunarCharged", "lunarBloom", "lunarCrystallize", "kx", "fykx", "multi", "fyplus", "fypct", "fybase", "fyinc", "fycdmg", "elation", "merryMake" ].includes(key)) {
+        if ([ "vaporize", "melt", "crystallize", "burning", "superConduct", "swirl", "electroCharged", "shatter", "overloaded", "bloom", "burgeon", "hyperBloom", "aggravate", "spread", "elevated", "lunarCharged", "lunarBloom", "lunarCrystallize", "kx", "fykx", "multi", "fyplus", "fypct", "fybase", "fyinc", "fycdmg" ].includes(key)) {
           attr[key] += val * 1 || 0
           return
         }

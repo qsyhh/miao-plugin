@@ -1134,7 +1134,8 @@ body {
 .sr-talent.memosprite {
   height: 67px;
 }
-.sr-talent.memosprite .char-talents.left {
+.sr-talent.memosprite .char-talents.left,
+.sr-talent.elation .char-talents.left {
   width: auto;
 }
 .sr-talent.memosprite .char-talents .talent-item .talent-icon {
