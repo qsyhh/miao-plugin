@@ -109,10 +109,11 @@ let DmgAttr = {
         }
         // 欢愉伤害
         ret.elation = ret.elation || {
-          pct: 0, // 欢愉度
-          multi: 0, // 独立倍率乘区加成
+          base: attr.elation * 1 || 0, // 欢愉度基础值
+          pct: 0, // 百分比加成
+          plus: 0, // 加成值
 
-          plus: 0, // 伤害值提高
+          multi: 0, // 独立倍率乘区加成
           merrymake: 0, // 增笑
           enemydmg: 0, // 承受伤害提高
           cpct: 0, // 暴击提高
@@ -213,9 +214,9 @@ let DmgAttr = {
           attr[tRet[1]][tRet[2].toLowerCase()] += val * 1 || 0
           return
         }
-        tRet = /^(elation)(Pct|Plus|Multi|Cpct|Cdmg|Enemydmg|Merrymake|Def|Ignore)?$/.exec(key)
+        tRet = /^(elation)(Base|Pct|Plus|Multi|Cpct|Cdmg|Enemydmg|Merrymake|Def|Ignore)?$/.exec(key)
         if (tRet) {
-          attr[tRet[1]][tRet[2] ? tRet[2].toLowerCase() : "pct"] += val * 1 || 0
+          attr[tRet[1]][tRet[2] ? tRet[2].toLowerCase() : "plus"] += val * 1 || 0
           return
         }
         let aRet = /^(hp|def|atk|speed)(Base|Plus|Pct|Inc)?$/.exec(key)

@@ -78,13 +78,13 @@ let DmgCalc = {
           let ds = attr[t]
 
           if (t !== "elation") {
+            plusNum += ds.plus
             pctNum += ds.pct / 100
             dmgNum += ds.dmg / 100
           }
           enemydmgNum += game === "gs" ? 0 : ds.enemydmg / 100
           cpctNum += ds.cpct / 100
           cdmgNum += ds.cdmg / 100
-          plusNum += ds.plus
           multiNum += ds.multi / 100
           enemyDef += ds.def / 100
           enemyIgnore += ds.ignore / 100
@@ -136,7 +136,7 @@ let DmgCalc = {
     }
 
     let stanceNum = 1
-    let punchlineNum = 1
+    let elationNum = 1
     if (game === "sr") {
       switch (ele) {
         case "shock":
@@ -157,7 +157,8 @@ let DmgCalc = {
           break
         }
         case "elation": {
-          punchlineNum += 6 * basicNum / (basicNum + 200)
+          eleNum += 6 * basicNum / (basicNum + 200)
+          elationNum += calc(attr.elation) / 100
           break
         }
         default:
@@ -265,12 +266,11 @@ let DmgCalc = {
       // 欢愉伤害 = 基础伤害 * (1+欢愉度%) * (1+增笑%) * (1+(6*笑点/笑点+200)) * 易伤区 * 减伤区 * 防御区 * 抗性区 * 暴击区
       case "elation": {
         let elationBase = elationBaseDmg[level]
-        elationBase *= pctNum / 100
-        let elationNum = 1 + attr.elation.pct / 100
+        elationBase *= pctNum * (1 + multiNum) + plusNum
         let merryMakeNum = 1 + attr.elation.merrymake / 100
         ret = {
-          dmg: elationBase * elationNum * merryMakeNum * punchlineNum * enemydmgNum * dmgReduceNum * defNum * kNum * (1 + cdmgNum),
-          avg: elationBase * elationNum * merryMakeNum * punchlineNum * enemydmgNum * dmgReduceNum * defNum * kNum * (1 + cpctNum * cdmgNum)
+          dmg: elationBase * elationNum * merryMakeNum * eleNum * enemydmgNum * dmgReduceNum * defNum * kNum * (1 + cdmgNum),
+          avg: elationBase * elationNum * merryMakeNum * eleNum * enemydmgNum * dmgReduceNum * defNum * kNum * (1 + cpctNum * cdmgNum)
         }
         break
       }

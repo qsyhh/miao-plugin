@@ -132,7 +132,7 @@ let ProfileDetail = {
       attr[`${key}Base`] = fn(base[key])
       attr[`${key}Plus`] = fn(a[key] - base[key])
     })
-    lodash.forEach((isGs ? "cpct,cdmg,recharge,dmg" : "cpct,cdmg,recharge,dmg,effPct,effDef,heal,stance").split(","), (key) => {
+    lodash.forEach((isGs ? "cpct,cdmg,recharge,dmg" : "cpct,cdmg,recharge,dmg,effPct,effDef,heal,stance,elation").split(","), (key) => {
       let fn = Format.pct
       let key2 = key
       if (key === "dmg") {

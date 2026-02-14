@@ -188,6 +188,9 @@ body {
 .i-effDef {
   background-position: -192px 0;
 }
+.i-elation {
+  background-position: -208px 0;
+}
 .detail.attr li:nth-child(even) {
   background: rgba(0, 0, 0, 0.4);
 }
@@ -892,11 +895,11 @@ body {
   line-height: 20px;
   color: #bbb;
 }
+.game-sr .main-pic {
+  height: 520px;
+}
 .game-sr .artis-weapon {
   display: none;
-}
-.game-sr .char-lv {
-  margin-bottom: 25px;
 }
 .game-sr .char-attr .icon i {
   background-image: url('./imgs/icon-sr.png');
