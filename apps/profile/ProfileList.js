@@ -1,6 +1,6 @@
 import lodash from "lodash"
 import { getTargetUid } from "./ProfileCommon.js"
-import { Cfg, Common, Data } from "#miao"
+import { Cfg, Common } from "#miao"
 import { Button, ProfileRank, Player, Character, MysApi } from "#miao.models"
 
 const ProfileList = {
@@ -97,7 +97,6 @@ const ProfileList = {
       newChar = e.newChar
       updateChar = e.updateChar
     }
-    const cfg = await Data.importCfg("cfg")
     // 获取面板数据
     let player = Player.create(e)
     let servName = e.isNewCharFromMys ? "米游社" : Player.getProfileServName(uid, player.game)
@@ -114,7 +113,7 @@ const ProfileList = {
     if (groupId) rank = await ProfileRank.create({ groupId, uid, qq: e.user_id }, player.game)
 
     const rankCfg = await ProfileRank.getGroupCfg(groupId, player.game)
-    const groupRank = rank && (cfg?.diyCfg?.groupRank || false) && rankCfg.status !== 1
+    const groupRank = rank && Cfg.get("groupRank") && rankCfg.status !== 1
     for (let id in profiles) {
       let profile = profiles[id]
       let char = profile.char
