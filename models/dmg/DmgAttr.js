@@ -28,7 +28,7 @@ let DmgAttr = {
       })
     })
 
-    lodash.forEach((game === "gs" ? "mastery,recharge,cpct,cdmg,heal,dmg,phy" : "speed,recharge,cpct,cdmg,heal,dmg,enemydmg,effPct,effDef,stance").split(","), (key) => {
+    lodash.forEach((game === "gs" ? "mastery,recharge,cpct,cdmg,heal,dmg,phy,diffelem" : "speed,recharge,cpct,cdmg,heal,dmg,enemydmg,effPct,effDef,stance").split(","), (key) => {
       ret[key] = AttrItem.create(originalAttr?.[key] || {
         base: attr[key] * 1 || 0, // 基础值
         plus: 0, // 加成值
@@ -225,7 +225,7 @@ let DmgAttr = {
           if (aRet[2] === "Base") attr[aRet[1]].plus += val * attr.staticAttr[aRet[1]].pct / 100 || 0
           return
         }
-        aRet = /^(mastery|cpct|cdmg|heal|recharge|dmg|enemydmg|phy|shield|stance)(Plus|Pct|Inc)?$/.exec(key)
+        aRet = /^(mastery|cpct|cdmg|heal|recharge|dmg|enemydmg|phy|diffelem|shield|stance)(Plus|Pct|Inc)?$/.exec(key)
         if (aRet) {
           attr[aRet[1]][aRet[2] ? aRet[2].toLowerCase() : "plus"] += val * 1 || 0
           return

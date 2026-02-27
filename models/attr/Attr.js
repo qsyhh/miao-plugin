@@ -234,7 +234,7 @@ class Attr extends Base {
     if (!ds) return false
 
     let key = ds.key
-    if (Format.isElem(key) && char.elem === key) key = "dmg"
+    if (Format.isElem(key)) key = char.elem === key ? "dmg" : [ "electro", "pyro", "hydro", "cryo" ].includes(key) ? "diffelem" : key
     if (!key) return false
     if ([ "atk", "hp", "def" ].includes(key)) key = key + "Pct"
     this.attr.addAttr(key, ds.value * 1)

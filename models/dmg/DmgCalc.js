@@ -18,6 +18,7 @@ let DmgCalc = {
     let {
       dynamicDmg = 0, // 动态增伤
       dynamicPhy = 0, // 动态物伤
+      dynamicDiffelem = 0, // 动态元素伤害
       dynamicCpct = 0, // 动态暴击率
       dynamicCdmg = 0, // 动态暴击伤害
       dynamicEnemydmg = 0 // 动态易伤
@@ -32,7 +33,7 @@ let DmgCalc = {
     } = data
     let calc = ds.calc
 
-    let { atk, dmg, phy, cdmg, cpct, enemydmg } = attr
+    let { atk, dmg, phy, diffelem, cdmg, cpct, enemydmg } = attr
 
     // 攻击区
     let atkNum = calc(atk)
@@ -50,6 +51,7 @@ let DmgCalc = {
     let elevatedNum = attr.elevated / 100 // 擢升
 
     if (ele === "phy") dmgNum = (1 + phy.base / 100 + phy.plus / 100 + dynamicPhy / 100)
+    if (ele === "diffelem") dmgNum = (1 + diffelem.base / 100 + diffelem.plus / 100 + dynamicDiffelem / 100)
 
     if (/^scene,.*/.test(ele) || /.*,scene$/.test(ele) || ele === "scene") {
       let dmgPct = attr.staticAttr.dmg.plus / 100

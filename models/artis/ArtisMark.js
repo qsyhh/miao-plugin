@@ -93,7 +93,7 @@ let ArtisMark = {
   },
 
   // 获取位置分数
-  getMark({ charCfg, idx, arti, elem = "", game = "gs" }) {
+  getMark({ char, charCfg, idx, arti, elem = "", game = "gs" }) {
     let ret = 0
     let mAttr = arti.main
     let sAttr = arti.attrs
@@ -107,6 +107,7 @@ let ArtisMark = {
       let mainKey = key
       if (key !== "recharge") {
         let dmgIdx = { gs: 4, sr: 5 }
+        if ([ 10000128 ].includes(char.id) && Format.isElem(key)) elem = key
         if (idx === dmgIdx[game] && Format.sameElem(elem, key, game)) mainKey = "dmg"
         fixPct = Math.max(0, Math.min(1, (attrs[mainKey]?.weight || 0) / (posMaxMark["m" + idx])))
         if (game === "gs") {
@@ -172,9 +173,9 @@ let ArtisMark = {
     let artisRet = {}
     let setCount = {}
     let totalMark = 0
-    let { game, artis, elem } = profile
+    let { char, game, artis, elem } = profile
     artis.forEach((arti, idx) => {
-      let mark = ArtisMark.getMark({ charCfg, idx, arti, elem, game })
+      let mark = ArtisMark.getMark({ char, charCfg, idx, arti, elem, game })
       totalMark += mark
       setCount[arti.set] = (setCount[arti.set] || 0) + 1
       artisRet[idx] = {
