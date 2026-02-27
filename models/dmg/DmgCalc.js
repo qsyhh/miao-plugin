@@ -128,7 +128,7 @@ let DmgCalc = {
     cpctNum = Math.max(0, Math.min(1, cpctNum))
     if (cpctNum === 0) cdmgNum = 0
 
-    const isEle = ele !== false && ele !== "phy" && ele !== "scene"
+    const isEle = ele !== false && ele !== "phy" && ele !== "scene" && ele !== "diffelem"
     // 反应区
     let eleNum = 1
     let eleBase = 1
