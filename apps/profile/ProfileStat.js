@@ -142,19 +142,19 @@ const ProfileStat = {
     let cacheData = await Data.getCacheJSON("miao:cache:homdgcat:overall")
     if (cacheData && !lodash.isEmpty(cacheData)) return cacheData
 
-    let resData, match, overallMazeInfo, overallMazeData, levelMapping, monsterMapping
+    let overallMazeInfo, match, overallMazeData, levelMapping, monsterMapping
     try {
       overallMazeInfo = await (await fetch("https://gitee.com/qsyhh_res/json/raw/master/overall.json")).json()
       if (overallMazeInfo.overallMazeData) {
         await Data.setCacheJSON("miao:cache:homdgcat:overall", overallMazeInfo, 3600);
         ({ overallMazeData, levelMapping, monsterMapping } = overallMazeInfo)
       } else {
-        resData = await (await ProfileStat.fetchWithTimeout("https://homdgcat.wiki/gi/CH/maze.js")).text()
-        match = /var _overall = (.*?)var/s.exec(resData)
+        overallMazeInfo = await (await ProfileStat.fetchWithTimeout("https://homdgcat.wiki/gi/CH/maze.js")).text()
+        match = /var _overall = (.*?)var/s.exec(overallMazeInfo)
         if (match) overallMazeData = JSON.parse(match[1])
-        match = /var _mp = (.*?)var/s.exec(resData)
+        match = /var _mp = (.*?)var/s.exec(overallMazeInfo)
         if (match) levelMapping = JSON.parse(match[1])
-        match = /var _mons = (.*?)var/s.exec(resData)
+        match = /var _mons = (.*?)var/s.exec(overallMazeInfo)
         if (match) monsterMapping = JSON.parse(match[1])
 
         await Data.setCacheJSON("miao:cache:homdgcat:overall", { overallMazeData, levelMapping, monsterMapping }, 3600)
@@ -243,10 +243,8 @@ const ProfileStat = {
     for (let [ k, v ] of Object.entries(displayedChambers)) {
       if (v) {
         let chamberInfo = `${k}：`
-        let levelId = v.Configs[0]
-        let time = v.Time
-        if (levelId) {
-          let monsterIds = levelMapping[Number(levelId)]
+        if (v.Configs[0]) {
+          let monsterIds = levelMapping[Number(v.Configs[0])]
           if (monsterIds) {
             let monsterNames = []
             for (let monsterId of monsterIds) {
@@ -254,7 +252,7 @@ const ProfileStat = {
               if (monsterName) monsterNames.push(monsterName.replace(/<.*?>/g, ""))
             }
             chamberInfo += monsterNames.join("、")
-            chamberInfo += `（${time}）`
+            if (v.Time) chamberInfo += `（${v.Time}）`
           }
         }
         monsterInfo.push(chamberInfo)
