@@ -241,7 +241,7 @@ export default class ProfileDmg extends Base {
             rowData.push({ type: "na" })
             return
           }
-          let { attr } = DmgAttr.calcAttr({
+          dmgDetail.dmgAttr = DmgAttr.calcAttr({
             originalAttr,
             buffs,
             artis,
@@ -251,9 +251,9 @@ export default class ProfileDmg extends Base {
             reduceAttr,
             talent: detail.talent || "",
             game
-          })
-          let ds = lodash.merge({ talent }, DmgAttr.getDs(attr, meta, params))
-          let dmg = DmgCalc.getDmgFn({ ds, attr, level: profile.level, enemyLv, game })
+          })?.attr
+          let ds = lodash.merge({ talent }, DmgAttr.getDs(dmgDetail.dmgAttr, meta, params))
+          let dmg = DmgCalc.getDmgFn({ ds, attr: dmgDetail.dmgAttr, level: profile.level, enemyLv, game })
           if (detail.dmg) {
             let dmgCalcRet = detail.dmg(ds, dmg)
             rowData.push({
@@ -266,9 +266,7 @@ export default class ProfileDmg extends Base {
       })
     }
 
-    if (mode === "single") {
-      return ret[0]
-    }
+    if (mode === "single") return ret[0]
     return {
       ret,
       // 根据当前计算的伤害，显示对应的buff列表

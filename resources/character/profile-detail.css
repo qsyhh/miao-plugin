@@ -19,7 +19,7 @@ body {
 }
 .basic {
   position: relative;
-  margin: 0 -15px 15px -10px;
+  margin: 0 -15px 10px -10px;
 }
 .basic:after {
   content: "";
