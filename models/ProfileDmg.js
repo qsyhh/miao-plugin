@@ -150,6 +150,7 @@ export default class ProfileDmg extends Base {
     let { msg } = DmgAttr.calcAttr({ originalAttr, buffs, artis, meta, params: defParams || {}, game })
     let msgList = []
 
+    let dmgAttr
     let ret = []
     let detailMap = []
     let dmgRet = []
@@ -180,6 +181,7 @@ export default class ProfileDmg extends Base {
       if (params.BondOfLife) params.BondOfLife = Math.min(params.BondOfLife, 200)
 
       let { attr, msg } = DmgAttr.calcAttr({ originalAttr, buffs, artis, meta, params, talent: detail.talent || "", game })
+      if (mode === "dmg" && detailSysIdx === dmgIdx) dmgAttr = lodash.cloneDeep(attr)
       if (detail.isStatic) return
 
       let ds = lodash.merge({ talent }, DmgAttr.getDs(attr, meta, params))
@@ -224,6 +226,7 @@ export default class ProfileDmg extends Base {
         title: detail.title,
         userIdx: detail.userIdx || defDmgIdx,
         basicRet: lodash.merge({}, ret[detail.userIdx] || ret[defDmgIdx]),
+        dmgAttr,
         attr: []
       }
 
@@ -241,7 +244,7 @@ export default class ProfileDmg extends Base {
             rowData.push({ type: "na" })
             return
           }
-          dmgDetail.dmgAttr = DmgAttr.calcAttr({
+          let { attr } = DmgAttr.calcAttr({
             originalAttr,
             buffs,
             artis,
@@ -251,9 +254,9 @@ export default class ProfileDmg extends Base {
             reduceAttr,
             talent: detail.talent || "",
             game
-          })?.attr
-          let ds = lodash.merge({ talent }, DmgAttr.getDs(dmgDetail.dmgAttr, meta, params))
-          let dmg = DmgCalc.getDmgFn({ ds, attr: dmgDetail.dmgAttr, level: profile.level, enemyLv, game })
+          })
+          let ds = lodash.merge({ talent }, DmgAttr.getDs(attr, meta, params))
+          let dmg = DmgCalc.getDmgFn({ ds, attr, level: profile.level, enemyLv, game })
           if (detail.dmg) {
             let dmgCalcRet = detail.dmg(ds, dmg)
             rowData.push({
